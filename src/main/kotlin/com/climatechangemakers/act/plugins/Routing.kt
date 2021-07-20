@@ -7,8 +7,6 @@ import io.ktor.application.*
 import io.ktor.response.*
 
 fun Application.configureRouting() {
-  // Starting point for a Ktor app:
-
   val apiComponent = DaggerApiComponent.create()
 
   routing {
@@ -16,6 +14,6 @@ fun Application.configureRouting() {
       call.respondText("Hello World!")
     }
 
-    legislatorRoutes(apiComponent.representativeFinderManager())
+    legislatorRoutes(apiComponent.representativesFinderController())
   }
 }

@@ -1,5 +1,6 @@
 package com.climatechangemakers.act.feature.representativefinder.routing
 
+import com.climatechangemakers.act.feature.representativefinder.controller.RepresentativeController
 import com.climatechangemakers.act.feature.representativefinder.manager.LegislatorFinderManager
 import com.climatechangemakers.act.feature.representativefinder.model.GetLegislatorsRequest
 import io.ktor.application.call
@@ -11,10 +12,7 @@ import io.ktor.routing.Routing
 import io.ktor.routing.get
 import io.ktor.routing.post
 
-fun Routing.legislatorRoutes(manager: LegislatorFinderManager) {
+fun Routing.legislatorRoutes(controller: RepresentativeController) {
 
-  post("/legislators") {
-    val request = call.receive<GetLegislatorsRequest>()
-    call.respond(manager.getLegislators(request))
-  }
+  post("/legislators") { controller.hanleLegislators(call) }
 }
