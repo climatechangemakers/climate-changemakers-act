@@ -1,6 +1,6 @@
 package com.climatechangemakers.act.feature.representativefinder.service
 
-import com.climatechangemakers.act.feature.representativefinder.model.GetLegislatorsResponse
+import com.climatechangemakers.act.feature.representativefinder.model.GeocodioApiResult
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -13,5 +13,6 @@ interface GeocodioService {
   @GET("geocode?fields=cd")
   suspend fun getLegislators(
     @Query("q") query: String,
-  ): GetLegislatorsResponse
+    @Query("fields") fields: List<String> = listOf("cd"),
+  ): GeocodioApiResult
 }

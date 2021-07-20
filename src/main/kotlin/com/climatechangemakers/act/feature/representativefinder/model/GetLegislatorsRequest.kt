@@ -1,6 +1,8 @@
 package com.climatechangemakers.act.feature.representativefinder.model
 
-class GetLegislatorsRequest(
+import kotlinx.serialization.Serializable
+
+@Serializable class GetLegislatorsRequest(
   val streetAddress: String,
   val city: String,
   val state: String,
