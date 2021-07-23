@@ -1,7 +1,7 @@
 package com.climatechangemakers.act.feature.action.controller
 
-import com.climatechangemakers.act.feature.representativefinder.manager.LegislatorsManager
-import com.climatechangemakers.act.feature.representativefinder.model.GetRepresentativeRequest
+import com.climatechangemakers.act.feature.findlegislator.manager.LegislatorsManager
+import com.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsRequest
 import io.ktor.application.ApplicationCall
 import io.ktor.request.receive
 import io.ktor.response.respond
@@ -12,7 +12,7 @@ class ActionController @Inject constructor(
 ) {
 
   suspend fun initiateAction(call: ApplicationCall) {
-    val request = call.receive<GetRepresentativeRequest>()
+    val request = call.receive<GetLegislatorsRequest>()
     call.respond(manager.getLegislators(request))
   }
 }

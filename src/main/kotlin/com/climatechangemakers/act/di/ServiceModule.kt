@@ -1,6 +1,6 @@
 package com.climatechangemakers.act.di
 
-import com.climatechangemakers.act.feature.representativefinder.service.GeocodioService
+import com.climatechangemakers.act.feature.findlegislator.service.GeocodioService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides

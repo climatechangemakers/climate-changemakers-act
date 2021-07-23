@@ -1,17 +1,17 @@
-package com.climatechangemakers.act.feature.representativefinder.manager
+package com.climatechangemakers.act.feature.findlegislator.manager
 
-import com.climatechangemakers.act.feature.representativefinder.model.CongressionalDistrict
-import com.climatechangemakers.act.feature.representativefinder.model.Fields
-import com.climatechangemakers.act.feature.representativefinder.model.GeocodeResult
-import com.climatechangemakers.act.feature.representativefinder.model.GeocodioApiResult
-import com.climatechangemakers.act.feature.representativefinder.model.GeocodioLegislator
-import com.climatechangemakers.act.feature.representativefinder.model.GetRepresentativeRequest
-import com.climatechangemakers.act.feature.representativefinder.model.Legislator
-import com.climatechangemakers.act.feature.representativefinder.model.LegislatorBio
-import com.climatechangemakers.act.feature.representativefinder.model.LegislatorContactInformation
-import com.climatechangemakers.act.feature.representativefinder.model.LegislatorType
-import com.climatechangemakers.act.feature.representativefinder.service.FakeGeocodioService
-import com.climatechangemakers.act.feature.representativefinder.util.suspendTest
+import com.climatechangemakers.act.feature.findlegislator.model.CongressionalDistrict
+import com.climatechangemakers.act.feature.findlegislator.model.Fields
+import com.climatechangemakers.act.feature.findlegislator.model.GeocodeResult
+import com.climatechangemakers.act.feature.findlegislator.model.GeocodioApiResult
+import com.climatechangemakers.act.feature.findlegislator.model.GeocodioLegislator
+import com.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsRequest
+import com.climatechangemakers.act.feature.findlegislator.model.Legislator
+import com.climatechangemakers.act.feature.findlegislator.model.LegislatorBio
+import com.climatechangemakers.act.feature.findlegislator.model.LegislatorContactInformation
+import com.climatechangemakers.act.feature.findlegislator.model.LegislatorType
+import com.climatechangemakers.act.feature.findlegislator.service.FakeGeocodioService
+import com.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -48,7 +48,7 @@ class TestLegislatorsManager {
   private val manager = LegislatorsManager(service)
 
   @Test fun `getLegislators gets called with correct query string`() = suspendTest {
-    val request = GetRepresentativeRequest(
+    val request = GetLegislatorsRequest(
       streetAddress = "10 Beech Place",
       city = "West Deptford",
       state = "NJ",
@@ -64,7 +64,7 @@ class TestLegislatorsManager {
   }
 
   @Test fun `getLegislators maps correctly to domain legislator type`() = suspendTest {
-    val request = GetRepresentativeRequest(
+    val request = GetLegislatorsRequest(
       streetAddress = "10 Beech Place",
       city = "West Deptford",
       state = "NJ",

@@ -1,4 +1,4 @@
-package com.climatechangemakers.act.feature.representativefinder.util
+package com.climatechangemakers.act.feature.findlegislator.util
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking

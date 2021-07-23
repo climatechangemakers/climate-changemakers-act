@@ -1,4 +1,4 @@
-package com.climatechangemakers.act.feature.representativefinder.model
+package com.climatechangemakers.act.feature.findlegislator.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -1,6 +1,6 @@
-package com.climatechangemakers.act.feature.representativefinder.service
+package com.climatechangemakers.act.feature.findlegislator.service
 
-import com.climatechangemakers.act.feature.representativefinder.model.GeocodioApiResult
+import com.climatechangemakers.act.feature.findlegislator.model.GeocodioApiResult
 
 class FakeGeocodioService(
   private val fakeResultProvider: () -> GeocodioApiResult,
