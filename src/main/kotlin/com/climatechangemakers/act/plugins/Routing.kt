@@ -1,7 +1,7 @@
 package com.climatechangemakers.act.plugins
 
 import com.climatechangemakers.act.di.DaggerApiComponent
-import com.climatechangemakers.act.feature.representativefinder.routing.legislatorRoutes
+import com.climatechangemakers.act.feature.action.routing.actionRoutes
 import io.ktor.routing.*
 import io.ktor.application.*
 import io.ktor.response.*
@@ -14,6 +14,6 @@ fun Application.configureRouting() {
       call.respondText("Hello World!")
     }
 
-    legislatorRoutes(apiComponent.representativesFinderController())
+    actionRoutes(apiComponent.actionController())
   }
 }

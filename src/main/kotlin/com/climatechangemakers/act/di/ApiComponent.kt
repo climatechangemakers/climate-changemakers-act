@@ -1,11 +1,10 @@
 package com.climatechangemakers.act.di
 
-import com.climatechangemakers.act.feature.representativefinder.controller.RepresentativeController
-import com.climatechangemakers.act.feature.representativefinder.manager.LegislatorFinderManager
+import com.climatechangemakers.act.feature.action.controller.ActionController
 import dagger.Component
 
 @Component(modules = [ServiceModule::class])
 interface ApiComponent {
 
-  fun representativesFinderController(): RepresentativeController
+  fun actionController(): ActionController
 }

@@ -1,20 +1,10 @@
 package com.climatechangemakers.act.feature.representativefinder.model
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable class Legislator(
+@Serializable data class Legislator(
+  val name: String,
   val type: LegislatorType,
-  @SerialName("contact") val contactInfo: LegislatorContactInformation,
-)
-
-@Serializable class LegislatorContactInformation(
-  @SerialName("url") val siteUrl: String,
-  @SerialName("address") val formattedAddress: String,
+  val siteUrl: String,
   val phone: String,
 )
-
-@Serializable enum class LegislatorType {
-  @SerialName("representative") Representative,
-  @SerialName("senator") Senator,
-}
