@@ -6,6 +6,8 @@ import com.climatechangemakers.act.feature.findlegislator.model.GeocodioLegislat
 import com.climatechangemakers.act.feature.findlegislator.model.Legislator
 import com.climatechangemakers.act.feature.findlegislator.service.GeocodioService
 import com.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
+import com.climatechangemakers.act.feature.lcvscore.model.LcvScore
+import com.climatechangemakers.act.feature.lcvscore.model.LcvScoreType
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -26,8 +28,9 @@ class LegislatorsManager @Inject constructor(
 
     geocodioLegislators.map { geocodioLegislator ->
       async {
-        val score = lcvScoreManager.getScore(geocodioLegislator.fullName)
-        geocodioLegislator.toDomainLegislator(score)
+        val scores = lcvScoreManager.getScores(geocodioLegislator.fullName)
+        checkNotNull(scores.firstOrNull { it.scoreType == LcvScoreType.LifetimeScore })
+        geocodioLegislator.toDomainLegislator(scores)
       }
     }.awaitAll()
   }
@@ -37,10 +40,10 @@ private val GetLegislatorsRequest.queryString: String get() = "$streetAddress, $
 
 private val GeocodioLegislator.fullName get() = "${bio.firstName} ${bio.lastName}"
 
-private fun GeocodioLegislator.toDomainLegislator(lcvScore: Int) = Legislator(
+private fun GeocodioLegislator.toDomainLegislator(lcvScores: List<LcvScore>) = Legislator(
   name = fullName,
   type = type,
   siteUrl = contactInfo.siteUrl,
   phone = contactInfo.phone,
-  lcvScore = lcvScore,
+  lcvScores = lcvScores,
 )

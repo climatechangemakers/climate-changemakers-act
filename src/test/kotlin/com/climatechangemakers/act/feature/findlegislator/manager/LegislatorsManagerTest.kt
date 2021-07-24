@@ -13,12 +13,20 @@ import com.climatechangemakers.act.feature.findlegislator.model.LegislatorType
 import com.climatechangemakers.act.feature.findlegislator.service.FakeGeocodioService
 import com.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import com.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
+import com.climatechangemakers.act.feature.lcvscore.model.LcvScore
+import com.climatechangemakers.act.feature.lcvscore.model.LcvScoreType
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class LegislatorsManagerTest {
 
-  private val fakeLcvManager = LcvScoreManager { 10 }
+  private val fakeLcvManager = LcvScoreManager { listOf(
+    LcvScore(10, LcvScoreType.LifetimeScore),
+    LcvScore(10, LcvScoreType.YearlyScore(2020)),
+    LcvScore(10, LcvScoreType.YearlyScore(2019)),
+  ) }
+
   private val fakeGeocodioService = FakeGeocodioService {
     GeocodioApiResult(
       results = listOf(
@@ -46,7 +54,6 @@ class LegislatorsManagerTest {
       )
     )
   }
-
 
   private val manager = LegislatorsManager(fakeGeocodioService, fakeLcvManager)
 
@@ -82,9 +89,28 @@ class LegislatorsManagerTest {
         type = LegislatorType.Representative,
         siteUrl = "www.foo.com",
         phone = "555-555-5555",
-        lcvScore = 10,
+        lcvScores = listOf(
+          LcvScore(10, LcvScoreType.LifetimeScore),
+          LcvScore(10, LcvScoreType.YearlyScore(2020)),
+          LcvScore(10, LcvScoreType.YearlyScore(2019)),
+        ),
       )),
       actual = response
     )
+  }
+
+  @Test fun `getLegislators throws IllegalStateException with wrong LCV scores`() = suspendTest {
+    val request = GetLegislatorsRequest(
+      streetAddress = "10 Beech Place",
+      city = "West Deptford",
+      state = "NJ",
+      postalCode = "08096",
+    )
+
+    val manager = LegislatorsManager(fakeGeocodioService) { emptyList() }
+
+    assertFailsWith<IllegalStateException> {
+      manager.getLegislators(request)
+    }
   }
 }

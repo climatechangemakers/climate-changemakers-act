@@ -1,5 +1,6 @@
 package com.climatechangemakers.act.feature.findlegislator.model
 
+import com.climatechangemakers.act.feature.lcvscore.model.LcvScore
 import kotlinx.serialization.Serializable
 
 @Serializable data class Legislator(
@@ -7,5 +8,5 @@ import kotlinx.serialization.Serializable
   val type: LegislatorType,
   val siteUrl: String,
   val phone: String,
-  val lcvScore: Int,
+  val lcvScores: List<LcvScore>,
 )
