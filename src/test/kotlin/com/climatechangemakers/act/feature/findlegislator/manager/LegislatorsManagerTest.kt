@@ -12,12 +12,14 @@ import com.climatechangemakers.act.feature.findlegislator.model.LegislatorContac
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorType
 import com.climatechangemakers.act.feature.findlegislator.service.FakeGeocodioService
 import com.climatechangemakers.act.feature.findlegislator.util.suspendTest
+import com.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class TestLegislatorsManager {
+class LegislatorsManagerTest {
 
-  private val service = FakeGeocodioService {
+  private val fakeLcvManager = LcvScoreManager { 10 }
+  private val fakeGeocodioService = FakeGeocodioService {
     GeocodioApiResult(
       results = listOf(
         GeocodeResult(
@@ -45,7 +47,8 @@ class TestLegislatorsManager {
     )
   }
 
-  private val manager = LegislatorsManager(service)
+
+  private val manager = LegislatorsManager(fakeGeocodioService, fakeLcvManager)
 
   @Test fun `getLegislators gets called with correct query string`() = suspendTest {
     val request = GetLegislatorsRequest(
@@ -59,7 +62,7 @@ class TestLegislatorsManager {
 
     assertEquals(
       expected = "10 Beech Place, West Deptford NJ 08096",
-      actual = service.capturedQuery
+      actual = fakeGeocodioService.capturedQuery
     )
   }
 
@@ -79,6 +82,7 @@ class TestLegislatorsManager {
         type = LegislatorType.Representative,
         siteUrl = "www.foo.com",
         phone = "555-555-5555",
+        lcvScore = 10,
       )),
       actual = response
     )

@@ -7,4 +7,5 @@ import kotlinx.serialization.Serializable
   val type: LegislatorType,
   val siteUrl: String,
   val phone: String,
+  val lcvScore: Int,
 )
