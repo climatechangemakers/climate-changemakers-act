@@ -8,5 +8,6 @@ import kotlinx.serialization.Serializable
   val type: LegislatorType,
   val siteUrl: String,
   val phone: String,
+  val imageUrl: String,
   val lcvScores: List<LcvScore>,
 )

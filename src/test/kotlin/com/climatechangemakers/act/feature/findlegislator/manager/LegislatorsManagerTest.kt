@@ -1,5 +1,6 @@
 package com.climatechangemakers.act.feature.findlegislator.manager
 
+import com.climatechangemakers.act.feature.congressgov.manager.SearchCongressManager
 import com.climatechangemakers.act.feature.findlegislator.model.CongressionalDistrict
 import com.climatechangemakers.act.feature.findlegislator.model.Fields
 import com.climatechangemakers.act.feature.findlegislator.model.GeocodeResult
@@ -55,7 +56,8 @@ class LegislatorsManagerTest {
     )
   }
 
-  private val manager = LegislatorsManager(fakeGeocodioService, fakeLcvManager)
+  private val fakeSearchCongressManager = SearchCongressManager { "www.bar.com" }
+  private val manager = LegislatorsManager(fakeGeocodioService, fakeLcvManager, fakeSearchCongressManager)
 
   @Test fun `getLegislators gets called with correct query string`() = suspendTest {
     val request = GetLegislatorsRequest(
@@ -89,6 +91,7 @@ class LegislatorsManagerTest {
         type = LegislatorType.Representative,
         siteUrl = "www.foo.com",
         phone = "555-555-5555",
+        imageUrl = "www.bar.com",
         lcvScores = listOf(
           LcvScore(10, LcvScoreType.LifetimeScore),
           LcvScore(10, LcvScoreType.YearlyScore(2020)),
@@ -107,7 +110,11 @@ class LegislatorsManagerTest {
       postalCode = "08096",
     )
 
-    val manager = LegislatorsManager(fakeGeocodioService) { emptyList() }
+    val manager = LegislatorsManager(
+      geocodioService = fakeGeocodioService,
+      lcvScoreManager = { emptyList() },
+      searchCongressManager = fakeSearchCongressManager,
+    )
 
     assertFailsWith<IllegalStateException> {
       manager.getLegislators(request)
