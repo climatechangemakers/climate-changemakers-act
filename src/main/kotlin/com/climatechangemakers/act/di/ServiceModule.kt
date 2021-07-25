@@ -1,6 +1,6 @@
 package com.climatechangemakers.act.di
 
-import com.climatechangemakers.act.feature.findlegislator.service.GeocodioService
+import com.climatechangemakers.act.feature.findlegislator.service.GoogleCivicInformationService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -15,18 +15,18 @@ import retrofit2.Retrofit
     val originalRequest = chain.request()
     val originalUrl = originalRequest.url()
     val newUrl = originalUrl.newBuilder()
-      .addQueryParameter("api_key", requireNotNull(System.getenv("GEOCODIO_API_KEY")))
+      .addQueryParameter("key", requireNotNull(System.getenv("GOOGLE_CIVIC_API_KEY")))
       .build()
 
     chain.proceed(originalRequest.newBuilder().url(newUrl).build())
   }.build()
 
-  @Provides fun providesGeocodioService(client: OkHttpClient): GeocodioService = Retrofit.Builder()
-    .baseUrl("https://api.geocod.io/v1.6/")
+  @Provides fun providesGoogleCivicService(client: OkHttpClient): GoogleCivicInformationService = Retrofit.Builder()
+    .baseUrl("https://civicinfo.googleapis.com/")
     .addConverterFactory(
       Json { ignoreUnknownKeys = true }.asConverterFactory(MediaType.get("application/json"))
     )
     .client(client)
     .build()
-    .create(GeocodioService::class.java)
+    .create(GoogleCivicInformationService::class.java)
 }

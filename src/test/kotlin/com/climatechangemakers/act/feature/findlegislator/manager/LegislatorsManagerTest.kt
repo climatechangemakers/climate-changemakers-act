@@ -1,17 +1,12 @@
 package com.climatechangemakers.act.feature.findlegislator.manager
 
-import com.climatechangemakers.act.feature.congressgov.manager.SearchCongressManager
-import com.climatechangemakers.act.feature.findlegislator.model.CongressionalDistrict
-import com.climatechangemakers.act.feature.findlegislator.model.Fields
-import com.climatechangemakers.act.feature.findlegislator.model.GeocodeResult
-import com.climatechangemakers.act.feature.findlegislator.model.GeocodioApiResult
-import com.climatechangemakers.act.feature.findlegislator.model.GeocodioLegislator
 import com.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsRequest
+import com.climatechangemakers.act.feature.findlegislator.model.GoogleCivicInformationResponse
+import com.climatechangemakers.act.feature.findlegislator.model.GoogleCivicLegislator
+import com.climatechangemakers.act.feature.findlegislator.model.GoogleCivicOffice
 import com.climatechangemakers.act.feature.findlegislator.model.Legislator
-import com.climatechangemakers.act.feature.findlegislator.model.LegislatorBio
-import com.climatechangemakers.act.feature.findlegislator.model.LegislatorContactInformation
-import com.climatechangemakers.act.feature.findlegislator.model.LegislatorType
-import com.climatechangemakers.act.feature.findlegislator.service.FakeGeocodioService
+import com.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
+import com.climatechangemakers.act.feature.findlegislator.service.FakeGoogleCivicInformationService
 import com.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import com.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
 import com.climatechangemakers.act.feature.lcvscore.model.LcvScore
@@ -28,36 +23,23 @@ class LegislatorsManagerTest {
     LcvScore(10, LcvScoreType.YearlyScore(2019)),
   ) }
 
-  private val fakeGeocodioService = FakeGeocodioService {
-    GeocodioApiResult(
-      results = listOf(
-        GeocodeResult(
-          fields = Fields(
-            congressionalDistricts = listOf(
-              CongressionalDistrict(
-                "VA-04",
-                4,
-                currentLegislators = listOf(
-                  GeocodioLegislator(
-                    LegislatorType.Representative,
-                    LegislatorBio("McEachin", "A."),
-                    LegislatorContactInformation(
-                      "www.foo.com",
-                      "This is an address.",
-                      "555-555-5555"
-                    )
-                  )
-                )
-              )
-            )
-          )
+  private val fakeGoogleCivicService = FakeGoogleCivicInformationService {
+    GoogleCivicInformationResponse(
+      offices = listOf(
+        GoogleCivicOffice(role = LegislatorRole.Representative, legislatorIndices = listOf(0))
+      ),
+      legislators = listOf(
+        GoogleCivicLegislator(
+          name = "A. Donald McEachin",
+          phoneNumbers = listOf("555-555-5555"),
+          urls = listOf("www.foo.com"),
+          photoUrl = "www.bar.com"
         )
       )
     )
   }
 
-  private val fakeSearchCongressManager = SearchCongressManager { "www.bar.com" }
-  private val manager = LegislatorsManager(fakeGeocodioService, fakeLcvManager, fakeSearchCongressManager)
+  private val manager = LegislatorsManager(fakeGoogleCivicService, fakeLcvManager)
 
   @Test fun `getLegislators gets called with correct query string`() = suspendTest {
     val request = GetLegislatorsRequest(
@@ -71,7 +53,7 @@ class LegislatorsManagerTest {
 
     assertEquals(
       expected = "10 Beech Place, West Deptford NJ 08096",
-      actual = fakeGeocodioService.capturedQuery
+      actual = fakeGoogleCivicService.capturedQuery
     )
   }
 
@@ -87,8 +69,8 @@ class LegislatorsManagerTest {
 
     assertEquals(
       expected = listOf(Legislator(
-        name = "A. McEachin",
-        type = LegislatorType.Representative,
+        name = "A. Donald McEachin",
+        role = LegislatorRole.Representative,
         siteUrl = "www.foo.com",
         phone = "555-555-5555",
         imageUrl = "www.bar.com",
@@ -111,9 +93,8 @@ class LegislatorsManagerTest {
     )
 
     val manager = LegislatorsManager(
-      geocodioService = fakeGeocodioService,
+      civicService = fakeGoogleCivicService,
       lcvScoreManager = { emptyList() },
-      searchCongressManager = fakeSearchCongressManager,
     )
 
     assertFailsWith<IllegalStateException> {
