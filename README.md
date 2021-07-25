@@ -15,12 +15,12 @@ Climate Changemakers is developing a tool which allows constituents to reach out
 
 ### Docker
 
-The backend includes a `Dockerfile`. You should have no need to install a JDK or JRE if you're running the application through Docker. 
+The backend & frontend include a `Dockerfile`. You should have no need to install JDK/JRE/NODE if you're running the application through Docker. 
 
 ```shell
-$ cd backend
-$ docker build -t climatechangemakers .
-$ docker run --env GOOGLE_CIVIC_API_KEY=<YOUR_API_KEY> --publish 8080:8080 --name climatechangemakers climatechangemakers:latest
+$ docker build --file=backend/backend.dockerfile  -t backend .
+$ docker build --file=frontend/frontend.dockerfile  -t frontend .
+$ GOOGLE_CIVIC_API_KEY=<YOUR_API_KEY> docker-compose -f docker-compose.yml up
 ```
 
 ### Initiating action 

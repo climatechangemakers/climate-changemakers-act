@@ -1,0 +1,14 @@
+services:
+    frontend:
+      image: frontend:latest
+      environment:
+        PORT: 3000
+        PROXY_API: http://backend:8080/
+      ports:
+        - 3000:3000
+    backend:
+      image: backend:latest
+      environment:
+        - "GOOGLE_CIVIC_API_KEY=${GOOGLE_CIVIC_API_KEY}"
+      ports:
+        - 8080:8080

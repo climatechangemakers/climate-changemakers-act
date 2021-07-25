@@ -30,6 +30,8 @@ COPY --from=build /appbuild/build/libs/climatechangemakers-backend*all.jar /app/
 COPY --from=build /appbuild/build/resources/ /app/resources/
 WORKDIR /app
 
+EXPOSE $PORT
+
 # Entrypoint definition
 CMD ["sh", "-c", "java -server -XX:+UnlockExperimentalVMOptions -XX:+UseContainerSupport -XX:InitialRAMFraction=2 -XX:MinRAMFraction=2 -XX:MaxRAMFraction=2 -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:+UseStringDeduplication -jar climatechangemakers-backend.jar"]
 # End Container setup --------
