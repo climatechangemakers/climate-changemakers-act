@@ -1,1 +1,1 @@
-rootProject.name = "com.climatechangemakers.act"
+rootProject.name = "climatechangemakers-backend"
