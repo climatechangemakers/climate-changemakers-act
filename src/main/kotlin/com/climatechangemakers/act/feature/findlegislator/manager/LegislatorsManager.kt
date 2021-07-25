@@ -1,7 +1,6 @@
 package com.climatechangemakers.act.feature.findlegislator.manager
 
 import com.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsRequest
-import com.climatechangemakers.act.feature.findlegislator.model.GoogleCivicInformationResponse
 import com.climatechangemakers.act.feature.findlegislator.model.GoogleCivicLegislator
 import com.climatechangemakers.act.feature.findlegislator.model.Legislator
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorRole

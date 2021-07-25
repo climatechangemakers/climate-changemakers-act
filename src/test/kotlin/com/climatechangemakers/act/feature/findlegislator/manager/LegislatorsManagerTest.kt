@@ -101,4 +101,36 @@ class LegislatorsManagerTest {
       manager.getLegislators(request)
     }
   }
+
+  @Test fun `getLegislators throws IllegalStateException with no associated legislator role`() = suspendTest {
+    val request = GetLegislatorsRequest(
+      streetAddress = "10 Beech Place",
+      city = "West Deptford",
+      state = "NJ",
+      postalCode = "08096",
+    )
+
+    val fakeCivicClient = FakeGoogleCivicInformationService {
+      GoogleCivicInformationResponse(
+        offices = emptyList(),
+        legislators = listOf(
+          GoogleCivicLegislator(
+            name = "A. Donald McEachin",
+            phoneNumbers = listOf("555-555-5555"),
+            urls = listOf("www.foo.com"),
+            photoUrl = "www.bar.com"
+          )
+        )
+      )
+    }
+
+    val manager = LegislatorsManager(
+      civicService = fakeCivicClient,
+      lcvScoreManager = { emptyList() },
+    )
+
+    assertFailsWith<IllegalStateException> {
+      manager.getLegislators(request)
+    }
+  }
 }
