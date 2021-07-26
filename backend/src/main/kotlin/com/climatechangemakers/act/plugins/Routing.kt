@@ -10,10 +10,6 @@ fun Application.configureRouting() {
   val apiComponent = DaggerApiComponent.create()
 
   routing {
-    get("/") {
-      call.respondText("Hello World!")
-    }
-
     actionRoutes(apiComponent.actionController())
   }
 }
