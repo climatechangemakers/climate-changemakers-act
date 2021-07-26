@@ -11,16 +11,18 @@ Climate Changemakers is developing a tool which allows constituents to reach out
 
 ### Required API Keys
 
+For a local development environment to work, some API keys need to be set as environment variables. 
+
 * [Google Civic Information API Key](https://cloud.google.com/docs/authentication/api-keys)
+  * `export GOOGLE_CIVIC_API_KEY=<key>`
+
 
 ### Docker
 
-The backend & frontend include a `Dockerfile`. You should have no need to install JDK/JRE/NODE if you're running the application through Docker. 
+The backend & frontend include a `Dockerfile`. You should have no need to install JDK/JRE/NODE if you're running the application through Docker. The local development process should be frictionless with `docker-compose`.
 
 ```shell
-$ docker build --file=backend/backend.dockerfile  -t backend .
-$ docker build --file=frontend/frontend.dockerfile  -t frontend .
-$ GOOGLE_CIVIC_API_KEY=<YOUR_API_KEY> docker-compose -f docker-compose.yml up
+$ docker-compose up -d
 ```
 
 ### Initiating action 

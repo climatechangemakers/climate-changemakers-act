@@ -2,20 +2,15 @@
 FROM node:alpine3.14
 
 RUN mkdir -p /app
-COPY frontend/package*.json ./
+COPY package*.json ./
 
 WORKDIR /app
 
 RUN npm install
-
-COPY frontend/ .
+COPY . .
 
 RUN npm run build
 # End App Building phase --------
-
-# Expose $PORT on container.
-# We use a varibale here as the port is something that can differ on the environment.
-EXPOSE $PORT
 
 # Set host to localhost / the docker image
 ENV REACT_HOST=0.0.0.0
