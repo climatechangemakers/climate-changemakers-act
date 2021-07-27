@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.cli.jvm.compiler.findMainClass
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val ktor_version: String by project
 val kotlin_version: String by project
@@ -34,9 +35,9 @@ tasks {
         }
     }
 
-    // withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    //     kotlinOptions.jvmTarget = "1.8"
-    // }
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "11"
+    }
 }
 
 repositories {
