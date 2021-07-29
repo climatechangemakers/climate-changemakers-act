@@ -2,7 +2,7 @@ package com.climatechangemakers.act.feature.findlegislator.model
 
 import kotlinx.serialization.Serializable
 
-@Serializable class GetLegislatorsRequest(
+@Serializable class GetLegislatorsByAddressRequest(
   val streetAddress: String,
   val city: String,
   val state: String,

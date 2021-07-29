@@ -13,8 +13,8 @@ Climate Changemakers is developing a tool which allows constituents to reach out
 
 For a local development environment to work, some API keys need to be set as environment variables. 
 
-* [Google Civic Information API Key](https://cloud.google.com/docs/authentication/api-keys)
-  * `export GOOGLE_CIVIC_API_KEY=<key>`
+* [Geocodio API Key](https://www.geocod.io/)
+  * `export GEOCODIO_API_KEY=<key>`
 
 
 ### Docker

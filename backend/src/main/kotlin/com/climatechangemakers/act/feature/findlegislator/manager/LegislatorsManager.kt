@@ -1,10 +1,10 @@
 package com.climatechangemakers.act.feature.findlegislator.manager
 
-import com.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsRequest
-import com.climatechangemakers.act.feature.findlegislator.model.GoogleCivicLegislator
+import com.climatechangemakers.act.feature.findlegislator.model.GeocodioApiResult
+import com.climatechangemakers.act.feature.findlegislator.model.GeocodioLegislator
+import com.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsByAddressRequest
 import com.climatechangemakers.act.feature.findlegislator.model.Legislator
-import com.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
-import com.climatechangemakers.act.feature.findlegislator.service.GoogleCivicInformationService
+import com.climatechangemakers.act.feature.findlegislator.service.GeocodioService
 import com.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
 import com.climatechangemakers.act.feature.lcvscore.model.LcvScore
 import com.climatechangemakers.act.feature.lcvscore.model.LcvScoreType
@@ -14,39 +14,45 @@ import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
 class LegislatorsManager @Inject constructor(
-  private val civicService: GoogleCivicInformationService,
+  private val geocodioService: GeocodioService,
   private val lcvScoreManager: LcvScoreManager,
 ) {
 
-  suspend fun getLegislators(request: GetLegislatorsRequest): List<Legislator> = coroutineScope {
-    val civicResponse = civicService.getLegislators(address = request.queryString)
-    val roles = Array(civicResponse.legislators.size) { index ->
-      civicResponse.offices.forEach { office ->
-        if (index in office.legislatorIndices) return@Array office.role
-      }
-      error("No legislator role for index $index!")
-    }
+  suspend fun getLegislators(request: GetLegislatorsByAddressRequest): List<Legislator> = coroutineScope {
+    val geoCodioResponse: GeocodioApiResult = geocodioService.geocode(query = request.queryString)
 
-    civicResponse.legislators.mapIndexed { index, civicLegislator ->
+    val geocodioLegislators = geoCodioResponse.results
+      .flatMap { it.fields.congressionalDistricts }
+      .first()
+      .currentLegislators
+
+    geocodioLegislators.map { geocodioLegislator ->
       async {
-        val lcvScores = lcvScoreManager.getScores(civicLegislator.name).also { scores ->
+        val lcvScores = lcvScoreManager.getScores(geocodioLegislator.fullName).also { scores ->
           // ensure we at least have a lifetime score for this individual
           checkNotNull(scores.firstOrNull { it.scoreType == LcvScoreType.LifetimeScore })
         }
 
-        civicLegislator.toDomainLegislator(lcvScores, roles[index])
+        geocodioLegislator.toDomainLegislator(lcvScores)
       }
     }.awaitAll()
   }
 }
 
-private val GetLegislatorsRequest.queryString: String get() = "$streetAddress, $city $state $postalCode"
+private val GetLegislatorsByAddressRequest.queryString: String get() = "$streetAddress, $city $state $postalCode"
 
-private fun GoogleCivicLegislator.toDomainLegislator(lcvScores: List<LcvScore>, role: LegislatorRole) = Legislator(
-  name = name,
-  role = role,
-  siteUrl = urls.first(),
-  phone = phoneNumbers.first(),
-  imageUrl = photoUrl,
+private val GeocodioLegislator.fullName get() = "${bio.firstName} ${bio.lastName}"
+
+private fun GeocodioLegislator.toDomainLegislator(lcvScores: List<LcvScore>) = Legislator(
+  name = fullName,
+  role = type,
+  siteUrl = contactInfo.siteUrl,
+  phone = contactInfo.phone,
+  imageUrl = imageUrl,
   lcvScores = lcvScores,
 )
+
+private val GeocodioLegislator.imageUrl: String get() {
+  val bioguide = references.bioguide
+  return "https://bioguide.congress.gov/bioguide/photo/${bioguide[0]}/$bioguide.jpg"
+}
