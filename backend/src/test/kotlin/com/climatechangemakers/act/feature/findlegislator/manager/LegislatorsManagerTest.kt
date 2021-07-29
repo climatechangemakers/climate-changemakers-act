@@ -1,12 +1,17 @@
 package com.climatechangemakers.act.feature.findlegislator.manager
 
-import com.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsRequest
-import com.climatechangemakers.act.feature.findlegislator.model.GoogleCivicInformationResponse
-import com.climatechangemakers.act.feature.findlegislator.model.GoogleCivicLegislator
-import com.climatechangemakers.act.feature.findlegislator.model.GoogleCivicOffice
+import com.climatechangemakers.act.feature.findlegislator.model.CongressionalDistrict
+import com.climatechangemakers.act.feature.findlegislator.model.Fields
+import com.climatechangemakers.act.feature.findlegislator.model.GeocodeResult
+import com.climatechangemakers.act.feature.findlegislator.model.GeocodioApiResult
+import com.climatechangemakers.act.feature.findlegislator.model.GeocodioLegislator
+import com.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsByAddressRequest
 import com.climatechangemakers.act.feature.findlegislator.model.Legislator
+import com.climatechangemakers.act.feature.findlegislator.model.LegislatorBio
+import com.climatechangemakers.act.feature.findlegislator.model.LegislatorContactInformation
+import com.climatechangemakers.act.feature.findlegislator.model.LegislatorReferences
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
-import com.climatechangemakers.act.feature.findlegislator.service.FakeGoogleCivicInformationService
+import com.climatechangemakers.act.feature.findlegislator.service.FakeGeocodioService
 import com.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import com.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
 import com.climatechangemakers.act.feature.lcvscore.model.LcvScore
@@ -23,26 +28,39 @@ class LegislatorsManagerTest {
     LcvScore(10, LcvScoreType.YearlyScore(2019)),
   ) }
 
-  private val fakeGoogleCivicService = FakeGoogleCivicInformationService {
-    GoogleCivicInformationResponse(
-      offices = listOf(
-        GoogleCivicOffice(role = LegislatorRole.Representative, legislatorIndices = listOf(0))
-      ),
-      legislators = listOf(
-        GoogleCivicLegislator(
-          name = "A. Donald McEachin",
-          phoneNumbers = listOf("555-555-5555"),
-          urls = listOf("www.foo.com"),
-          photoUrl = "www.bar.com"
+  private val fakeGeocodioService = FakeGeocodioService {
+    GeocodioApiResult(
+      results = listOf(
+        GeocodeResult(
+          fields = Fields(
+            congressionalDistricts = listOf(
+              CongressionalDistrict(
+                "VA_04",
+                4,
+                currentLegislators = listOf(
+                  GeocodioLegislator(
+                    type = LegislatorRole.Representative,
+                    bio = LegislatorBio("McEachin", "A. Donald"),
+                    contactInfo = LegislatorContactInformation(
+                      siteUrl = "www.foo.com",
+                      formattedAddress = "foo",
+                      phone = "555-555-5555",
+                    ),
+                    references = LegislatorReferences(bioguide = "M00001")
+                  )
+                )
+              )
+            )
+          )
         )
       )
     )
   }
 
-  private val manager = LegislatorsManager(fakeGoogleCivicService, fakeLcvManager)
+  private val manager = LegislatorsManager(fakeGeocodioService, fakeLcvManager)
 
   @Test fun `getLegislators gets called with correct query string`() = suspendTest {
-    val request = GetLegislatorsRequest(
+    val request = GetLegislatorsByAddressRequest(
       streetAddress = "10 Beech Place",
       city = "West Deptford",
       state = "NJ",
@@ -53,12 +71,12 @@ class LegislatorsManagerTest {
 
     assertEquals(
       expected = "10 Beech Place, West Deptford NJ 08096",
-      actual = fakeGoogleCivicService.capturedQuery
+      actual = fakeGeocodioService.capturedQuery
     )
   }
 
   @Test fun `getLegislators maps correctly to domain legislator type`() = suspendTest {
-    val request = GetLegislatorsRequest(
+    val request = GetLegislatorsByAddressRequest(
       streetAddress = "10 Beech Place",
       city = "West Deptford",
       state = "NJ",
@@ -73,7 +91,7 @@ class LegislatorsManagerTest {
         role = LegislatorRole.Representative,
         siteUrl = "www.foo.com",
         phone = "555-555-5555",
-        imageUrl = "www.bar.com",
+        imageUrl = "https://bioguide.congress.gov/bioguide/photo/M/M00001.jpg",
         lcvScores = listOf(
           LcvScore(10, LcvScoreType.LifetimeScore),
           LcvScore(10, LcvScoreType.YearlyScore(2020)),
@@ -85,7 +103,7 @@ class LegislatorsManagerTest {
   }
 
   @Test fun `getLegislators throws IllegalStateException with wrong LCV scores`() = suspendTest {
-    val request = GetLegislatorsRequest(
+    val request = GetLegislatorsByAddressRequest(
       streetAddress = "10 Beech Place",
       city = "West Deptford",
       state = "NJ",
@@ -93,39 +111,7 @@ class LegislatorsManagerTest {
     )
 
     val manager = LegislatorsManager(
-      civicService = fakeGoogleCivicService,
-      lcvScoreManager = { emptyList() },
-    )
-
-    assertFailsWith<IllegalStateException> {
-      manager.getLegislators(request)
-    }
-  }
-
-  @Test fun `getLegislators throws IllegalStateException with no associated legislator role`() = suspendTest {
-    val request = GetLegislatorsRequest(
-      streetAddress = "10 Beech Place",
-      city = "West Deptford",
-      state = "NJ",
-      postalCode = "08096",
-    )
-
-    val fakeCivicClient = FakeGoogleCivicInformationService {
-      GoogleCivicInformationResponse(
-        offices = emptyList(),
-        legislators = listOf(
-          GoogleCivicLegislator(
-            name = "A. Donald McEachin",
-            phoneNumbers = listOf("555-555-5555"),
-            urls = listOf("www.foo.com"),
-            photoUrl = "www.bar.com"
-          )
-        )
-      )
-    }
-
-    val manager = LegislatorsManager(
-      civicService = fakeCivicClient,
+      geocodioService = fakeGeocodioService,
       lcvScoreManager = { emptyList() },
     )
 

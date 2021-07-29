@@ -3,7 +3,7 @@ package com.climatechangemakers.act.feature.action.controller
 import com.climatechangemakers.act.feature.action.model.InitiateActionRequest
 import com.climatechangemakers.act.feature.action.model.InitiateActionResponse
 import com.climatechangemakers.act.feature.findlegislator.manager.LegislatorsManager
-import com.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsRequest
+import com.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsByAddressRequest
 import io.ktor.application.ApplicationCall
 import io.ktor.request.receive
 import io.ktor.response.respond
@@ -24,7 +24,7 @@ class ActionController @Inject constructor(
   }
 }
 
-private fun InitiateActionRequest.toGetLegislatorsRequest() = GetLegislatorsRequest(
+private fun InitiateActionRequest.toGetLegislatorsRequest() = GetLegislatorsByAddressRequest(
   streetAddress = streetAddress,
   city = city,
   state = state,
