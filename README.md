@@ -14,12 +14,26 @@ Climate Changemakers is developing a tool which allows constituents to reach out
 For a local development environment to work, some API keys need to be set as environment variables. 
 
 * [Geocodio API Key](https://www.geocod.io/)
-  * `export GEOCODIO_API_KEY=<key>`
 
 
 ### Docker
 
-The backend & frontend include a `Dockerfile`. You should have no need to install JDK/JRE/NODE if you're running the application through Docker. The local development process should be frictionless with `docker-compose`.
+The backend, frontend, and database include a `Dockerfile`. You should have no need to install JDK/JRE/NODE/PostgresSQL if you're running the application through Docker. The local development process should be frictionless with `docker-compose`.
+
+#### Setting up your environment
+
+For the containers specified in `docker-compose.yml` to function properly, you'll need to define a `.env` file. Docker will read from this environment file while creating images and assign the correct environment variables as needed. 
+
+The `.env` file needs to have the following keys defined. 
+
+```
+GEOCODIO_API_KEY=<API_KEY>
+POSTGRES_PASSWORD=<PASSWORD>
+POSTGRES_USER=<USER>
+POSTGRES_DB=<DB_NAME>
+```
+
+After that's done, you can initialize your environment. 
 
 ```shell
 $ docker-compose up -d
