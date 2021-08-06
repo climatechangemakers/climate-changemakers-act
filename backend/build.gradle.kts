@@ -11,6 +11,7 @@ buildscript {
     repositories { gradlePluginPortal() }
     dependencies {
         classpath("gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0")
+        classpath("com.squareup.sqldelight:gradle-plugin:1.5.1")
     }
 }
 
@@ -20,12 +21,21 @@ plugins {
     kotlin("plugin.serialization") version "1.5.21"
     kotlin("kapt") version "1.5.21"
     id("com.github.johnrengelman.shadow") version "7.0.0"
+    id("com.squareup.sqldelight") version "1.5.1"
 }
 
 group = "com.climatechangemakers.act"
 
 application {
     mainClass.set("com.climatechangemakers.act.ApplicationKt")
+}
+
+sqldelight {
+    database("Database") {
+        packageName = "com.climatechangemakers.act.db"
+        dialect = "postgresql"
+        deriveSchemaFromMigrations = false
+    }
 }
 
 tasks {
@@ -52,6 +62,9 @@ dependencies {
     implementation("com.google.dagger:dagger:2.37")
     kapt("com.google.dagger:dagger-compiler:2.37")
 
+    implementation("com.squareup.sqldelight:jdbc-driver:1.5.1")
+    implementation("org.postgresql:postgresql:42.2.16")
+
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
@@ -60,4 +73,5 @@ dependencies {
 
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlin_version")
+    testImplementation("org.testcontainers:postgresql:1.15.3")
 }

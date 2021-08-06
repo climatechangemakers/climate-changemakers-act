@@ -5,6 +5,8 @@ import dagger.Component
 
 @Component(modules = [
   ServiceModule::class,
+  DatabaseModule::class,
+  CoroutineModule::class,
   BindingModule::class,
 ])
 interface ApiComponent {

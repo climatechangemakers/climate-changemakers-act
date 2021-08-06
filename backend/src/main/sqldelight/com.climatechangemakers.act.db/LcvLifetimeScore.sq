@@ -1,0 +1,10 @@
+CREATE TABLE lcv_score_lifetime (
+  bioguide_id VARCHAR PRIMARY KEY,
+  score INTEGER AS Int NOT NULL
+);
+
+selectById:
+SELECT score
+FROM lcv_score_lifetime
+WHERE bioguide_id = :bioguideId
+LIMIT 1;

@@ -4,5 +4,9 @@ import com.climatechangemakers.act.feature.lcvscore.model.LcvScore
 
 fun interface LcvScoreManager {
 
-  suspend fun getScores(legislatorName: String): List<LcvScore>
+  /**
+   * Retrieve a list of [LcvScore] for a given representative's [bioguideId].
+   * If no scores are found for this [bioguideId], an empty list is returned.
+   */
+  suspend fun getScores(bioguideId: String): List<LcvScore>
 }
