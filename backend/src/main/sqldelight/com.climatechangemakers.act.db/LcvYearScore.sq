@@ -1,0 +1,11 @@
+CREATE TABLE lcv_score_year(
+  bioguide_id VARCHAR NOT NULL,
+  score_year INTEGER NOT NULL,
+  score INTEGER AS Int NOT NULL,
+  PRIMARY KEY(bioguide_id, score_year)
+);
+
+selectById:
+SELECT score_year, score
+FROM lcv_score_year
+WHERE bioguide_id = :bioguideId;

@@ -28,9 +28,8 @@ class LegislatorsManager @Inject constructor(
 
     geocodioLegislators.map { geocodioLegislator ->
       async {
-        val lcvScores = lcvScoreManager.getScores(geocodioLegislator.fullName).also { scores ->
-          // ensure we at least have a lifetime score for this individual
-          checkNotNull(scores.firstOrNull { it.scoreType == LcvScoreType.LifetimeScore })
+        val lcvScores = lcvScoreManager.getScores(geocodioLegislator.references.bioguide).also { scores ->
+          check(scores.isNotEmpty())
         }
 
         geocodioLegislator.toDomainLegislator(lcvScores)

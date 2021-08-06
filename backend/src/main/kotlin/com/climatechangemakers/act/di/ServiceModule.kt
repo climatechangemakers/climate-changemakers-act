@@ -16,7 +16,7 @@ import javax.inject.Named
     val originalRequest = chain.request()
     val originalUrl = originalRequest.url()
     val newUrl = originalUrl.newBuilder()
-      .addQueryParameter("api_key", requireNotNull(System.getenv("GEOCODIO_API_KEY")))
+      .addQueryParameter("api_key", getEnvironmentVariable(EnvironmentVariable.GeocodioApiKey))
       .build()
 
     chain.proceed(originalRequest.newBuilder().url(newUrl).build())
