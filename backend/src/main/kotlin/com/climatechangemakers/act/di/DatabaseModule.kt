@@ -1,6 +1,6 @@
 package com.climatechangemakers.act.di
 
-import com.climatechangemakers.act.db.Database
+import com.climatechangemakers.act.database.Database
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.sqlite.driver.asJdbcDriver
 import dagger.Module
@@ -30,7 +30,7 @@ import javax.inject.Named
     EnvironmentVariable.DatabaseName
   )
 
-  @Provides fun providesClimageChangeMakersSqlDriver(
+  @Provides fun providesClimateChangeMakersSqlDriver(
     @Named("database_host") host: String,
     @Named("database_password") password: String,
     @Named("database_user") user: String,

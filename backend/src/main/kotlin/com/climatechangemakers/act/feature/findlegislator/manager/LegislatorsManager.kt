@@ -18,6 +18,7 @@ class LegislatorsManager @Inject constructor(
   private val lcvScoreManager: LcvScoreManager,
 ) {
 
+  @OptIn(ExperimentalStdlibApi::class)
   suspend fun getLegislators(request: GetLegislatorsByAddressRequest): List<Legislator> = coroutineScope {
     val geoCodioResponse: GeocodioApiResult = geocodioService.geocode(query = request.queryString)
 
@@ -28,11 +29,17 @@ class LegislatorsManager @Inject constructor(
 
     geocodioLegislators.map { geocodioLegislator ->
       async {
-        val lcvScores = lcvScoreManager.getScores(geocodioLegislator.references.bioguide).also { scores ->
-          check(scores.isNotEmpty())
+        val lcvScores = coroutineScope {
+          val lifetimeScore = async { lcvScoreManager.getLifetimeScore(geocodioLegislator.references.bioguide) }
+          val yearlyScores = async { lcvScoreManager.getYearlyScores(geocodioLegislator.references.bioguide) }
+
+          buildList {
+            lifetimeScore.await()?.let(::add)
+            addAll(yearlyScores.await())
+          }
         }
 
-        geocodioLegislator.toDomainLegislator(lcvScores)
+        geocodioLegislator.toDomainLegislator(lcvScores.also { check(it.isNotEmpty()) })
       }
     }.awaitAll()
   }
