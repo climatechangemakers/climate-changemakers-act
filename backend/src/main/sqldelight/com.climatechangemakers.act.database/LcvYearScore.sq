@@ -8,4 +8,5 @@ CREATE TABLE lcv_score_year(
 selectById:
 SELECT score_year, score
 FROM lcv_score_year
-WHERE bioguide_id = :bioguideId;
+WHERE bioguide_id = :bioguideId
+ORDER BY score_year DESC;

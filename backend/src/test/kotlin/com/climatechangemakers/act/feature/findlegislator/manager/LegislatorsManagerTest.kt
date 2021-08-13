@@ -22,11 +22,16 @@ import kotlin.test.assertFailsWith
 
 class LegislatorsManagerTest {
 
-  private val fakeLcvManager = LcvScoreManager { listOf(
-    LcvScore(10, LcvScoreType.LifetimeScore),
-    LcvScore(10, LcvScoreType.YearlyScore(2020)),
-    LcvScore(10, LcvScoreType.YearlyScore(2019)),
-  ) }
+  private val fakeLcvManager = object : LcvScoreManager {
+    override suspend fun getLifetimeScore(
+      bioguideId: String
+    ) = LcvScore(10, LcvScoreType.LifetimeScore)
+
+    override suspend fun getYearlyScores(bioguideId: String) = listOf(
+      LcvScore(10, LcvScoreType.YearlyScore(2020)),
+      LcvScore(10, LcvScoreType.YearlyScore(2019)),
+    )
+  }
 
   private val fakeGeocodioService = FakeGeocodioService {
     GeocodioApiResult(
@@ -112,7 +117,10 @@ class LegislatorsManagerTest {
 
     val manager = LegislatorsManager(
       geocodioService = fakeGeocodioService,
-      lcvScoreManager = { emptyList() },
+      lcvScoreManager = object : LcvScoreManager {
+        override suspend fun getLifetimeScore(bioguideId: String): LcvScore? = null
+        override suspend fun getYearlyScores(bioguideId: String): List<LcvScore> = emptyList()
+      }
     )
 
     assertFailsWith<IllegalStateException> {

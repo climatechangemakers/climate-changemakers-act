@@ -32,9 +32,10 @@ application {
 
 sqldelight {
     database("Database") {
-        packageName = "com.climatechangemakers.act.db"
+        packageName = "com.climatechangemakers.act.database"
         dialect = "postgresql"
         deriveSchemaFromMigrations = false
+        verifyMigrations = false
     }
 }
 

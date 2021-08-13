@@ -6,5 +6,4 @@ CREATE TABLE lcv_score_lifetime (
 selectById:
 SELECT score
 FROM lcv_score_lifetime
-WHERE bioguide_id = :bioguideId
-LIMIT 1;
+WHERE bioguide_id = :bioguideId;
