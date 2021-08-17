@@ -6,7 +6,7 @@ COPY . /appbuild
 
 WORKDIR /appbuild
 
-RUN ./gradlew clean build --no-daemon
+RUN ./gradlew clean build -x test --no-daemon
 # End App Building phase --------
 
 # Container setup --------

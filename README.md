@@ -31,6 +31,8 @@ GEOCODIO_API_KEY=<API_KEY>
 POSTGRES_PASSWORD=<PASSWORD>
 POSTGRES_USER=<USER>
 POSTGRES_DB=<DB_NAME>
+POSTGRES_HOSTNAME=database
+POSTGRES_PORT=5432
 ```
 
 After that's done, you can initialize your environment. 
