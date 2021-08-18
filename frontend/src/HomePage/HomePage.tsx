@@ -41,7 +41,7 @@ export default function HomePage() {
             </Row>
             <Form onSubmit={handleSubmit}>
                 <Row>
-                    <Form.Group as={Col} md="6" className="mb-2 mb-md-3 d-flex align-items-start flex-column" controlId="formGridAddress">
+                    <Form.Group as={Col} md="6" className="mb-3 d-flex align-items-start flex-column" controlId="formGridAddress">
                         <Form.Label>Address</Form.Label>
                         <Form.Control
                             value={address}
@@ -49,14 +49,14 @@ export default function HomePage() {
                             placeholder="1234 Make An Impact St"
                             required />
                     </Form.Group>
-                    <Form.Group as={Col} md="3" className="mb-2 mb-md-3 col-12 d-flex align-items-start flex-column" controlId="formGridCity">
+                    <Form.Group as={Col} md="3" className="mb-3 col-12 d-flex align-items-start flex-column" controlId="formGridCity">
                         <Form.Label>City</Form.Label>
                         <Form.Control
                             value={city}
                             onChange={e => setCity(e.currentTarget.value)}
                             required />
                     </Form.Group>
-                    <Form.Group as={Col} md="3" className="mb-2 mb-md-3 col-12 d-flex align-items-start flex-column" controlId="formGridState">
+                    <Form.Group as={Col} md="3" className="mb-3 col-12 d-flex align-items-start flex-column" controlId="formGridState">
                         <Form.Label>State</Form.Label>
                         <Form.Select value={state} onChange={e => setState(e.currentTarget.value)} required>
                             <option value="">Select</option>
@@ -113,11 +113,11 @@ export default function HomePage() {
                             <option value="WY">Wyoming</option>
                         </Form.Select>
                     </Form.Group>
-                    <Form.Group as={Col} md="3" className="mb-2 mb-md-3 d-flex align-items-start flex-column" controlId="formGridZip">
+                    <Form.Group as={Col} md="3" className="mb-3 d-flex align-items-start flex-column" controlId="formGridZip">
                         <Form.Label>Zip</Form.Label>
                         <Form.Control value={zip} onChange={e => setZip(e.currentTarget.value)} required />
                     </Form.Group>
-                    <Form.Group lg as={Col} md="6" className="mb-2 mb-md-3 d-flex align-items-start flex-column" controlId="formGridEmail">
+                    <Form.Group lg as={Col} md="6" className="mb-3 d-flex align-items-start flex-column" controlId="formGridEmail">
                         <Form.Label>Email</Form.Label>
                         <Form.Control
                             value={email}
@@ -126,7 +126,7 @@ export default function HomePage() {
                             placeholder="ilovetheplanet@example.com"
                             required />
                     </Form.Group>
-                    <Col md="3" className="mt-3 mb-2 mb-md-3 d-flex align-items-end">
+                    <Col md="3" className="mt-3 mb-3 d-flex align-items-end">
                         <Button className="w-100" variant="primary" type="submit">
                             Let's Go!
                         </Button>
