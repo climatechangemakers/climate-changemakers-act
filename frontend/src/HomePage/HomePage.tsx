@@ -1,9 +1,5 @@
 import logo from './logo.png';
-import Badge from 'react-bootstrap/badge';
-import Row from 'react-bootstrap/esm/Row';
-import Form from 'react-bootstrap/esm/Form';
-import Col from 'react-bootstrap/esm/Col';
-import { Button } from 'react-bootstrap';
+import { Badge, Button, Col, Form, Row } from 'react-bootstrap';
 import { useState } from 'react';
 
 export default function HomePage() {

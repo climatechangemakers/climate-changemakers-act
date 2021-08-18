@@ -1,4 +1,4 @@
-import Container from "react-bootstrap/esm/Container";
+import { Container } from "react-bootstrap"
 
 type Props = {
     children: any;
