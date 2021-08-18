@@ -1,3 +1,24 @@
+:root {
+  --bs-primary-rgb: 226,188,243 !important;
+  --orange: 
+}
+
+.btn-primary {
+  background-color: #fc4b13 !important;
+  border-color: #fc4b13 !important;
+}
+
+.btn {
+  -webkit-transition: .1s opacity linear !important;
+  -moz-transition: .1s opacity linear !important;
+  -o-transition: .1s opacity linear !important;
+  transition: .1s opacity linear !important;
+}
+
+.btn:hover {
+  opacity: .8;
+}
+
 .App {
   text-align: center;
 }
@@ -13,8 +34,8 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
+.App-body {
+  background-color: #2e266c;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,10 +43,6 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
 }
 
 @keyframes App-logo-spin {
