@@ -1,10 +1,11 @@
 :root {
   --bs-primary-rgb: 226,188,243 !important;
+  --primary-orange: #fc4b13;
 }
 
 .btn-primary {
-  background-color: #fc4b13 !important;
-  border-color: #fc4b13 !important;
+  background-color: var(--primary-orange) !important;
+  border-color: var(--primary-orange) !important;
 }
 
 .btn {
