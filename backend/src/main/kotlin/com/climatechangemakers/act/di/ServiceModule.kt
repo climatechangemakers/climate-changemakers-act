@@ -12,7 +12,7 @@ import javax.inject.Named
 
 @Module object ServiceModule {
 
-  @Provides @Named("geocodio") fun providesOkHttpClient(): OkHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
+  @Provides @Geocodio fun providesOkHttpClient(): OkHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
     val originalRequest = chain.request()
     val originalUrl = originalRequest.url()
     val newUrl = originalUrl.newBuilder()
@@ -22,7 +22,7 @@ import javax.inject.Named
     chain.proceed(originalRequest.newBuilder().url(newUrl).build())
   }.build()
 
-  @Provides fun providesGeocodioService(@Named("geocodio") client: OkHttpClient): GeocodioService = Retrofit.Builder()
+  @Provides fun providesGeocodioService(@Geocodio client: OkHttpClient): GeocodioService = Retrofit.Builder()
     .baseUrl("https://api.geocod.io/v1.6/")
     .addConverterFactory(
       Json { ignoreUnknownKeys = true }.asConverterFactory(MediaType.get("application/json"))

@@ -8,5 +8,5 @@ import kotlin.coroutines.CoroutineContext
 
 @Module object CoroutineModule {
 
-  @Provides @Named("IO") fun providesIoDispatcher(): CoroutineContext = Dispatchers.IO
+  @Provides @Io fun providesIoDispatcher(): CoroutineContext = Dispatchers.IO
 }

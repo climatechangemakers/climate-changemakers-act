@@ -1,6 +1,7 @@
 package com.climatechangemakers.act.feature.lcvscore.manager
 
 import com.climatechangemakers.act.database.Database
+import com.climatechangemakers.act.di.Io
 import com.climatechangemakers.act.feature.lcvscore.model.LcvScore
 import com.climatechangemakers.act.feature.lcvscore.model.LcvScoreType
 import kotlinx.coroutines.withContext
@@ -10,7 +11,7 @@ import kotlin.coroutines.CoroutineContext
 
 class DatabaseLcvScoreManager @Inject constructor(
   database: Database,
-  @Named("IO") private val coroutineContext: CoroutineContext,
+  @Io private val coroutineContext: CoroutineContext,
 ) : LcvScoreManager {
 
   private val lifetimeQueries = database.lcvLifetimeScoreQueries
