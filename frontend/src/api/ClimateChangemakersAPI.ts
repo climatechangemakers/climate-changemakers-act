@@ -37,4 +37,4 @@ export const initiateActionAPI = (email: string, streetAddress: string, city: st
             role: string;
             siteUrl: string;
         }[]
-    }>("/initiate-action", { email, streetAddress, city, state, postalCode })
+    }>("/api/initiate-action", { email, streetAddress, city, state, postalCode })
