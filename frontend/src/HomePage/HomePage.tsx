@@ -1,17 +1,31 @@
 import logo from './logo.png';
-import { Badge, Button, Col, Form, Row } from 'react-bootstrap';
+import { Alert, Badge, Button, Col, Form, Row } from 'react-bootstrap';
 import { useState } from 'react';
+import { initiateActionAPI } from '../api/ClimateChangemakersAPI';
 
 export default function HomePage() {
-    const [address, setAddress] = useState("");
+    const [streetAddress, setStreetAddress] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
-    const [zip, setZip] = useState("");
+    const [postalCode, setPostalCode] = useState("");
     const [email, setEmail] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("Submitted");
+
+        setErrorMessage("");
+        setIsLoading(true);
+        const response = await initiateActionAPI(email, streetAddress, city, state, postalCode);
+        setIsLoading(false);
+
+        if (typeof response === "string") {
+            setErrorMessage(response);
+            return;
+        }
+
+        console.log(response);
     }
 
     return (
@@ -40,8 +54,8 @@ export default function HomePage() {
                     <Form.Group as={Col} md="6" className="mb-3 d-flex align-items-start flex-column" controlId="formGridAddress">
                         <Form.Label>Address</Form.Label>
                         <Form.Control
-                            value={address}
-                            onChange={e => setAddress(e.currentTarget.value)}
+                            value={streetAddress}
+                            onChange={e => setStreetAddress(e.currentTarget.value)}
                             placeholder="1234 Make An Impact St"
                             required />
                     </Form.Group>
@@ -116,7 +130,7 @@ export default function HomePage() {
                     </Form.Group>
                     <Form.Group as={Col} md="3" className="mb-3 d-flex align-items-start flex-column" controlId="formGridZip">
                         <Form.Label>Zip</Form.Label>
-                        <Form.Control value={zip} onChange={e => setZip(e.currentTarget.value)} required />
+                        <Form.Control value={postalCode} onChange={e => setPostalCode(e.currentTarget.value)} required />
                     </Form.Group>
                     <Form.Group lg as={Col} md="6" className="mb-3 d-flex align-items-start flex-column" controlId="formGridEmail">
                         <Form.Label>Email</Form.Label>
@@ -129,11 +143,23 @@ export default function HomePage() {
                     </Form.Group>
                     <Col md="3" className="mt-3 mb-3 d-flex align-items-end">
                         <Button className="w-100" variant="primary" type="submit">
-                            Let's Go!
+                            {errorMessage
+                                ? "Try again"
+                                : isLoading
+                                    ? "Loading..."
+                                    : "Let's Go!"}
                         </Button>
                     </Col>
                 </Row>
             </Form>
+            {errorMessage &&
+                <Row>
+                    <Col>
+                        <Alert variant="danger" className="p-1 mt-2">
+                            {errorMessage}
+                        </Alert>
+                    </Col>
+                </Row>}
         </div>
     )
 }
