@@ -1,6 +1,7 @@
 package com.climatechangemakers.act.di
 
 import com.climatechangemakers.act.feature.action.controller.ActionController
+import com.climatechangemakers.act.feature.issue.controller.IssueListController
 import dagger.Component
 
 @Component(modules = [
@@ -12,4 +13,5 @@ import dagger.Component
 interface ApiComponent {
 
   fun actionController(): ActionController
+  fun issueController(): IssueListController
 }
