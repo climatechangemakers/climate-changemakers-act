@@ -5,7 +5,7 @@ services:
       build: ./frontend
       image: frontend:latest
       ports:
-        - ${REACT_APP_PORT}:${REACT_APP_PORT}
+        - ${REACT_APP_PORT}:3000
     backend:
       build: ./backend
       image: backend:latest
@@ -17,7 +17,7 @@ services:
         - POSTGRES_HOSTNAME=${POSTGRES_HOSTNAME}
         - POSTGRES_PORT=${POSTGRES_PORT}
       ports:
-        - ${KOTLIN_PORT}:${KOTLIN_PORT}
+        - ${KOTLIN_PORT}:8080
     database:
       build: ./database
       image: database:latest
@@ -26,4 +26,4 @@ services:
         - POSTGRES_USER=${POSTGRES_USER}
         - POSTGRES_DB=${POSTGRES_DB} 
       ports:
-        - ${POSTGRES_PORT}:${POSTGRES_PORT}
+        - ${POSTGRES_PORT}:5432
