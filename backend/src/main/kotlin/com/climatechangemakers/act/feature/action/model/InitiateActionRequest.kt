@@ -8,4 +8,6 @@ import kotlinx.serialization.Serializable
   val city: String,
   val state: String,
   val postalCode: String,
+  val consentToTrackImpact: Boolean,
+  val desiresInformationalEmails: Boolean,
 )
