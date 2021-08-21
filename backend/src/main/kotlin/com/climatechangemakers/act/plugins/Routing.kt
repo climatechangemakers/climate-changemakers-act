@@ -10,6 +10,8 @@ fun Application.configureRouting() {
   val apiComponent = DaggerApiComponent.create()
 
   routing {
-    actionRoutes(apiComponent.actionController())
+    route("/api") {
+      actionRoutes(apiComponent.actionController())
+    }
   }
 }
