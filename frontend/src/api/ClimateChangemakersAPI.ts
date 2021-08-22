@@ -18,7 +18,7 @@ const post = async <T>(path: string, content: Object): Promise<T | string> => {
     }
 }
 
-export const initiateActionAPI = (email: string, streetAddress: string, city: string, state: string, postalCode: string) =>
+export const initiateActionAPI = (email: string, streetAddress: string, city: string, state: string, postalCode: string, consentToTrackImpact: boolean, desiresInformationalEmails: boolean) =>
     post<{
         initiatorEmail: string;
         legislators: {
@@ -37,4 +37,4 @@ export const initiateActionAPI = (email: string, streetAddress: string, city: st
             role: string;
             siteUrl: string;
         }[]
-    }>("/api/initiate-action", { email, streetAddress, city, state, postalCode })
+    }>("/api/initiate-action", { email, streetAddress, city, state, postalCode, consentToTrackImpact, desiresInformationalEmails })

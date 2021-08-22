@@ -9,6 +9,8 @@ export default function HomePage() {
     const [state, setState] = useState("");
     const [postalCode, setPostalCode] = useState("");
     const [email, setEmail] = useState("");
+    const [hasTrackConsent, setHasTrackConsent] = useState(false);
+    const [hasEmailingConsent, setHasEmailingConsent] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
@@ -17,7 +19,7 @@ export default function HomePage() {
 
         setErrorMessage("");
         setIsLoading(true);
-        const response = await initiateActionAPI(email, streetAddress, city, state, postalCode);
+        const response = await initiateActionAPI(email, streetAddress, city, state, postalCode, hasTrackConsent, hasEmailingConsent);
         setIsLoading(false);
 
         if (typeof response === "string") {
@@ -141,7 +143,34 @@ export default function HomePage() {
                             placeholder="ilovetheplanet@example.com"
                             required />
                     </Form.Group>
-                    <Col md="3" className="mt-3 mb-3 d-flex align-items-end">
+                    <Form.Group
+                        as={Col}
+                        md="12"
+                        className="mb-3 fs-5"
+                        controlId="formConsentCheckbox">
+                        <Form.Check
+                            className="text-start"
+                            checked={hasTrackConsent}
+                            onChange={() => setHasTrackConsent(!hasTrackConsent)}
+                            type="checkbox"
+                            label="I consent to allow Climate Changemakers to store my email address and the policymakers I contact to track our collective impact. (required)"
+                            required
+                        />
+                    </Form.Group>
+                    <Form.Group
+                        as={Col}
+                        md="12"
+                        className="mb-3"
+                        controlId="formInformationalCheckbox">
+                        <Form.Check
+                            className="text-start fs-5"
+                            checked={hasEmailingConsent}
+                            onChange={() => setHasEmailingConsent(!hasEmailingConsent)}
+                            type="checkbox"
+                            label="Yes, I would like to receive occasional information emails from Climate Changemakers! (optional)"
+                        />
+                    </Form.Group>
+                    <Col sm="12" md="3" className="mt-3 mb-3 d-flex align-items-end justify-content-center">
                         <Button className="w-100" variant="primary" type="submit">
                             {errorMessage
                                 ? "Try again"

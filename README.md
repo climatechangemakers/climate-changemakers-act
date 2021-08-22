@@ -55,7 +55,9 @@ $ docker-compose up -d
   "streetAddress": string, // a valid street address, required
   "city": string, // a valid city
   "state": string, // a valid 2 letter state code, required
-  "postalCode": string // a valid postal code, required 
+  "postalCode": string, // a valid postal code, required 
+  "consentToTrackImpact": boolean, // required
+  "desiresInformationEmails": boolean // optional
 }
 ```
 
