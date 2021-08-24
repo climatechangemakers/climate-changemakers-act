@@ -1,9 +1,13 @@
-import logo from './logo.png';
-import { Alert, Badge, Button, Col, Form, Row } from 'react-bootstrap';
-import { useState } from 'react';
-import { initiateActionAPI } from '../api/ClimateChangemakersAPI';
+import { useState } from "react";
+import { Row, Col, Badge, Form, Button, Alert } from "react-bootstrap";
+import { initiateActionAPI } from "../api/ClimateChangemakersAPI";
+import { ActionInfo } from "../models/ActionInfo";
 
-export default function HomePage() {
+type Props = {
+    setActionInfo: (info: ActionInfo) => void;
+}
+
+export default function InitiateAction({ setActionInfo }: Props) {
     const [streetAddress, setStreetAddress] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
@@ -27,16 +31,12 @@ export default function HomePage() {
             return;
         }
 
-        console.log(response);
+        setActionInfo(response);
+        document.getElementById("meet_your_reps")?.scrollIntoView();
     }
 
     return (
-        <div>
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1>Take Climate Action</h1>
-            <p>
-                Welcome! We want to help you take climate actions whenever you have time for the issues that matter most. In 3 simple steps you can make climate impact:
-            </p>
+        <>
             <Row className="d-flex mb-3 mb-md-4">
                 <Col md="4" className="mb-2 mb-md-0 d-flex align-items-center justify-content-md-center">
                     <Badge className="me-2" pill>1</Badge>
@@ -51,7 +51,7 @@ export default function HomePage() {
                     <span>Use your voice</span>
                 </Col>
             </Row>
-            <Form onSubmit={handleSubmit}>
+            <Form className="pb-3" onSubmit={handleSubmit}>
                 <Row>
                     <Form.Group as={Col} md="6" className="mb-3 d-flex align-items-start flex-column" controlId="formGridAddress">
                         <Form.Label>Address</Form.Label>
@@ -189,6 +189,6 @@ export default function HomePage() {
                         </Alert>
                     </Col>
                 </Row>}
-        </div>
+        </>
     )
 }
