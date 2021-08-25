@@ -5,11 +5,13 @@ import com.climatechangemakers.act.feature.findlegislator.model.Fields
 import com.climatechangemakers.act.feature.findlegislator.model.GeocodeResult
 import com.climatechangemakers.act.feature.findlegislator.model.GeocodioApiResult
 import com.climatechangemakers.act.feature.findlegislator.model.GeocodioLegislator
+import com.climatechangemakers.act.feature.findlegislator.model.GeocodioPoliticalParty
 import com.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsByAddressRequest
 import com.climatechangemakers.act.feature.findlegislator.model.Legislator
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorArea
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorBio
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorContactInformation
+import com.climatechangemakers.act.feature.findlegislator.model.LegislatorPoliticalParty
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorReferences
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
 import com.climatechangemakers.act.feature.findlegislator.service.FakeGeocodioService
@@ -17,7 +19,6 @@ import com.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import com.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
 import com.climatechangemakers.act.feature.lcvscore.model.LcvScore
 import com.climatechangemakers.act.feature.lcvscore.model.LcvScoreType
-import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -47,7 +48,7 @@ class LegislatorsManagerTest {
                 currentLegislators = listOf(
                   GeocodioLegislator(
                     type = LegislatorRole.Representative,
-                    bio = LegislatorBio("McEachin", "A. Donald"),
+                    bio = LegislatorBio("McEachin", "A. Donald", GeocodioPoliticalParty.Democrat),
                     contactInfo = LegislatorContactInformation(
                       siteUrl = "www.foo.com",
                       formattedAddress = "foo",
@@ -57,7 +58,7 @@ class LegislatorsManagerTest {
                   ),
                   GeocodioLegislator(
                     type = LegislatorRole.Senator,
-                    bio = LegislatorBio("Kaine", "Tim"),
+                    bio = LegislatorBio("Kaine", "Tim", GeocodioPoliticalParty.Republican),
                     contactInfo = LegislatorContactInformation(
                       siteUrl = "www.foo.com",
                       formattedAddress = "foo",
@@ -115,7 +116,8 @@ class LegislatorsManagerTest {
             LcvScore(10, LcvScoreType.YearlyScore(2020)),
             LcvScore(10, LcvScoreType.YearlyScore(2019)),
           ),
-          area = LegislatorArea("NJ", 4)
+          area = LegislatorArea("NJ", 4),
+          partyAffiliation = LegislatorPoliticalParty.Democrat,
         ),
         Legislator(
           name = "Tim Kaine",
@@ -128,7 +130,8 @@ class LegislatorsManagerTest {
             LcvScore(10, LcvScoreType.YearlyScore(2020)),
             LcvScore(10, LcvScoreType.YearlyScore(2019)),
           ),
-          area = LegislatorArea("NJ", null)
+          area = LegislatorArea("NJ", null),
+          partyAffiliation = LegislatorPoliticalParty.Republican,
         ),
       ),
       actual = response

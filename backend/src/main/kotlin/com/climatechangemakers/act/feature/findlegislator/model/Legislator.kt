@@ -10,5 +10,6 @@ import kotlinx.serialization.Serializable
   val phone: String,
   val imageUrl: String?,
   val area: LegislatorArea,
+  val partyAffiliation: LegislatorPoliticalParty,
   val lcvScores: List<LcvScore>,
 )
