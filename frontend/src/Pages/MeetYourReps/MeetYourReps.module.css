@@ -9,3 +9,7 @@
     transform: translate(-95px, -134px);
     scale: 50%;
 }
+
+.lcvScoreContainer {
+    height: 1.05rem;
+}
