@@ -31,7 +31,22 @@ import kotlinx.serialization.Serializable
 @Serializable class LegislatorBio(
   @SerialName("last_name") val lastName: String,
   @SerialName("first_name") val firstName: String,
+  val party: GeocodioPoliticalParty,
 )
+
+@Serializable enum class GeocodioPoliticalParty {
+  @SerialName("Republican") Republican,
+  @SerialName("Democrat") Democrat,
+  @SerialName("Independent") Independent,
+  @SerialName("Libertarian") Libertarian,
+}
+
+val GeocodioPoliticalParty.domainPoliticalParty: LegislatorPoliticalParty get() = when (this) {
+  GeocodioPoliticalParty.Republican -> LegislatorPoliticalParty.Republican
+  GeocodioPoliticalParty.Democrat -> LegislatorPoliticalParty.Democrat
+  GeocodioPoliticalParty.Independent -> LegislatorPoliticalParty.Independent
+  GeocodioPoliticalParty.Libertarian -> LegislatorPoliticalParty.Libertarian
+}
 
 @Serializable class LegislatorContactInformation(
   @SerialName("url") val siteUrl: String,
