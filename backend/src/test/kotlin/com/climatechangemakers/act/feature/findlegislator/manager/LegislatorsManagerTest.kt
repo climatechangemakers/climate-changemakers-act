@@ -7,6 +7,7 @@ import com.climatechangemakers.act.feature.findlegislator.model.GeocodioApiResul
 import com.climatechangemakers.act.feature.findlegislator.model.GeocodioLegislator
 import com.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsByAddressRequest
 import com.climatechangemakers.act.feature.findlegislator.model.Legislator
+import com.climatechangemakers.act.feature.findlegislator.model.LegislatorArea
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorBio
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorContactInformation
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorReferences
@@ -16,6 +17,7 @@ import com.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import com.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
 import com.climatechangemakers.act.feature.lcvscore.model.LcvScore
 import com.climatechangemakers.act.feature.lcvscore.model.LcvScoreType
+import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -46,6 +48,16 @@ class LegislatorsManagerTest {
                   GeocodioLegislator(
                     type = LegislatorRole.Representative,
                     bio = LegislatorBio("McEachin", "A. Donald"),
+                    contactInfo = LegislatorContactInformation(
+                      siteUrl = "www.foo.com",
+                      formattedAddress = "foo",
+                      phone = "555-555-5555",
+                    ),
+                    references = LegislatorReferences(bioguide = "M00001")
+                  ),
+                  GeocodioLegislator(
+                    type = LegislatorRole.Senator,
+                    bio = LegislatorBio("Kaine", "Tim"),
                     contactInfo = LegislatorContactInformation(
                       siteUrl = "www.foo.com",
                       formattedAddress = "foo",
@@ -91,18 +103,34 @@ class LegislatorsManagerTest {
     val response = manager.getLegislators(request)
 
     assertEquals(
-      expected = listOf(Legislator(
-        name = "A. Donald McEachin",
-        role = LegislatorRole.Representative,
-        siteUrl = "www.foo.com",
-        phone = "555-555-5555",
-        imageUrl = "https://bioguide.congress.gov/bioguide/photo/M/M00001.jpg",
-        lcvScores = listOf(
-          LcvScore(10, LcvScoreType.LifetimeScore),
-          LcvScore(10, LcvScoreType.YearlyScore(2020)),
-          LcvScore(10, LcvScoreType.YearlyScore(2019)),
+      expected = listOf(
+        Legislator(
+          name = "A. Donald McEachin",
+          role = LegislatorRole.Representative,
+          siteUrl = "www.foo.com",
+          phone = "555-555-5555",
+          imageUrl = "https://bioguide.congress.gov/bioguide/photo/M/M00001.jpg",
+          lcvScores = listOf(
+            LcvScore(10, LcvScoreType.LifetimeScore),
+            LcvScore(10, LcvScoreType.YearlyScore(2020)),
+            LcvScore(10, LcvScoreType.YearlyScore(2019)),
+          ),
+          area = LegislatorArea("NJ", 4)
         ),
-      )),
+        Legislator(
+          name = "Tim Kaine",
+          role = LegislatorRole.Senator,
+          siteUrl = "www.foo.com",
+          phone = "555-555-5555",
+          imageUrl = "https://bioguide.congress.gov/bioguide/photo/M/M00001.jpg",
+          lcvScores = listOf(
+            LcvScore(10, LcvScoreType.LifetimeScore),
+            LcvScore(10, LcvScoreType.YearlyScore(2020)),
+            LcvScore(10, LcvScoreType.YearlyScore(2019)),
+          ),
+          area = LegislatorArea("NJ", null)
+        ),
+      ),
       actual = response
     )
   }
