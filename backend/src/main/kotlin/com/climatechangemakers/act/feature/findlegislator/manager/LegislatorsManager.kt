@@ -6,6 +6,7 @@ import com.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsBy
 import com.climatechangemakers.act.feature.findlegislator.model.Legislator
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorArea
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
+import com.climatechangemakers.act.feature.findlegislator.model.domainPoliticalParty
 import com.climatechangemakers.act.feature.findlegislator.service.GeocodioService
 import com.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
 import com.climatechangemakers.act.feature.lcvscore.model.LcvScore
@@ -63,6 +64,7 @@ private fun GeocodioLegislator.toDomainLegislator(
   siteUrl = contactInfo.siteUrl,
   phone = contactInfo.phone,
   imageUrl = imageUrl,
+  partyAffiliation = bio.party.domainPoliticalParty,
   area = LegislatorArea(state = state, if (type == LegislatorRole.Senator) null else districtNumber),
   lcvScores = lcvScores,
 )
