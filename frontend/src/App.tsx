@@ -19,39 +19,22 @@ export default function App() {
     const [isPhoneCallMade, setIsPhoneCallMade] = useState(false);
     const [isSocialPosted, setIsSocialPosted] = useState(false);
 
-    useEffect(() => {
-        if (actionInfo)
-            document.getElementById("pick_your_issue")?.scrollIntoView();
-    }, [actionInfo])
+    const scrollToId = (id: string) =>
+        document.getElementById(id)?.scrollIntoView()
 
-    useEffect(() => {
-        if (issue)
-            document.getElementById("take_action")?.scrollIntoView();
-    }, [issue])
-
-
-    useEffect(() => {
-        if (isEmailSent)
-            document.getElementById("make_a_phone_call")?.scrollIntoView();
-    }, [isEmailSent])
-
-    useEffect(() => {
-        if (isPhoneCallMade)
-            document.getElementById("post_on_social")?.scrollIntoView();
-    }, [isPhoneCallMade])
-
-    useEffect(() => {
-        if (isEmailSent && isPhoneCallMade && isSocialPosted)
-            document.getElementById("all_done")?.scrollIntoView();
-    }, [isEmailSent, isPhoneCallMade, isSocialPosted])
+    useEffect(() => { actionInfo && scrollToId("pick_your_issue") }, [actionInfo])
+    useEffect(() => { issue && scrollToId("take_action") }, [issue])
+    useEffect(() => { isEmailSent && scrollToId("make_a_phone_call") }, [isEmailSent])
+    useEffect(() => { isPhoneCallMade && scrollToId("post_on_social") }, [isPhoneCallMade])
+    useEffect(() => { isEmailSent && isPhoneCallMade && isSocialPosted && scrollToId("all_done") }, [isEmailSent, isPhoneCallMade, isSocialPosted])
 
     return (
         <Layout
             isActionInfo={!!actionInfo}
             isIssue={!!issue}
-            isEmailSent={!!isEmailSent}
-            isPhoneCallMade={!!isPhoneCallMade}
-            isSocialPosted={!!isSocialPosted}
+            isEmailSent={isEmailSent}
+            isPhoneCallMade={isPhoneCallMade}
+            isSocialPosted={isSocialPosted}
         >
             <div>
                 <img src={logo} className="App-logo" alt="logo" />
