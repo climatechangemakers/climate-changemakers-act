@@ -15,7 +15,7 @@ export default function DesktopProgressBar({ isActionInfo, isIssue, isEmailSent,
             : isActive ? "active"
                 : "disabled"
     return (
-        <Navbar id="#desktop-scrollbar" variant="dark" className="ps-1">
+        <Navbar variant="dark" className="ps-1">
             <Nav className="d-flex flex-column fs-6">
                 <ProgressNavLink href="#find_your_reps" state={linkState(isActionInfo, !isIssue)} step={1}>
                     Find Your Reps
