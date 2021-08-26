@@ -1,0 +1,21 @@
+.inactiveLink {
+    pointer-events: none;
+    cursor: default;
+ }
+
+ .numbers,
+ .bullets,
+ .checkmark {
+    font-weight: 600;
+    top: 50%;
+    transform: translate(0, -50%);
+    font-size: .9rem;
+}
+
+.checkmark {
+    color: #28a745;
+}
+
+.bullets {
+    font-size: .7rem;
+}

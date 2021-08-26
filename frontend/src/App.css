@@ -22,6 +22,9 @@
 
 .App {
   text-align: center;
+  background-color: #2e266c;
+  font-size: 1.5rem;
+  color: white;
 }
 
 .App-logo {
@@ -36,14 +39,12 @@
 }
 
 .App-body {
-  background-color: #2e266c;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  color: white;
+  max-width: 750px;
 }
 
 @keyframes App-logo-spin {
