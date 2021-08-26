@@ -1,7 +1,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from './logo.png';
-import Layout from './Layout';
+import Layout from './Components/Layout';
 import GetStarted from './Pages/InitiateAction';
 import { useState } from 'react';
 import { ActionInfo } from './models/ActionInfo';

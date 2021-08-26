@@ -6,8 +6,10 @@
 }
 
 .image {
-    transform: translate(-95px, -134px);
-    scale: 50%;
+    transform: translate(-49px, -70px) scale(.5);
+    -webkit-transform: translate(-49px, -70px) scale(.5);
+    -moz-transform: translate(-49px, -70px) scale(.5);
+    -o-transform: translate(-49px, -70px) scale(.5);
 }
 
 .lcvScoreContainer {
