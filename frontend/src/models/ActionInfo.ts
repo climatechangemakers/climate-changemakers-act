@@ -2,6 +2,11 @@ export type ActionInfo = {
     initiatorEmail: string;
     legislators: {
         imageUrl: string;
+        area: {
+            state: string;
+            districtNumber?: number;
+        };
+        partyAffiliation: string;
         lcvScores: {
             score: number;
             scoreType: {
