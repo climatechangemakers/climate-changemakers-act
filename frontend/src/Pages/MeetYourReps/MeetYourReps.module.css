@@ -1,0 +1,15 @@
+.imageContainer {
+    height: 5rem;
+    width: 5rem;
+    overflow: hidden;
+    border-radius: 100%;
+}
+
+.image {
+    transform: translate(-95px, -134px);
+    scale: 50%;
+}
+
+.lcvScoreContainer {
+    height: 1.05rem;
+}
