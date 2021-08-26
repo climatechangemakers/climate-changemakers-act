@@ -23,17 +23,17 @@ export default function DesktopProgressBar({ isActionInfo, isIssue, isEmailSent,
                 <ProgressNavLink href="#pick_your_issue" state={linkState(isIssue, isActionInfo)} step={2}>
                     Pick an Issue
                 </ProgressNavLink>
-                <ProgressNavLink href="#take_action" state={linkState(isEmailSent && isPhoneCallMade && isSocialPosted, isIssue)} step={3}>
+                <ProgressNavLink href="#take_action" state={linkState(isSocialPosted, isIssue)} step={3}>
                     Take Action
                 </ProgressNavLink>
                 <Nav className="d-flex flex-column ps-4">
                     <ProgressNavLink href="#send_an_email" state={linkState(isEmailSent, isIssue)}>
                         Send an Email
                     </ProgressNavLink>
-                    <ProgressNavLink href="#make_a_phone_call" state={linkState(isPhoneCallMade, isIssue && isEmailSent)}>
+                    <ProgressNavLink href="#make_a_phone_call" state={linkState(isPhoneCallMade, isEmailSent)}>
                         Make Phone Call
                     </ProgressNavLink>
-                    <ProgressNavLink href="#post_on_social" state={linkState(isSocialPosted, isIssue && isEmailSent && isPhoneCallMade)}>
+                    <ProgressNavLink href="#post_on_social" state={linkState(isSocialPosted, isPhoneCallMade)}>
                         Post on Social
                     </ProgressNavLink>
                 </Nav>

@@ -26,7 +26,7 @@ export default function App() {
     useEffect(() => { issue && scrollToId("take_action") }, [issue])
     useEffect(() => { isEmailSent && scrollToId("make_a_phone_call") }, [isEmailSent])
     useEffect(() => { isPhoneCallMade && scrollToId("post_on_social") }, [isPhoneCallMade])
-    useEffect(() => { isEmailSent && isPhoneCallMade && isSocialPosted && scrollToId("all_done") }, [isEmailSent, isPhoneCallMade, isSocialPosted])
+    useEffect(() => { isSocialPosted && scrollToId("all_done") }, [isEmailSent, isPhoneCallMade, isSocialPosted])
 
     return (
         <Layout
@@ -66,7 +66,7 @@ export default function App() {
                         <hr id="post_on_social" />
                         <PostOnSocial isSocialPosted={isSocialPosted} setIsSocialPosted={setIsSocialPosted} />
                     </>}
-                {isEmailSent && isPhoneCallMade && isSocialPosted &&
+                {isSocialPosted &&
                     <>
                         <hr id="all_done" />
                         <AllDone />
