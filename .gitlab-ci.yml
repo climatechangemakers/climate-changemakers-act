@@ -18,5 +18,4 @@ test-backend:
     - ./gradlew test
   only: 
     - trunk 
-    - merge_requests
     - external_pull_requests
