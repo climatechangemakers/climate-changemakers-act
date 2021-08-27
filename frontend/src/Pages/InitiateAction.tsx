@@ -4,10 +4,11 @@ import { initiateActionAPI } from "../api/ClimateChangemakersAPI";
 import { ActionInfo } from "../models/ActionInfo";
 
 type Props = {
+    actionInfo: ActionInfo | undefined
     setActionInfo: (info: ActionInfo) => void;
 }
 
-export default function InitiateAction({ setActionInfo }: Props) {
+export default function InitiateAction({ actionInfo, setActionInfo }: Props) {
     const [streetAddress, setStreetAddress] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
@@ -21,18 +22,19 @@ export default function InitiateAction({ setActionInfo }: Props) {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        setErrorMessage("");
-        setIsLoading(true);
-        const response = await initiateActionAPI(email, streetAddress, city, state, postalCode, hasTrackConsent, hasEmailingConsent);
-        setIsLoading(false);
+        if (!actionInfo) {
+            setErrorMessage("");
+            setIsLoading(true);
+            const response = await initiateActionAPI(email, streetAddress, city, state, postalCode, hasTrackConsent, hasEmailingConsent);
+            setIsLoading(false);
 
-        if (typeof response === "string") {
-            setErrorMessage(response);
-            return;
+            if (typeof response === "string") {
+                setErrorMessage(response);
+                return;
+            }
+
+            setActionInfo(response);
         }
-
-        setActionInfo(response);
-        document.getElementById("meet_your_reps")?.scrollIntoView();
     }
 
     return (
@@ -171,12 +173,12 @@ export default function InitiateAction({ setActionInfo }: Props) {
                         />
                     </Form.Group>
                     <Col sm="12" md="3" className="mt-3 mb-3 d-flex align-items-end justify-content-center">
-                        <Button className="w-100" variant="primary" type="submit">
+                        <Button className="w-100" variant="primary" type="submit" disabled={!!actionInfo}>
                             {errorMessage
                                 ? "Try again"
                                 : isLoading
                                     ? "Loading..."
-                                    : "Let's Go!"}
+                                    : "Find Your Reps!"}
                         </Button>
                     </Col>
                 </Row>

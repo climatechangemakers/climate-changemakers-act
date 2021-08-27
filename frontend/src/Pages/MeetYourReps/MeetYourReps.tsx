@@ -9,8 +9,8 @@ type Props = {
 
 export default function MeetYourReps({ actionInfo }: Props) {
     return (
-        <div>
-            <h2 className="d-flex justify-content-md-start justify-content-center mb-4 mt-4">Meet Your Reps</h2>
+        <div className="pb-2">
+            <h2 className="text-start mb-4 mt-4">Meet Your Reps</h2>
             <div className="mb-2 justify-content-between d-flex flex-md-row flex-column align-items-center">
                 {actionInfo.legislators.map(legislator =>
                     <Card key={legislator.name} className="pt-3 mb-3" style={{ width: '14rem' }}>
