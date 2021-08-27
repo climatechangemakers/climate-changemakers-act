@@ -19,4 +19,4 @@ test-backend:
   only: 
     - trunk 
     - merge_requests
-    - pull_requests
+    - pull_request
