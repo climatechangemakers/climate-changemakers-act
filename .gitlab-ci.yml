@@ -1,0 +1,21 @@
+image: java:11-jdk
+
+stages: 
+  - test
+
+before_script: 
+  - export GRADLE_USER_HOME=`pwd`/backend/.gradle
+
+cache:
+  paths:
+    - ./bakcned/.gradle/wrapper
+    - ./backend/.gradle/caches
+
+test-backend:
+  stage: test
+  script: 
+    - cd backend
+    - ./gradlew test
+  only: 
+    - master
+    - merge_requests
