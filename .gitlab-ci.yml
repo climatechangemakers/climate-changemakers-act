@@ -1,4 +1,12 @@
-image: java:11-jdk
+image: openjdk:11.0.12
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_HOST: "tcp://docker:2375"
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_DRIVER: overlay2
 
 stages: 
   - test
@@ -18,4 +26,4 @@ test-backend:
     - ./gradlew test
   only: 
     - trunk 
-    - merge_requests
+    - external_pull_requests
