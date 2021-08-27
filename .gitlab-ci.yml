@@ -17,5 +17,5 @@ test-backend:
     - cd backend
     - ./gradlew test
   only: 
-    - master
+    - trunk 
     - merge_requests
