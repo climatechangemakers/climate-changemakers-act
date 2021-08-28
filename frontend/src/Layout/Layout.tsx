@@ -1,5 +1,7 @@
 import { Container } from "react-bootstrap"
-import DesktopScrollspy from "./DesktopProgressBar"
+import DesktopProgressBar from "./DesktopProgressBar/DesktopProgressBar"
+import MobileProgressBar from "./MobileProgressBar/MobileProgressBar"
+import styles from "./Layout.module.css"
 
 type Props = {
     children: any;
@@ -13,22 +15,33 @@ type Props = {
 export default function Layout({ children, isActionInfo, isIssue, isEmailSent, isPhoneCallMade, isSocialPosted }: Props) {
     return (
         <main className="App">
-            <div className="d-flex justify-content-between">
+            <div className="d-flex justify-content-between flex-column flex-lg-row align-items-center align-items-lg-start">
                 <div className="flex-grow-1" />
-                <div className="App-body w-100 flex-1 justify-content-center">
+                <div className="App-body w-100 flex-1 pb-5">
                     <Container>
                         {children}
                     </Container>
                 </div>
                 <div className="flex-grow-1 d-flex justify-content-center">
                     <div className="position-fixed d-none d-lg-block">
-                        <DesktopScrollspy
+                        <DesktopProgressBar
                             isActionInfo={isActionInfo}
                             isIssue={isIssue}
                             isEmailSent={isEmailSent}
                             isPhoneCallMade={isPhoneCallMade}
                             isSocialPosted={isSocialPosted}
                         />
+                    </div>
+                    <div className={`${styles.mobileProgress} position-fixed d-block d-lg-none w-100`}>
+                        <Container>
+                            <MobileProgressBar
+                                isActionInfo={isActionInfo}
+                                isIssue={isIssue}
+                                isEmailSent={isEmailSent}
+                                isPhoneCallMade={isPhoneCallMade}
+                                isSocialPosted={isSocialPosted}
+                            />
+                        </Container>
                     </div>
                 </div>
             </div>
