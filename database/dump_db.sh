@@ -2,7 +2,7 @@
 
 pg_dump --no-acl\
        	--no-owner\
-       	--exclude-table-data "actions_raw"\
+       	--exclude-table-data "*action*"\
        	--exclude-table-data "*attendanc*"\
        	--exclude-table-data "hoa_*"\
        	--exclude-table-data "segments"\

@@ -110,9 +110,11 @@ CREATE TYPE public.audience AS ENUM (
 
 CREATE TYPE public.hoa_event_type AS ENUM (
     'ADV_PERSONALIZE_TALKING_POINTS_AND_PERSONAL_NETWORK_OUTREACH',
+    'ADV_SHARE_AND_INVITE',
     'ADV_POLICYMAKER_OUTREACH',
     'ADV_KEY_STAKEHOLDER_AND_PUBLIC_OUTREACH',
     'ADV_CLIMATE_CONVERSATION_WITH_POLICYMAKER',
+    'ADV_PREP_TALKING_CLIMATE_WITH_POLICYMAKERS',
     'ELECTORAL'
 );
 
@@ -527,6 +529,16 @@ CREATE VIEW dbt_mchang.yellow_brick_road AS
     member_stats.num_hoas_attended,
     member_stats.progress
    FROM member_stats;
+
+
+--
+-- Name: action_initiate; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.action_initiate (
+    email public.citext NOT NULL,
+    initiated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
 
 
 --
