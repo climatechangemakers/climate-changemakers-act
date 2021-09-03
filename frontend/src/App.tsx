@@ -6,15 +6,17 @@ import GetStarted from './Pages/InitiateAction';
 import { useEffect, useState } from 'react';
 import { ActionInfo } from './models/ActionInfo';
 import MeetYourReps from './Pages/MeetYourReps/MeetYourReps';
-import PickYourIssue from './Pages/PickYourIssue';
+import PickYourIssue from './Pages/PickYourIssue/PickYourIssue';
 import SendAnEmail from './Pages/SendAnEmail';
 import MakeAPhoneCall from './Pages/MakeAPhoneCall';
 import PostOnSocial from './Pages/PostOnSocial';
 import AllDone from './Pages/AllDone';
+import { Issue, IssuesResponse } from './models/IssuesResponse';
 
 export default function App() {
     const [actionInfo, setActionInfo] = useState<ActionInfo | undefined>();
-    const [issue, setIssue] = useState<string | undefined>();
+    const [issues, setIssues] = useState<IssuesResponse | undefined>()
+    const [selectedIssue, setSelectedIssue] = useState<Issue | undefined>();
     const [isEmailSent, setIsEmailSent] = useState(false);
     const [isPhoneCallMade, setIsPhoneCallMade] = useState(false);
     const [isSocialPosted, setIsSocialPosted] = useState(false);
@@ -22,8 +24,8 @@ export default function App() {
     const scrollToId = (id: string) =>
         document.getElementById(id)?.scrollIntoView()
 
-    useEffect(() => { actionInfo && scrollToId("pick_your_issue") }, [actionInfo])
-    useEffect(() => { issue && scrollToId("take_action") }, [issue])
+    useEffect(() => { actionInfo && issues && scrollToId("pick_your_issue") }, [actionInfo, issues])
+    useEffect(() => { selectedIssue && scrollToId("take_action") }, [selectedIssue])
     useEffect(() => { isEmailSent && scrollToId("make_a_phone_call") }, [isEmailSent])
     useEffect(() => { isPhoneCallMade && scrollToId("post_on_social") }, [isPhoneCallMade])
     useEffect(() => { isSocialPosted && scrollToId("all_done") }, [isEmailSent, isPhoneCallMade, isSocialPosted])
@@ -31,7 +33,7 @@ export default function App() {
     return (
         <Layout
             isActionInfo={!!actionInfo}
-            isIssue={!!issue}
+            isIssue={!!selectedIssue}
             isEmailSent={isEmailSent}
             isPhoneCallMade={isPhoneCallMade}
             isSocialPosted={isSocialPosted}
@@ -48,13 +50,17 @@ export default function App() {
                         <hr id="pick_your_issue" />
                         <MeetYourReps actionInfo={actionInfo} />
                         <hr />
-                        <PickYourIssue issue={issue} setIssue={setIssue} />
+                        <PickYourIssue
+                            issues={issues}
+                            setIssues={setIssues}
+                            selectedIssue={selectedIssue}
+                            setSelectedIssue={setSelectedIssue} />
                     </>}
-                {issue &&
+                {selectedIssue &&
                     <>
                         <hr id="take_action" />
                         <h2 id="send_an_email">Time to Take Action!</h2>
-                        <SendAnEmail isEmailSent={isEmailSent} setIsEmailSent={setIsEmailSent} />
+                        <SendAnEmail selectedIssue={selectedIssue} isEmailSent={isEmailSent} setIsEmailSent={setIsEmailSent} />
                     </>}
                 {isEmailSent &&
                     <>

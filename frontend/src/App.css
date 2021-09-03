@@ -40,6 +40,10 @@
   height: 50vh;
 }
 
+.card-title {
+  color: rgb(var(--bs-dark-rgb));
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
