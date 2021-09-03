@@ -7,8 +7,8 @@ type Props = {
     selectedIssue: Issue;
 }
 
-export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedEmail }: Props) {
-    console.log(selectedEmail);
+export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue }: Props) {
+    console.log(selectedIssue);
 
     return (
         <div className="pt-2 pb-3">
