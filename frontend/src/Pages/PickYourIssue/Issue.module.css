@@ -1,0 +1,30 @@
+.learnMore {
+    color: var(--primary-orange) !important;
+    font-weight: 500;
+    font-size: .9rem;
+}
+
+.issueCard {
+    transition: background-color 0.25s ease !important;
+}
+
+.issueCard:disabled {
+    opacity: .8;
+}
+
+.issueCardSelected,
+.issueCard:hover {
+    color: white !important;
+    background-color: var(--primary-orange) !important;
+}
+
+.issueTitle {
+    color: rgb(var(--bs-dark-rgb));
+}
+
+.issueCardSelected .issueTitle,
+.issueCardSelected .learnMore,
+.issueCard:hover .issueTitle,
+.issueCard:hover .learnMore {
+    color: white !important;
+}

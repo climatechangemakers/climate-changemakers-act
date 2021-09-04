@@ -1,11 +1,15 @@
 import { Button } from "react-bootstrap";
+import { Issue } from "../models/IssuesResponse";
 
 type Props = {
     isEmailSent: boolean;
     setIsEmailSent: (bool: boolean) => void;
+    selectedIssue: Issue;
 }
 
-export default function SendAnEmail({ isEmailSent, setIsEmailSent }: Props) {
+export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue }: Props) {
+    console.log(selectedIssue);
+
     return (
         <div className="pt-2 pb-3">
             <h3 className="text-start pb-3 step-height">Send An Email</h3>
