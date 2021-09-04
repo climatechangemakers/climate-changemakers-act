@@ -12,7 +12,7 @@ export default function IssueCard({ onClick, title, selectedIssue }: Props) {
     return (
         <Button
             onClick={onClick}
-            className={`${styles.issueCard} ${selectedIssue?.title === title ? styles.issueCardSelected : ""} card w-100 px-4 py-4`}
+            className={`${styles.issueCard} ${selectedIssue?.title === title ? styles.issueCardSelected : ""} d-flex justify-content-around align-items-start card h-100 w-100 px-4 py-4`}
             variant="white"
             disabled={!!selectedIssue}>
             <Card.Title className={`${styles.issueTitle} text-start`}>{title}</Card.Title>

@@ -34,10 +34,12 @@ export default function PickYourIssue({ issues, setIssues, selectedIssue, setSel
                     <Row className="pb-4">
                         <Col md="6">
                             <h3 className="text-start">Featured</h3>
-                            <IssueCard
-                                onClick={() => setSelectedIssue(issues.focusIssue)}
-                                title={issues.focusIssue.title}
-                                selectedIssue={selectedIssue} />
+                            <div>
+                                <IssueCard
+                                    onClick={() => setSelectedIssue(issues.focusIssue)}
+                                    title={issues.focusIssue.title}
+                                    selectedIssue={selectedIssue} />
+                            </div>
                         </Col>
                     </Row>
                     <Row>
