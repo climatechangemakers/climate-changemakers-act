@@ -2,12 +2,13 @@ package com.climatechangemakers.act.feature.issue.model
 
 import kotlinx.serialization.Serializable
 
-@Serializable class Issue(
+@Serializable data class Issue(
+  val id: Long,
   val title: String,
   val talkingPoints: List<TalkingPoint>,
 )
 
-@Serializable class TalkingPoint(
+@Serializable data class TalkingPoint(
   val title: String,
   val content: String,
 )

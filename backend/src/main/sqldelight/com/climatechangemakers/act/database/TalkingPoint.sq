@@ -1,0 +1,11 @@
+CREATE TABLE talking_point (
+  id BIGSERIAL PRIMARY KEY NOT NULL,
+  title VARCHAR NOT NULL,
+  issue_id BIGINT NOT NULL REFERENCES issue ON DELETE CASCADE,
+  content VARCHAR NOT NULL
+);
+
+selectForIssueId:
+SELECT title, content
+FROM talking_point
+WHERE issue_id = :issueId;
