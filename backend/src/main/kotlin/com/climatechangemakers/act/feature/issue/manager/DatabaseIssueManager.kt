@@ -25,11 +25,9 @@ class DatabaseIssueManager @Inject constructor(
   }
 
   override suspend fun getUnfocusedIssues(): List<Issue> = withContext(ioDispatcher) {
-    coroutineScope {
-      issueQueries.selectUnfocused().executeAsList().map { issue ->
-        async { Issue(issue.id, issue.title, getIssueTalkingPoints(issue.id)) }
-      }.awaitAll()
-    }
+    issueQueries.selectUnfocused().executeAsList().map { issue ->
+      async { Issue(issue.id, issue.title, getIssueTalkingPoints(issue.id)) }
+    }.awaitAll()
   }
 
   private suspend fun getIssueTalkingPoints(issueId: Long): List<TalkingPoint> = withContext(ioDispatcher) {
