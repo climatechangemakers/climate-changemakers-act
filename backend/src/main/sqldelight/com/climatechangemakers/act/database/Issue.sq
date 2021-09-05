@@ -3,9 +3,9 @@ CREATE TABLE issue (
   title VARCHAR NOT NULL
 );
 
--- TODO(kcianfarini) Defining these tables in the same .sq file is a SQLDelight.
--- TODO(kcianfarini) Move this table definition to its own file.
+-- TODO(kcianfarini) Defining these tables in the same .sq file because of a SQLDelight bug.
 -- TODO(kcianfarini) related issue: https://github.com/cashapp/sqldelight/issues/2559
+-- TODO(kcianfarini) Move this table definition to its own file.
 CREATE TABLE focus_issue (
   issue_id BIGINT NOT NULL REFERENCES issue ON DELETE CASCADE,
   focused_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
