@@ -1,4 +1,3 @@
-import Markdown from "markdown-to-jsx";
 import { useState } from "react";
 import { Accordion, Button, Col, Form, Row } from "react-bootstrap";
 import { Issue } from "../../models/IssuesResponse";
@@ -44,9 +43,7 @@ export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue
                                     {point.title}
                                 </Accordion.Header>
                                 <Accordion.Body className={`${styles.pointsBody} h-100 text-dark fs-6`}>
-                                    <Markdown>
-                                        {point.content}
-                                    </Markdown>
+                                    <div dangerouslySetInnerHTML={{ __html: point.content }} />
                                 </Accordion.Body>
                             </Accordion.Item>)}
                     </Accordion>
