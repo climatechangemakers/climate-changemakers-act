@@ -29,8 +29,7 @@ export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue
                     <h4>Prompts</h4>
                     <div className="fs-6">Here are some prompts to get you started</div>
                     <ul className="fs-6">
-                        {prompts.map((m) =>
-                            <li>{m}</li>)}
+                        {prompts.map((m) => <li>{m}</li>)}
                     </ul>
                 </Col>
             </Row>
