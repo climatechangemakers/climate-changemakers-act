@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { ActionInfo } from './models/ActionInfo';
 import MeetYourReps from './Pages/MeetYourReps/MeetYourReps';
 import PickYourIssue from './Pages/PickYourIssue/PickYourIssue';
-import SendAnEmail from './Pages/SendAnEmail';
+import SendAnEmail from './Pages/SendAnEmail/SendAnEmail';
 import MakeAPhoneCall from './Pages/MakeAPhoneCall';
 import PostOnSocial from './Pages/PostOnSocial';
 import AllDone from './Pages/AllDone';
