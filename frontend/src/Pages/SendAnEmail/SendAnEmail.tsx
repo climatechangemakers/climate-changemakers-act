@@ -28,10 +28,10 @@ export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue
                 <Col md="6">
                     <h4>Prompts</h4>
                     <div className="fs-6">Here are some prompts to get you started</div>
-                    <div className="fs-6 ms-3">
+                    <ul className="fs-6">
                         {prompts.map((m) =>
-                            <div>&lowast; {m}</div>)}
-                    </div>
+                            <li>{m}</li>)}
+                    </ul>
                 </Col>
             </Row>
             <Row className={`${styles.emailRow} mt-3`}>
@@ -42,8 +42,8 @@ export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue
                                 <Accordion.Header>
                                     {point.title}
                                 </Accordion.Header>
-                                <Accordion.Body className={`${styles.pointsBody} h-100 text-dark fs-6`}>
-                                    <div dangerouslySetInnerHTML={{ __html: point.content }} />
+                                <Accordion.Body className={`${styles.pointsBody} p-0 h-100 text-dark fs-6`}>
+                                    <div className="py-2 px-3" dangerouslySetInnerHTML={{ __html: point.content }} />
                                 </Accordion.Body>
                             </Accordion.Item>)}
                     </Accordion>
@@ -54,6 +54,7 @@ export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue
                         <Form.Control
                             value={email}
                             onChange={e => setEmail(e.currentTarget.value)}
+                            disabled={isEmailSent}
                             placeholder="Email here..."
                             className="h-100 p-3"
                             as="textarea"
