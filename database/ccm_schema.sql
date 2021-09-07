@@ -555,6 +555,16 @@ CREATE TABLE public.attendance_preview (
 
 
 --
+-- Name: focus_issue; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.focus_issue (
+    issue_id bigint NOT NULL,
+    focused_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+--
 -- Name: hoa_events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -572,6 +582,52 @@ CREATE SEQUENCE public.hoa_events_id_seq
 --
 
 ALTER SEQUENCE public.hoa_events_id_seq OWNED BY public.hoa_events.id;
+
+
+--
+-- Name: issue; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.issue (
+    id bigint NOT NULL,
+    title character varying NOT NULL
+);
+
+
+--
+-- Name: issue_and_focus; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.issue_and_focus AS
+ SELECT issue.id,
+    issue.title,
+        CASE
+            WHEN (( SELECT focus_issue.issue_id
+               FROM public.focus_issue
+              ORDER BY focus_issue.focused_at DESC
+             LIMIT 1) = issue.id) THEN true
+            ELSE false
+        END AS is_focused
+   FROM public.issue;
+
+
+--
+-- Name: issue_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.issue_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: issue_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.issue_id_seq OWNED BY public.issue.id;
 
 
 --
@@ -635,10 +691,76 @@ CREATE VIEW public.segments AS
 
 
 --
+-- Name: talking_point; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.talking_point (
+    id bigint NOT NULL,
+    title character varying NOT NULL,
+    issue_id bigint NOT NULL,
+    content character varying NOT NULL
+);
+
+
+--
+-- Name: talking_point_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.talking_point_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: talking_point_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.talking_point_id_seq OWNED BY public.talking_point.id;
+
+
+--
 -- Name: hoa_events id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.hoa_events ALTER COLUMN id SET DEFAULT nextval('public.hoa_events_id_seq'::regclass);
+
+
+--
+-- Name: issue id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.issue ALTER COLUMN id SET DEFAULT nextval('public.issue_id_seq'::regclass);
+
+
+--
+-- Name: talking_point id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.talking_point ALTER COLUMN id SET DEFAULT nextval('public.talking_point_id_seq'::regclass);
+
+
+--
+-- Data for Name: focus_issue; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.focus_issue (issue_id, focused_at) FROM stdin;
+2	2021-09-07 12:19:46.258849
+\.
+
+
+--
+-- Data for Name: issue; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.issue (id, title) FROM stdin;
+2	This is the focus issue
+4	This is not a focus issue
+5	This is also not a focus issue
+6	this is some random issue that might one day be focused
+\.
 
 
 --
@@ -1742,11 +1864,43 @@ S000033	2020	62
 
 
 --
+-- Data for Name: talking_point; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.talking_point (id, title, issue_id, content) FROM stdin;
+2	Talking point 1	2	<b>This is bold</b
+3	Talking point 2	2	<em>This is italics</em>
+\.
+
+
+--
+-- Name: issue_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.issue_id_seq', 6, true);
+
+
+--
+-- Name: talking_point_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.talking_point_id_seq', 3, true);
+
+
+--
 -- Name: hoa_events hoa_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.hoa_events
     ADD CONSTRAINT hoa_events_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: issue issue_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.issue
+    ADD CONSTRAINT issue_pkey PRIMARY KEY (id);
 
 
 --
@@ -1774,6 +1928,14 @@ ALTER TABLE ONLY public.luma_attendance
 
 
 --
+-- Name: talking_point talking_point_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.talking_point
+    ADD CONSTRAINT talking_point_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: contacts unique_airtable_id; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1790,11 +1952,27 @@ ALTER TABLE ONLY public.attendance_preview
 
 
 --
+-- Name: focus_issue focus_issue_issue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.focus_issue
+    ADD CONSTRAINT focus_issue_issue_id_fkey FOREIGN KEY (issue_id) REFERENCES public.issue(id) ON DELETE CASCADE;
+
+
+--
 -- Name: luma_attendance luma_attendance_event_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.luma_attendance
     ADD CONSTRAINT luma_attendance_event_id_fkey FOREIGN KEY (event_id) REFERENCES public.hoa_events(id) ON DELETE RESTRICT;
+
+
+--
+-- Name: talking_point talking_point_issue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.talking_point
+    ADD CONSTRAINT talking_point_issue_id_fkey FOREIGN KEY (issue_id) REFERENCES public.issue(id) ON DELETE CASCADE;
 
 
 --

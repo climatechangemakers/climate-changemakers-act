@@ -1,0 +1,17 @@
+CREATE VIEW issue_and_focus AS
+SELECT issue.id, issue.title,
+   CASE
+       WHEN (SELECT focus_issue.issue_id FROM focus_issue ORDER BY focus_issue.focused_at DESC LIMIT 1) = issue.id THEN TRUE
+       ELSE FALSE
+   END AS is_focused
+FROM issue;
+
+selectFocused:
+SELECT id, title
+FROM issue_and_focus
+WHERE is_focused = TRUE;
+
+selectUnfocused:
+SELECT id, title
+FROM issue_and_focus
+WHERE is_focused = FALSE;

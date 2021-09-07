@@ -1,35 +1,16 @@
 package com.climatechangemakers.act.feature.lcvscore.manager
 
-import com.climatechangemakers.act.database.Database
+import com.climatechangemakers.act.feature.util.TestContainerProvider
 import com.climatechangemakers.act.feature.lcvscore.model.LcvScore
 import com.climatechangemakers.act.feature.lcvscore.model.LcvScoreType
-import com.squareup.sqldelight.sqlite.driver.JdbcDriver
 import kotlinx.coroutines.runBlocking
-import java.sql.Connection
-import java.sql.DriverManager
 import kotlin.test.Test
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 
-class DatabaseLcvScoreManagerTest {
+class DatabaseLcvScoreManagerTest : TestContainerProvider() {
 
-  // the jdbc url is special and instructs testcontainers to use the postgres 12.5 image
-  private val connection = DriverManager.getConnection("jdbc:tc:postgresql:12.5:///my_db")
-  private val driver = object : JdbcDriver() {
-    override fun closeConnection(connection: Connection) = Unit
-    override fun getConnection(): Connection = connection
-  }
-
-  private val database = Database(driver)
   private val manager = DatabaseLcvScoreManager(database, EmptyCoroutineContext)
-
-  @BeforeTest fun before() {
-    Database.Schema.create(driver)
-  }
-
-  @AfterTest fun after() = connection.close()
 
   @Test fun `select lifetime by id returns correct value`() = runBlocking {
     insert("foo", LcvScore(99, LcvScoreType.LifetimeScore))
