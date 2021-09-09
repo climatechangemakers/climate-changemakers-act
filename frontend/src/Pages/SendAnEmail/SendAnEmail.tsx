@@ -16,6 +16,7 @@ const prompts = ["Where are you from and what do you do?",
 
 export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue }: Props) {
     const [email, setEmail] = useState("");
+    const hasTalkingPoints = selectedIssue.talkingPoints.length > 0;
 
     return (
         <div className="pt-2 pb-3 text-start">
@@ -33,8 +34,8 @@ export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue
                     </ul>
                 </Col>
             </Row>
-            <Row className={`${styles.emailRow} mt-3 d-flex justify-content-center`}>
-                {selectedIssue.talkingPoints.length > 0 &&
+            <Row className={`${styles.emailRow} mt-3`}>
+                {hasTalkingPoints &&
                     <Col md="6" className={`${styles.pointsBodyCol} mb-2`}>
                         <Accordion defaultActiveKey="0">
                             {selectedIssue.talkingPoints.map((point, i) =>
@@ -48,7 +49,7 @@ export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue
                                 </Accordion.Item>)}
                         </Accordion>
                     </Col>}
-                <Col className="mb-2" md="6">
+                <Col className="mb-2" md={hasTalkingPoints ? "6" : "12"}>
                     <Form.Group className="mb-3 h-100" controlId="emailForm.emailFormTextArea">
                         <Form.Label className="visuallyhidden">Send an email</Form.Label>
                         <Form.Control
