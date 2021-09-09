@@ -3,9 +3,11 @@ package com.climatechangemakers.act.feature.action.controller
 import com.climatechangemakers.act.feature.action.manager.ActionTrackerManager
 import com.climatechangemakers.act.feature.action.model.InitiateActionRequest
 import com.climatechangemakers.act.feature.action.model.InitiateActionResponse
+import com.climatechangemakers.act.feature.email.model.SendEmailRequest
 import com.climatechangemakers.act.feature.findlegislator.manager.LegislatorsManager
 import com.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsByAddressRequest
 import io.ktor.application.ApplicationCall
+import io.ktor.http.HttpStatusCode.Companion.NoContent
 import io.ktor.request.receive
 import io.ktor.response.respond
 import kotlinx.coroutines.async
@@ -29,6 +31,11 @@ class ActionController @Inject constructor(
 
     launch { actionTrackerManager.trackActionInitiated(request.email) }
     call.respond(response.await())
+  }
+
+  suspend fun sendEmail(call: ApplicationCall) {
+    val request = call.receive<SendEmailRequest>()
+    call.response.status(NoContent)
   }
 }
 

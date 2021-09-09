@@ -8,7 +8,6 @@ import io.ktor.routing.post
 
 fun Route.actionRoutes(controller: ActionController) {
 
-  post("/initiate-action") {
-    controller.initiateAction(call)
-  }
+  post("/initiate-action") { controller.initiateAction(call) }
+  post("/send-email") { controller.sendEmail(call) }
 }
