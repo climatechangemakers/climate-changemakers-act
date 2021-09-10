@@ -1,0 +1,10 @@
+CREATE TABLE action_email_legislator(
+  email VARCHAR NOT NULL,
+  contacted_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  issue_id BIGINT NOT NULL REFERENCES issue ON DELETE CASCADE,
+  contacted_bioguide_id VARCHAR NOT NULL
+);
+
+insert:
+INSERT INTO action_email_legislator(email, issue_id, contacted_bioguide_id)
+VALUES(:email, :issueId, :contactedBioguideId);
