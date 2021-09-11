@@ -17,11 +17,11 @@ export default function PickYourIssue({ issues, setIssues, selectedIssue, setSel
     useEffect(() => {
         const fetchIssues = async () => {
             const response = await issueAPI();
-            if (typeof response === "string") {
-                setErrorMessage(response);
+            if (!response.successful) {
+                setErrorMessage(response.error ?? "Failed to fetch issues");
                 return;
             }
-            setIssues(response);
+            setIssues(response.data!);
         }
         fetchIssues();
     }, [setIssues])

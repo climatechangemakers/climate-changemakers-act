@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Accordion, Button, Col, Form, Row } from "react-bootstrap";
+import { Accordion, Alert, Button, Col, Form, Row } from "react-bootstrap";
+import { sendEmailAPI } from "../../api/ClimateChangemakersAPI";
 import { Issue } from "../../models/IssuesResponse";
 import styles from "./SendAnEmail.module.css";
 
@@ -16,7 +17,20 @@ const prompts = ["Where are you from and what do you do?",
 
 export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue }: Props) {
     const [email, setEmail] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
     const hasTalkingPoints = selectedIssue.talkingPoints.length > 0;
+
+    const sendEmail = async () => {
+        setErrorMessage("");
+        // TODO: Use actual relatedIssueId and contactedBioguideIds
+        const response = await sendEmailAPI(-1, email, []);
+        if (!response.successful) {
+            setErrorMessage(response?.error ?? "Failed to send email");
+            return;
+        }
+        setIsEmailSent(true);
+    }
 
     return (
         <div className="pt-2 pb-3 text-start">
@@ -30,7 +44,7 @@ export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue
                     <h4>Prompts</h4>
                     <div className="fs-6">Here are some prompts to get you started</div>
                     <ul className="fs-6">
-                        {prompts.map((m) => <li>{m}</li>)}
+                        {prompts.map((m) => <li key={m}>{m}</li>)}
                     </ul>
                 </Col>
             </Row>
@@ -39,7 +53,7 @@ export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue
                     <Col md="6" className={`${styles.pointsBodyCol} mb-2`}>
                         <Accordion defaultActiveKey="0">
                             {selectedIssue.talkingPoints.map((point, i) =>
-                                <Accordion.Item eventKey={i.toString()}>
+                                <Accordion.Item key={i} eventKey={i.toString()}>
                                     <Accordion.Header>
                                         {point.title}
                                     </Accordion.Header>
@@ -66,9 +80,19 @@ export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue
             <Button
                 className="d-flex me-auto mt-3"
                 disabled={!email || isEmailSent}
-                onClick={() => setIsEmailSent(true)}>
-                Send Email
+                onClick={sendEmail}>
+                {!errorMessage
+                    ? "Send Email"
+                    : "Try again"}
             </Button>
+            {errorMessage &&
+                <Row>
+                    <Col>
+                        <Alert variant="danger" className="p-1 mt-2">
+                            {errorMessage}
+                        </Alert>
+                    </Col>
+                </Row>}
         </div>
     )
 }
