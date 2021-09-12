@@ -44,10 +44,6 @@
   color: rgb(var(--bs-dark-rgb));
 }
 
-canvas {
-  z-index: -999;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
