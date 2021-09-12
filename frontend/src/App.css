@@ -36,12 +36,16 @@
   height: 1.5rem !important;
 }
 
-.step-height {
+.vh-50 {
   height: 50vh;
 }
 
 .card-title {
   color: rgb(var(--bs-dark-rgb));
+}
+
+canvas {
+  z-index: -999;
 }
 
 @media (prefers-reduced-motion: no-preference) {

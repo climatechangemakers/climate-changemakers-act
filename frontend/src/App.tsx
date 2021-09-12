@@ -10,7 +10,7 @@ import PickYourIssue from './Pages/PickYourIssue/PickYourIssue';
 import SendAnEmail from './Pages/SendAnEmail/SendAnEmail';
 import MakeAPhoneCall from './Pages/MakeAPhoneCall';
 import PostOnSocial from './Pages/PostOnSocial';
-import AllDone from './Pages/AllDone';
+import AllDone from './Pages/AllDone/AllDone';
 import { Issue, IssuesResponse } from './models/IssuesResponse';
 
 export default function App() {
