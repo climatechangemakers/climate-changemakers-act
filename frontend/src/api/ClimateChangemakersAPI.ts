@@ -49,8 +49,8 @@ const get = async <T>(path: string): Promise<FetchResponse<T>> =>
 export const initiateActionAPI = (email: string, streetAddress: string, city: string, state: string, postalCode: string, consentToTrackImpact: boolean, desiresInformationalEmails: boolean) =>
     post<ActionInfo>("/initiate-action", { email, streetAddress, city, state, postalCode, consentToTrackImpact, desiresInformationalEmails })
 
-export const sendEmailAPI = (relatedIssueId: number, emailBody: string, contactedBioguideIds: string[]) =>
-    post<null>("/send-email", { relatedIssueId, emailBody, contactedBioguideIds });
+export const sendEmailAPI = (originatingEmailAddress: string, relatedIssueId: number, emailBody: string, contactedBioguideIds: string[]) =>
+    post<null>("/send-email", { originatingEmailAddress, relatedIssueId, emailBody, contactedBioguideIds });
 
 export const issueAPI = () =>
     get<IssuesResponse>("/issues")

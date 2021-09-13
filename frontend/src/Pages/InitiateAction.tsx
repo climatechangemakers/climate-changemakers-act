@@ -4,16 +4,17 @@ import { initiateActionAPI } from "../api/ClimateChangemakersAPI";
 import { ActionInfo } from "../models/ActionInfo";
 
 type Props = {
+    email: string;
+    setEmail: (email: string) => void;
     actionInfo: ActionInfo | undefined
     setActionInfo: (info: ActionInfo) => void;
 }
 
-export default function InitiateAction({ actionInfo, setActionInfo }: Props) {
+export default function InitiateAction({ email, setEmail, actionInfo, setActionInfo }: Props) {
     const [streetAddress, setStreetAddress] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
     const [postalCode, setPostalCode] = useState("");
-    const [email, setEmail] = useState("");
     const [hasTrackConsent, setHasTrackConsent] = useState(false);
     const [hasEmailingConsent, setHasEmailingConsent] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");

@@ -5,6 +5,7 @@ import { Issue } from "../../models/IssuesResponse";
 import styles from "./SendAnEmail.module.css";
 
 type Props = {
+    email: string;
     isEmailSent: boolean;
     setIsEmailSent: (bool: boolean) => void;
     selectedIssue: Issue;
@@ -15,8 +16,8 @@ const prompts = ["Where are you from and what do you do?",
     "What conerns is this issue causing you?",
     "How do you think it could be different?"];
 
-export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue }: Props) {
-    const [email, setEmail] = useState("");
+export default function SendAnEmail({ email, isEmailSent, setIsEmailSent, selectedIssue }: Props) {
+    const [emailMessage, setEmailMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
     const hasTalkingPoints = selectedIssue.talkingPoints.length > 0;
@@ -24,7 +25,7 @@ export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue
     const sendEmail = async () => {
         setErrorMessage("");
         // TODO: Use actual relatedIssueId and contactedBioguideIds
-        const response = await sendEmailAPI(-1, email, []);
+        const response = await sendEmailAPI(email, -1, emailMessage, []);
         if (!response.successful) {
             setErrorMessage(response?.error ?? "Failed to send email");
             return;
@@ -67,8 +68,8 @@ export default function SendAnEmail({ isEmailSent, setIsEmailSent, selectedIssue
                     <Form.Group className="mb-3 h-100" controlId="emailForm.emailFormTextArea">
                         <Form.Label className="visuallyhidden">Send an email</Form.Label>
                         <Form.Control
-                            value={email}
-                            onChange={e => setEmail(e.currentTarget.value)}
+                            value={emailMessage}
+                            onChange={e => setEmailMessage(e.currentTarget.value)}
                             disabled={isEmailSent}
                             placeholder="Email here..."
                             className="h-100 p-3"
