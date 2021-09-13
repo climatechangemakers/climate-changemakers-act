@@ -16,6 +16,7 @@ CREATE TABLE focus_issue (
 -- TODO(kcianfarini) related issue: https://github.com/cashapp/sqldelight/issues/2559
 -- TODO(kcianfarini) Move this table definition to its own file.
 CREATE TABLE action_contact_legislator(
+  id BIGSERIAL PRIMARY KEY,
   email VARCHAR NOT NULL,
   -- TODO(kcianfarini) Update to TIMESTAMPTZ when SQLDelight supports the grammar
   -- TODO(kcianfarini) related https://github.com/AlecStrong/sql-psi/issues/233
