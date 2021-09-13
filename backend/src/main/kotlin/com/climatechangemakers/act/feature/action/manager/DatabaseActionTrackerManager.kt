@@ -13,7 +13,7 @@ class DatabaseActionTrackerManager @Inject constructor(
 ) : ActionTrackerManager {
 
   private val initiateActionQueries = database.actionInitiateQueries
-  private val actionEmailLegislatorQueries = database.actionEmailLegislatorQueries
+  private val actionEmailLegislatorQueries = database.actionContactLegislatorQueries
 
   override suspend fun trackActionInitiated(email: String) = withContext(ioDispatcher) {
     initiateActionQueries.insert(email)

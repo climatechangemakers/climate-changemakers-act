@@ -1,4 +1,4 @@
--- CREATE TABLE action_email_legislator(
+-- CREATE TABLE action_contact_legislator(
 --   email VARCHAR NOT NULL,
 --   -- TODO(kcianfarini) Update to TIMESTAMPTZ when SQLDelight supports the grammar
 --   -- TODO(kcianfarini) related https://github.com/AlecStrong/sql-psi/issues/233
@@ -8,5 +8,5 @@
 -- );
 
 insert:
-INSERT INTO action_email_legislator(email, issue_id, contacted_bioguide_id)
+INSERT INTO action_contact_legislator(email, issue_id, contacted_bioguide_id)
 VALUES(:email, :issueId, :contactedBioguideId);
