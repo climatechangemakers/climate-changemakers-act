@@ -33,7 +33,7 @@ class ActionController @Inject constructor(
     call.respond(response.await())
   }
 
-  suspend fun sendEmail(call: ApplicationCall) = coroutineScope {
+  suspend fun sendEmailToLegislators(call: ApplicationCall) = coroutineScope {
     val request = call.receive<SendEmailRequest>()
 
     launch {
