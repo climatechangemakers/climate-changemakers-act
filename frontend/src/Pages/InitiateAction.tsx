@@ -28,12 +28,12 @@ export default function InitiateAction({ actionInfo, setActionInfo }: Props) {
             const response = await initiateActionAPI(email, streetAddress, city, state, postalCode, hasTrackConsent, hasEmailingConsent);
             setIsLoading(false);
 
-            if (typeof response === "string") {
-                setErrorMessage(response);
+            if (!response.successful) {
+                setErrorMessage(response?.error ?? "Failed to initiate action");
                 return;
             }
 
-            setActionInfo(response);
+            setActionInfo(response.data!);
         }
     }
 
