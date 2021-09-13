@@ -536,11 +536,31 @@ CREATE VIEW dbt_mchang.yellow_brick_road AS
 --
 
 CREATE TABLE public.action_contact_legislator (
+    id bigint NOT NULL,
     email character varying NOT NULL,
     contacted_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     issue_id bigint NOT NULL,
     contacted_bioguide_id character varying NOT NULL
 );
+
+
+--
+-- Name: action_contact_legislator_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.action_contact_legislator_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: action_contact_legislator_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.action_contact_legislator_id_seq OWNED BY public.action_contact_legislator.id;
 
 
 --
@@ -731,6 +751,13 @@ CREATE SEQUENCE public.talking_point_id_seq
 --
 
 ALTER SEQUENCE public.talking_point_id_seq OWNED BY public.talking_point.id;
+
+
+--
+-- Name: action_contact_legislator id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.action_contact_legislator ALTER COLUMN id SET DEFAULT nextval('public.action_contact_legislator_id_seq'::regclass);
 
 
 --
@@ -1897,6 +1924,14 @@ SELECT pg_catalog.setval('public.issue_id_seq', 6, true);
 --
 
 SELECT pg_catalog.setval('public.talking_point_id_seq', 3, true);
+
+
+--
+-- Name: action_contact_legislator action_contact_legislator_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.action_contact_legislator
+    ADD CONSTRAINT action_contact_legislator_pkey PRIMARY KEY (id);
 
 
 --
