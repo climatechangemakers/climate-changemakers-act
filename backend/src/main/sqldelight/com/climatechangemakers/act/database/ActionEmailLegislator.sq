@@ -1,9 +1,11 @@
-CREATE TABLE action_email_legislator(
-  email VARCHAR NOT NULL,
-  contacted_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  issue_id BIGINT NOT NULL REFERENCES issue ON DELETE CASCADE,
-  contacted_bioguide_id VARCHAR NOT NULL
-);
+-- CREATE TABLE action_email_legislator(
+--   email VARCHAR NOT NULL,
+--   -- TODO(kcianfarini) Update to TIMESTAMPTZ when SQLDelight supports the grammar
+--   -- TODO(kcianfarini) related https://github.com/AlecStrong/sql-psi/issues/233
+--   contacted_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--   issue_id BIGINT NOT NULL REFERENCES issue ON DELETE CASCADE,
+--   contacted_bioguide_id VARCHAR NOT NULL
+-- );
 
 insert:
 INSERT INTO action_email_legislator(email, issue_id, contacted_bioguide_id)
