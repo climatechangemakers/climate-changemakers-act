@@ -17,7 +17,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
 
     assertEquals(
       2,
-      driver.executeQuery(0, "SELECT COUNT(*) FROM action_email_legislator", 0).let {
+      driver.executeQuery(0, "SELECT COUNT(*) FROM action_contact_legislator", 0).let {
         it.next()
         it.getLong(0)
       }
