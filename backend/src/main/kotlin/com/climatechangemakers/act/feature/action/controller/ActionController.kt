@@ -33,8 +33,17 @@ class ActionController @Inject constructor(
     call.respond(response.await())
   }
 
-  suspend fun sendEmail(call: ApplicationCall) {
+  suspend fun sendEmailToLegislators(call: ApplicationCall) = coroutineScope {
     val request = call.receive<SendEmailRequest>()
+
+    launch {
+      actionTrackerManager.trackActionSendEmails(
+        request.originatingEmailAddress,
+        request.contactedBioguideIds,
+        request.relatedIssueId,
+      )
+    }
+
     call.response.status(NoContent)
   }
 }

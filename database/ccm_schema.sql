@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.5
+-- Dumped from database version 12.7
 -- Dumped by pg_dump version 13.3
 
 SET statement_timeout = 0;
@@ -529,6 +529,18 @@ CREATE VIEW dbt_mchang.yellow_brick_road AS
     member_stats.num_hoas_attended,
     member_stats.progress
    FROM member_stats;
+
+
+--
+-- Name: action_contact_legislator; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.action_contact_legislator (
+    email character varying NOT NULL,
+    contacted_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    issue_id bigint NOT NULL,
+    contacted_bioguide_id character varying NOT NULL
+);
 
 
 --
@@ -1941,6 +1953,14 @@ ALTER TABLE ONLY public.talking_point
 
 ALTER TABLE ONLY public.contacts
     ADD CONSTRAINT unique_airtable_id UNIQUE (airtable_id);
+
+
+--
+-- Name: action_contact_legislator action_contact_legislator_issue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.action_contact_legislator
+    ADD CONSTRAINT action_contact_legislator_issue_id_fkey FOREIGN KEY (issue_id) REFERENCES public.issue(id) ON DELETE CASCADE;
 
 
 --
