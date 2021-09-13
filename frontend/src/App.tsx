@@ -20,6 +20,7 @@ export default function App() {
     const [isEmailSent, setIsEmailSent] = useState(false);
     const [isPhoneCallMade, setIsPhoneCallMade] = useState(false);
     const [isSocialPosted, setIsSocialPosted] = useState(false);
+    const [email, setEmail] = useState("");
 
     const scrollToId = (id: string) =>
         document.getElementById(id)?.scrollIntoView()
@@ -44,7 +45,11 @@ export default function App() {
                 <p>
                     Welcome! We want to help you take climate actions whenever you have time for the issues that matter most. In 3 simple steps you can make climate impact:
                 </p>
-                <GetStarted actionInfo={actionInfo} setActionInfo={setActionInfo} />
+                <GetStarted
+                    email={email}
+                    setEmail={setEmail}
+                    actionInfo={actionInfo}
+                    setActionInfo={setActionInfo} />
                 {actionInfo &&
                     <>
                         <hr id="pick_your_issue" />
@@ -60,7 +65,11 @@ export default function App() {
                     <>
                         <hr id="take_action" />
                         <h2 id="send_an_email">Time to Take Action!</h2>
-                        <SendAnEmail selectedIssue={selectedIssue} isEmailSent={isEmailSent} setIsEmailSent={setIsEmailSent} />
+                        <SendAnEmail
+                            email={email}
+                            selectedIssue={selectedIssue}
+                            isEmailSent={isEmailSent}
+                            setIsEmailSent={setIsEmailSent} />
                     </>}
                 {isEmailSent &&
                     <>
