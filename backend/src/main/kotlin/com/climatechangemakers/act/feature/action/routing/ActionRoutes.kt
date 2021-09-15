@@ -9,4 +9,5 @@ fun Route.actionRoutes(controller: ActionController) {
 
   post("/initiate-action") { controller.initiateAction(call) }
   post("/send-email") { controller.sendEmailToLegislators(call) }
+  post("/log-call") { controller.logLegislatorCallAction(call) }
 }

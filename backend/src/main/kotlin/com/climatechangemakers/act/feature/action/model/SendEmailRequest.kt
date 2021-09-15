@@ -1,4 +1,4 @@
-package com.climatechangemakers.act.feature.email.model
+package com.climatechangemakers.act.feature.action.model
 
 import kotlinx.serialization.Serializable
 

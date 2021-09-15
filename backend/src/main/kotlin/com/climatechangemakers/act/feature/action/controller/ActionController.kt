@@ -3,7 +3,8 @@ package com.climatechangemakers.act.feature.action.controller
 import com.climatechangemakers.act.feature.action.manager.ActionTrackerManager
 import com.climatechangemakers.act.feature.action.model.InitiateActionRequest
 import com.climatechangemakers.act.feature.action.model.InitiateActionResponse
-import com.climatechangemakers.act.feature.email.model.SendEmailRequest
+import com.climatechangemakers.act.feature.action.model.LogPhoneCallRequest
+import com.climatechangemakers.act.feature.action.model.SendEmailRequest
 import com.climatechangemakers.act.feature.findlegislator.manager.LegislatorsManager
 import com.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsByAddressRequest
 import io.ktor.application.ApplicationCall
@@ -43,6 +44,19 @@ class ActionController @Inject constructor(
         request.relatedIssueId,
       )
     }
+
+    call.response.status(NoContent)
+  }
+
+  suspend fun logLegislatorCallAction(call: ApplicationCall) {
+    val request = call.receive<LogPhoneCallRequest>()
+
+    actionTrackerManager.trackActionPhoneCall(
+      request.originatingEmailAddress,
+      request.contactedBioguideId,
+      request.relatedIssueId,
+      request.contactedPhoneNumber,
+    )
 
     call.response.status(NoContent)
   }
