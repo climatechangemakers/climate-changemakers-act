@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 12.7
--- Dumped by pg_dump version 13.3
+-- Dumped by pg_dump version 13.4
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -276,6 +276,37 @@ CREATE VIEW analysis.hoa_attendance AS
 
 
 --
+-- Name: contacts_hydrated; Type: VIEW; Schema: analysis; Owner: -
+--
+
+CREATE VIEW analysis.contacts_hydrated AS
+ WITH airtable_id_to_hoa_count AS (
+         SELECT contacts_1.airtable_id,
+            count(hoa_attendance.date) AS hoa_count
+           FROM (public.contacts contacts_1
+             LEFT JOIN analysis.hoa_attendance hoa_attendance USING (airtable_id))
+          GROUP BY contacts_1.airtable_id
+        )
+ SELECT contacts.email,
+    contacts.airtable_id,
+    contacts.first_name,
+    contacts.last_name,
+    contacts.slack_member_id,
+    contacts.signup_date,
+    contacts.slack_joined_date,
+    contacts.slack_last_active_date,
+    contacts.state,
+    contacts.referred_by,
+    contacts.one_on_one_status,
+    contacts.one_on_one_greeter,
+    contacts.is_experienced,
+    contacts.mailchimp_status,
+    airtable_id_to_hoa_count.hoa_count
+   FROM (public.contacts contacts
+     LEFT JOIN airtable_id_to_hoa_count USING (airtable_id));
+
+
+--
 -- Name: hoa_attendance_by_hoa_week; Type: VIEW; Schema: analysis; Owner: -
 --
 
@@ -335,10 +366,8 @@ CREATE VIEW analysis.yellow_brick_road AS
          SELECT c.airtable_id,
             (c.signup_date IS NOT NULL) AS did_signup,
             (c.slack_joined_date IS NOT NULL) AS did_join_slack,
-            count(a.date) AS num_hoas_attended
-           FROM (public.contacts c
-             LEFT JOIN analysis.hoa_attendance a ON (((c.airtable_id)::text = (a.airtable_id)::text)))
-          GROUP BY c.airtable_id, (c.signup_date IS NOT NULL), (c.slack_joined_date IS NOT NULL)
+            c.hoa_count AS num_hoas_attended
+           FROM analysis.contacts_hydrated c
         ), member_stats AS (
          SELECT merged_members.airtable_id,
             merged_members.did_signup,
@@ -444,6 +473,37 @@ CREATE VIEW dbt_mchang.hoa_attendance AS
 
 
 --
+-- Name: contacts_hydrated; Type: VIEW; Schema: dbt_mchang; Owner: -
+--
+
+CREATE VIEW dbt_mchang.contacts_hydrated AS
+ WITH airtable_id_to_hoa_count AS (
+         SELECT contacts_1.airtable_id,
+            count(hoa_attendance.date) AS hoa_count
+           FROM (public.contacts contacts_1
+             LEFT JOIN dbt_mchang.hoa_attendance hoa_attendance USING (airtable_id))
+          GROUP BY contacts_1.airtable_id
+        )
+ SELECT contacts.email,
+    contacts.airtable_id,
+    contacts.first_name,
+    contacts.last_name,
+    contacts.slack_member_id,
+    contacts.signup_date,
+    contacts.slack_joined_date,
+    contacts.slack_last_active_date,
+    contacts.state,
+    contacts.referred_by,
+    contacts.one_on_one_status,
+    contacts.one_on_one_greeter,
+    contacts.is_experienced,
+    contacts.mailchimp_status,
+    airtable_id_to_hoa_count.hoa_count
+   FROM (public.contacts contacts
+     LEFT JOIN airtable_id_to_hoa_count USING (airtable_id));
+
+
+--
 -- Name: hoa_attendance_by_hoa_week; Type: VIEW; Schema: dbt_mchang; Owner: -
 --
 
@@ -503,10 +563,8 @@ CREATE VIEW dbt_mchang.yellow_brick_road AS
          SELECT c.airtable_id,
             (c.signup_date IS NOT NULL) AS did_signup,
             (c.slack_joined_date IS NOT NULL) AS did_join_slack,
-            count(a.date) AS num_hoas_attended
-           FROM (public.contacts c
-             LEFT JOIN dbt_mchang.hoa_attendance a ON (((c.airtable_id)::text = (a.airtable_id)::text)))
-          GROUP BY c.airtable_id, (c.signup_date IS NOT NULL), (c.slack_joined_date IS NOT NULL)
+            c.hoa_count AS num_hoas_attended
+           FROM dbt_mchang.contacts_hydrated c
         ), member_stats AS (
          SELECT merged_members.airtable_id,
             merged_members.did_signup,
@@ -529,6 +587,16 @@ CREATE VIEW dbt_mchang.yellow_brick_road AS
     member_stats.num_hoas_attended,
     member_stats.progress
    FROM member_stats;
+
+
+--
+-- Name: action_call_legislator; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.action_call_legislator (
+    action_contact_legislator_id bigint NOT NULL,
+    phone_number_called character varying NOT NULL
+);
 
 
 --
@@ -1988,6 +2056,14 @@ ALTER TABLE ONLY public.talking_point
 
 ALTER TABLE ONLY public.contacts
     ADD CONSTRAINT unique_airtable_id UNIQUE (airtable_id);
+
+
+--
+-- Name: action_call_legislator action_call_legislator_action_contact_legislator_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.action_call_legislator
+    ADD CONSTRAINT action_call_legislator_action_contact_legislator_id_fkey FOREIGN KEY (action_contact_legislator_id) REFERENCES public.action_contact_legislator(id) ON DELETE CASCADE;
 
 
 --

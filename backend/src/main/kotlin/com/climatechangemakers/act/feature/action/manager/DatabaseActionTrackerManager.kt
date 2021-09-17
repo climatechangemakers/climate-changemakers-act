@@ -13,7 +13,8 @@ class DatabaseActionTrackerManager @Inject constructor(
 ) : ActionTrackerManager {
 
   private val initiateActionQueries = database.actionInitiateQueries
-  private val actionEmailLegislatorQueries = database.actionContactLegislatorQueries
+  private val actionContactLegislatorQueries = database.actionContactLegislatorQueries
+  private val actionCallLegislatorQueries = database.actionCallLegislatorQueries
 
   override suspend fun trackActionInitiated(email: String) = withContext(ioDispatcher) {
     initiateActionQueries.insert(email)
@@ -25,7 +26,22 @@ class DatabaseActionTrackerManager @Inject constructor(
     relatedIssueId: Long,
   ) = withContext(ioDispatcher) {
     contactedBioguideIds.forEach { bioguide ->
-      launch { actionEmailLegislatorQueries.insert(email, relatedIssueId, bioguide) }
+      launch { actionContactLegislatorQueries.insert(email, relatedIssueId, bioguide) }
+    }
+  }
+
+  override suspend fun trackActionPhoneCall(
+    email: String,
+    contactedBioguideId: String,
+    relatedIssueId: Long,
+    contactedPhoneNumber: String
+  ) = withContext(ioDispatcher) {
+    // TODO(kcianfarini) get rid of this when transaction RETURNING is supported.
+    // TODO(kcianfarini) related issue: https://github.com/AlecStrong/sql-psi/issues/173
+    actionCallLegislatorQueries.transaction {
+      actionContactLegislatorQueries.insert(email, relatedIssueId, contactedBioguideId)
+      val insertedId: Long = actionContactLegislatorQueries.getMaxId().executeAsOne()
+      actionCallLegislatorQueries.insert(insertedId, contactedPhoneNumber)
     }
   }
 }

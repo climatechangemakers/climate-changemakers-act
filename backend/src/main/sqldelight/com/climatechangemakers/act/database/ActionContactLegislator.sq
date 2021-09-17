@@ -11,3 +11,12 @@
 insert:
 INSERT INTO action_contact_legislator(email, issue_id, contacted_bioguide_id)
 VALUES(:email, :issueId, :contactedBioguideId);
+
+-- TODO(kcianfarini) this is garbage, remove once RETURNING is supported.
+-- TODO(kcianfarini) Additional related issues:
+--   * https://github.com/AlecStrong/sql-psi/issues/263
+--   * https://github.com/AlecStrong/sql-psi/issues/173
+getMaxId:
+SELECT id FROM action_contact_legislator
+ORDER BY id DESC
+LIMIT 1;
