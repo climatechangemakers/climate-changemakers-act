@@ -16,7 +16,7 @@ VALUES(:email, :issueId, :contactedBioguideId);
 -- TODO(kcianfarini) Additional related issues:
 --   * https://github.com/AlecStrong/sql-psi/issues/263
 --   * https://github.com/AlecStrong/sql-psi/issues/173
-getLatestId:
+getMaxId:
 SELECT id FROM action_contact_legislator
 ORDER BY id DESC
 LIMIT 1;

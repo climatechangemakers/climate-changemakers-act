@@ -14,6 +14,6 @@ interface ActionTrackerManager {
     email: String,
     contactedBioguideId: String,
     relatedIssueId: Long,
-    connntedPhoneNumber: String,
+    contactedPhoneNumber: String,
   )
 }
