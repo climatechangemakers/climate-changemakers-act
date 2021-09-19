@@ -22,7 +22,6 @@ import com.climatechangemakers.act.feature.lcvscore.model.LcvScore
 import com.climatechangemakers.act.feature.lcvscore.model.LcvScoreType
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
 class LegislatorsManagerTest {
 
@@ -140,27 +139,5 @@ class LegislatorsManagerTest {
       ),
       actual = response
     )
-  }
-
-  @Test fun `getLegislators throws IllegalStateException with wrong LCV scores`() = suspendTest {
-    val request = GetLegislatorsByAddressRequest(
-      streetAddress = "10 Beech Place",
-      city = "West Deptford",
-      state = "NJ",
-      postalCode = "08096",
-    )
-
-    val manager = LegislatorsManager(
-      geocodioService = fakeGeocodioService,
-      lcvScoreManager = object : LcvScoreManager {
-        override suspend fun getLifetimeScore(bioguideId: String): LcvScore? = null
-        override suspend fun getYearlyScores(bioguideId: String): List<LcvScore> = emptyList()
-      },
-      fakeDistrictOfficerManager,
-    )
-
-    assertFailsWith<IllegalStateException> {
-      manager.getLegislators(request)
-    }
   }
 }

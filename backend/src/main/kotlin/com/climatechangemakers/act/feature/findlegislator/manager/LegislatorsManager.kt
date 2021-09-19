@@ -37,7 +37,7 @@ class LegislatorsManager @Inject constructor(
         geocodioLegislator.toDomainLegislator(
           state = request.state,
           districtNumber = congressionalDistrict.districtNumber,
-          lcvScores = lcvScores.await().also { check(it.isNotEmpty()) },
+          lcvScores = lcvScores.await(),
           districtPhoneNumber = districtPhoneNumber.await(),
         )
       }
