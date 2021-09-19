@@ -1,6 +1,9 @@
 import { ActionInfo } from "../models/ActionInfo";
 import { IssuesResponse } from "../models/IssuesResponse";
 
+// const apiEndpoint = "https://changemakers-act-backend.onrender.com/"
+const apiEndpoint = process.env.API_ENDPOINT || '';
+
 type FetchResponse<T> = {
     successful: boolean;
     error?: string;
@@ -27,7 +30,7 @@ const parseFetch = async<T>(response: Response): Promise<FetchResponse<T>> => {
 
 const post = async <T>(path: string, content: Object): Promise<FetchResponse<T>> =>
     parseFetch(
-        await fetch("/api" + path, {
+        await fetch(apiEndpoint + "/api" + path, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json;charset=UTF-8'
@@ -38,7 +41,7 @@ const post = async <T>(path: string, content: Object): Promise<FetchResponse<T>>
 
 const get = async <T>(path: string): Promise<FetchResponse<T>> =>
     parseFetch(
-        await fetch("/api" + path, {
+        await fetch(apiEndpoint + "/api" + path, {
             method: 'GET',
             headers: {
                 'content-type': 'application/json;charset=UTF-8'
