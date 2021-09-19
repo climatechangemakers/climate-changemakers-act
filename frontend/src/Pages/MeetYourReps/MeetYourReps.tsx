@@ -23,10 +23,10 @@ export default function MeetYourReps({ actionInfo }: Props) {
                                 <span className="text-capitalize">{legislator.partyAffiliation} </span>
                                 - {legislator.area.state}{legislator.area.districtNumber ? `-${legislator.area.districtNumber}` : ""}
                             </div>
-                            <div className={`${styles.lcvScoreContainer} d-flex justify-content-center align-items-center flex-row`}>
+                            { legislator.lcvScores.length > 0 && <div className={`${styles.lcvScoreContainer} d-flex justify-content-center align-items-center flex-row`}>
                                 <img className="h-100 align-baseline me-1" alt="LCV score" src={lcvlogo} />
-                                <div className="text-dark fs-6 fw-normal">{legislator.lcvScores.find(s => s.scoreType.type === "lifetime")!.score}%</div>
-                            </div>
+                                <div className="text-dark fs-6 fw-normal">{legislator.lcvScores[0].score}%</div>
+                            </div> }
                         </Card.Body>
                     </Card>)}
             </div>
