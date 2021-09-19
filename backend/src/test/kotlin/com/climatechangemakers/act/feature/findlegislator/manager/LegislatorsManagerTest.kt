@@ -14,6 +14,7 @@ import com.climatechangemakers.act.feature.findlegislator.model.LegislatorContac
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorPoliticalParty
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorReferences
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
+import com.climatechangemakers.act.feature.findlegislator.model.Location
 import com.climatechangemakers.act.feature.findlegislator.service.FakeGeocodioService
 import com.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import com.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
@@ -36,10 +37,13 @@ class LegislatorsManagerTest {
     )
   }
 
+  private val fakeDistrictOfficerManager = DistrictOfficerManager { _, _ -> "867-5309" }
+
   private val fakeGeocodioService = FakeGeocodioService {
     GeocodioApiResult(
       results = listOf(
         GeocodeResult(
+          location = Location(0.0, 0.0),
           fields = Fields(
             congressionalDistricts = listOf(
               CongressionalDistrict(
@@ -75,7 +79,7 @@ class LegislatorsManagerTest {
     )
   }
 
-  private val manager = LegislatorsManager(fakeGeocodioService, fakeLcvManager)
+  private val manager = LegislatorsManager(fakeGeocodioService, fakeLcvManager, fakeDistrictOfficerManager)
 
   @Test fun `getLegislators gets called with correct query string`() = suspendTest {
     val request = GetLegislatorsByAddressRequest(
@@ -109,7 +113,7 @@ class LegislatorsManagerTest {
           name = "A. Donald McEachin",
           role = LegislatorRole.Representative,
           siteUrl = "www.foo.com",
-          phone = "555-555-5555",
+          phoneNumbers = listOf("555-555-5555", "867-5309"),
           imageUrl = "https://bioguide.congress.gov/bioguide/photo/M/M00001.jpg",
           lcvScores = listOf(
             LcvScore(10, LcvScoreType.LifetimeScore),
@@ -123,7 +127,7 @@ class LegislatorsManagerTest {
           name = "Tim Kaine",
           role = LegislatorRole.Senator,
           siteUrl = "www.foo.com",
-          phone = "555-555-5555",
+          phoneNumbers = listOf("555-555-5555", "867-5309"),
           imageUrl = "https://bioguide.congress.gov/bioguide/photo/M/M00001.jpg",
           lcvScores = listOf(
             LcvScore(10, LcvScoreType.LifetimeScore),
@@ -151,7 +155,8 @@ class LegislatorsManagerTest {
       lcvScoreManager = object : LcvScoreManager {
         override suspend fun getLifetimeScore(bioguideId: String): LcvScore? = null
         override suspend fun getYearlyScores(bioguideId: String): List<LcvScore> = emptyList()
-      }
+      },
+      fakeDistrictOfficerManager,
     )
 
     assertFailsWith<IllegalStateException> {

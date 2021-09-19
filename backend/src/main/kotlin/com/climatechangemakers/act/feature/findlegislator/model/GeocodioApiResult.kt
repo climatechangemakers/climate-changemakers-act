@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 )
 
 @Serializable class GeocodeResult(
+  val location: Location,
   val fields: Fields,
 )
 

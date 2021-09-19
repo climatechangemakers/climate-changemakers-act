@@ -17,7 +17,7 @@ export type ActionInfo = {
             };
         }[];
         name: string;
-        phone: string;
+        phoneNumbers: string[];
         role: string;
         siteUrl: string;
     }[];
