@@ -5,7 +5,6 @@ export type ActionInfo = {
         area: {
             state: string;
             districtNumber?: number;
-            districtPhoneNumber?: string;
         };
         partyAffiliation: string;
         lcvScores: {
@@ -18,7 +17,7 @@ export type ActionInfo = {
             };
         }[];
         name: string;
-        phoneNumbers: string[];
+        phone: string;
         role: string;
         siteUrl: string;
     }[];
