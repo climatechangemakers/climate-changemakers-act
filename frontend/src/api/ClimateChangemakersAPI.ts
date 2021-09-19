@@ -2,7 +2,8 @@ import { ActionInfo } from "../models/ActionInfo";
 import { IssuesResponse } from "../models/IssuesResponse";
 
 // const apiEndpoint = "https://changemakers-act-backend.onrender.com/"
-const apiEndpoint = process.env.API_ENDPOINT || '';
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || '';
+console.log(process.env.NODE_ENV);
 
 type FetchResponse<T> = {
     successful: boolean;
