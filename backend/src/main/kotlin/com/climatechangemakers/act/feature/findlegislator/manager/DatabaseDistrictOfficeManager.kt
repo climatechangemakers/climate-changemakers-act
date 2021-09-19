@@ -18,10 +18,10 @@ class DatabaseDistrictOfficeManager @Inject constructor(
     bioguideId: String,
     requestingLocation: Location
   ): String? = withContext(ioDispatcher) {
-    val districtOffices = districtOfficeQueries.selectForBioguideId(bioguideId).executeAsList()
-    val closestOffice = districtOffices.filter { it.lat != null && it.long != null }
-      .minByOrNull { requestingLocation.distanceBetween(Location(it.lat!!, it.long!!)) }
-
-    closestOffice?.phone_number ?: districtOffices.firstOrNull()?.phone_number
+    districtOfficeQueries.selectForBioguideId(
+      bioguideId = bioguideId,
+      lat = requestingLocation.lat,
+      long = requestingLocation.long
+    ).executeAsOneOrNull()
   }
 }

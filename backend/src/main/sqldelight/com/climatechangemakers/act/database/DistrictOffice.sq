@@ -6,6 +6,15 @@ CREATE TABLE district_office (
 );
 
 selectForBioguideId:
-SELECT phone_number, lat, long
+SELECT phone_number
 FROM district_office
-WHERE phone_number IS NOT NULL AND bioguide_id = :bioguideId;
+WHERE phone_number IS NOT NULL AND bioguide_id = :bioguideId
+ORDER BY
+(2 * 6371 * ASIN(
+    SQRT(
+      POWER(SIN(RADIANS(lat - :lat) / 2), 2) + COS(RADIANS(lat)) * COS(RADIANS(:lat)) * POWER(RADIANS(long - :long) / 2, 2)
+    )
+  )
+)
+ASC
+LIMIT 1;
