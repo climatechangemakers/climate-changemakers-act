@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
   val name: String,
   val role: LegislatorRole,
   val siteUrl: String,
-  val phone: String,
+  val phoneNumbers: List<String>,
   val imageUrl: String?,
   val area: LegislatorArea,
   val partyAffiliation: LegislatorPoliticalParty,

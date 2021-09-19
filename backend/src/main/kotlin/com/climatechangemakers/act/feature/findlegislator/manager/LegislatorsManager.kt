@@ -1,11 +1,11 @@
 package com.climatechangemakers.act.feature.findlegislator.manager
 
-import com.climatechangemakers.act.feature.findlegislator.model.GeocodioApiResult
 import com.climatechangemakers.act.feature.findlegislator.model.GeocodioLegislator
 import com.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsByAddressRequest
 import com.climatechangemakers.act.feature.findlegislator.model.Legislator
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorArea
 import com.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
+import com.climatechangemakers.act.feature.findlegislator.model.Location
 import com.climatechangemakers.act.feature.findlegislator.model.domainPoliticalParty
 import com.climatechangemakers.act.feature.findlegislator.service.GeocodioService
 import com.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
@@ -13,40 +13,46 @@ import com.climatechangemakers.act.feature.lcvscore.model.LcvScore
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class LegislatorsManager @Inject constructor(
   private val geocodioService: GeocodioService,
   private val lcvScoreManager: LcvScoreManager,
+  private val districtOfficerManager: DistrictOfficerManager,
 ) {
 
-  @OptIn(ExperimentalStdlibApi::class)
   suspend fun getLegislators(request: GetLegislatorsByAddressRequest): List<Legislator> = coroutineScope {
-    val geoCodioResponse: GeocodioApiResult = geocodioService.geocode(query = request.queryString)
-
-    val congressionalDistrict = geoCodioResponse.results
-      .flatMap { it.fields.congressionalDistricts }
-      .first()
+    val geoCodioResponse = geocodioService.geocode(query = request.queryString).results.first()
+    val congressionalDistrict = geoCodioResponse.fields.congressionalDistricts.first()
 
     congressionalDistrict.currentLegislators.map { geocodioLegislator ->
       async {
-        val lcvScores = coroutineScope {
-          val lifetimeScore = async { lcvScoreManager.getLifetimeScore(geocodioLegislator.references.bioguide) }
-          val yearlyScores = async { lcvScoreManager.getYearlyScores(geocodioLegislator.references.bioguide) }
-
-          buildList {
-            lifetimeScore.await()?.let(::add)
-            addAll(yearlyScores.await())
-          }
+        val bioguideId = geocodioLegislator.references.bioguide
+        val lcvScores = async { getLcvScoresForBioguide(bioguideId) }
+        val districtPhoneNumber = async {
+          districtOfficerManager.getNearestDistrictOfficePhoneNumber(bioguideId, geoCodioResponse.location)
         }
 
         geocodioLegislator.toDomainLegislator(
           state = request.state,
           districtNumber = congressionalDistrict.districtNumber,
-          lcvScores = lcvScores.also { check(it.isNotEmpty()) }
+          lcvScores = lcvScores.await().also { check(it.isNotEmpty()) },
+          districtPhoneNumber = districtPhoneNumber.await(),
         )
       }
     }.awaitAll()
+  }
+
+  @OptIn(ExperimentalStdlibApi::class)
+  private suspend fun getLcvScoresForBioguide(bioguideId: String): List<LcvScore> = coroutineScope {
+    val lifetimeScore = async { lcvScoreManager.getLifetimeScore(bioguideId) }
+    val yearlyScores = async { lcvScoreManager.getYearlyScores(bioguideId) }
+
+    buildList {
+      lifetimeScore.await()?.let(::add)
+      addAll(yearlyScores.await())
+    }
   }
 }
 
@@ -57,12 +63,13 @@ private val GeocodioLegislator.fullName get() = "${bio.firstName} ${bio.lastName
 private fun GeocodioLegislator.toDomainLegislator(
   state: String,
   districtNumber: Int,
+  districtPhoneNumber: String?,
   lcvScores: List<LcvScore>,
 ) = Legislator(
   name = fullName,
   role = type,
   siteUrl = contactInfo.siteUrl,
-  phone = contactInfo.phone,
+  phoneNumbers = listOfNotNull(contactInfo.phone, districtPhoneNumber),
   imageUrl = imageUrl,
   partyAffiliation = bio.party.domainPoliticalParty,
   area = LegislatorArea(state = state, if (type == LegislatorRole.Senator) null else districtNumber),

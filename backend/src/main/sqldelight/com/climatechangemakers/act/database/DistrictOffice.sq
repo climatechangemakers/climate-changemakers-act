@@ -1,0 +1,11 @@
+CREATE TABLE district_office (
+  bioguide_id VARCHAR NOT NULL,
+  phone_number VARCHAR,
+  lat DOUBLE PRECISION,
+  long DOUBLE PRECISION
+);
+
+selectForBioguideId:
+SELECT phone_number, lat, long
+FROM district_office
+WHERE phone_number IS NOT NULL AND bioguide_id = :bioguideId;
