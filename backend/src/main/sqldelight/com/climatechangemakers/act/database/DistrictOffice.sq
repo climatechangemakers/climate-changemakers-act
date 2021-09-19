@@ -5,7 +5,7 @@ CREATE TABLE district_office (
   long DOUBLE PRECISION
 );
 
-selectForBioguideId:
+selectClosestDistrictOfficePhoneNumber:
 SELECT phone_number
 FROM district_office
 WHERE phone_number IS NOT NULL AND bioguide_id = :bioguideId

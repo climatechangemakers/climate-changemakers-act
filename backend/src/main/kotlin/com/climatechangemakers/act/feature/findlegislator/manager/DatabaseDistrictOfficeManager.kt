@@ -18,7 +18,7 @@ class DatabaseDistrictOfficeManager @Inject constructor(
     bioguideId: String,
     requestingLocation: Location
   ): String? = withContext(ioDispatcher) {
-    districtOfficeQueries.selectForBioguideId(
+    districtOfficeQueries.selectClosestDistrictOfficePhoneNumber(
       bioguideId = bioguideId,
       lat = requestingLocation.lat,
       long = requestingLocation.long
