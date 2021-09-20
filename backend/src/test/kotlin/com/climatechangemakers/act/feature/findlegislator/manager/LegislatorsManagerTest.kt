@@ -110,6 +110,7 @@ class LegislatorsManagerTest {
       expected = listOf(
         Legislator(
           name = "A. Donald McEachin",
+          bioguideId = "M00001",
           role = LegislatorRole.Representative,
           siteUrl = "www.foo.com",
           phoneNumbers = listOf("555-555-5555", "867-5309"),
@@ -124,6 +125,7 @@ class LegislatorsManagerTest {
         ),
         Legislator(
           name = "Tim Kaine",
+          bioguideId = "M00001",
           role = LegislatorRole.Senator,
           siteUrl = "www.foo.com",
           phoneNumbers = listOf("555-555-5555", "867-5309"),

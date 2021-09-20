@@ -67,6 +67,7 @@ private fun GeocodioLegislator.toDomainLegislator(
   lcvScores: List<LcvScore>,
 ) = Legislator(
   name = fullName,
+  bioguideId = references.bioguide,
   role = type,
   siteUrl = contactInfo.siteUrl,
   phoneNumbers = listOfNotNull(contactInfo.phone, districtPhoneNumber),

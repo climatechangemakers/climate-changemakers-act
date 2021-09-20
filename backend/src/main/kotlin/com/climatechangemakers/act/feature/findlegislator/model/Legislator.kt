@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable data class Legislator(
   val name: String,
+  val bioguideId: String,
   val role: LegislatorRole,
   val siteUrl: String,
   val phoneNumbers: List<String>,
