@@ -1,6 +1,6 @@
 import { Col, Row } from "react-bootstrap";
 import { ActionInfo } from "../../models/ActionInfo";
-import Legislator from "./Legislator";
+import LegislatorCard from "./LegislatorCard";
 
 type Props = {
     actionInfo: ActionInfo;
@@ -13,7 +13,7 @@ export default function MeetYourReps({ actionInfo }: Props) {
             <Row className="mb-4 justify-content-between d-flex flex-md-row flex-column">
                 {actionInfo.legislators.map((legislator, i) =>
                     <Col className="d-flex justify-content-center" xs="12" md="4" key={i}>
-                        <Legislator legislator={legislator} />
+                        <LegislatorCard legislator={legislator} />
                     </Col>)}
             </Row>
             <p className="fs-5">Let’s let them know what we think by calling, emailing, and tweeting them!</p>
