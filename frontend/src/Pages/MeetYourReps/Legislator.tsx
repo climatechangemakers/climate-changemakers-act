@@ -1,13 +1,13 @@
 import { Card } from "react-bootstrap";
-import styles from "./Representative.module.css"
+import styles from "./Legislator.module.css"
 import lcvlogo from "./lcv.jpg";
-import { Legislator } from "../../models/ActionInfo";
+import { Legislator as LegislatorType } from "../../models/ActionInfo";
 
 type Props = {
-    legislator: Legislator;
+    legislator: LegislatorType;
 }
 
-export default function Representative({ legislator }: Props) {
+export default function Legislator({ legislator }: Props) {
     return (
         <Card key={legislator.name} className="h-100 d-flex pt-3 mb-2" style={{ width: '14rem' }}>
             <div className={`${styles.imageContainer} m-auto`}>
