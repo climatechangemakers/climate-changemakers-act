@@ -24,15 +24,15 @@ plugins {
     id("com.squareup.sqldelight") version "1.5.1"
 }
 
-group = "com.climatechangemakers.act"
+group = "org.climatechangemakers.act"
 
 application {
-    mainClass.set("com.climatechangemakers.act.ApplicationKt")
+    mainClass.set("org.climatechangemakers.act.ApplicationKt")
 }
 
 sqldelight {
     database("Database") {
-        packageName = "com.climatechangemakers.act.database"
+        packageName = "org.climatechangemakers.act.database"
         dialect = "postgresql"
         deriveSchemaFromMigrations = false
         verifyMigrations = false
@@ -42,7 +42,7 @@ sqldelight {
 tasks {
     named<ShadowJar>("shadowJar") {
         manifest {
-            attributes("Main-Class" to "com.climatechangemakers.act.ApplicationKt")
+            attributes("Main-Class" to "org.climatechangemakers.act.ApplicationKt")
         }
     }
 
