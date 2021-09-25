@@ -12,6 +12,7 @@ import org.climatechangemakers.act.feature.lcvscore.model.LcvScore
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import org.climatechangemakers.act.common.model.State
 import javax.inject.Inject
 
 class LegislatorsManager @Inject constructor(
@@ -59,7 +60,7 @@ private val GetLegislatorsByAddressRequest.queryString: String get() = "$streetA
 private val GeocodioLegislator.fullName get() = "${bio.firstName} ${bio.lastName}"
 
 private fun GeocodioLegislator.toDomainLegislator(
-  state: String,
+  state: State,
   districtNumber: Int,
   districtPhoneNumber: String?,
   lcvScores: List<LcvScore>,
