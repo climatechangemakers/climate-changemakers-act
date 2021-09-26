@@ -5,14 +5,15 @@ import org.climatechangemakers.act.common.serializers.StringEnum
 import org.climatechangemakers.act.common.serializers.StringEnumSerializer
 
 @Serializable(with = StateSerializer::class) enum class State(override val value: String) : StringEnum {
-  Alabama("AL"),
   Alaska("AK"),
+  Alabama("AL"),
   AmericanSamoa("AS"),
   Arizona("AZ"),
   Arkansas("AR"),
   California("CA"),
   Colorado("CO"),
   Connecticut("CT"),
+  DistrictOfColumbia("DC"),
   Delaware("DE"),
   Florida("FL"),
   Georgia("GA"),
@@ -41,6 +42,7 @@ import org.climatechangemakers.act.common.serializers.StringEnumSerializer
   NewYork("NY"),
   NorthCarolina("NC"),
   NorthDakota("ND"),
+  NorthernMarianaIslands("MP"),
   Ohio("OH"),
   Oklahoma("OK"),
   Oregon("OR"),
