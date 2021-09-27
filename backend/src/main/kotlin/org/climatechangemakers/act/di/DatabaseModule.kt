@@ -5,6 +5,8 @@ import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.sqlite.driver.asJdbcDriver
 import dagger.Module
 import dagger.Provides
+import org.climatechangemakers.act.common.columnadapter.StringEnumColumnAdapter
+import org.climatechangemakers.act.database.Member_of_congress
 import org.postgresql.ds.PGSimpleDataSource
 
 @Module object DatabaseModule {
@@ -19,5 +21,12 @@ import org.postgresql.ds.PGSimpleDataSource
 
   @Provides fun providesClimateChangeMakersDatabase(
     driver: SqlDriver,
-  ): Database = Database(driver)
+  ): Database = Database(
+    driver = driver,
+    member_of_congressAdapter = Member_of_congress.Adapter(
+      stateAdapter = StringEnumColumnAdapter(),
+      legislative_roleAdapter = StringEnumColumnAdapter(),
+      partyAdapter = StringEnumColumnAdapter(),
+    ),
+  )
 }

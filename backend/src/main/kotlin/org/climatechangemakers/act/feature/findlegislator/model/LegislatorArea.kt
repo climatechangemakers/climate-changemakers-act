@@ -5,5 +5,5 @@ import org.climatechangemakers.act.common.model.RepresentedArea
 
 @Serializable data class LegislatorArea(
   val state: RepresentedArea,
-  val districtNumber: Int?,
+  val districtNumber: Short?,
 )

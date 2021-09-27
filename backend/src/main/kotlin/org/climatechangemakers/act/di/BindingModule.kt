@@ -10,6 +10,8 @@ import org.climatechangemakers.act.feature.lcvscore.manager.DatabaseLcvScoreMana
 import org.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
 import dagger.Binds
 import dagger.Module
+import org.climatechangemakers.act.feature.findlegislator.manager.DatabaseMemberOfCongressManager
+import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongressManager
 
 @Module interface BindingModule {
 
@@ -17,4 +19,5 @@ import dagger.Module
   @Binds fun bindsIssueManager(manager: DatabaseIssueManager): IssueManager
   @Binds fun bindsActionTrackerManager(manager: DatabaseActionTrackerManager): ActionTrackerManager
   @Binds fun bindsDistrictOfficeManager(manager: DatabaseDistrictOfficeManager): DistrictOfficerManager
+  @Binds fun bindsMemberOfCongressManager(manager: DatabaseMemberOfCongressManager): MemberOfCongressManager
 }

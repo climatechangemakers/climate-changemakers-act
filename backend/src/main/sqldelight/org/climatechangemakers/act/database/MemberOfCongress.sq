@@ -1,0 +1,18 @@
+import org.climatechangemakers.act.common.model.RepresentedArea;
+import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole;
+import org.climatechangemakers.act.feature.findlegislator.model.LegislatorPoliticalParty;
+
+CREATE TABLE member_of_congress (
+  bioguide_id VARCHAR NOT NULL PRIMARY KEY,
+  full_name VARCHAR NOT NULL,
+  legislative_role VARCHAR AS LegislatorRole NOT NULL,
+  state VARCHAR AS RepresentedArea NOT NULL,
+  congressional_district SMALLINT,
+  party VARCHAR AS LegislatorPoliticalParty NOT NULL,
+  dc_phone_number VARCHAR NOT NULL,
+  twitter_handle VARCHAR NOT NULL
+);
+
+selectForBioguide:
+SELECT * FROM member_of_congress
+WHERE bioguide_id = :bioguideId;

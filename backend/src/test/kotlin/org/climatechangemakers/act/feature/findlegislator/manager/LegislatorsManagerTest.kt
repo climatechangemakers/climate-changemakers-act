@@ -6,16 +6,14 @@ import org.climatechangemakers.act.feature.findlegislator.model.Fields
 import org.climatechangemakers.act.feature.findlegislator.model.GeocodeResult
 import org.climatechangemakers.act.feature.findlegislator.model.GeocodioApiResult
 import org.climatechangemakers.act.feature.findlegislator.model.GeocodioLegislator
-import org.climatechangemakers.act.feature.findlegislator.model.GeocodioPoliticalParty
 import org.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsByAddressRequest
 import org.climatechangemakers.act.feature.findlegislator.model.Legislator
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorArea
-import org.climatechangemakers.act.feature.findlegislator.model.LegislatorBio
-import org.climatechangemakers.act.feature.findlegislator.model.LegislatorContactInformation
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorPoliticalParty
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorReferences
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
 import org.climatechangemakers.act.feature.findlegislator.model.Location
+import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
 import org.climatechangemakers.act.feature.findlegislator.service.FakeGeocodioService
 import org.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import org.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
@@ -37,8 +35,33 @@ class LegislatorsManagerTest {
     )
   }
 
-  private val fakeDistrictOfficerManager = DistrictOfficerManager { _, _ -> "867-5309" }
+  private val fakeMemberOfCongressManager = MemberOfCongressManager { bioguide ->
+    when (bioguide) {
+      "M00001" -> MemberOfCongress(
+        bioguideId = bioguide,
+        fullName = "A. Donald McEachin",
+        legislativeRole = LegislatorRole.Representative,
+        representedArea = RepresentedArea.NewJersey,
+        congressionalDistrict = 4,
+        party = LegislatorPoliticalParty.Democrat,
+        dcPhoneNumber = "555-555-5555",
+        twitterHandle = "fancytwitter",
+      )
+      "K00001" -> MemberOfCongress(
+        bioguideId = bioguide,
+        fullName = "Tim Kaine",
+        legislativeRole = LegislatorRole.Senator,
+        representedArea = RepresentedArea.NewJersey,
+        congressionalDistrict = null,
+        party = LegislatorPoliticalParty.Republican,
+        dcPhoneNumber = "555-555-5555",
+        twitterHandle = "fancytwitter2",
+      )
+      else -> error("")
+    }
+  }
 
+  private val fakeDistrictOfficerManager = DistrictOfficerManager { _, _ -> "867-5309" }
   private val fakeGeocodioService = FakeGeocodioService {
     GeocodioApiResult(
       results = listOf(
@@ -47,29 +70,9 @@ class LegislatorsManagerTest {
           fields = Fields(
             congressionalDistricts = listOf(
               CongressionalDistrict(
-                "VA_04",
-                4,
                 currentLegislators = listOf(
-                  GeocodioLegislator(
-                    type = LegislatorRole.Representative,
-                    bio = LegislatorBio("McEachin", "A. Donald", GeocodioPoliticalParty.Democrat),
-                    contactInfo = LegislatorContactInformation(
-                      siteUrl = "www.foo.com",
-                      formattedAddress = "foo",
-                      phone = "555-555-5555",
-                    ),
-                    references = LegislatorReferences(bioguide = "M00001")
-                  ),
-                  GeocodioLegislator(
-                    type = LegislatorRole.Senator,
-                    bio = LegislatorBio("Kaine", "Tim", GeocodioPoliticalParty.Republican),
-                    contactInfo = LegislatorContactInformation(
-                      siteUrl = "www.foo.com",
-                      formattedAddress = "foo",
-                      phone = "555-555-5555",
-                    ),
-                    references = LegislatorReferences(bioguide = "M00001")
-                  )
+                  GeocodioLegislator(references = LegislatorReferences(bioguide = "M00001")),
+                  GeocodioLegislator(references = LegislatorReferences(bioguide = "K00001"))
                 )
               )
             )
@@ -79,7 +82,12 @@ class LegislatorsManagerTest {
     )
   }
 
-  private val manager = LegislatorsManager(fakeGeocodioService, fakeLcvManager, fakeDistrictOfficerManager)
+  private val manager = LegislatorsManager(
+    fakeGeocodioService,
+    fakeLcvManager,
+    fakeDistrictOfficerManager,
+    fakeMemberOfCongressManager,
+  )
 
   @Test fun `getLegislators gets called with correct query string`() = suspendTest {
     val request = GetLegislatorsByAddressRequest(
@@ -113,8 +121,8 @@ class LegislatorsManagerTest {
           name = "A. Donald McEachin",
           bioguideId = "M00001",
           role = LegislatorRole.Representative,
-          siteUrl = "www.foo.com",
           phoneNumbers = listOf("555-555-5555", "867-5309"),
+          twitter = "fancytwitter",
           imageUrl = "https://bioguide.congress.gov/bioguide/photo/M/M00001.jpg",
           lcvScores = listOf(
             LcvScore(10, LcvScoreType.LifetimeScore),
@@ -126,11 +134,11 @@ class LegislatorsManagerTest {
         ),
         Legislator(
           name = "Tim Kaine",
-          bioguideId = "M00001",
+          bioguideId = "K00001",
           role = LegislatorRole.Senator,
-          siteUrl = "www.foo.com",
           phoneNumbers = listOf("555-555-5555", "867-5309"),
-          imageUrl = "https://bioguide.congress.gov/bioguide/photo/M/M00001.jpg",
+          twitter = "fancytwitter2",
+          imageUrl = "https://bioguide.congress.gov/bioguide/photo/K/K00001.jpg",
           lcvScores = listOf(
             LcvScore(10, LcvScoreType.LifetimeScore),
             LcvScore(10, LcvScoreType.YearlyScore(2020)),
