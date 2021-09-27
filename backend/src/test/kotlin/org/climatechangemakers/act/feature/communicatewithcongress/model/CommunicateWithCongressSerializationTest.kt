@@ -3,7 +3,7 @@ package org.climatechangemakers.act.feature.communicatewithcongress.model
 import kotlinx.serialization.encodeToString
 import nl.adaptivity.xmlutil.XmlDeclMode
 import nl.adaptivity.xmlutil.serialization.XML
-import org.climatechangemakers.act.common.model.State
+import org.climatechangemakers.act.common.model.RepresentedArea
 import org.junit.Test
 import java.util.Calendar
 import java.util.Calendar.JANUARY
@@ -40,7 +40,7 @@ class CommunicateWithCongressSerializationTest {
         title = null,
         address = "123 Main Street",
         city = "My City",
-        state = State.Virginia,
+        state = RepresentedArea.Virginia,
         postalCode = "12345",
         email = "myemail@email.com",
       ),

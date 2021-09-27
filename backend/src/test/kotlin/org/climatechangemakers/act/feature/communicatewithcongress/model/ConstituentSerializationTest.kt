@@ -2,7 +2,7 @@ package org.climatechangemakers.act.feature.communicatewithcongress.model
 
 import kotlinx.serialization.encodeToString
 import nl.adaptivity.xmlutil.serialization.XML
-import org.climatechangemakers.act.common.model.State
+import org.climatechangemakers.act.common.model.RepresentedArea
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -23,7 +23,7 @@ class ConstituentSerializationTest {
       title = "Climate Change Advocate",
       address = "123 Main Street",
       city = "City",
-      state = State.WestVirginia,
+      state = RepresentedArea.WestVirginia,
       postalCode = "12345",
       email = "fake@fake.org",
     )

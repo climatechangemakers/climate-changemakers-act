@@ -4,7 +4,10 @@ import kotlinx.serialization.Serializable
 import org.climatechangemakers.act.common.serializers.StringEnum
 import org.climatechangemakers.act.common.serializers.StringEnumSerializer
 
-@Serializable(with = StateSerializer::class) enum class State(override val value: String) : StringEnum {
+/**
+ * An area which has at least one representatives present in Congress.
+ */
+@Serializable(with = StateSerializer::class) enum class RepresentedArea(override val value: String) : StringEnum {
   Alaska("AK"),
   Alabama("AL"),
   AmericanSamoa("AS"),
@@ -65,4 +68,4 @@ import org.climatechangemakers.act.common.serializers.StringEnumSerializer
   override fun toString() = value
 }
 
-object StateSerializer : StringEnumSerializer<State>(State.values())
+object StateSerializer : StringEnumSerializer<RepresentedArea>(RepresentedArea.values())

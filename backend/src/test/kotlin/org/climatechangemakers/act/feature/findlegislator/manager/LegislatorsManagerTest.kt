@@ -1,6 +1,6 @@
 package org.climatechangemakers.act.feature.findlegislator.manager
 
-import org.climatechangemakers.act.common.model.State
+import org.climatechangemakers.act.common.model.RepresentedArea
 import org.climatechangemakers.act.feature.findlegislator.model.CongressionalDistrict
 import org.climatechangemakers.act.feature.findlegislator.model.Fields
 import org.climatechangemakers.act.feature.findlegislator.model.GeocodeResult
@@ -85,7 +85,7 @@ class LegislatorsManagerTest {
     val request = GetLegislatorsByAddressRequest(
       streetAddress = "10 Beech Place",
       city = "West Deptford",
-      state = State.NewJersey,
+      state = RepresentedArea.NewJersey,
       postalCode = "08096",
     )
 
@@ -101,7 +101,7 @@ class LegislatorsManagerTest {
     val request = GetLegislatorsByAddressRequest(
       streetAddress = "10 Beech Place",
       city = "West Deptford",
-      state = State.NewJersey,
+      state = RepresentedArea.NewJersey,
       postalCode = "08096",
     )
 
@@ -121,7 +121,7 @@ class LegislatorsManagerTest {
             LcvScore(10, LcvScoreType.YearlyScore(2020)),
             LcvScore(10, LcvScoreType.YearlyScore(2019)),
           ),
-          area = LegislatorArea(State.NewJersey, 4),
+          area = LegislatorArea(RepresentedArea.NewJersey, 4),
           partyAffiliation = LegislatorPoliticalParty.Democrat,
         ),
         Legislator(
@@ -136,7 +136,7 @@ class LegislatorsManagerTest {
             LcvScore(10, LcvScoreType.YearlyScore(2020)),
             LcvScore(10, LcvScoreType.YearlyScore(2019)),
           ),
-          area = LegislatorArea(State.NewJersey, null),
+          area = LegislatorArea(RepresentedArea.NewJersey, null),
           partyAffiliation = LegislatorPoliticalParty.Republican,
         ),
       ),
