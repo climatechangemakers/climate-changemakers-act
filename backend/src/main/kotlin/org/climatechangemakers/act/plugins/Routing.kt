@@ -5,15 +5,16 @@ import org.climatechangemakers.act.feature.action.routing.actionRoutes
 import org.climatechangemakers.act.feature.issue.routing.issueRoutes
 import io.ktor.routing.*
 import io.ktor.application.*
-import io.ktor.response.*
+import org.climatechangemakers.act.feature.values.routing.valuesRoutes
 
 fun Application.configureRouting() {
-  val apiComponent = org.climatechangemakers.act.di.DaggerApiComponent.create()
+  val apiComponent = DaggerApiComponent.create()
 
   routing {
     route("/api") {
       actionRoutes(apiComponent.actionController())
       issueRoutes(apiComponent.issueController())
+      route("/values") { valuesRoutes(apiComponent.valuesController()) }
     }
   }
 }

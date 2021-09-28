@@ -1,8 +1,12 @@
 package org.climatechangemakers.act.feature.communicatewithcongress.model
 
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.serializersModuleOf
 import nl.adaptivity.xmlutil.serialization.XML
 import org.climatechangemakers.act.common.model.RepresentedArea
+import org.climatechangemakers.act.common.model.RepresentedAreaSerializer
 import org.junit.Test
 import kotlin.test.assertEquals
 

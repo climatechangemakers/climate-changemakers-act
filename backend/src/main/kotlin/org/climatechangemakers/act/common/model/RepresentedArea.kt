@@ -5,9 +5,10 @@ import org.climatechangemakers.act.common.serializers.StringEnum
 import org.climatechangemakers.act.common.serializers.StringEnumSerializer
 
 /**
- * An area which has at least one representatives present in Congress.
+ * An area which has at least one representative present in Congress.
  */
-@Serializable(with = RepresentedAreaSerializer::class) enum class RepresentedArea(override val value: String) : StringEnum {
+@Serializable(with = RepresentedAreaSerializer::class)
+enum class RepresentedArea(override val value: String) : StringEnum {
   Alaska("AK"),
   Alabama("AL"),
   AmericanSamoa("AS"),
