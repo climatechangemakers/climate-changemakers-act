@@ -1,6 +1,6 @@
 import confetti from "canvas-confetti";
 import { useEffect } from "react";
-import styles from "./AllDone.module.css"
+import styles from "./AllDone.module.css";
 
 export default function AllDone() {
     useEffect(() => {

@@ -1,7 +1,7 @@
+import { Legislator } from "common/models/ActionInfo";
 import { Card } from "react-bootstrap";
-import styles from "./LegislatorCard.module.css"
 import lcvlogo from "./lcv.jpg";
-import { Legislator } from "../../models/ActionInfo";
+import styles from "./LegislatorCard.module.css";
 
 type Props = {
     legislator: Legislator;

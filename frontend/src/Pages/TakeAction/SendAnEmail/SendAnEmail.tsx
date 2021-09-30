@@ -1,7 +1,7 @@
+import { sendEmailAPI } from "common/api/ClimateChangemakersAPI";
+import { Issue } from "common/models/IssuesResponse";
 import { useState } from "react";
 import { Accordion, Alert, Button, Col, Form, Row } from "react-bootstrap";
-import { sendEmailAPI } from "../../api/ClimateChangemakersAPI";
-import { Issue } from "../../models/IssuesResponse";
 import styles from "./SendAnEmail.module.css";
 
 type Props = {

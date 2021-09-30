@@ -56,7 +56,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 750px;
 }
 
 @keyframes App-logo-spin {

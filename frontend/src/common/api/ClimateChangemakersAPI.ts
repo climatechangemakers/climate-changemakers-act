@@ -1,5 +1,5 @@
-import { ActionInfo } from "../models/ActionInfo";
-import { IssuesResponse } from "../models/IssuesResponse";
+import { ActionInfo } from '../models/ActionInfo';
+import { IssuesResponse } from '../models/IssuesResponse';
 
 type FetchResponse<T> = {
     successful: boolean;

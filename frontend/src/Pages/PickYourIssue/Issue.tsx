@@ -1,6 +1,6 @@
-import { Button, Card } from "react-bootstrap"
-import { Issue } from "../../models/IssuesResponse"
-import styles from "./Issue.module.css"
+import { Button, Card } from 'react-bootstrap';
+import { Issue } from '../../common/models/IssuesResponse';
+import styles from './Issue.module.css';
 
 type Props = {
     onClick: () => void;
