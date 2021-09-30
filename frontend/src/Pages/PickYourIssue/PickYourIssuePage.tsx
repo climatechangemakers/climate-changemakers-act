@@ -10,7 +10,7 @@ import IssueCard from "./Issue";
 export default function PickYourIssuePage() {
     const [errorMessage, setErrorMessage] = useState("");
     const [issues, setIssues] = useState<IssuesResponse>();
-    const [selectedIssue, setSelectedIssue] = useSessionStorage<Issue>("selectedIssue");
+    const [selectedIssue, setSelectedIssue] = useSessionStorage<Issue | undefined>("selectedIssue");
     const [actionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
     const history = useHistory();
 
