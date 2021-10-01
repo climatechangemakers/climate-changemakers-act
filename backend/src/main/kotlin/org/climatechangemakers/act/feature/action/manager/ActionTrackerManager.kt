@@ -16,4 +16,10 @@ interface ActionTrackerManager {
     relatedIssueId: Long,
     contactedPhoneNumber: String,
   )
+
+  suspend fun trackTweet(
+    email: String,
+    contactedBioguideIds: List<String>,
+    relatedIssueId: Long,
+  )
 }

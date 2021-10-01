@@ -1,0 +1,12 @@
+-- CREATE TABLE action_tweet_legislator(
+--   action_contact_legislator_id BIGINT NOT NULL REFERENCES action_contact_legislator(id)
+-- );
+
+insert:
+WITH items AS (
+  INSERT INTO action_contact_legislator(email, issue_id, contacted_bioguide_id)
+  VALUES(:email, :issueId, :bioguideId)
+  RETURNING id
+)
+INSERT INTO action_tweet_legislator
+SELECT id FROM items;
