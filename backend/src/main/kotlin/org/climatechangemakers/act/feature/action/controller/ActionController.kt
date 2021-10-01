@@ -8,12 +8,12 @@ import org.climatechangemakers.act.feature.action.model.SendEmailRequest
 import org.climatechangemakers.act.feature.findlegislator.manager.LegislatorsManager
 import org.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsByAddressRequest
 import io.ktor.application.ApplicationCall
-import io.ktor.http.HttpStatusCode.Companion.NoContent
 import io.ktor.request.receive
 import io.ktor.response.respond
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import org.climatechangemakers.act.common.extension.respondNothing
 import org.climatechangemakers.act.feature.action.model.LogTweetRequest
 import javax.inject.Inject
 
@@ -22,31 +22,33 @@ class ActionController @Inject constructor(
   private val actionTrackerManager: ActionTrackerManager,
 ) {
 
-  suspend fun initiateAction(call: ApplicationCall) = coroutineScope {
+  suspend fun initiateAction(call: ApplicationCall) {
     val request = call.receive<InitiateActionRequest>()
-    val response = async {
-      InitiateActionResponse(
-        request.email,
-        legislatorsManager.getLegislators(request.toGetLegislatorsRequest())
-      )
+
+    val response = coroutineScope {
+      launch { actionTrackerManager.trackActionInitiated(request.email) }
+      async {
+        InitiateActionResponse(request.email, legislatorsManager.getLegislators(request.toGetLegislatorsRequest()))
+      }
     }
 
-    launch { actionTrackerManager.trackActionInitiated(request.email) }
     call.respond(response.await())
   }
 
-  suspend fun sendEmailToLegislators(call: ApplicationCall) = coroutineScope {
+  suspend fun sendEmailToLegislators(call: ApplicationCall) {
     val request = call.receive<SendEmailRequest>()
 
-    launch {
-      actionTrackerManager.trackActionSendEmails(
-        request.originatingEmailAddress,
-        request.contactedBioguideIds,
-        request.relatedIssueId,
-      )
+    coroutineScope {
+      launch {
+        actionTrackerManager.trackActionSendEmails(
+          request.originatingEmailAddress,
+          request.contactedBioguideIds,
+          request.relatedIssueId,
+        )
+      }
     }
 
-    call.response.status(NoContent)
+    call.respondNothing()
   }
 
   suspend fun logLegislatorCallAction(call: ApplicationCall) {
@@ -59,7 +61,7 @@ class ActionController @Inject constructor(
       request.contactedPhoneNumber,
     )
 
-    call.response.status(NoContent)
+    call.respondNothing()
   }
 
   suspend fun logLegislatorTweetAction(call: ApplicationCall) {
@@ -71,7 +73,7 @@ class ActionController @Inject constructor(
       relatedIssueId = request.relatedIssueId,
     )
 
-    call.response.status(NoContent)
+    call.respondNothing()
   }
 }
 
