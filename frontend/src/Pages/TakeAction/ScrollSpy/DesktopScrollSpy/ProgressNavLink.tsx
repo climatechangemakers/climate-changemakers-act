@@ -1,4 +1,4 @@
-import styles from "./ProgressNavLink.module.css"
+import styles from './ProgressNavLink.module.css';
 
 type Props = {
     children: string;

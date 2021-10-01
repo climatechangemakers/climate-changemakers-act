@@ -1,5 +1,5 @@
+import { ActionInfo } from "common/models/ActionInfo";
 import { Col, Row } from "react-bootstrap";
-import { ActionInfo } from "../../models/ActionInfo";
 import LegislatorCard from "./LegislatorCard";
 
 type Props = {

@@ -1,4 +1,4 @@
-import styles from "./ProgressLabel.module.css"
+import styles from './ProgressLabel.module.css';
 
 type Props = {
     children: string;

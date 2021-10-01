@@ -1,45 +1,48 @@
+import { initiateActionAPI } from "common/api/ClimateChangemakersAPI";
+import useSessionStorage from "common/hooks/useSessionStorage";
+import logo from "common/logo.png";
+import { ActionInfo } from "common/models/ActionInfo";
 import { useState } from "react";
-import { Row, Col, Badge, Form, Button, Alert } from "react-bootstrap";
-import { initiateActionAPI } from "../api/ClimateChangemakersAPI";
-import { ActionInfo } from "../models/ActionInfo";
+import { Alert, Badge, Button, Col, Form, Row } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
-type Props = {
-    email: string;
-    setEmail: (email: string) => void;
-    actionInfo: ActionInfo | undefined
-    setActionInfo: (info: ActionInfo) => void;
-}
-
-export default function InitiateAction({ email, setEmail, actionInfo, setActionInfo }: Props) {
+export default function WelcomePage() {
     const [streetAddress, setStreetAddress] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
     const [postalCode, setPostalCode] = useState("");
+    const [email, setEmail] = useState("");
     const [hasTrackConsent, setHasTrackConsent] = useState(false);
     const [hasEmailingConsent, setHasEmailingConsent] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [, setActionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
+    const history = useHistory();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (!actionInfo) {
-            setErrorMessage("");
-            setIsLoading(true);
-            const response = await initiateActionAPI(email, streetAddress, city, state, postalCode, hasTrackConsent, hasEmailingConsent);
-            setIsLoading(false);
+        setErrorMessage("");
+        setIsLoading(true);
+        const response = await initiateActionAPI(email, streetAddress, city, state, postalCode, hasTrackConsent, hasEmailingConsent);
+        setIsLoading(false);
 
-            if (!response.successful) {
-                setErrorMessage(response?.error ?? "Failed to initiate action");
-                return;
-            }
-
-            setActionInfo(response.data!);
+        if (!response.successful) {
+            setErrorMessage(response?.error ?? "Failed to initiate action");
+            return;
         }
+
+        setActionInfo(response.data!);
+        history.push("/pick-your-issue");
     }
 
     return (
         <>
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1 id="find_your_reps">Take Climate Action</h1>
+            <p>
+                Welcome! We want to help you take climate actions whenever you have time for the issues that matter most. In 3 simple steps you can make climate impact:
+            </p>
             <Row className="d-flex mb-3 mb-md-4">
                 <Col md="4" className="mb-2 mb-md-0 d-flex align-items-center justify-content-md-center">
                     <Badge className="me-2" pill>1</Badge>
@@ -174,7 +177,7 @@ export default function InitiateAction({ email, setEmail, actionInfo, setActionI
                         />
                     </Form.Group>
                     <Col sm="12" md="3" className="mt-3 mb-3 d-flex align-items-end justify-content-center">
-                        <Button className="w-100" variant="primary" type="submit" disabled={!!actionInfo}>
+                        <Button className="w-100" variant="primary" type="submit">
                             {errorMessage
                                 ? "Try again"
                                 : isLoading
