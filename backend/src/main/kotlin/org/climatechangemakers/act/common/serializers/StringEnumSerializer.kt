@@ -11,12 +11,12 @@ interface StringEnum {
 }
 
 abstract class StringEnumSerializer<T>(
-  private val enumValues: Array<out T>,
+  enumValues: Array<out T>,
 ) : KSerializer<T> where T : StringEnum, T : Enum<T> {
+
+  private val enumMap = enumValues.associateBy { it.value }
 
   override val descriptor get() = PrimitiveSerialDescriptor("StringEnumSerializer", PrimitiveKind.STRING)
   override fun serialize(encoder: Encoder, value: T) = encoder.encodeString(value.value)
-  override fun deserialize(decoder: Decoder): T = decoder.decodeString().let { value ->
-    enumValues.first { it.value == value }
-  }
+  override fun deserialize(decoder: Decoder): T = checkNotNull(enumMap[decoder.decodeString()])
 }

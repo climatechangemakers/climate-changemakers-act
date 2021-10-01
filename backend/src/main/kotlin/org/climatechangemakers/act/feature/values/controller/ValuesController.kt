@@ -1,0 +1,42 @@
+package org.climatechangemakers.act.feature.values.controller
+
+import io.ktor.application.ApplicationCall
+import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
+import io.ktor.response.respondText
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.builtins.ArraySerializer
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.buildClassSerialDescriptor
+import kotlinx.serialization.descriptors.element
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.encoding.encodeStructure
+import kotlinx.serialization.json.Json
+import org.climatechangemakers.act.common.model.RepresentedArea
+import javax.inject.Inject
+
+class ValuesController @Inject constructor(private val json: Json) {
+
+  suspend fun areaValues(call: ApplicationCall) {
+    call.respondText(
+      contentType = ContentType.Application.Json,
+      text = json.encodeToString(ArraySerializer(FullNameAreaSerializer), RepresentedArea.values()),
+      status = HttpStatusCode.OK,
+    )
+  }
+}
+
+private object FullNameAreaSerializer : KSerializer<RepresentedArea> {
+
+  override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Area") {
+    element<String>("shortName")
+    element<String>("fullName")
+  }
+
+  override fun deserialize(decoder: Decoder) = TODO()
+  override fun serialize(encoder: Encoder, value: RepresentedArea) = encoder.encodeStructure(descriptor) {
+    encodeStringElement(descriptor, 0, value.value)
+    encodeStringElement(descriptor, 1, value.fullName)
+  }
+}
