@@ -632,6 +632,15 @@ ALTER SEQUENCE public.action_contact_legislator_id_seq OWNED BY public.action_co
 
 
 --
+-- Name: action_email_legislator; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.action_email_legislator (
+    action_contact_legislator_id bigint NOT NULL
+);
+
+
+--
 -- Name: action_initiate; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3852,6 +3861,14 @@ ALTER TABLE ONLY public.action_call_legislator
 
 ALTER TABLE ONLY public.action_contact_legislator
     ADD CONSTRAINT action_contact_legislator_issue_id_fkey FOREIGN KEY (issue_id) REFERENCES public.issue(id) ON DELETE CASCADE;
+
+
+--
+-- Name: action_email_legislator action_email_legislator_action_contact_legislator_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.action_email_legislator
+    ADD CONSTRAINT action_email_legislator_action_contact_legislator_id_fkey FOREIGN KEY (action_contact_legislator_id) REFERENCES public.action_contact_legislator(id) ON DELETE CASCADE;
 
 
 --
