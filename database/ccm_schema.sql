@@ -642,6 +642,15 @@ CREATE TABLE public.action_initiate (
 
 
 --
+-- Name: action_tweet_legislator; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.action_tweet_legislator (
+    action_contact_legislator_id bigint NOT NULL
+);
+
+
+--
 -- Name: attendance_preview; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3843,6 +3852,14 @@ ALTER TABLE ONLY public.action_call_legislator
 
 ALTER TABLE ONLY public.action_contact_legislator
     ADD CONSTRAINT action_contact_legislator_issue_id_fkey FOREIGN KEY (issue_id) REFERENCES public.issue(id) ON DELETE CASCADE;
+
+
+--
+-- Name: action_tweet_legislator action_tweet_legislator_action_contact_legislator_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.action_tweet_legislator
+    ADD CONSTRAINT action_tweet_legislator_action_contact_legislator_id_fkey FOREIGN KEY (action_contact_legislator_id) REFERENCES public.action_contact_legislator(id) ON DELETE CASCADE;
 
 
 --

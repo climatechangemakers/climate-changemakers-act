@@ -32,3 +32,11 @@ CREATE TABLE action_call_legislator(
   action_contact_legislator_id BIGINT NOT NULL REFERENCES action_contact_legislator(id) ON DELETE CASCADE,
   phone_number_called VARCHAR NOT NULL
 );
+
+
+-- TODO(kcianfarini) Defining these tables in the same .sq file because of a SQLDelight bug.
+-- TODO(kcianfarini) related issue: https://github.com/cashapp/sqldelight/issues/2559
+-- TODO(kcianfarini) Move this table definition to its own file.
+CREATE TABLE action_tweet_legislator(
+  action_contact_legislator_id BIGINT NOT NULL REFERENCES action_contact_legislator(id) ON DELETE CASCADE
+);

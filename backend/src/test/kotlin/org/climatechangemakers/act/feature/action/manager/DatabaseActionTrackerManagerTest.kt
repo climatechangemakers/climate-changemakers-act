@@ -45,6 +45,32 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
     )
   }
 
+  @OptIn(ExperimentalStdlibApi::class)
+  @Test fun `recording a tweet inserts into both tables`() = suspendTest {
+    insertIssue(1, "issue")
+    manager.trackTweet("foo@foo.com", listOf("foo", "bar"), 1)
+
+    assertEquals(
+      2,
+      driver.executeQuery(0, "SELECT COUNT(*) FROM action_tweet_legislator", 0).let {
+        it.next()
+        it.getLong(0)
+      },
+    )
+
+    assertEquals(
+      listOf("foo", "bar"),
+      driver.executeQuery(0, "SELECT contacted_bioguide_id FROM action_contact_legislator", 0).let { cursor ->
+        buildList {
+          cursor.next()
+          add(cursor.getString(0))
+          cursor.next()
+          add(cursor.getString(0))
+        }
+      }
+    )
+  }
+
   private fun insertIssue(id: Long, title: String) {
     driver.execute(0, "INSERT INTO issue(id, title) VALUES(?,?)", 2) {
       bindLong(1, id)

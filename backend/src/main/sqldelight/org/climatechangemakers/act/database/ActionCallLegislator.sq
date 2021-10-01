@@ -4,5 +4,10 @@
 -- );
 
 insert:
+WITH items AS (
+  INSERT INTO action_contact_legislator(email, issue_id, contacted_bioguide_id)
+  VALUES(:email, :issueId, :bioguideId)
+  RETURNING id
+)
 INSERT INTO action_call_legislator(action_contact_legislator_id, phone_number_called)
-VALUES(:actionContactLegislatorId, :phoneNumberCalled);
+SELECT id, :phoneNumber FROM items;

@@ -14,6 +14,7 @@ import io.ktor.response.respond
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import org.climatechangemakers.act.feature.action.model.LogTweetRequest
 import javax.inject.Inject
 
 class ActionController @Inject constructor(
@@ -56,6 +57,18 @@ class ActionController @Inject constructor(
       request.contactedBioguideId,
       request.relatedIssueId,
       request.contactedPhoneNumber,
+    )
+
+    call.response.status(NoContent)
+  }
+
+  suspend fun logLegislatorTweetAction(call: ApplicationCall) {
+    val request = call.receive<LogTweetRequest>()
+
+    actionTrackerManager.trackTweet(
+      email = request.originatingEmailAddress,
+      contactedBioguideIds = request.contactedBioguideIds,
+      relatedIssueId = request.relatedIssueId,
     )
 
     call.response.status(NoContent)
