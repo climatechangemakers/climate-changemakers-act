@@ -11,6 +11,3 @@ WITH items AS (
 )
 INSERT INTO action_call_legislator(action_contact_legislator_id, phone_number_called)
 SELECT id, :phoneNumber FROM items;
-
--- INSERT INTO action_call_legislator(action_contact_legislator_id, phone_number_called)
--- VALUES(:actionContactLegislatorId, :phoneNumberCalled);
