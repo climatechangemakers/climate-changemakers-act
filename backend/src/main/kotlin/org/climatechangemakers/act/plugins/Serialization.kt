@@ -8,12 +8,8 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.serializersModuleOf
 import org.climatechangemakers.act.common.model.RepresentedAreaSerializer
 
-fun Application.configureSerialization() {
+fun Application.configureSerialization(json: Json) {
   install(ContentNegotiation) {
-    val json = Json {
-      prettyPrint = true
-      serializersModule = serializersModuleOf(RepresentedAreaSerializer)
-    }
     json(json)
   }
 }
