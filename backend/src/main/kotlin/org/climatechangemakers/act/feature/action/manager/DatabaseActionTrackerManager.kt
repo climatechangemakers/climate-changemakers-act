@@ -35,15 +35,9 @@ class DatabaseActionTrackerManager @Inject constructor(
     email: String,
     contactedBioguideId: String,
     relatedIssueId: Long,
-    contactedPhoneNumber: String
+    contactedPhoneNumber: String,
   ) = withContext(ioDispatcher) {
-    // TODO(kcianfarini) get rid of this when transaction RETURNING is supported.
-    // TODO(kcianfarini) related issue: https://github.com/AlecStrong/sql-psi/issues/173
-    actionCallLegislatorQueries.transaction {
-      actionContactLegislatorQueries.insert(email, relatedIssueId, contactedBioguideId)
-      val insertedId: Long = actionContactLegislatorQueries.getMaxId().executeAsOne()
-      actionCallLegislatorQueries.insert(insertedId, contactedPhoneNumber)
-    }
+    actionCallLegislatorQueries.insert(email, relatedIssueId, contactedBioguideId, contactedPhoneNumber)
   }
 
   override suspend fun trackTweet(
