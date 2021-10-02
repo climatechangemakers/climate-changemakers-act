@@ -39,4 +39,4 @@ import org.climatechangemakers.act.common.serializers.StringEnumSerializer
   WaterResourcesDevelopment("Water Resources Development"),
 }
 
-private object TopicSerializer : StringEnumSerializer<Topic>(Topic.values())
+object TopicSerializer : StringEnumSerializer<Topic>(Topic.values())

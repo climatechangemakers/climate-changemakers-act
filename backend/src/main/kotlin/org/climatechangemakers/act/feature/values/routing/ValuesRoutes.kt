@@ -8,4 +8,5 @@ import org.climatechangemakers.act.feature.values.controller.ValuesController
 fun Route.valuesRoutes(controller: ValuesController) {
 
   get("/areas") { controller.areaValues(call) }
+  get("/library-of-congress-topics") { controller.libraryOfCongressTopicValues(call) }
 }
