@@ -685,6 +685,16 @@ CREATE TABLE public.district_office (
 
 
 --
+-- Name: example_issue_why_statement; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.example_issue_why_statement (
+    issue_id bigint NOT NULL,
+    statement character varying NOT NULL
+);
+
+
+--
 -- Name: focus_issue; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2081,6 +2091,14 @@ K000395	570-322-3961	\N	\N
 B001311	740-218-5300	\N	\N
 M001210	252-931-1003	\N	\N
 M001210	910-937-6929	\N	\N
+\.
+
+
+--
+-- Data for Name: example_issue_why_statement; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.example_issue_why_statement (issue_id, statement) FROM stdin;
 \.
 
 
@@ -3885,6 +3903,14 @@ ALTER TABLE ONLY public.action_tweet_legislator
 
 ALTER TABLE ONLY public.attendance_preview
     ADD CONSTRAINT attendance_preview_airtable_id_fkey FOREIGN KEY (airtable_id) REFERENCES public.contacts(airtable_id) ON DELETE RESTRICT;
+
+
+--
+-- Name: example_issue_why_statement example_issue_why_statement_issue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.example_issue_why_statement
+    ADD CONSTRAINT example_issue_why_statement_issue_id_fkey FOREIGN KEY (issue_id) REFERENCES public.issue(id) ON DELETE CASCADE;
 
 
 --
