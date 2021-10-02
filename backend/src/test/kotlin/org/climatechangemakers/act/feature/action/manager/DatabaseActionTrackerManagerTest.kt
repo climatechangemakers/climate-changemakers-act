@@ -22,6 +22,14 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
         it.getLong(0)
       }
     )
+
+    assertEquals(
+      1,
+      driver.executeQuery(0, "SELECT action_contact_legislator_id FROM action_email_legislator", 0).let {
+        it.next()
+        it.getLong(0)
+      }
+    )
   }
 
   @Test fun `recording a legislator call insert into both tables`() = suspendTest {
