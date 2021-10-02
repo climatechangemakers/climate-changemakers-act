@@ -58,10 +58,39 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
     )
   }
 
+  @Test fun `example statements for issue are correct`() = suspendTest {
+    insertIssue(1, "foo")
+    insertIssue(2, "bar")
+    insertExampleWhyStatement(1, "This is correct")
+    insertExampleWhyStatement(2, "this is incorrect")
+
+    assertEquals(
+      listOf("This is correct"),
+      issueManager.getExampleStatementsForIssue(1),
+    )
+  }
+
+  @Test fun `example statements query produces max 5 results`() = suspendTest {
+    insertIssue(1, "foo")
+    repeat(10) { insertExampleWhyStatement(1, "$it") }
+
+    assertEquals(
+      5,
+      issueManager.getExampleStatementsForIssue(1).size,
+    )
+  }
+
   private fun insertIssue(id: Long, title: String) {
     driver.execute(0, "INSERT INTO issue(id, title) VALUES(?,?)", 2) {
       bindLong(1, id)
       bindString(2, title)
+    }
+  }
+
+  private fun insertExampleWhyStatement(issueId: Long, statement: String) {
+    driver.execute(0, "INSERT INTO example_issue_why_statement(issue_id, statement) VALUES(?,?)", 2) {
+      bindLong(1, issueId)
+      bindString(2, statement)
     }
   }
 

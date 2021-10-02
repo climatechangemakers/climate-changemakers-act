@@ -16,6 +16,7 @@ class DatabaseIssueManager @Inject constructor(
 ) : IssueManager {
 
   private val issueQueries = database.issueAndFocusQueries
+  private val exampleIssueWhyStatementQueries = database.exampleIssueWhyStatementQueries
   private val talkingPointQueries = database.talkingPointQueries
 
   override suspend fun getFocusIssue(): Issue = withContext(ioDispatcher) {
@@ -27,6 +28,10 @@ class DatabaseIssueManager @Inject constructor(
     issueQueries.selectUnfocused().executeAsList().map { issue ->
       async { Issue(issue.id, issue.title, getIssueTalkingPoints(issue.id)) }
     }.awaitAll()
+  }
+
+  override suspend fun getExampleStatementsForIssue(issueId: Long): List<String> = withContext(ioDispatcher) {
+    exampleIssueWhyStatementQueries.selectForIssueId(issueId).executeAsList()
   }
 
   private suspend fun getIssueTalkingPoints(issueId: Long): List<TalkingPoint> = withContext(ioDispatcher) {
