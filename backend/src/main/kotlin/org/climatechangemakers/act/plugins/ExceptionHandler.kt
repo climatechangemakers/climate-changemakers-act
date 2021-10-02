@@ -7,6 +7,7 @@ import io.ktor.features.StatusPages
 import io.ktor.http.HttpStatusCode
 import io.ktor.response.respond
 import kotlinx.serialization.SerializationException
+import org.postgresql.util.PSQLException
 import retrofit2.HttpException
 
 fun Application.configureExceptionHandler() {
@@ -19,6 +20,10 @@ fun Application.configureExceptionHandler() {
     exception<HttpException> { cause ->
       // TODO(kcianfarini) log this
       call.respond(HttpStatusCode.InternalServerError, cause.message())
+    }
+
+    exception<Exception> { cause ->
+      call.respond(HttpStatusCode.InternalServerError, cause.message ?: "")
     }
   }
 }
