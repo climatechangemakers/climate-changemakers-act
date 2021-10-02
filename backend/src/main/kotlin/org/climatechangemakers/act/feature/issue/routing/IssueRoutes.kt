@@ -9,6 +9,6 @@ import io.ktor.util.getOrFail
 fun Route.issueRoutes(controller: IssueListController) {
   get("/issues") { controller.respondIssueList(call) }
   get("/issues/{issueId}/example-statements") {
-    controller.respondExampleWhyStatements(call, call.parameters.getOrFail("issueId").toLong())
+    controller.respondExampleWhyStatements(call, call.parameters.getOrFail<Long>("issueId"))
   }
 }
