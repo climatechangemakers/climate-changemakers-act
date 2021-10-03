@@ -15,3 +15,6 @@ selectUnfocused:
 SELECT id, title
 FROM issue_and_focus
 WHERE is_focused = FALSE;
+
+rowCount:
+SELECT COUNT(*) FROM issue_and_focus WHERE id = :issueId;
