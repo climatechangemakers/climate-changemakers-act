@@ -19,8 +19,9 @@ RUN useradd $APPLICATION_USER
 # Giving permissions
 RUN mkdir /app
 RUN mkdir /app/resources
+RUN mkdir /app/log
 RUN chown -R $APPLICATION_USER /app
-RUN chmod -R 755 /app
+RUN chmod -R 777 /app
 
 # Setting user to use when running the image
 USER $APPLICATION_USER
