@@ -1,8 +1,9 @@
-import { initiateActionAPI } from "common/api/ClimateChangemakersAPI";
+import { areasAPI, initiateActionAPI } from "common/api/ClimateChangemakersAPI";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import logo from "common/logo.png";
 import { ActionInfo } from "common/models/ActionInfo";
-import { useState } from "react";
+import { AreasResponse } from "common/models/Areas";
+import { useEffect, useState } from "react";
 import { Alert, Badge, Button, Col, Form, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
@@ -16,8 +17,21 @@ export default function WelcomePage() {
     const [hasEmailingConsent, setHasEmailingConsent] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [areas, setAreas] = useState<AreasResponse>();
     const [, setActionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
     const history = useHistory();
+
+    useEffect(() => {
+        const fetchIssues = async () => {
+            const response = await areasAPI();
+            if (!response.successful) {
+                setErrorMessage(response.error ?? "Failed to fetch areas");
+                return;
+            }
+            setAreas(response.data!);
+        }
+        fetchIssues();
+    }, [setAreas])
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -77,63 +91,9 @@ export default function WelcomePage() {
                     <Form.Group as={Col} md="3" className="mb-3 col-12 d-flex align-items-start flex-column" controlId="formGridState">
                         <Form.Label>State</Form.Label>
                         <Form.Select value={state} onChange={e => setState(e.currentTarget.value)} required>
-                            <option value="">Select</option>
-                            <option value="AL">Alabama</option>
-                            <option value="AK">Alaska</option>
-                            <option value="AS">American Samoa</option>
-                            <option value="AZ">Arizona</option>
-                            <option value="AR">Arkansas</option>
-                            <option value="CA">California</option>
-                            <option value="CO">Colorado</option>
-                            <option value="CT">Connecticut</option>
-                            <option value="DE">Delaware</option>
-                            <option value="DC">District Of Columbia</option>
-                            <option value="FL">Florida</option>
-                            <option value="GA">Georgia</option>
-                            <option value="GU">Guam</option>
-                            <option value="HI">Hawaii</option>
-                            <option value="ID">Idaho</option>
-                            <option value="IL">Illinois</option>
-                            <option value="IN">Indiana</option>
-                            <option value="IA">Iowa</option>
-                            <option value="KS">Kansas</option>
-                            <option value="KY">Kentucky</option>
-                            <option value="LA">Louisiana</option>
-                            <option value="ME">Maine</option>
-                            <option value="MD">Maryland</option>
-                            <option value="MA">Massachusetts</option>
-                            <option value="MI">Michigan</option>
-                            <option value="MN">Minnesota</option>
-                            <option value="MS">Mississippi</option>
-                            <option value="MO">Missouri</option>
-                            <option value="MT">Montana</option>
-                            <option value="NE">Nebraska</option>
-                            <option value="NV">Nevada</option>
-                            <option value="NH">New Hampshire</option>
-                            <option value="NJ">New Jersey</option>
-                            <option value="NM">New Mexico</option>
-                            <option value="NY">New York</option>
-                            <option value="NC">North Carolina</option>
-                            <option value="ND">North Dakota</option>
-                            <option value="MP">Northern Mariana Islands</option>
-                            <option value="OH">Ohio</option>
-                            <option value="OK">Oklahoma</option>
-                            <option value="OR">Oregon</option>
-                            <option value="PA">Pennsylvania</option>
-                            <option value="PR">Puerto Rico</option>
-                            <option value="RI">Rhode Island</option>
-                            <option value="SC">South Carolina</option>
-                            <option value="SD">South Dakota</option>
-                            <option value="TN">Tennessee</option>
-                            <option value="TX">Texas</option>
-                            <option value="UT">Utah</option>
-                            <option value="VT">Vermont</option>
-                            <option value="VI">Virgin Islands</option>
-                            <option value="VA">Virginia</option>
-                            <option value="WA">Washington</option>
-                            <option value="WV">West Virginia</option>
-                            <option value="WI">Wisconsin</option>
-                            <option value="WY">Wyoming</option>
+                            {<option value="">Select</option>}
+                            {areas?.map(area =>
+                                <option key={area.shortName} value={area.shortName}>{area.fullName}</option>)}
                         </Form.Select>
                     </Form.Group>
                     <Form.Group as={Col} md="3" className="mb-3 d-flex align-items-start flex-column" controlId="formGridZip">
