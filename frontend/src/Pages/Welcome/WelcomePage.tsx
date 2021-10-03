@@ -93,7 +93,7 @@ export default function WelcomePage() {
                         <Form.Select value={state} onChange={e => setState(e.currentTarget.value)} required>
                             {<option value="">Select</option>}
                             {areas?.map(area =>
-                                <option key={area.shortName} value={area.shortName}>{area.fullName} </option>)}
+                                <option key={area.shortName} value={area.shortName}>{area.fullName}</option>)}
                         </Form.Select>
                     </Form.Group>
                     <Form.Group as={Col} md="3" className="mb-3 d-flex align-items-start flex-column" controlId="formGridZip">
