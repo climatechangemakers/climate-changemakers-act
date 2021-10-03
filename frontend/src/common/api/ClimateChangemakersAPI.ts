@@ -1,4 +1,5 @@
 import { ActionInfo } from "common/models/ActionInfo";
+import { AreasResponse } from "common/models/Areas";
 import { IssuesResponse } from "common/models/IssuesResponse";
 
 type FetchResponse<T> = {
@@ -54,3 +55,6 @@ export const sendEmailAPI = (originatingEmailAddress: string, relatedIssueId: nu
 
 export const issueAPI = () =>
     get<IssuesResponse>("/issues")
+
+export const areasAPI = () =>
+    get<AreasResponse>("/values/areas");
