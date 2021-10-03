@@ -7,6 +7,7 @@ import org.climatechangemakers.act.feature.util.TestContainerProvider
 import org.junit.Test
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class DatabaseIssueManagerTest : TestContainerProvider() {
 
@@ -78,6 +79,12 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
       5,
       issueManager.getExampleStatementsForIssue(1).size,
     )
+  }
+
+  @Test fun `example statements throws for a non-existent issueId`() = suspendTest {
+    assertFailsWith<NoSuchElementException> {
+      issueManager.getExampleStatementsForIssue(100L)
+    }
   }
 
   private fun insertIssue(id: Long, title: String) {
