@@ -9,4 +9,5 @@ fun Route.valuesRoutes(controller: ValuesController) {
 
   get("/areas") { controller.areaValues(call) }
   get("/library-of-congress-topics") { controller.libraryOfCongressTopicValues(call) }
+  get("/prefixes") { controller.prefixValues(call) }
 }
