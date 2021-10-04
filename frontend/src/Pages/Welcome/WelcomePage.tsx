@@ -5,15 +5,20 @@ import { ActionInfo } from "common/models/ActionInfo";
 import { useState } from "react";
 import { Alert, Badge, Button, Col, Form, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import styles from "./WelcomePage.module.css";
 
 export default function WelcomePage() {
-    const [streetAddress, setStreetAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [postalCode, setPostalCode] = useState("");
-    const [email, setEmail] = useState("");
-    const [hasTrackConsent, setHasTrackConsent] = useState(false);
-    const [hasEmailingConsent, setHasEmailingConsent] = useState(false);
+    const [formInfo, setFormInfo] = useState(
+        {
+            streetAddress: "",
+            city: "",
+            state: "",
+            postalCode: "",
+            email: "",
+            hasTrackingConsent: false,
+            hasEmailingConsent: false
+        });
+
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [, setActionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
@@ -24,7 +29,7 @@ export default function WelcomePage() {
 
         setErrorMessage("");
         setIsLoading(true);
-        const response = await initiateActionAPI(email, streetAddress, city, state, postalCode, hasTrackConsent, hasEmailingConsent);
+        const response = await initiateActionAPI(formInfo);
         setIsLoading(false);
 
         if (!response.successful) {
@@ -37,46 +42,56 @@ export default function WelcomePage() {
     }
 
     return (
-        <>
+        <div className={`${styles.welcomePageContainer} m-auto`}>
             <img src={logo} className="App-logo" alt="logo" />
-            <h1 id="find_your_reps">Take Climate Action</h1>
-            <p>
-                Welcome! We want to help you take climate actions whenever you have time for the issues that matter most. In 3 simple steps you can make climate impact:
-            </p>
+            <h1 id="find_your_reps">Climate Action in 3 Steps</h1>
+            <p>Advocate to your elected reprepresentatives on issues that matter to you.</p>
             <Row className="d-flex mb-3 mb-md-4">
-                <Col md="4" className="mb-2 mb-md-0 d-flex align-items-center justify-content-md-center">
-                    <Badge className="me-2" pill>1</Badge>
+                <Col md="4" className="fs-5 mb-2 mb-md-0 d-flex align-items-center justify-content-md-center">
+                    <Badge className="me-2 text-dark" pill>1</Badge>
                     <span>Choose an issue</span>
                 </Col>
-                <Col md="4" className="mb-2 mb-md-0 d-flex align-items-center justify-content-md-center">
-                    <Badge className="me-2" pill>2</Badge>
+                <Col md="4" className="fs-5 mb-2 mb-md-0 d-flex align-items-center justify-content-md-center">
+                    <Badge className="me-2 text-dark" pill>2</Badge>
                     <span>Write your why</span>
                 </Col>
-                <Col md="4" className="mb-2 mb-md-0 d-flex align-items-center justify-content-md-center">
-                    <Badge className="me-2" pill>3</Badge>
+                <Col md="4" className="fs-5 mb-2 mb-md-0 d-flex align-items-center justify-content-md-center">
+                    <Badge className="me-2 text-dark" pill>3</Badge>
                     <span>Use your voice</span>
                 </Col>
             </Row>
-            <Form className="pb-3" onSubmit={handleSubmit}>
-                <Row>
-                    <Form.Group as={Col} md="6" className="mb-3 d-flex align-items-start flex-column" controlId="formGridAddress">
-                        <Form.Label>Address</Form.Label>
+            <div className={`${styles.formContainer} d-flex m-auto`}>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group className="mb-2 d-flex align-items-start align-items-md-center flex-column flex-md-row" controlId="formGridEmail">
+                        <Form.Label className={`${styles.formLabel} text-start mb-md-0 mb-1`}>Email</Form.Label>
                         <Form.Control
-                            value={streetAddress}
-                            onChange={e => setStreetAddress(e.currentTarget.value)}
+                            className={styles.formControl}
+                            value={formInfo.email}
+                            onChange={e => setFormInfo({ ...formInfo, email: e.currentTarget.value })}
+                            type="email"
+                            placeholder="ilovetheplanet@example.com"
+                            required />
+                    </Form.Group>
+                    <Form.Group className="mb-2 d-flex align-items-start align-items-md-center flex-column flex-md-row" controlId="formGridAddress">
+                        <Form.Label className={`${styles.formLabel} text-start mb-md-0 mb-1`}>Street</Form.Label>
+                        <Form.Control
+                            className={styles.formControl}
+                            value={formInfo.streetAddress}
+                            onChange={e => setFormInfo({ ...formInfo, streetAddress: e.currentTarget.value })}
                             placeholder="1234 Make An Impact St"
                             required />
                     </Form.Group>
-                    <Form.Group as={Col} md="3" className="mb-3 col-12 d-flex align-items-start flex-column" controlId="formGridCity">
-                        <Form.Label>City</Form.Label>
+                    <Form.Group className="mb-2 d-flex align-items-start align-items-md-center flex-column flex-md-row" controlId="formGridCity">
+                        <Form.Label className={`${styles.formLabel} text-start mb-md-0 mb-1`}>City</Form.Label>
                         <Form.Control
-                            value={city}
-                            onChange={e => setCity(e.currentTarget.value)}
+                            className={styles.formControl}
+                            value={formInfo.city}
+                            onChange={e => setFormInfo({ ...formInfo, city: e.currentTarget.value })}
                             required />
                     </Form.Group>
-                    <Form.Group as={Col} md="3" className="mb-3 col-12 d-flex align-items-start flex-column" controlId="formGridState">
-                        <Form.Label>State</Form.Label>
-                        <Form.Select value={state} onChange={e => setState(e.currentTarget.value)} required>
+                    <Form.Group className="mb-2 d-flex align-items-start align-items-md-center flex-column flex-md-row" controlId="formGridState">
+                        <Form.Label className={`${styles.formLabel} text-start mb-md-0 mb-1`}>State</Form.Label>
+                        <Form.Select className={styles.formControl} value={formInfo.state} onChange={e => setFormInfo({ ...formInfo, state: e.currentTarget.value })} required>
                             <option value="">Select</option>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
@@ -136,57 +151,43 @@ export default function WelcomePage() {
                             <option value="WY">Wyoming</option>
                         </Form.Select>
                     </Form.Group>
-                    <Form.Group as={Col} md="3" className="mb-3 d-flex align-items-start flex-column" controlId="formGridZip">
-                        <Form.Label>Zip</Form.Label>
-                        <Form.Control value={postalCode} onChange={e => setPostalCode(e.currentTarget.value)} required />
-                    </Form.Group>
-                    <Form.Group lg as={Col} md="6" className="mb-3 d-flex align-items-start flex-column" controlId="formGridEmail">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control
-                            value={email}
-                            onChange={e => setEmail(e.currentTarget.value)}
-                            type="email"
-                            placeholder="ilovetheplanet@example.com"
-                            required />
+                    <Form.Group className="mb-3 d-flex align-items-start align-items-md-center flex-column flex-md-row" controlId="formGridZip">
+                        <Form.Label className={`${styles.formLabel} text-start mb-md-0 mb-1`}>Zip Code</Form.Label>
+                        <Form.Control className={styles.formControl} value={formInfo.postalCode} onChange={e => setFormInfo({ ...formInfo, postalCode: e.currentTarget.value })} required />
                     </Form.Group>
                     <Form.Group
-                        as={Col}
-                        md="12"
-                        className="mb-3 fs-5"
+                        className="mb-3"
                         controlId="formConsentCheckbox">
                         <Form.Check
                             className="text-start"
-                            checked={hasTrackConsent}
-                            onChange={() => setHasTrackConsent(!hasTrackConsent)}
+                            checked={formInfo.hasTrackingConsent}
+                            onChange={() => setFormInfo({ ...formInfo, hasTrackingConsent: !formInfo.hasTrackingConsent })}
                             type="checkbox"
                             label="I consent to allow Climate Changemakers to store my email address and the policymakers I contact to track our collective impact. (required)"
                             required
                         />
                     </Form.Group>
                     <Form.Group
-                        as={Col}
-                        md="12"
                         className="mb-3"
                         controlId="formInformationalCheckbox">
                         <Form.Check
-                            className="text-start fs-5"
-                            checked={hasEmailingConsent}
-                            onChange={() => setHasEmailingConsent(!hasEmailingConsent)}
+                            className="text-start"
+                            checked={formInfo.hasEmailingConsent}
+                            onChange={() => setFormInfo({ ...formInfo, hasEmailingConsent: !formInfo.hasEmailingConsent })}
                             type="checkbox"
                             label="Yes, I would like to receive occasional information emails from Climate Changemakers! (optional)"
                         />
                     </Form.Group>
-                    <Col sm="12" md="3" className="mt-3 mb-3 d-flex align-items-end justify-content-center">
-                        <Button className="w-100" variant="primary" type="submit">
-                            {errorMessage
-                                ? "Try again"
-                                : isLoading
-                                    ? "Loading..."
-                                    : "Find Your Reps!"}
-                        </Button>
-                    </Col>
-                </Row>
-            </Form>
+                    <Button className="w-100 text-dark fs-5" variant="primary" type="submit">
+                        {errorMessage
+                            ? "Try again"
+                            : isLoading
+                                ? "Loading..."
+                                : "Start Advocating"}
+                    </Button>
+                    <p className="mt-2 text-start smallText">Complete street address needed to identify your elected representatives. Climate Changemakers will not save your address or use it for any other purpose.</p>
+                </Form>
+            </div>
             {errorMessage &&
                 <Row>
                     <Col>
@@ -195,6 +196,6 @@ export default function WelcomePage() {
                         </Alert>
                     </Col>
                 </Row>}
-        </>
+        </div>
     )
 }
