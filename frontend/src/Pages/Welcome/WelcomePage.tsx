@@ -26,7 +26,7 @@ export default function WelcomePage() {
     const history = useHistory();
 
     useEffect(() => {
-        const fetchIssues = async () => {
+        const fetchAreas = async () => {
             const response = await areasAPI();
             if (!response.successful) {
                 setErrorMessage(response.error ?? "Failed to fetch areas");
@@ -34,7 +34,7 @@ export default function WelcomePage() {
             }
             setAreas(response.data!);
         }
-        fetchIssues();
+        fetchAreas();
     }, [setAreas])
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
