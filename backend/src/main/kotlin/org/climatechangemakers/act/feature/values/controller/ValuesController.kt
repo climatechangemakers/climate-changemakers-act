@@ -15,6 +15,8 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.encoding.encodeStructure
 import kotlinx.serialization.json.Json
 import org.climatechangemakers.act.common.model.RepresentedArea
+import org.climatechangemakers.act.feature.communicatewithcongress.model.Prefix
+import org.climatechangemakers.act.feature.communicatewithcongress.model.PrefixSerializer
 import org.climatechangemakers.act.feature.communicatewithcongress.model.Topic
 import org.climatechangemakers.act.feature.communicatewithcongress.model.TopicSerializer
 import javax.inject.Inject
@@ -36,6 +38,12 @@ class ValuesController @Inject constructor(private val json: Json) {
       status = HttpStatusCode.OK,
     )
   }
+
+  suspend fun prefixValues(call: ApplicationCall) = call.respondText(
+    contentType = ContentType.Application.Json,
+    text = json.encodeToString(ArraySerializer(PrefixSerializer), Prefix.values()),
+    status = HttpStatusCode.OK,
+  )
 }
 
 private object FullNameAreaSerializer : KSerializer<RepresentedArea> {

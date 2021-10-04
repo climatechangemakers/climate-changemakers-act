@@ -12,4 +12,4 @@ import org.climatechangemakers.act.common.serializers.StringEnumSerializer
   Dr("Dr.")
 }
 
-private object PrefixSerializer : StringEnumSerializer<Prefix>(Prefix.values())
+object PrefixSerializer : StringEnumSerializer<Prefix>(Prefix.values())
