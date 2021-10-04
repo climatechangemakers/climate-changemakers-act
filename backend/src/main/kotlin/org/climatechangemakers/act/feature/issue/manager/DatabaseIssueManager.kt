@@ -7,6 +7,7 @@ import org.climatechangemakers.act.feature.issue.model.TalkingPoint
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
+import org.climatechangemakers.act.common.util.exists
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -31,10 +32,16 @@ class DatabaseIssueManager @Inject constructor(
   }
 
   override suspend fun getExampleStatementsForIssue(issueId: Long): List<String> = withContext(ioDispatcher) {
+    ensureIssueExists(issueId)
     exampleIssueWhyStatementQueries.selectForIssueId(issueId).executeAsList()
   }
 
   private suspend fun getIssueTalkingPoints(issueId: Long): List<TalkingPoint> = withContext(ioDispatcher) {
+    ensureIssueExists(issueId)
     talkingPointQueries.selectForIssueId(issueId, ::TalkingPoint).executeAsList()
+  }
+
+  private suspend fun ensureIssueExists(issueId: Long) = withContext(ioDispatcher) {
+    exists(issueQueries.rowCount(issueId).executeAsOne() == 1L) { "No issue with id $issueId was found" }
   }
 }
