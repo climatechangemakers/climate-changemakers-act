@@ -1,0 +1,22 @@
+.formContainer {
+    max-width: 450px;
+}
+
+.welcomePageContainer {
+    max-width: 700px;
+}
+
+.formLabel {
+    width: 25%
+}
+
+.formControl {
+    width: 75%;
+}
+
+@media only screen and (max-width: 767px) {
+    .formLabel,
+    .formControl {
+        width: 100%;
+    }
+}

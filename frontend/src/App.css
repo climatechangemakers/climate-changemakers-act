@@ -1,12 +1,12 @@
 :root {
-  --bs-primary-rgb: 226,188,243 !important;
+  --bs-primary-rgb: 194,197,234 !important;
   --bs-dark-rgb: 46, 38, 108 !important;
   --primary-orange: #fc4b13;
 }
 
 .btn-primary {
-  background-color: var(--primary-orange) !important;
-  border-color: var(--primary-orange) !important;
+  background-color: rgb(var(--bs-primary-rgb)) !important;
+  border-color: rgb(var(--bs-primary-rgb)) !important;
 }
 
 .btn {
@@ -23,7 +23,6 @@
 .App {
   text-align: center;
   background-color: #2e266c;
-  font-size: 1.5rem;
   color: white;
 }
 
@@ -76,4 +75,8 @@
   padding: 0;
   position: absolute;
   width: 1px;
+}
+
+.smallText {
+  font-size: .75rem;
 }

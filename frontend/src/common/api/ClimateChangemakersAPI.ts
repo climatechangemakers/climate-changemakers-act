@@ -1,5 +1,6 @@
 import { ActionInfo } from "common/models/ActionInfo";
 import { AreasResponse } from "common/models/Areas";
+import { FormInfo } from "common/models/FormInfo";
 import { IssuesResponse } from "common/models/IssuesResponse";
 
 type FetchResponse<T> = {
@@ -47,8 +48,16 @@ const get = async <T>(path: string): Promise<FetchResponse<T>> =>
         })
     );
 
-export const initiateActionAPI = (email: string, streetAddress: string, city: string, state: string, postalCode: string, consentToTrackImpact: boolean, desiresInformationalEmails: boolean) =>
-    post<ActionInfo>("/initiate-action", { email, streetAddress, city, state, postalCode, consentToTrackImpact, desiresInformationalEmails })
+export const initiateActionAPI = (form: FormInfo) =>
+    post<ActionInfo>("/initiate-action", {
+        email: form.email,
+        streetAddress: form.streetAddress,
+        city: form.city,
+        state: form.state,
+        postalCode: form.postalCode,
+        consentToTrackImpact: form.hasTrackingConsent,
+        desiresInformationalEmails: form.hasEmailingConsent
+    })
 
 export const sendEmailAPI = (originatingEmailAddress: string, relatedIssueId: number, emailBody: string, contactedBioguideIds: string[]) =>
     post<null>("/send-email", { originatingEmailAddress, relatedIssueId, emailBody, contactedBioguideIds });
