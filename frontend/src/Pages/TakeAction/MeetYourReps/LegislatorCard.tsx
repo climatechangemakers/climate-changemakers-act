@@ -14,22 +14,24 @@ export default function LegislatorCard({ legislator }: Props) {
             <div className={`${styles.imageContainer} m-auto`}>
                 <img alt="" className={styles.image} src={legislator.imageUrl} />
             </div>
-            <Card.Body className="pt-2 pb-2 ps-1 pe-1">
+            <Card.Body className="pt-2 pb-2 ps-1 pe-1 d-flex flex-column justify-content-between">
                 <Card.Title className="text-dark fs-6 mb-2">{surname} {legislator.name}</Card.Title>
-                <div className="text-dark fs-6 mb-2 fw-bold d-flex justify-content-center">
-                    <Badge bg="purple" className="pt-2 pb-2 me-1 text-capitalize fw-light text-dark">
-                        {legislator.partyAffiliation}
-                    </Badge>
-                    <Badge bg="purple" className="pt-2 pb-2 me-1 text-capitalize fw-light text-dark">
-                        {legislator.area.state}{legislator.area.districtNumber ? `-${legislator.area.districtNumber}` : ""}
-                    </Badge>
+                <div>
+                    <div className="text-dark fs-6 mb-2 fw-bold d-flex justify-content-center">
+                        <Badge bg="purple" className="pt-2 pb-2 me-1 text-capitalize fw-light text-dark">
+                            {legislator.partyAffiliation}
+                        </Badge>
+                        <Badge bg="purple" className="pt-2 pb-2 me-1 text-capitalize fw-light text-dark">
+                            {legislator.area.state}{legislator.area.districtNumber ? `-${legislator.area.districtNumber}` : ""}
+                        </Badge>
+                    </div>
+                    <div className="text-purple mb-2 fs-7 fw-bold">@{legislator.twitter}</div>
+                    {legislator.lcvScores.length > 0 &&
+                        <div className={`${styles.lcvScoreContainer} d-flex justify-content-center align-items-center flex-row`}>
+                            <img className="h-100 align-baseline me-1" alt="LCV score" src={lcvlogo} />
+                            <div className="text-dark fw-bold me-1">{legislator.lcvScores[0].score}</div>
+                        </div>}
                 </div>
-                <div className="text-purple mb-2 fs-7 fw-bold">@{legislator.twitter}</div>
-                {legislator.lcvScores.length > 0 &&
-                    <div className={`${styles.lcvScoreContainer} d-flex justify-content-center align-items-center flex-row`}>
-                        <img className="h-100 align-baseline me-1" alt="LCV score" src={lcvlogo} />
-                        <div className="text-dark fw-bold me-1">{legislator.lcvScores[0].score}</div>
-                    </div>}
             </Card.Body>
         </Card>)
 }
