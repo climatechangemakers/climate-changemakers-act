@@ -5,6 +5,7 @@ export type ActionInfo = {
 
 export type Legislator = {
     imageUrl: string;
+    twitter: string;
     area: {
         state: string;
         districtNumber?: number;
