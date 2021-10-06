@@ -1,5 +1,5 @@
-import { Nav, Navbar } from 'react-bootstrap';
-import ProgressNavLink from './ProgressNavLink';
+import { Nav, Navbar } from "react-bootstrap";
+import ProgressNavLink from "./ProgressNavLink";
 
 type Props = {
     isEmailSent: boolean;
@@ -15,22 +15,16 @@ export default function DesktopProgressBar({ isEmailSent, isPhoneCallMade, isSoc
     return (
         <Navbar variant="dark" className="ps-1">
             <Nav className="d-flex flex-column fs-6">
-                <ProgressNavLink href="#find_your_reps" state={"active"} step={1}>
+                <ProgressNavLink href="#introduction" state={"active"} step={1}>
                     Introduction
                 </ProgressNavLink>
-                <ProgressNavLink href="#pick_your_issue" state={"active"} step={2}>
-                    Write Your Why
-                </ProgressNavLink>
-                <ProgressNavLink href="#take_action" state={linkState(isSocialPosted, true)} step={3}>
-                    Take Action
-                </ProgressNavLink>
-                <ProgressNavLink href="#send_an_email" state={linkState(isEmailSent, true)}>
+                <ProgressNavLink href="#send_an_email" state={linkState(isEmailSent, true)} step={2}>
                     Send an Email
                 </ProgressNavLink>
-                <ProgressNavLink href="#make_a_phone_call" state={linkState(isPhoneCallMade, isEmailSent)}>
+                <ProgressNavLink href="#make_a_phone_call" state={linkState(isPhoneCallMade, isEmailSent)} step={3}>
                     Make Phone Call
                 </ProgressNavLink>
-                <ProgressNavLink href="#post_on_social" state={linkState(isSocialPosted, isPhoneCallMade)}>
+                <ProgressNavLink href="#post_on_social" state={linkState(isSocialPosted, isPhoneCallMade)} step={4}>
                     Post on Social
                 </ProgressNavLink>
             </Nav>

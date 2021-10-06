@@ -9,14 +9,13 @@ type Props = {
 export default function MeetYourReps({ actionInfo }: Props) {
     return (
         <div className="pb-2">
-            <h2 className="text-start mb-4 mt-4">Meet Your Reps</h2>
-            <Row className="mb-4 justify-content-between d-flex flex-md-row flex-column">
+            <h2 className="text-pink fw-bold mb-4">Meet Your Reps</h2>
+            <Row className="mb-2 d-flex flex-md-row flex-column text-center">
                 {actionInfo.legislators.map((legislator, i) =>
                     <Col className="d-flex justify-content-center" xs="12" md="4" key={i}>
                         <LegislatorCard legislator={legislator} />
                     </Col>)}
             </Row>
-            <p className="fs-5">Let’s let them know what we think by calling, emailing, and tweeting them!</p>
         </div>
     )
 }

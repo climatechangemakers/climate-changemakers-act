@@ -2,6 +2,9 @@
   --bs-primary-rgb: 194,197,234 !important;
   --bs-dark-rgb: 46, 38, 108 !important;
   --primary-orange: #fc4b13;
+  --text-pink: #f3b6fb;
+  --bg-light-grey: #EEEFFF;
+  --primary-purple: #351F75;
 }
 
 .btn-primary {
@@ -21,8 +24,7 @@
 }
 
 .App {
-  text-align: center;
-  background-color: #2e266c;
+  background-color: var(--primary-purple);
   color: white;
 }
 
@@ -77,6 +79,28 @@
   width: 1px;
 }
 
-.smallText {
-  font-size: .75rem;
+.fs-7 {
+  font-size: .85rem !important;
+}
+
+.text-pink {
+  color: var(--text-pink);
+  font-weight: 600;
+}
+
+.text-purple {
+  color: var(--primary-purple)
+}
+
+.bg-light-grey {
+  background-color: var(--bg-light-grey) !important;
+}
+
+.bg-purple {
+  background-color: rgba(53, 31, 117, .15);
+}
+
+hr {
+  height: 1px !important;
+  opacity: 1 !important;
 }

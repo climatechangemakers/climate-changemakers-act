@@ -15,7 +15,6 @@ export default function MobileScrollSpy({ isEmailSent, isPhoneCallMade, isSocial
             <ProgressBar variant="success" now={percentDone} />
             <div className={`${styles.stepsContainer} d-flex justify-content-between fs-6`}>
                 <ProgressLabel completed={true}>Introduction</ProgressLabel>
-                <ProgressLabel completed={true}>Write Your Why</ProgressLabel>
                 <ProgressLabel completed={isEmailSent}>Email</ProgressLabel>
                 <ProgressLabel completed={isPhoneCallMade}>Call</ProgressLabel>
                 <ProgressLabel completed={isSocialPosted}>Social</ProgressLabel>

@@ -55,7 +55,7 @@ export default function WelcomePage() {
     }
 
     return (
-        <div className={`${styles.welcomePageContainer} m-auto`}>
+        <div className={`${styles.welcomePageContainer} text-center m-auto`}>
             <img src={logo} className="App-logo" alt="logo" />
             <h1 id="find_your_reps">Climate Action in 3 Steps</h1>
             <p>Advocate to your elected reprepresentatives on issues that matter to you.</p>
@@ -144,7 +144,7 @@ export default function WelcomePage() {
                                 ? "Loading..."
                                 : "Start Advocating"}
                     </Button>
-                    <p className="mt-2 text-start smallText">Complete street address needed to identify your elected representatives. Climate Changemakers will not save your address or use it for any other purpose.</p>
+                    <p className="mt-2 text-start fs-7">Complete street address needed to identify your elected representatives. Climate Changemakers will not save your address or use it for any other purpose.</p>
                 </Form>
             </div>
             {errorMessage &&

@@ -7,6 +7,7 @@ import { Col, Row } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import AllDone from "./AllDone/AllDone";
 import MakeAPhoneCall from "./MakeAPhoneCall";
+import MeetYourReps from "./MeetYourReps/MeetYourReps";
 import PostOnSocial from "./PostOnSocial";
 import ScrollSpy from "./ScrollSpy/ScrollSpy";
 import SendAnEmail from "./SendAnEmail/SendAnEmail";
@@ -35,15 +36,14 @@ export default function TakeActionPage() {
         <Layout>
             <Row className="d-flex">
                 <Col md="10" xs="12">
-                    <>
-                        <hr id="take_action" />
-                        <h2 id="send_an_email">Time to Take Action!</h2>
-                        <SendAnEmail
-                            email={actionInfo.initiatorEmail}
-                            selectedIssue={selectedIssue}
-                            isEmailSent={isEmailSent}
-                            setIsEmailSent={setIsEmailSent} />
-                    </>
+                    <h1 className="text-start mb-4 pb-2 pt-4" id="introduction">Time to get started!</h1>
+                    <MeetYourReps actionInfo={actionInfo} />
+                    <hr id="send_an_email" />
+                    <SendAnEmail
+                        email={actionInfo.initiatorEmail}
+                        selectedIssue={selectedIssue}
+                        isEmailSent={isEmailSent}
+                        setIsEmailSent={setIsEmailSent} />
                     {isEmailSent &&
                         <>
                             <hr id="make_a_phone_call" />
