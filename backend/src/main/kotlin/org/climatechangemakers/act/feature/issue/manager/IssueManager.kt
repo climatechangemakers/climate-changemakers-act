@@ -19,4 +19,9 @@ interface IssueManager {
    * to a constituent.
    */
   suspend fun getExampleStatementsForIssue(issueId: Long): List<String>
+
+  /**
+   * Get the designated pre-composed tweet for the given [issueId].
+   */
+  suspend fun getPreComposedTweetForIssue(issueId: Long): String
 }
