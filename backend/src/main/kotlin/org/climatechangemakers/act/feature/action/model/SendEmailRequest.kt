@@ -23,5 +23,8 @@ import org.climatechangemakers.act.feature.communicatewithcongress.model.Topic
   init {
     require(contactedBioguideIds.isNotEmpty())
     require(relatedTopics.isNotEmpty())
+    require(contactedBioguideIds.size <= 3)
+    require(firstName.isNotBlank())
+    require(lastName.isNotBlank())
   }
 }
