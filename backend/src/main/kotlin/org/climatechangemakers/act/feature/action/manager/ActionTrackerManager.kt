@@ -4,9 +4,9 @@ interface ActionTrackerManager {
 
   suspend fun trackActionInitiated(email: String)
 
-  suspend fun trackActionSendEmails(
+  suspend fun trackActionSendEmail(
     email: String,
-    contactedBioguideIds: List<String>,
+    contactedBioguideId: String,
     relatedIssueId: Long,
   )
 

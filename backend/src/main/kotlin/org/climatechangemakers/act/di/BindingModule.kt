@@ -10,6 +10,8 @@ import org.climatechangemakers.act.feature.lcvscore.manager.DatabaseLcvScoreMana
 import org.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
 import dagger.Binds
 import dagger.Module
+import org.climatechangemakers.act.feature.communicatewithcongress.manager.CommunicateWithCongressManager
+import org.climatechangemakers.act.feature.communicatewithcongress.manager.NetworkCommunicateWithCongressManager
 import org.climatechangemakers.act.feature.findlegislator.manager.DatabaseMemberOfCongressManager
 import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongressManager
 
@@ -20,4 +22,5 @@ import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongre
   @Binds fun bindsActionTrackerManager(manager: DatabaseActionTrackerManager): ActionTrackerManager
   @Binds fun bindsDistrictOfficeManager(manager: DatabaseDistrictOfficeManager): DistrictOfficerManager
   @Binds fun bindsMemberOfCongressManager(manager: DatabaseMemberOfCongressManager): MemberOfCongressManager
+  @Binds fun bindsNetworkCommunicateWithCongressManager(manager: NetworkCommunicateWithCongressManager): CommunicateWithCongressManager
 }

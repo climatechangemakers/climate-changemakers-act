@@ -10,5 +10,6 @@ data class MemberOfCongress(
   val congressionalDistrict: Short?,
   val party: LegislatorPoliticalParty,
   val dcPhoneNumber: String,
-  val twitterHandle: String
+  val twitterHandle: String,
+  val cwcOfficeCode: String?,
 )

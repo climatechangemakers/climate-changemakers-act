@@ -23,7 +23,8 @@ class DatabaseMemberOfCongressManagerTest : TestContainerProvider() {
       1,
       LegislatorPoliticalParty.Republican,
       "555-555-5555",
-      "twitter1"
+      "twitter1",
+      "foobar",
     ))
 
     val expectedMember = MemberOfCongress(
@@ -34,7 +35,8 @@ class DatabaseMemberOfCongressManagerTest : TestContainerProvider() {
       null,
       LegislatorPoliticalParty.Republican,
       "555-555-5555",
-      "twitter2"
+      "twitter2",
+      "barfoo",
     )
 
     insert(expectedMember)
@@ -42,7 +44,7 @@ class DatabaseMemberOfCongressManagerTest : TestContainerProvider() {
   }
 
   private fun insert(member: MemberOfCongress) = driver.execute(
-    0, "INSERT INTO member_of_congress VALUES(?, ?, ?, ?, ?, ?, ?, ?)", 8
+    0, "INSERT INTO member_of_congress VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)", 9
   ) {
     bindString(1, member.bioguideId)
     bindString(2, member.fullName)
@@ -52,5 +54,6 @@ class DatabaseMemberOfCongressManagerTest : TestContainerProvider() {
     bindString(6, member.party.value)
     bindString(7, member.dcPhoneNumber)
     bindString(8, member.twitterHandle)
+    bindString(9, member.cwcOfficeCode)
   }
 }

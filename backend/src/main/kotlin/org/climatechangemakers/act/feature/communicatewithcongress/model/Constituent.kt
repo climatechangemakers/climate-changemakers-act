@@ -8,10 +8,10 @@ import org.climatechangemakers.act.common.model.RepresentedArea
 @Serializable class Constituent(
   @XmlElement(true) @XmlSerialName("Prefix", "", "") val prefix: Prefix,
   @XmlElement(true) @XmlSerialName("FirstName", "", "") val firstName: String,
-  @XmlElement(true) @XmlSerialName("MiddleName", "", "") val middleName: String?,
+  @XmlElement(true) @XmlSerialName("MiddleName", "", "") val middleName: String? = null,
   @XmlElement(true) @XmlSerialName("LastName", "", "") val lastName: String,
-  @XmlElement(true) @XmlSerialName("Suffix", "", "") val suffix: String?,
-  @XmlElement(true) @XmlSerialName("Title", "", "") val title: String?,
+  @XmlElement(true) @XmlSerialName("Suffix", "", "") val suffix: String?= null,
+  @XmlElement(true) @XmlSerialName("Title", "", "") val title: String? = null,
   @XmlElement(true) @XmlSerialName("Address1", "", "") val address: String,
   @XmlElement(true) @XmlSerialName("City", "", "") val city: String,
   @XmlElement(true) @XmlSerialName("StateAbbreviation", "", "") val state: RepresentedArea,

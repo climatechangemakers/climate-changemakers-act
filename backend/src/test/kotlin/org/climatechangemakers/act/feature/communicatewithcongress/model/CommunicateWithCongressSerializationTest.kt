@@ -20,7 +20,6 @@ class CommunicateWithCongressSerializationTest {
 
   @Test fun `sample object structure serializes correctly`() {
     val request = CommunicateWithCogressRequest(
-      version = 2.0,
       delivery = Delivery(
         deliveryId = UUID.fromString("19739ece-434e-488a-9857-a338a918a798"),
         deliveryDate = Calendar.getInstance().apply {
@@ -67,7 +66,7 @@ class CommunicateWithCongressSerializationTest {
         |    <DeliveryAgentAckEmailAddress>info@climatechangemakers.org</DeliveryAgentAckEmailAddress>
         |    <DeliveryAgentContact>
         |      <DeliveryAgentContactName>Eliza Nemser</DeliveryAgentContactName>
-        |      <DeliveryAgentContactEmail>eliza@climatechangemakers.org</DeliveryAgentContactEmail>
+        |      <DeliveryAgentContactEmail>info@climatechangemakers.org</DeliveryAgentContactEmail>
         |      <DeliveryAgentContactPhone>555-555-5555</DeliveryAgentContactPhone>
         |    </DeliveryAgentContact>
         |    <Organization>Climate Changemakers</Organization>

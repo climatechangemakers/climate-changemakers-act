@@ -38,7 +38,7 @@ import java.util.UUID
   @XmlElement(true)
   val contact = DeliveryAgentContact(
     "Eliza Nemser",
-    "eliza@climatechangemakers.org",
+    "info@climatechangemakers.org",
     "555-555-5555", // TODO(kcianfarini) get contact information
   )
 

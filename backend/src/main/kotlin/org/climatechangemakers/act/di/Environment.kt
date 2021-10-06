@@ -2,10 +2,12 @@ package org.climatechangemakers.act.di
 
 fun getEnvironmentVariable(
   key: EnvironmentVariable,
-): String = requireNotNull(System.getenv(key.key)) { "No environment variable $key set" }
+): String = requireNotNull(System.getenv(key.key)) { "No environment variable ${key.key} set" }
 
 enum class EnvironmentVariable(val key: String) {
   GeocodioApiKey("GEOCODIO_API_KEY"),
+  SCWCApiKey("SCWC_API_KEY"),
+  SCWCUrl("SCWC_URL"),
   DatabasePassword("POSTGRES_PASSWORD"),
   DatabaseUser("POSTGRES_USER"),
   DatabaseName("POSTGRES_DB"),

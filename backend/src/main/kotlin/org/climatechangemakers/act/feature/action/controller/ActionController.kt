@@ -15,11 +15,13 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import org.climatechangemakers.act.common.extension.respondNothing
 import org.climatechangemakers.act.feature.action.model.LogTweetRequest
+import org.climatechangemakers.act.feature.communicatewithcongress.manager.CommunicateWithCongressManager
 import javax.inject.Inject
 
 class ActionController @Inject constructor(
   private val legislatorsManager: LegislatorsManager,
   private val actionTrackerManager: ActionTrackerManager,
+  private val communicateWithCongressManager: CommunicateWithCongressManager,
 ) {
 
   suspend fun initiateAction(call: ApplicationCall) {
@@ -37,17 +39,7 @@ class ActionController @Inject constructor(
 
   suspend fun sendEmailToLegislators(call: ApplicationCall) {
     val request = call.receive<SendEmailRequest>()
-
-    coroutineScope {
-      launch {
-        actionTrackerManager.trackActionSendEmails(
-          request.originatingEmailAddress,
-          request.contactedBioguideIds,
-          request.relatedIssueId,
-        )
-      }
-    }
-
+    communicateWithCongressManager.sendEmails(request)
     call.respondNothing()
   }
 
