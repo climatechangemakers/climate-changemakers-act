@@ -2,7 +2,7 @@
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>log/climate-changemakers-act-backend.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>climate-changemakers-act-backend-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>log/climate-changemakers-act-backend-%d{yyyy-MM-dd}.log</fileNamePattern>
             <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
         <encoder>
