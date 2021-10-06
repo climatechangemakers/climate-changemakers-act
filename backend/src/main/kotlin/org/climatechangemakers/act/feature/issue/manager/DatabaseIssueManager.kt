@@ -36,6 +36,13 @@ class DatabaseIssueManager @Inject constructor(
     exampleIssueWhyStatementQueries.selectForIssueId(issueId).executeAsList()
   }
 
+  override suspend fun getPreComposedTweetForIssue(issueId: Long): String {
+    // TODO(kcianfarini) remove mock
+    return """
+      This is a pre-composed tweet. This is an @twitterhandle. This is a #hashtag. 
+    """.trimIndent()
+  }
+
   private suspend fun getIssueTalkingPoints(issueId: Long): List<TalkingPoint> = withContext(ioDispatcher) {
     ensureIssueExists(issueId)
     talkingPointQueries.selectForIssueId(issueId, ::TalkingPoint).executeAsList()

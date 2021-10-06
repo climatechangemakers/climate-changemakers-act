@@ -4,7 +4,6 @@ import org.climatechangemakers.act.feature.issue.manager.IssueManager
 import org.climatechangemakers.act.feature.issue.model.GetIssuesResponse
 import io.ktor.application.ApplicationCall
 import io.ktor.response.respond
-import io.ktor.util.getOrFail
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
@@ -24,5 +23,9 @@ class IssueListController @Inject constructor(
 
   suspend fun respondExampleWhyStatements(call: ApplicationCall, issueId: Long) = call.respond(
     manager.getExampleStatementsForIssue(issueId)
+  )
+
+  suspend fun respondPreComposedTweet(call: ApplicationCall, issueId: Long) = call.respond(
+    manager.getPreComposedTweetForIssue(issueId)
   )
 }
