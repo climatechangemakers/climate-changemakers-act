@@ -28,7 +28,7 @@ export default function LegislatorCard({ legislator }: Props) {
                 {legislator.lcvScores.length > 0 &&
                     <div className={`${styles.lcvScoreContainer} d-flex justify-content-center align-items-center flex-row`}>
                         <img className="h-100 align-baseline me-1" alt="LCV score" src={lcvlogo} />
-                        <div className="text-dark fw-bold fw-normal me-1">{legislator.lcvScores[0].score}</div>
+                        <div className="text-dark fw-bold me-1">{legislator.lcvScores[0].score}</div>
                     </div>}
             </Card.Body>
         </Card>)
