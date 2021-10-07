@@ -4,6 +4,7 @@ export type ActionInfo = {
 }
 
 export type Legislator = {
+    bioguideId: string;
     imageUrl: string;
     twitter: string;
     area: {

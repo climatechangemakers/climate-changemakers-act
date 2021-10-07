@@ -2,6 +2,7 @@ import { ActionInfo } from "common/models/ActionInfo";
 import { AreasResponse } from "common/models/Areas";
 import { FormInfo } from "common/models/FormInfo";
 import { IssuesResponse } from "common/models/IssuesResponse";
+import { PreComposedTweetResponse } from "common/models/PreComposedTweetResponse";
 
 type FetchResponse<T> = {
     successful: boolean;
@@ -67,3 +68,10 @@ export const issueAPI = () =>
 
 export const areasAPI = () =>
     get<AreasResponse>("/values/areas");
+
+export const preComposedTweetAPI = (issueId: number) =>
+    get<PreComposedTweetResponse>(`/issues/${issueId}/precomposed-tweet`)
+
+export const logTweetAPI = async (originatingEmailAddress: string, relatedIssueId: number, contactedBioguideIds: ReadonlyArray<string>): Promise<void> => {
+    await post<unknown>("/log-tweet", { originatingEmailAddress, relatedIssueId, contactedBioguideIds });
+}

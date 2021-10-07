@@ -4,6 +4,7 @@ type TalkingPoint = {
 }
 
 export type Issue = {
+    id: number;
     title: string;
     talkingPoints: TalkingPoint[];
 }
