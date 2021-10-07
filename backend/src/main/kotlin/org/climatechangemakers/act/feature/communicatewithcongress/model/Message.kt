@@ -5,7 +5,7 @@ import nl.adaptivity.xmlutil.serialization.XmlChildrenName
 import nl.adaptivity.xmlutil.serialization.XmlElement
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
 
-@Serializable class Message(
+@Serializable data class Message(
   @XmlElement(true) @XmlSerialName("Subject", "", "") val subject: String,
 
   @XmlElement(true)

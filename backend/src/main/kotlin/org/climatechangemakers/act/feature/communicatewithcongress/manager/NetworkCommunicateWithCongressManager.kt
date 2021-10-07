@@ -44,7 +44,7 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
 
   private suspend fun sendEmailViaCWC(memberOfConress: MemberOfCongress, emailRequest: SendEmailRequest) {
     val cwcRequest = CommunicateWithCogressRequest(
-      delivery = Delivery(campaignId = "campaign Id"),
+      delivery = Delivery(campaignId = "campaign Id"), // TODO(kcianfarini)
       recipient = Recipient(officeCode = memberOfConress.cwcOfficeCode!!),
       constituent = Constituent(
         prefix = emailRequest.title,
@@ -64,7 +64,7 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
       ),
     )
 
-    return when (memberOfConress.legislativeRole) {
+    when (memberOfConress.legislativeRole) {
       LegislatorRole.Senator -> service.contact(cwcRequest)
       LegislatorRole.Representative -> Unit
     }

@@ -8,7 +8,7 @@ import org.climatechangemakers.act.common.serializers.UUIDSerializer
 import java.util.Date
 import java.util.UUID
 
-@Serializable class Delivery(
+@Serializable data class Delivery(
 
   @XmlElement(true)
   @XmlSerialName("CampaignId", "", "")

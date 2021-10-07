@@ -5,7 +5,7 @@ import nl.adaptivity.xmlutil.serialization.XmlElement
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
 import org.climatechangemakers.act.common.model.RepresentedArea
 
-@Serializable class Constituent(
+@Serializable data class Constituent(
   @XmlElement(true) @XmlSerialName("Prefix", "", "") val prefix: Prefix,
   @XmlElement(true) @XmlSerialName("FirstName", "", "") val firstName: String,
   @XmlElement(true) @XmlSerialName("MiddleName", "", "") val middleName: String? = null,
