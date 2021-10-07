@@ -14,4 +14,4 @@ object DateSerializer : KSerializer<Date> {
   override fun deserialize(decoder: Decoder): Date = TODO()
 }
 
-fun Date.toEightCharFormat(): String = SimpleDateFormat("YYYYMMDD").format(this)
+fun Date.toEightCharFormat(): String = SimpleDateFormat("yyyyMMdd").format(this)

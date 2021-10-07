@@ -10,16 +10,15 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
 
   private val manager = DatabaseActionTrackerManager(database, EmptyCoroutineContext)
 
-  @Test fun `email action entries are recorded for every bioguide`() = suspendTest {
-    val bioguides = listOf("hello", "goodbye")
+  @Test fun `email action entries are recorded in both tables`() = suspendTest {
     insertIssue(1, "this is an issue")
-    manager.trackActionSendEmails("foo@foo.com", bioguides, 1)
+    manager.trackActionSendEmail("foo@foo.com", "hello", 1)
 
     assertEquals(
-      2,
-      driver.executeQuery(0, "SELECT COUNT(*) FROM action_contact_legislator", 0).let {
+      "hello",
+      driver.executeQuery(0, "SELECT contacted_bioguide_id FROM action_contact_legislator", 0).let {
         it.next()
-        it.getLong(0)
+        it.getString(0)
       }
     )
 

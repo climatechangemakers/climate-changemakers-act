@@ -3,6 +3,7 @@ package org.climatechangemakers.act.feature.findlegislator.manager
 import kotlinx.coroutines.withContext
 import org.climatechangemakers.act.database.Database
 import org.climatechangemakers.act.di.Io
+import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
 import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext

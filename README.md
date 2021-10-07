@@ -35,6 +35,8 @@ POSTGRES_HOSTNAME=database
 POSTGRES_PORT=5432
 REACT_APP_PORT=3000
 KOTLIN_PORT=8080
+SCWC_API_KEY=<API_KEY>
+SCWC_URL=<URL>
 ```
 
 After that's done, you can initialize your environment. 

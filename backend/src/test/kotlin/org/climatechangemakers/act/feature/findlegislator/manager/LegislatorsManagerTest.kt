@@ -35,10 +35,10 @@ class LegislatorsManagerTest {
     )
   }
 
-  private val fakeMemberOfCongressManager = MemberOfCongressManager { bioguide ->
-    when (bioguide) {
+  private val fakeMemberOfCongressManager = MemberOfCongressManager { bioguideId ->
+    when (bioguideId) {
       "M00001" -> MemberOfCongress(
-        bioguideId = bioguide,
+        bioguideId = bioguideId,
         fullName = "A. Donald McEachin",
         legislativeRole = LegislatorRole.Representative,
         representedArea = RepresentedArea.NewJersey,
@@ -46,9 +46,10 @@ class LegislatorsManagerTest {
         party = LegislatorPoliticalParty.Democrat,
         dcPhoneNumber = "555-555-5555",
         twitterHandle = "fancytwitter",
+        cwcOfficeCode = "foo",
       )
       "K00001" -> MemberOfCongress(
-        bioguideId = bioguide,
+        bioguideId = bioguideId,
         fullName = "Tim Kaine",
         legislativeRole = LegislatorRole.Senator,
         representedArea = RepresentedArea.NewJersey,
@@ -56,6 +57,7 @@ class LegislatorsManagerTest {
         party = LegislatorPoliticalParty.Republican,
         dcPhoneNumber = "555-555-5555",
         twitterHandle = "fancytwitter2",
+        cwcOfficeCode = "foo",
       )
       else -> error("")
     }
