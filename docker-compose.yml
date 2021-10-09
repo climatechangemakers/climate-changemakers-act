@@ -16,6 +16,8 @@ services:
         - POSTGRES_DB=${POSTGRES_DB} 
         - POSTGRES_HOSTNAME=${POSTGRES_HOSTNAME}
         - POSTGRES_PORT=${POSTGRES_PORT}
+        - SCWC_API_KEY=${SCWC_API_KEY}
+        - SCWC_URL=${SCWC_URL}
       ports:
         - ${KOTLIN_PORT}:8080
     database:
