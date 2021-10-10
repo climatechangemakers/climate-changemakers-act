@@ -1,4 +1,4 @@
-import { preComposedTweetAPI, logTweetAPI } from "common/api/ClimateChangemakersAPI";
+import { preComposedTweetAPI } from "common/api/ClimateChangemakersAPI";
 import Layout from "common/Components/Layout";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import { ActionInfo } from "common/models/ActionInfo";
@@ -89,17 +89,9 @@ export default function TakeActionPage() {
                             <PostOnSocial
                                 isSocialPosted={isSocialPosted}
                                 setIsSocialPosted={setIsSocialPosted}
+                                actionInfo={actionInfo}
+                                selectedIssue={selectedIssue}
                                 preComposedTweet={preComposedTweet}
-                                logTweet={async () => {
-                                    const bioguideIds = actionInfo.legislators.map(l => l.bioguideId);
-                                    let error: unknown;
-                                    try {
-                                        ({ error } = await logTweetAPI(actionInfo.initiatorEmail, selectedIssue.id, bioguideIds));
-                                    } catch (err: unknown) {
-                                        error = err;
-                                    }
-                                    console.warn(error);
-                                }}
                             />
                         </>}
                     {isSocialPosted &&
