@@ -158,7 +158,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                         </Row>
                         <Row>
                             <Col>
-                                <Form.Label>Letter Topic (Hold Ctrl (windows) or Command (Mac) to select multiple)</Form.Label>
+                                <Form.Label>Letter Topic (hold Ctrl (Windows) or Command (Mac) to select multiple)</Form.Label>
                                 <Form.Select
                                     multiple
                                     value={emailInfo.relatedTopics}
