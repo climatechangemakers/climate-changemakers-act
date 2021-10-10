@@ -31,32 +31,32 @@ export default function PostOnSocial({
         if (preComposedTweet.status === "loaded") setTweet(preComposedTweet.value);
     }, [preComposedTweet]);
 
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (hasClickedLink) {
+            setIsSocialPosted(true);
+        } else if (window.open(getPostTweetUrl(tweet.trim()))) {
+            setHasClickedLink(true);
+            const bioguideIds = actionInfo.legislators.map((l) => l.bioguideId);
+            let error: unknown;
+            try {
+                ({ error } = await logTweetAPI(actionInfo.initiatorEmail, selectedIssue.id, bioguideIds));
+            } catch (err: unknown) {
+                error = err;
+            }
+            console.warn(error);
+        }
+    };
+
     return (
         <div className="pt-2 pb-3">
             <h3 className="text-start pb-3">Post on Social</h3>
             {preComposedTweet.status === "loading" ? <p>Loading...</p>
              : preComposedTweet.status === "failed" ? <p>Failed to load. Please try refreshing the page.</p>
             : (
-                <Form
-                    onSubmit={async (event) => {
-                        event.preventDefault();
-                        event.stopPropagation();
-
-                        if (hasClickedLink) {
-                            setIsSocialPosted(true);
-                        } else if (window.open(getPostTweetUrl(tweet.trim()))) {
-                            setHasClickedLink(true);
-                            const bioguideIds = actionInfo.legislators.map((l) => l.bioguideId);
-                            let error: unknown;
-                            try {
-                                ({ error } = await logTweetAPI(actionInfo.initiatorEmail, selectedIssue.id, bioguideIds));
-                            } catch (err: unknown) {
-                                error = err;
-                            }
-                            console.warn(error);
-                        }
-                    }}
-                >
+                <Form onSubmit={handleSubmit}>
                     <Form.Group>
                         <Form.Label htmlFor="draft-tweet-input">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus!</Form.Label>
                         <InputGroup hasValidation>
@@ -72,9 +72,7 @@ export default function PostOnSocial({
                                 className="flex-grow-1 mr-2"
                                 variant="secondary"
                                 disabled={isSocialPosted}
-                                onClick={() => {
-                                    setIsSocialPosted(true);
-                                }}
+                                onClick={() => setIsSocialPosted(true)}
                             >
                                 Skip Tweeting
                             </Button>
