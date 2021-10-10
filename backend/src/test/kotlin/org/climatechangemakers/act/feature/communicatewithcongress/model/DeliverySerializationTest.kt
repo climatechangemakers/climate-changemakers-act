@@ -34,7 +34,7 @@ class DeliverySerializationTest {
         |  <DeliveryAgentAckEmailAddress>info@climatechangemakers.org</DeliveryAgentAckEmailAddress>
         |  <DeliveryAgentContact>
         |    <DeliveryAgentContactName>Eliza Nemser</DeliveryAgentContactName>
-        |    <DeliveryAgentContactEmail>eliza@climatechangemakers.org</DeliveryAgentContactEmail>
+        |    <DeliveryAgentContactEmail>info@climatechangemakers.org</DeliveryAgentContactEmail>
         |    <DeliveryAgentContactPhone>555-555-5555</DeliveryAgentContactPhone>
         |  </DeliveryAgentContact>
         |  <Organization>Climate Changemakers</Organization>
