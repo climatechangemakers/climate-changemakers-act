@@ -28,8 +28,6 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
     const { data: prefixes, error: prefixError } = useSWR<string[], string>("/values/prefixes", fetcher);
     const { data: locTopics, error: locTopicsError } = useSWR<string[], string>("/values/library-of-congress-topics", fetcher);
 
-    console.log(prefixError);
-
     const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSendEmailError("");
