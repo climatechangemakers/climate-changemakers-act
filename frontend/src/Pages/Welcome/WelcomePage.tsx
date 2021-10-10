@@ -22,7 +22,7 @@ export default function WelcomePage() {
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [, setActionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
-    const { data: areas, error: areasError } = useSWR<{ shortName: string; fullName: string; }[]>("/values/areas", fetcher);
+    const { data: areas, error: areasError } = useSWR<{ shortName: string; fullName: string; }[], string>("/values/areas", fetcher);
     const history = useHistory();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

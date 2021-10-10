@@ -7,8 +7,14 @@ type FetchResponse<T> = {
     data?: T;
 }
 
-export const fetcher = async <T>(path: string) =>
-    (await (await fetch("/api" + path)).json() as T);
+export const fetcher = async <T>(path: string) => {
+    const res = await fetch("/api" + path);
+
+    if (!res.ok)
+        throw `Failed to fetch ${path}: ${res.statusText}`;
+
+    return await res.json() as T;
+}
 
 const parseFetch = async<T>(response: Response): Promise<FetchResponse<T>> => {
     try {

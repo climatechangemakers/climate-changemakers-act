@@ -25,8 +25,10 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
         body: ""
     });
     const [sendEmailError, setSendEmailError] = useState("");
-    const { data: prefixes, error: prefixError } = useSWR<string[]>("/values/prefixes", fetcher);
-    const { data: locTopics, error: locTopicsError } = useSWR<string[]>("/values/library-of-congress-topics", fetcher);
+    const { data: prefixes, error: prefixError } = useSWR<string[], string>("/values/prefixes", fetcher);
+    const { data: locTopics, error: locTopicsError } = useSWR<string[], string>("/values/library-of-congress-topics", fetcher);
+
+    console.log(prefixError);
 
     const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -112,7 +114,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                     <Form.Label>Prefix</Form.Label>
                                     <Form.Select
                                         value={emailInfo.prefix}
-                                        onChange={e => setEmailInfo({ ...emailInfo, prefix: e.currentTarget.value })}
+                                        onChange={e => setEmailInfo(emailInfo => ({ ...emailInfo, prefix: e.currentTarget.value }))}
                                         required>
                                         <option value="">--</option>
                                         {prefixes?.map(p =>
@@ -125,7 +127,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                     <Form.Label>First Name</Form.Label>
                                     <Form.Control
                                         value={emailInfo.firstName}
-                                        onChange={e => setEmailInfo({ ...emailInfo, firstName: e.currentTarget.value })}
+                                        onChange={e => setEmailInfo(emailInfo => ({ ...emailInfo, firstName: e.currentTarget.value }))}
                                         required />
                                 </Form.Group>
                             </Col>
@@ -134,7 +136,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                     <Form.Label>Last Name</Form.Label>
                                     <Form.Control
                                         value={emailInfo.lastName}
-                                        onChange={e => setEmailInfo({ ...emailInfo, lastName: e.currentTarget.value })}
+                                        onChange={e => setEmailInfo(emailInfo => ({ ...emailInfo, lastName: e.currentTarget.value }))}
                                         required />
                                 </Form.Group>
                             </Col>
@@ -145,7 +147,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                     <Form.Label>Subject Line</Form.Label>
                                     <Form.Control
                                         value={emailInfo.subject}
-                                        onChange={e => setEmailInfo({ ...emailInfo, subject: e.currentTarget.value })}
+                                        onChange={e => setEmailInfo(emailInfo => ({ ...emailInfo, subject: e.currentTarget.value }))}
                                         required />
                                 </Form.Group>
                             </Col>
@@ -163,9 +165,8 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                             ? [...emailInfo.relatedTopics].filter(r => r !== e.target.value)
                                             : [...emailInfo.relatedTopics, e.target.value]
                                     }))}>
-                                    <option value="">--</option>
-                                    {locTopics?.map(t => (
-                                        <option key={t} value={t}>{t}</option>
+                                    {locTopics?.map((t, i) => (
+                                        <option key={i} value={t}>{t}</option>
                                     ))}
                                 </Form.Control>
                             </Col>
@@ -180,7 +181,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                             rows={6}
                             placeholder="Write your why..."
                             value={emailInfo.body}
-                            onChange={e => setEmailInfo({ ...emailInfo, body: e.currentTarget.value })}
+                            onChange={e => setEmailInfo(emailInfo => ({ ...emailInfo, body: e.currentTarget.value }))}
                             required />
                     </Form.Group>
                 </Row>
