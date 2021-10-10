@@ -3,13 +3,13 @@ import { Button, Form, InputGroup } from "react-bootstrap";
 import { logTweetAPI } from "common/api/ClimateChangemakersAPI";
 import { ActionInfo } from "common/models/ActionInfo";
 import { Issue } from "common/models/IssuesResponse";
-import type Loadable from "common/lib/Loadable";
 import { getPostTweetUrl } from "common/lib/twitter";
 
 type Props = {
     isSocialPosted: boolean;
     setIsSocialPosted: (bool: boolean) => void;
-    preComposedTweet: Loadable<string, string>;
+    preComposedTweet: undefined | string;
+    preComposedTweetError: undefined | string;
     actionInfo: ActionInfo;
     selectedIssue: Issue;
 };
@@ -21,6 +21,7 @@ export default function PostOnSocial({
     isSocialPosted,
     setIsSocialPosted,
     preComposedTweet,
+    preComposedTweetError,
     actionInfo,
     selectedIssue,
 }: Props) {
@@ -28,7 +29,7 @@ export default function PostOnSocial({
     const [hasOpenedTwitter, setHasOpenedTwitter] = useState(false);
 
     useEffect(() => {
-        if (preComposedTweet.status === "loaded") setTweet(preComposedTweet.value);
+        if (typeof preComposedTweet === "string") setTweet(preComposedTweet);
     }, [preComposedTweet]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,8 +54,8 @@ export default function PostOnSocial({
     return (
         <div className="pt-2 pb-3">
             <h3 className="text-start pb-3">Post on Social</h3>
-            {preComposedTweet.status === "loading" ? <p>Loading...</p>
-             : preComposedTweet.status === "failed" ? <p>Failed to load. Please try refreshing the page.</p>
+            {preComposedTweetError ? <p>Failed to load. Please try refreshing the page.</p>
+            : !preComposedTweet ? <p>Loading...</p>
             : (
                 <Form onSubmit={handleSubmit}>
                     <Form.Group>

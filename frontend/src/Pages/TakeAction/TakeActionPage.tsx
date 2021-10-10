@@ -1,12 +1,12 @@
-import { preComposedTweetAPI } from "common/api/ClimateChangemakersAPI";
+import { fetcher } from "common/api/ClimateChangemakersAPI";
 import Layout from "common/Components/Layout";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import { ActionInfo } from "common/models/ActionInfo";
 import { Issue } from "common/models/IssuesResponse";
-import type Loadable from "common/lib/Loadable";
 import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
+import useSWR from "swr";
 import AllDone from "./AllDone/AllDone";
 import MakeAPhoneCall from "./MakeAPhoneCall";
 import MeetYourReps from "./MeetYourReps/MeetYourReps";
@@ -20,7 +20,6 @@ export default function TakeActionPage() {
     const [isSocialPosted, setIsSocialPosted] = useState(false);
     const [selectedIssue] = useSessionStorage<Issue | undefined>("selectedIssue");
     const [actionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
-    const [preComposedTweet, setPreComposedTweet] = useState<Loadable<string, string>>({ status: "loading" });
 
     const scrollToId = (id: string) =>
         document.getElementById(id)?.scrollIntoView()
@@ -30,35 +29,10 @@ export default function TakeActionPage() {
     useEffect(() => { isSocialPosted && scrollToId("all_done") }, [isEmailSent, isPhoneCallMade, isSocialPosted])
 
     const selectedIssueId = selectedIssue?.id;
-    useEffect(() => {
-        if (!selectedIssueId) {
-            return;
-        }
-
-        setPreComposedTweet({ status: "loading" });
-
-        let isCanceled = false;
-        (async () => {
-            const response = await preComposedTweetAPI(selectedIssueId);
-            if (isCanceled) {
-                return;
-            }
-            if (response.successful && response.data) {
-                setPreComposedTweet({
-                    status: "loaded",
-                    value: response.data.tweet,
-                });
-            } else {
-                setPreComposedTweet({
-                    status: "failed",
-                    error: response.error ?? "Failed to fetch precomposed tweet",
-                });
-            }
-        })();
-        return () => {
-            isCanceled = true;
-        };
-    }, [selectedIssueId]);
+    const {
+        data: preComposedTweetData,
+        error: preComposedTweetError,
+    } = useSWR<{ tweet: string }, string>(() => (selectedIssueId !== undefined ? `/issues/${selectedIssueId}/precomposed-tweet` : null), fetcher);
 
     if (!actionInfo)
         return <Redirect to="/" />
@@ -91,7 +65,8 @@ export default function TakeActionPage() {
                                 setIsSocialPosted={setIsSocialPosted}
                                 actionInfo={actionInfo}
                                 selectedIssue={selectedIssue}
-                                preComposedTweet={preComposedTweet}
+                                preComposedTweet={preComposedTweetData?.tweet}
+                                preComposedTweetError={preComposedTweetError}
                             />
                         </>}
                     {isSocialPosted &&
