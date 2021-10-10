@@ -4,6 +4,7 @@ import org.climatechangemakers.act.database.Database
 import org.climatechangemakers.act.di.Io
 import org.climatechangemakers.act.feature.issue.model.Issue
 import org.climatechangemakers.act.feature.issue.model.TalkingPoint
+import org.climatechangemakers.act.feature.issue.model.PreComposedTweetResponse
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
@@ -36,11 +37,12 @@ class DatabaseIssueManager @Inject constructor(
     exampleIssueWhyStatementQueries.selectForIssueId(issueId).executeAsList()
   }
 
-  override suspend fun getPreComposedTweetForIssue(issueId: Long): String {
+  override suspend fun getPreComposedTweetForIssue(issueId: Long): PreComposedTweetResponse {
     // TODO(kcianfarini) remove mock
-    return """
+    val tweet = """
       This is a pre-composed tweet. This is an @twitterhandle. This is a #hashtag. 
     """.trimIndent()
+    return PreComposedTweetResponse(tweet)
   }
 
   private suspend fun getIssueTalkingPoints(issueId: Long): List<TalkingPoint> = withContext(ioDispatcher) {

@@ -2,7 +2,6 @@ package org.climatechangemakers.act.feature.issue.controller
 
 import org.climatechangemakers.act.feature.issue.manager.IssueManager
 import org.climatechangemakers.act.feature.issue.model.GetIssuesResponse
-import org.climatechangemakers.act.feature.issue.model.PreComposedTweetResponse
 import io.ktor.application.ApplicationCall
 import io.ktor.response.respond
 import kotlinx.coroutines.async
@@ -27,6 +26,6 @@ class IssueListController @Inject constructor(
   )
 
   suspend fun respondPreComposedTweet(call: ApplicationCall, issueId: Long) = call.respond(
-    PreComposedTweetResponse(manager.getPreComposedTweetForIssue(issueId))
+    manager.getPreComposedTweetForIssue(issueId)
   )
 }
