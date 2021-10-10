@@ -37,10 +37,13 @@ export default function PostOnSocial({
         e.preventDefault();
         e.stopPropagation();
 
-        if (hasOpenedTwitter) {
+        if (!hasOpenedTwitter) {
+            const openedWindow = window.open(getPostTweetUrl(tweet.trim()));
+            if (openedWindow) {
+              setHasOpenedTwitter(true);
+            }
+        } else {
             setIsSocialPosted(true);
-        } else if (window.open(getPostTweetUrl(tweet.trim()))) {
-            setHasOpenedTwitter(true);
             const bioguideIds = actionInfo.legislators.map((l) => l.bioguideId);
             let error: unknown;
             try {
