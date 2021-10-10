@@ -57,7 +57,6 @@ export default function PostOnSocial({
                             <Form.Control
                                 as="textarea"
                                 rows={4}
-                                // We rely on the twitter-text package to enforce lengths, but we have this just in case of a pathologically long string.
                                 maxLength={1000}
                                 id="draft-tweet-input"
                                 placeholder="Compose your tweet"
