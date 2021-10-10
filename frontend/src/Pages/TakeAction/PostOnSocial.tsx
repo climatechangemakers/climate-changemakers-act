@@ -56,9 +56,7 @@ export default function PostOnSocial({
                                  isInvalid={!isTweetValid(tweet)}
                                  disabled={isSocialPosted || hasClickedLink}
                                  value={tweet}
-                                 onChange={(event) => {
-                                     setTweet(event.target.value);
-                                 }}
+                                 onChange={e => setTweet(e.target.value)}
                              />
                              <Form.Control.Feedback type="invalid" tooltip>
                                  {tweet.trim() ? "Your tweet is invalid. Is it too long?" : "You must enter a tweet."}
