@@ -134,7 +134,6 @@ export default function TakeActionPage() {
                                 logTweet={() => {
                                     const bioguideIds = actionInfo.legislators.map(l => l.bioguideId);
                                     logTweetAPI(actionInfo.initiatorEmail, selectedIssue.id, bioguideIds).catch(err => {
-                                        // It's okay if this request fails.
                                         console.warn(err);
                                     });
                                 }}
