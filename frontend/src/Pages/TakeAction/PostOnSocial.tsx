@@ -1,9 +1,8 @@
-import twitterText from "twitter-text";
 import { ReactChild, useState, useEffect } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import type Loadable from "common/lib/Loadable";
 import MissingCaseError from "common/lib/MissingCaseError";
-import { getPostTweetUrl } from "common/lib/twitter";
+import { isTweetValid, getPostTweetUrl } from "common/lib/twitter";
 
 type Props = {
     isSocialPosted: boolean;
@@ -35,17 +34,7 @@ export default function PostOnSocial({
         case "failed":
             contents = <p>Failed to load. Please try refreshing the page.</p>;
             break;
-        case "loaded": {
-            const { weightedLength, valid: isTweetValid } = twitterText.parseTweet(tweet);
-
-            // We always render an error message, even if we don't display it.
-            let errorMessage = "Your tweet is invalid. Is it too long?";
-            if (weightedLength === 0) {
-                errorMessage = "You need to enter a tweet.";
-            } else if (weightedLength > 280) {
-                errorMessage = `Your tweet is ${weightedLength} characters but 280 is the maximum.`;
-            }
-
+        case "loaded":
             contents = (
                 <Form
                     onSubmit={(event) => {
@@ -72,7 +61,7 @@ export default function PostOnSocial({
                                 maxLength={1000}
                                 id="draft-tweet-input"
                                 placeholder="Compose your tweet"
-                                isInvalid={!isTweetValid}
+                                isInvalid={!isTweetValid(tweet)}
                                 disabled={isSocialPosted || hasClickedLink}
                                 value={tweet}
                                 onChange={(event) => {
@@ -80,7 +69,7 @@ export default function PostOnSocial({
                                 }}
                             />
                             <Form.Control.Feedback type="invalid" tooltip>
-                                {errorMessage}
+                                {tweet.trim() ? "Your tweet is invalid. Is it too long?" : "You must enter a tweet."}
                             </Form.Control.Feedback>
                         </InputGroup>
                     </Form.Group>
@@ -112,7 +101,7 @@ export default function PostOnSocial({
                                     type="submit"
                                     className="flex-grow-1 ml-2"
                                     variant="primary"
-                                    disabled={isSocialPosted || !isTweetValid}
+                                    disabled={isSocialPosted || !isTweetValid(tweet)}
                                 >
                                     Send Tweet
                                 </Button>
@@ -122,7 +111,6 @@ export default function PostOnSocial({
                 </Form>
             );
             break;
-        }
         default:
             throw new MissingCaseError(preComposedTweet);
     }
