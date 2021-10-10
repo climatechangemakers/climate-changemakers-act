@@ -4,7 +4,7 @@ import { logTweetAPI } from "common/api/ClimateChangemakersAPI";
 import { ActionInfo } from "common/models/ActionInfo";
 import { Issue } from "common/models/IssuesResponse";
 import type Loadable from "common/lib/Loadable";
-import { isTweetValid, getPostTweetUrl } from "common/lib/twitter";
+import { getPostTweetUrl } from "common/lib/twitter";
 
 type Props = {
     isSocialPosted: boolean;
@@ -13,6 +13,9 @@ type Props = {
     actionInfo: ActionInfo;
     selectedIssue: Issue;
 };
+
+export const isTweetValid = (text: string) =>
+    text.length <= 1000 && text.trim().length > 0;
 
 export default function PostOnSocial({
     isSocialPosted,
