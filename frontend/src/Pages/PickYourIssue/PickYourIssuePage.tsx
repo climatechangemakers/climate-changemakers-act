@@ -8,7 +8,7 @@ import useSWR from "swr";
 import IssueCard from "./Issue";
 
 export default function PickYourIssuePage() {
-    const { data: issues, error: issuesError } = useSWR<{ focusIssue: Issue; otherIssues: Issue[]; }>("/issues", fetcher);
+    const { data: issues, error: issuesError } = useSWR<{ focusIssue: Issue; otherIssues: Issue[]; }, string>("/issues", fetcher);
     const [selectedIssue, setSelectedIssue] = useSessionStorage<Issue | undefined>("selectedIssue");
     const [actionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
     const history = useHistory();
