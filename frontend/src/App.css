@@ -1,5 +1,5 @@
 :root {
-  --bs-primary-rgb: 194,197,234 !important;
+  --bs-primary-rgb: 243, 182, 251 !important;
   --bs-dark-rgb: 46, 38, 108 !important;
   --primary-orange: #fc4b13;
   --text-pink: #f3b6fb;
@@ -9,6 +9,12 @@
 
 .btn-primary {
   background-color: rgb(var(--bs-primary-rgb)) !important;
+  border-color: rgb(var(--bs-primary-rgb)) !important;
+}
+
+.btn-secondary {
+  background-color: transparent !important;
+  color: rgb(var(--bs-primary-rgb)) !important;
   border-color: rgb(var(--bs-primary-rgb)) !important;
 }
 
@@ -98,6 +104,15 @@
 
 .bg-purple {
   background-color: rgba(53, 31, 117, .15);
+}
+
+.bg-purple-secondary {
+  background-color: rgba(49, 35, 112, .1);
+}
+
+.accordion-item,
+.accordion-button {
+  background-color: var(--bg-light-grey) !important;
 }
 
 hr {
