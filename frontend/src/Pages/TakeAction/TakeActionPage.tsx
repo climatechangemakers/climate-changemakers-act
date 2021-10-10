@@ -131,11 +131,13 @@ export default function TakeActionPage() {
                                 isSocialPosted={isSocialPosted}
                                 setIsSocialPosted={setIsSocialPosted}
                                 preComposedTweet={preComposedTweet}
-                                logTweet={() => {
+                                logTweet={async () => {
                                     const bioguideIds = actionInfo.legislators.map(l => l.bioguideId);
-                                    logTweetAPI(actionInfo.initiatorEmail, selectedIssue.id, bioguideIds).catch(err => {
+                                    try {
+                                        await logTweetAPI(actionInfo.initiatorEmail, selectedIssue.id, bioguideIds);
+                                    } catch (err: unknown) {
                                         console.warn(err);
-                                    });
+                                    }
                                 }}
                             />
                         </>}
