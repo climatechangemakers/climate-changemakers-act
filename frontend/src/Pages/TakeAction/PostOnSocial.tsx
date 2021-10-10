@@ -20,9 +20,7 @@ export default function PostOnSocial({
     const [hasClickedLink, setHasClickedLink] = useState(false);
 
     useEffect(() => {
-        if (preComposedTweet.status === "loaded") {
-            setTweet(preComposedTweet.value);
-        }
+        if (preComposedTweet.status === "loaded") setTweet(preComposedTweet.value);
     }, [preComposedTweet]);
 
     return (
