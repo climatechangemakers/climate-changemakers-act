@@ -78,7 +78,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                     {point.title}
                                 </Accordion.Header>
                                 <Accordion.Body className="p-0 h-100 text-dark fs-6">
-                                    <div className="py-2 px-3" dangerouslySetInnerHTML={{ __html: point.content }} />
+                                    <div className="py-2 px-3 bg-purple-secondary" dangerouslySetInnerHTML={{ __html: point.content }} />
                                 </Accordion.Body>
                             </Accordion.Item>)}
                     </Accordion>
@@ -114,7 +114,8 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                     <Form.Label>Prefix</Form.Label>
                                     <Form.Select
                                         value={emailInfo.prefix}
-                                        onChange={e => setEmailInfo(emailInfo => ({ ...emailInfo, prefix: e.currentTarget.value }))}
+                                        onChange={e => setEmailInfo({ ...emailInfo, prefix: e.currentTarget.value })}
+                                        disabled={isEmailSent}
                                         required>
                                         <option value="">--</option>
                                         {prefixes?.map(p =>
@@ -127,7 +128,8 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                     <Form.Label>First Name</Form.Label>
                                     <Form.Control
                                         value={emailInfo.firstName}
-                                        onChange={e => setEmailInfo(emailInfo => ({ ...emailInfo, firstName: e.currentTarget.value }))}
+                                        onChange={e => setEmailInfo({ ...emailInfo, firstName: e.currentTarget.value })}
+                                        disabled={isEmailSent}
                                         required />
                                 </Form.Group>
                             </Col>
@@ -136,7 +138,8 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                     <Form.Label>Last Name</Form.Label>
                                     <Form.Control
                                         value={emailInfo.lastName}
-                                        onChange={e => setEmailInfo(emailInfo => ({ ...emailInfo, lastName: e.currentTarget.value }))}
+                                        onChange={e => setEmailInfo({ ...emailInfo, lastName: e.currentTarget.value })}
+                                        disabled={isEmailSent}
                                         required />
                                 </Form.Group>
                             </Col>
@@ -147,28 +150,27 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                     <Form.Label>Subject Line</Form.Label>
                                     <Form.Control
                                         value={emailInfo.subject}
-                                        onChange={e => setEmailInfo(emailInfo => ({ ...emailInfo, subject: e.currentTarget.value }))}
+                                        onChange={e => setEmailInfo({ ...emailInfo, subject: e.currentTarget.value })}
+                                        disabled={isEmailSent}
                                         required />
                                 </Form.Group>
                             </Col>
                         </Row>
                         <Row>
                             <Col>
-                                <Form.Label>Letter Topic</Form.Label>
-                                <Form.Control
-                                    as="select"
+                                <Form.Label>Letter Topic (Hold Ctrl (windows) or Command (Mac) to select multiple)</Form.Label>
+                                <Form.Select
                                     multiple
                                     value={emailInfo.relatedTopics}
-                                    onChange={e => setEmailInfo(emailInfo => ({
+                                    disabled={isEmailSent}
+                                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setEmailInfo({
                                         ...emailInfo,
-                                        relatedTopics: [...emailInfo.relatedTopics].some(r => r === e.target.value)
-                                            ? [...emailInfo.relatedTopics].filter(r => r !== e.target.value)
-                                            : [...emailInfo.relatedTopics, e.target.value]
-                                    }))}>
+                                        relatedTopics: Array.from(e.target.selectedOptions, option => option.value)
+                                    })}>
                                     {locTopics?.map((t, i) => (
                                         <option key={i} value={t}>{t}</option>
                                     ))}
-                                </Form.Control>
+                                </Form.Select>
                             </Col>
                         </Row>
                     </Col>
@@ -181,7 +183,8 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                             rows={6}
                             placeholder="Write your why..."
                             value={emailInfo.body}
-                            onChange={e => setEmailInfo(emailInfo => ({ ...emailInfo, body: e.currentTarget.value }))}
+                            onChange={e => setEmailInfo({ ...emailInfo, body: e.currentTarget.value })}
+                            disabled={isEmailSent}
                             required />
                     </Form.Group>
                 </Row>
@@ -192,7 +195,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                     <Col md="6">
                         <Button
                             type="submit"
-                            className="w-100"
+                            className="w-100 text-dark"
                             disabled={isEmailSent}>
                             {!sendEmailError
                                 ? "Send Email"

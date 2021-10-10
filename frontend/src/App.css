@@ -106,6 +106,15 @@
   background-color: rgba(53, 31, 117, .15);
 }
 
+.bg-purple-secondary {
+  background-color: rgba(49,35,112,.1);
+}
+
+.accordion-item,
+.accordion-button {
+  background-color: var(--bg-light-grey) !important;
+}
+
 hr {
   height: 1px !important;
   opacity: 1 !important;
