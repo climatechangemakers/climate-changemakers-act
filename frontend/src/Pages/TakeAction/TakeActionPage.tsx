@@ -22,53 +22,12 @@ export default function TakeActionPage() {
     const [actionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
     const [preComposedTweet, setPreComposedTweet] = useState<Loadable<string, string>>({ status: "loading" });
 
-    // `scrollIntoView` doesn't work when the window is backgrounded, so we have some complex logic to enqueue a scroll if the window is invisible.
-    const [idToScrollTo, setIdToScrollTo] = useState<undefined | string>();
-    useEffect(() => {
-        if (!idToScrollTo) {
-            return;
-        }
+    const scrollToId = (id: string) =>
+        document.getElementById(id)?.scrollIntoView()
 
-        const scroll = () => {
-            document.getElementById(idToScrollTo)?.scrollIntoView();
-            setIdToScrollTo(undefined);
-        };
-
-        if (!document.hidden) {
-            scroll();
-            return;
-        }
-
-        const onVisibilityChange = () => {
-            if (document.hidden) {
-                return;
-            }
-            clearScrollTimeout();
-            scrollTimeout = setTimeout(() => {
-                removeEventListener();
-                scroll();
-            }, 500);
-        };
-
-        let scrollTimeout: undefined | ReturnType<typeof setTimeout>;
-        const clearScrollTimeout = () => {
-            if (scrollTimeout !== undefined) {
-                clearTimeout(scrollTimeout);
-            }
-        };
-
-        document.addEventListener('visibilitychange', onVisibilityChange, false);
-        const removeEventListener = document.removeEventListener.bind(document, 'visibilitychange', onVisibilityChange, false);
-
-        return () => {
-            removeEventListener();
-            clearScrollTimeout();
-        };
-    }, [idToScrollTo]);
-
-    useEffect(() => { isEmailSent && setIdToScrollTo("make_a_phone_call") }, [isEmailSent])
-    useEffect(() => { isPhoneCallMade && setIdToScrollTo("post_on_social") }, [isPhoneCallMade])
-    useEffect(() => { isSocialPosted && setIdToScrollTo("all_done") }, [isEmailSent, isPhoneCallMade, isSocialPosted])
+    useEffect(() => { isEmailSent && scrollToId("make_a_phone_call") }, [isEmailSent])
+    useEffect(() => { isPhoneCallMade && scrollToId("post_on_social") }, [isPhoneCallMade])
+    useEffect(() => { isSocialPosted && scrollToId("all_done") }, [isEmailSent, isPhoneCallMade, isSocialPosted])
 
     const selectedIssueId = selectedIssue?.id;
     useEffect(() => {
