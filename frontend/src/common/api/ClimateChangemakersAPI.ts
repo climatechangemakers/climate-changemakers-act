@@ -61,7 +61,7 @@ export const initiateActionAPI = (form: FormInfo) =>
     })
 
 export const sendEmailAPI = (originatingEmailAddress: string, relatedIssueId: number, emailBody: string, contactedBioguideIds: string[]) =>
-    post<null>("/send-email", { originatingEmailAddress, relatedIssueId, emailBody, contactedBioguideIds });
+    post<void>("/send-email", { originatingEmailAddress, relatedIssueId, emailBody, contactedBioguideIds });
 
 export const issueAPI = () =>
     get<IssuesResponse>("/issues")
@@ -73,4 +73,4 @@ export const preComposedTweetAPI = (issueId: number) =>
     get<PreComposedTweetResponse>(`/issues/${issueId}/precomposed-tweet`)
 
 export const logTweetAPI = (originatingEmailAddress: string, relatedIssueId: number, contactedBioguideIds: ReadonlyArray<string>) =>
-    post<null>("/log-tweet", { originatingEmailAddress, relatedIssueId, contactedBioguideIds });
+    post<void>("/log-tweet", { originatingEmailAddress, relatedIssueId, contactedBioguideIds });
