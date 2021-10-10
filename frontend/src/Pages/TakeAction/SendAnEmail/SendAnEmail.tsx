@@ -106,7 +106,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                     <li key={m}>{m}</li>)}
                         </ul>
                     </Col>
-                    <Col lg="8" className="mt-auto">
+                    <Col lg="8">
                         <h4>Draft Your Email</h4>
                         <Row>
                             <Col lg="3">
