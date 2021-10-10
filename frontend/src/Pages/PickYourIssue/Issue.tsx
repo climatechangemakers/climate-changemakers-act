@@ -1,4 +1,4 @@
-import { Issue } from "common/models/IssuesResponse";
+import { Issue } from "common/models/Issue";
 import { Button, Card } from "react-bootstrap";
 import styles from "./Issue.module.css";
 

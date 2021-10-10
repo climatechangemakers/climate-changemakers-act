@@ -1,99 +1,214 @@
-import { sendEmailAPI } from "common/api/ClimateChangemakersAPI";
-import { Issue } from "common/models/IssuesResponse";
+import { fetcher, sendEmailAPI } from "common/api/ClimateChangemakersAPI";
+import { ActionInfo } from "common/models/ActionInfo";
+import { FormInfo } from "common/models/FormInfo";
+import { Issue } from "common/models/Issue";
 import { useState } from "react";
 import { Accordion, Alert, Button, Col, Form, Row } from "react-bootstrap";
-import styles from "./SendAnEmail.module.css";
+import useSWR from "swr";
+import emailIcon from "./email-icon.svg";
 
 type Props = {
-    email: string;
+    actionInfo: ActionInfo;
+    formInfo: FormInfo;
     isEmailSent: boolean;
     setIsEmailSent: (bool: boolean) => void;
     selectedIssue: Issue;
 }
 
-const prompts = ["Where are you from and what do you do?",
-    "Why is this climate issue important to you?",
-    "What conerns is this issue causing you?",
-    "How do you think it could be different?"];
+export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEmailSent, selectedIssue }: Props) {
+    const [emailInfo, setEmailInfo] = useState({
+        prefix: "",
+        firstName: "",
+        lastName: "",
+        subject: "",
+        relatedTopics: [] as string[],
+        body: ""
+    });
+    const [sendEmailError, setSendEmailError] = useState("");
+    const { data: prefixes, error: prefixError } = useSWR<string[]>("/values/prefixes", fetcher);
+    const { data: locTopics, error: locTopicsError } = useSWR<string[]>("/values/library-of-congress-topics", fetcher);
 
-export default function SendAnEmail({ email, isEmailSent, setIsEmailSent, selectedIssue }: Props) {
-    const [emailMessage, setEmailMessage] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
-
-    const hasTalkingPoints = selectedIssue.talkingPoints.length > 0;
-
-    const sendEmail = async () => {
-        setErrorMessage("");
-        // TODO: Use actual relatedIssueId and contactedBioguideIds
-        const response = await sendEmailAPI(email, -1, emailMessage, []);
+    const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setSendEmailError("");
+        const response = await sendEmailAPI(
+            formInfo.email,
+            emailInfo.prefix,
+            emailInfo.firstName,
+            emailInfo.lastName,
+            formInfo.streetAddress,
+            formInfo.city,
+            formInfo.state,
+            formInfo.postalCode,
+            emailInfo.relatedTopics,
+            emailInfo.subject,
+            emailInfo.body,
+            selectedIssue.id,
+            actionInfo.legislators.map(l => l.bioguideId)
+        );
         if (!response.successful) {
-            setErrorMessage(response?.error ?? "Failed to send email");
+            setSendEmailError(response?.error ?? "Failed to send email");
             return;
         }
         setIsEmailSent(true);
     }
 
+    const error = prefixError || locTopicsError || sendEmailError;
+
     return (
         <div className="pt-2 pb-3 text-start">
-            <h3 className="pb-3">Send An Email</h3>
-            <Row>
-                <Col md="6">
-                    <h4>Instructions</h4>
-                    <p className="fs-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                </Col>
-                <Col md="6">
-                    <h4>Prompts</h4>
-                    <div className="fs-6">Here are some prompts to get you started</div>
-                    <ul className="fs-6">
-                        {prompts.map((m) => <li key={m}>{m}</li>)}
-                    </ul>
-                </Col>
-            </Row>
-            <Row className={`${styles.emailRow} mt-3`}>
-                {hasTalkingPoints &&
-                    <Col md="6" className={`${styles.pointsBodyCol} mb-2`}>
-                        <Accordion defaultActiveKey="0">
-                            {selectedIssue.talkingPoints.map((point, i) =>
-                                <Accordion.Item key={i} eventKey={i.toString()}>
-                                    <Accordion.Header>
-                                        {point.title}
-                                    </Accordion.Header>
-                                    <Accordion.Body className={`${styles.pointsBody} p-0 h-100 text-dark fs-6`}>
-                                        <div className="py-2 px-3" dangerouslySetInnerHTML={{ __html: point.content }} />
-                                    </Accordion.Body>
-                                </Accordion.Item>)}
-                        </Accordion>
-                    </Col>}
-                <Col className="mb-2" md={hasTalkingPoints ? "6" : "12"}>
-                    <Form.Group className="mb-3 h-100" controlId="emailForm.emailFormTextArea">
-                        <Form.Label className="visuallyhidden">Send an email</Form.Label>
+            <div className="d-flex">
+                <img
+                    src={emailIcon}
+                    alt=""
+                    height="40"
+                    width="40" />
+                <h2 className="text-pink fw-bold mb-3 ms-3">Send an Email</h2>
+            </div>
+            <p>Fill out the form below to open up an email to your elected representatives. The email template includes plenty of ‘fill-in-the-blank’ spaces, so you should weave in your freshly-drafted ‘why’ to make your message stand out.</p>
+            {selectedIssue.talkingPoints.length > 0 &&
+                <div className="mb-3">
+                    <h4>Issue Guide</h4>
+                    <Accordion defaultActiveKey="0">
+                        {selectedIssue.talkingPoints.map((point, i) =>
+                            <Accordion.Item key={i} eventKey={i.toString()}>
+                                <Accordion.Header>
+                                    {point.title}
+                                </Accordion.Header>
+                                <Accordion.Body className="p-0 h-100 text-dark fs-6">
+                                    <div className="py-2 px-3" dangerouslySetInnerHTML={{ __html: point.content }} />
+                                </Accordion.Body>
+                            </Accordion.Item>)}
+                    </Accordion>
+                </div>}
+            <Form onSubmit={sendEmail}>
+                <Row>
+                    <Col lg="4">
+                        <h4>Tips</h4>
+                        <ul>
+                            {["Identify yourself as a constituent",
+                                "State any relevant expertise",
+                                "Mention how the issue impacts your state/district",
+                                "Stick to one issue",
+                                "Be respectful and brief",
+                                "Make a direct ask"].map((m) =>
+                                    <li key={m}>{m}</li>)
+                            }
+                        </ul>
+                        <h4>Prompts</h4>
+                        <ul className="fs-6">
+                            {["Where are you from and what do you do?",
+                                "Why is this climate issue important to you?",
+                                "What conerns is this issue causing you?",
+                                "How do you think it could be different?"].map((m) =>
+                                    <li key={m}>{m}</li>)}
+                        </ul>
+                    </Col>
+                    <Col lg="8" className="mt-auto">
+                        <h4>Draft Your Email</h4>
+                        <Row>
+                            <Col lg="3">
+                                <Form.Group className="mb-3 h-100" controlId="emailForm.prefix">
+                                    <Form.Label>Prefix</Form.Label>
+                                    <Form.Select
+                                        value={emailInfo.prefix}
+                                        onChange={e => setEmailInfo({ ...emailInfo, prefix: e.currentTarget.value })}
+                                        required>
+                                        <option value="">--</option>
+                                        {prefixes?.map(p =>
+                                            <option key={p} value={p}>{p}</option>)}
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                            <Col lg="4">
+                                <Form.Group className="mb-3 h-100" controlId="emailForm.firstName">
+                                    <Form.Label>First Name</Form.Label>
+                                    <Form.Control
+                                        value={emailInfo.firstName}
+                                        onChange={e => setEmailInfo({ ...emailInfo, firstName: e.currentTarget.value })}
+                                        required />
+                                </Form.Group>
+                            </Col>
+                            <Col lg="5">
+                                <Form.Group className="mb-3 h-100" controlId="emailForm.lastName">
+                                    <Form.Label>Last Name</Form.Label>
+                                    <Form.Control
+                                        value={emailInfo.lastName}
+                                        onChange={e => setEmailInfo({ ...emailInfo, lastName: e.currentTarget.value })}
+                                        required />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3 h-100" controlId="emailForm.subject">
+                                    <Form.Label>Subject Line</Form.Label>
+                                    <Form.Control
+                                        value={emailInfo.subject}
+                                        onChange={e => setEmailInfo({ ...emailInfo, subject: e.currentTarget.value })}
+                                        required />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Label>Letter Topic</Form.Label>
+                                <Form.Control
+                                    as="select"
+                                    multiple
+                                    value={emailInfo.relatedTopics}
+                                    onChange={e => setEmailInfo(emailInfo => ({
+                                        ...emailInfo,
+                                        relatedTopics: [...emailInfo.relatedTopics].some(r => r === e.target.value)
+                                            ? [...emailInfo.relatedTopics].filter(r => r !== e.target.value)
+                                            : [...emailInfo.relatedTopics, e.target.value]
+                                    }))}>
+                                    <option value="">--</option>
+                                    {locTopics?.map(t => (
+                                        <option key={t} value={t}>{t}</option>
+                                    ))}
+                                </Form.Control>
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+                <Row className="mt-1">
+                    <Form.Group className="mb-3 h-100" controlId="emailForm.body">
+                        <Form.Label>Body</Form.Label>
                         <Form.Control
-                            value={emailMessage}
-                            onChange={e => setEmailMessage(e.currentTarget.value)}
-                            disabled={isEmailSent}
-                            placeholder="Email here..."
-                            className="h-100 p-3"
                             as="textarea"
-                            rows={7} />
+                            rows={6}
+                            placeholder="Write your why..."
+                            value={emailInfo.body}
+                            onChange={e => setEmailInfo({ ...emailInfo, body: e.currentTarget.value })}
+                            required />
                     </Form.Group>
-                </Col>
-            </Row>
-            <Button
-                className="d-flex me-auto mt-3"
-                disabled={!email || isEmailSent}
-                onClick={sendEmail}>
-                {!errorMessage
-                    ? "Send Email"
-                    : "Try again"}
-            </Button>
-            {errorMessage &&
+                </Row>
+                <Row>
+                    <Col md="6">
+                        <Button variant="secondary" className="w-100" disabled={isEmailSent}>Skip to Call</Button>
+                    </Col>
+                    <Col md="6">
+                        <Button
+                            type="submit"
+                            className="w-100"
+                            disabled={isEmailSent}>
+                            {!sendEmailError
+                                ? "Send Email"
+                                : "Try again"}
+                        </Button>
+                    </Col>
+                </Row>
+            </Form >
+            {!!error &&
                 <Row>
                     <Col>
-                        <Alert variant="danger" className="p-1 mt-2">
-                            {errorMessage}
+                        <Alert variant="danger" className="p-1 mt-2 text-center">
+                            {error}
                         </Alert>
                     </Col>
-                </Row>}
-        </div>
+                </Row>
+            }
+        </div >
     )
 }

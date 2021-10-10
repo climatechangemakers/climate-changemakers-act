@@ -1,7 +1,8 @@
 import Layout from "common/Components/Layout";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import { ActionInfo } from "common/models/ActionInfo";
-import { Issue } from "common/models/IssuesResponse";
+import { FormInfo } from "common/models/FormInfo";
+import { Issue } from "common/models/Issue";
 import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
@@ -18,6 +19,7 @@ export default function TakeActionPage() {
     const [isSocialPosted, setIsSocialPosted] = useState(false);
     const [selectedIssue] = useSessionStorage<Issue | undefined>("selectedIssue");
     const [actionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
+    const [formInfo] = useSessionStorage<FormInfo | undefined>("formInfo");
 
     const scrollToId = (id: string) =>
         document.getElementById(id)?.scrollIntoView()
@@ -26,7 +28,7 @@ export default function TakeActionPage() {
     useEffect(() => { isPhoneCallMade && scrollToId("post_on_social") }, [isPhoneCallMade])
     useEffect(() => { isSocialPosted && scrollToId("all_done") }, [isEmailSent, isPhoneCallMade, isSocialPosted])
 
-    if (!actionInfo)
+    if (!actionInfo || !formInfo)
         return <Redirect to="/" />
 
     if (!selectedIssue)
@@ -40,7 +42,8 @@ export default function TakeActionPage() {
                     <MeetYourReps actionInfo={actionInfo} />
                     <hr id="send_an_email" />
                     <SendAnEmail
-                        email={actionInfo.initiatorEmail}
+                        actionInfo={actionInfo}
+                        formInfo={formInfo}
                         selectedIssue={selectedIssue}
                         isEmailSent={isEmailSent}
                         setIsEmailSent={setIsEmailSent} />

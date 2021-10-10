@@ -1,30 +1,17 @@
-import { issueAPI } from "common/api/ClimateChangemakersAPI";
+import { fetcher } from "common/api/ClimateChangemakersAPI";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import { ActionInfo } from "common/models/ActionInfo";
-import { Issue, IssuesResponse } from "common/models/IssuesResponse";
-import { useEffect, useState } from "react";
+import { Issue } from "common/models/Issue";
 import { Alert, Col, Row } from "react-bootstrap";
 import { Redirect, useHistory } from "react-router-dom";
+import useSWR from "swr";
 import IssueCard from "./Issue";
 
 export default function PickYourIssuePage() {
-    const [errorMessage, setErrorMessage] = useState("");
-    const [issues, setIssues] = useState<IssuesResponse>();
+    const { data: issues, error: issuesError } = useSWR<{ focusIssue: Issue; otherIssues: Issue[]; }>("/issues", fetcher);
     const [selectedIssue, setSelectedIssue] = useSessionStorage<Issue | undefined>("selectedIssue");
     const [actionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
     const history = useHistory();
-
-    useEffect(() => {
-        const fetchIssues = async () => {
-            const response = await issueAPI();
-            if (!response.successful) {
-                setErrorMessage(response.error ?? "Failed to fetch issues");
-                return;
-            }
-            setIssues(response.data!);
-        }
-        fetchIssues();
-    }, [setIssues])
 
     const handleIssueSelect = (issue: Issue) => {
         setSelectedIssue(issue);
@@ -61,11 +48,11 @@ export default function PickYourIssuePage() {
                             </Col>)}
                     </Row>
                 </>}
-            {errorMessage &&
+            {issuesError &&
                 <Row>
                     <Col>
                         <Alert variant="danger" className="p-1 mt-2">
-                            {errorMessage}
+                            {issuesError}
                         </Alert>
                     </Col>
                 </Row>}

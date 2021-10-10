@@ -1,5 +1,5 @@
 :root {
-  --bs-primary-rgb: 194,197,234 !important;
+  --bs-primary-rgb: 243, 182, 251 !important;
   --bs-dark-rgb: 46, 38, 108 !important;
   --primary-orange: #fc4b13;
   --text-pink: #f3b6fb;
@@ -9,6 +9,12 @@
 
 .btn-primary {
   background-color: rgb(var(--bs-primary-rgb)) !important;
+  border-color: rgb(var(--bs-primary-rgb)) !important;
+}
+
+.btn-secondary {
+  background-color: transparent !important;
+  color: rgb(var(--bs-primary-rgb)) !important;
   border-color: rgb(var(--bs-primary-rgb)) !important;
 }
 
