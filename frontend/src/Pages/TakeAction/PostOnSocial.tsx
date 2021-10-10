@@ -25,7 +25,7 @@ export default function PostOnSocial({
     selectedIssue,
 }: Props) {
     const [tweet, setTweet] = useState("");
-    const [hasClickedLink, setHasClickedLink] = useState(false);
+    const [hasOpenedTwitter, setHasOpenedTwitter] = useState(false);
 
     useEffect(() => {
         if (preComposedTweet.status === "loaded") setTweet(preComposedTweet.value);
@@ -35,10 +35,10 @@ export default function PostOnSocial({
         e.preventDefault();
         e.stopPropagation();
 
-        if (hasClickedLink) {
+        if (hasOpenedTwitter) {
             setIsSocialPosted(true);
         } else if (window.open(getPostTweetUrl(tweet.trim()))) {
-            setHasClickedLink(true);
+            setHasOpenedTwitter(true);
             const bioguideIds = actionInfo.legislators.map((l) => l.bioguideId);
             let error: unknown;
             try {
@@ -60,7 +60,7 @@ export default function PostOnSocial({
                     <Form.Group>
                         <Form.Label htmlFor="draft-tweet-input">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus!</Form.Label>
                         <InputGroup hasValidation>
-                            <Form.Control as="textarea" rows={4} maxLength={1000} id="draft-tweet-input" placeholder="Compose your tweet" isInvalid={!isTweetValid(tweet)} disabled={isSocialPosted || hasClickedLink} value={tweet} onChange={(e) => setTweet(e.target.value)} />
+                            <Form.Control as="textarea" rows={4} maxLength={1000} id="draft-tweet-input" placeholder="Compose your tweet" isInvalid={!isTweetValid(tweet)} disabled={isSocialPosted || hasOpenedTwitter} value={tweet} onChange={(e) => setTweet(e.target.value)} />
                             <Form.Control.Feedback type="invalid" tooltip>
                                 {tweet.trim() ? "Your tweet is invalid. Is it too long?" : "You must enter a tweet."}
                             </Form.Control.Feedback>
@@ -78,7 +78,7 @@ export default function PostOnSocial({
                             </Button>
                         </div>
                         <div className="col d-flex">
-                            {!hasClickedLink ? (
+                            {!hasOpenedTwitter ? (
                                 <Button type="submit" className="flex-grow-1 ml-2" variant="primary" disabled={isSocialPosted || !isTweetValid(tweet)}>
                                     Send Tweet
                                 </Button>
