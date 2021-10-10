@@ -132,9 +132,8 @@ export default function TakeActionPage() {
                                 setIsSocialPosted={setIsSocialPosted}
                                 preComposedTweet={preComposedTweet}
                                 logTweet={() => {
-                                    const { initiatorEmail: email, legislators } = actionInfo;
-                                    const bioguideIds = legislators.map(l => l.bioguideId);
-                                    logTweetAPI(email, selectedIssue.id, bioguideIds).catch(err => {
+                                    const bioguideIds = actionInfo.legislators.map(l => l.bioguideId);
+                                    logTweetAPI(actionInfo.initiatorEmail, selectedIssue.id, bioguideIds).catch(err => {
                                         // It's okay if this request fails.
                                         console.warn(err);
                                     });
