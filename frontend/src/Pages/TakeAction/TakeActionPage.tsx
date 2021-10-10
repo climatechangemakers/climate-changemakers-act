@@ -92,11 +92,13 @@ export default function TakeActionPage() {
                                 preComposedTweet={preComposedTweet}
                                 logTweet={async () => {
                                     const bioguideIds = actionInfo.legislators.map(l => l.bioguideId);
+                                    let error: unknown;
                                     try {
-                                        await logTweetAPI(actionInfo.initiatorEmail, selectedIssue.id, bioguideIds);
+                                        ({ error } = await logTweetAPI(actionInfo.initiatorEmail, selectedIssue.id, bioguideIds));
                                     } catch (err: unknown) {
-                                        console.warn(err);
+                                        error = err;
                                     }
+                                    console.warn(error);
                                 }}
                             />
                         </>}

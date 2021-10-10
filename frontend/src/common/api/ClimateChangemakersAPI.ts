@@ -72,6 +72,5 @@ export const areasAPI = () =>
 export const preComposedTweetAPI = (issueId: number) =>
     get<PreComposedTweetResponse>(`/issues/${issueId}/precomposed-tweet`)
 
-export const logTweetAPI = async (originatingEmailAddress: string, relatedIssueId: number, contactedBioguideIds: ReadonlyArray<string>): Promise<void> => {
-    await post<unknown>("/log-tweet", { originatingEmailAddress, relatedIssueId, contactedBioguideIds });
-}
+export const logTweetAPI = (originatingEmailAddress: string, relatedIssueId: number, contactedBioguideIds: ReadonlyArray<string>) =>
+    post<null>("/log-tweet", { originatingEmailAddress, relatedIssueId, contactedBioguideIds });
