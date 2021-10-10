@@ -80,13 +80,13 @@ export default function PostOnSocial({
                             </Button>
                         </div>
                         <div className="col d-flex">
-                            {hasClickedLink ? (
-                                <Button type="submit" className="flex-grow-1 ml-2" variant="primary" disabled={isSocialPosted}>
-                                    Done Tweeting
-                                </Button>
-                            ) : (
+                            {!hasClickedLink ? (
                                 <Button type="submit" className="flex-grow-1 ml-2" variant="primary" disabled={isSocialPosted || !isTweetValid(tweet)}>
                                     Send Tweet
+                                </Button>
+                            ) : (
+                                <Button type="submit" className="flex-grow-1 ml-2" variant="primary" disabled={isSocialPosted}>
+                                    Done Tweeting
                                 </Button>
                             )}
                         </div>
