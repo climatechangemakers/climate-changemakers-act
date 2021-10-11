@@ -4,6 +4,7 @@ import { FormInfo } from "common/models/FormInfo";
 import { Issue } from "common/models/Issue";
 import { useState } from "react";
 import { Accordion, Alert, Button, Col, Form, Row } from "react-bootstrap";
+import Select, { MultiValue } from "react-select";
 import useSWR from "swr";
 import emailIcon from "./email-icon.svg";
 
@@ -21,8 +22,8 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
         firstName: "",
         lastName: "",
         subject: "",
-        relatedTopics: [] as string[],
-        body: ""
+        body: "",
+        selectedLocTopics: [] as MultiValue<{ value: string; label: string; }>
     });
     const [sendEmailError, setSendEmailError] = useState("");
     const { data: prefixes, error: prefixError } = useSWR<string[], string>("/values/prefixes", fetcher);
@@ -40,7 +41,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
             formInfo.city,
             formInfo.state,
             formInfo.postalCode,
-            emailInfo.relatedTopics,
+            emailInfo.selectedLocTopics.map(t => t.value),
             emailInfo.subject,
             emailInfo.body,
             selectedIssue.id,
@@ -53,6 +54,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
         setIsEmailSent(true);
     }
 
+    const topicOptions = locTopics?.map(t => ({ value: t, label: t })) || [];
     const error = prefixError || locTopicsError || sendEmailError;
 
     return (
@@ -104,7 +106,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                     <li key={m}>{m}</li>)}
                         </ul>
                     </Col>
-                    <Col lg="8">
+                    <Col className="mt-auto" lg="8">
                         <h4>Draft Your Email</h4>
                         <Row>
                             <Col lg="3">
@@ -156,19 +158,19 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                         </Row>
                         <Row>
                             <Col>
-                                <Form.Label>Letter Topic (hold Ctrl (Windows) or Command (Mac) to select multiple)</Form.Label>
-                                <Form.Select
-                                    multiple
-                                    value={emailInfo.relatedTopics}
-                                    disabled={isEmailSent}
-                                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setEmailInfo({
-                                        ...emailInfo,
-                                        relatedTopics: Array.from(e.target.selectedOptions, option => option.value)
-                                    })}>
-                                    {locTopics?.map((t, i) => (
-                                        <option key={i} value={t}>{t}</option>
-                                    ))}
-                                </Form.Select>
+                                <Form.Label>Letter Topic</Form.Label>
+                                <Select
+                                    defaultValue={emailInfo.selectedLocTopics}
+                                    onChange={e => setEmailInfo({ ...emailInfo, selectedLocTopics: e })}
+                                    options={topicOptions}
+                                    styles={{
+                                        option: (provided) => ({
+                                            ...provided,
+                                            color: "black"
+                                        })
+                                    }}
+                                    isMulti
+                                />
                             </Col>
                         </Row>
                     </Col>
