@@ -1,121 +1,121 @@
 :root {
-  --bs-primary-rgb: 243, 182, 251 !important;
-  --bs-dark-rgb: 46, 38, 108 !important;
-  --primary-orange: #fc4b13;
-  --text-pink: #f3b6fb;
-  --bg-light-grey: #EEEFFF;
-  --primary-purple: #351F75;
+    --bs-primary-rgb: 243, 182, 251 !important;
+    --bs-dark-rgb: 46, 38, 108 !important;
+    --primary-orange: #fc4b13;
+    --text-pink: #f3b6fb;
+    --bg-light-grey: #eeefff;
+    --primary-purple: #351f75;
 }
 
 .btn-primary {
-  background-color: rgb(var(--bs-primary-rgb)) !important;
-  border-color: rgb(var(--bs-primary-rgb)) !important;
+    background-color: rgb(var(--bs-primary-rgb)) !important;
+    border-color: rgb(var(--bs-primary-rgb)) !important;
 }
 
 .btn-secondary {
-  background-color: transparent !important;
-  color: rgb(var(--bs-primary-rgb)) !important;
-  border-color: rgb(var(--bs-primary-rgb)) !important;
+    background-color: transparent !important;
+    color: rgb(var(--bs-primary-rgb)) !important;
+    border-color: rgb(var(--bs-primary-rgb)) !important;
 }
 
 .btn {
-  -webkit-transition: .1s opacity linear !important;
-  -moz-transition: .1s opacity linear !important;
-  -o-transition: .1s opacity linear !important;
-  transition: .1s opacity linear !important;
+    -webkit-transition: 0.1s opacity linear !important;
+    -moz-transition: 0.1s opacity linear !important;
+    -o-transition: 0.1s opacity linear !important;
+    transition: 0.1s opacity linear !important;
 }
 
 .btn:hover {
-  opacity: .8;
+    opacity: 0.8;
 }
 
 .App {
-  background-color: var(--primary-purple);
-  color: white;
+    background-color: var(--primary-purple);
+    color: white;
 }
 
 .App-logo {
-  height: 20vmin;
-  pointer-events: none;
+    height: 20vmin;
+    pointer-events: none;
 }
 
 .progress {
-  height: 1.5rem !important;
+    height: 1.5rem !important;
 }
 
 .vh-50 {
-  height: 50vh;
+    height: 50vh;
 }
 
 .card-title {
-  color: rgb(var(--bs-dark-rgb));
+    color: rgb(var(--bs-dark-rgb));
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
 .App-body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .visuallyhidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
 }
 
 .fs-7 {
-  font-size: .85rem !important;
+    font-size: 0.85rem !important;
 }
 
 .text-pink {
-  color: var(--text-pink);
-  font-weight: 600;
+    color: var(--text-pink);
+    font-weight: 600;
 }
 
 .text-purple {
-  color: var(--primary-purple)
+    color: var(--primary-purple);
 }
 
 .bg-light-grey {
-  background-color: var(--bg-light-grey) !important;
+    background-color: var(--bg-light-grey) !important;
 }
 
 .bg-purple {
-  background-color: rgba(53, 31, 117, .15);
+    background-color: rgba(53, 31, 117, 0.15);
 }
 
 .bg-purple-secondary {
-  background-color: rgba(49, 35, 112, .1);
+    background-color: rgba(49, 35, 112, 0.1);
 }
 
 .accordion-item,
 .accordion-button {
-  background-color: var(--bg-light-grey) !important;
+    background-color: var(--bg-light-grey) !important;
 }
 
 hr {
-  height: 1px !important;
-  opacity: 1 !important;
+    height: 1px !important;
+    opacity: 1 !important;
 }

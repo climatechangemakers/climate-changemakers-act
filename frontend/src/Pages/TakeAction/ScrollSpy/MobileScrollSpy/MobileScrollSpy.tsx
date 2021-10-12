@@ -6,7 +6,7 @@ type Props = {
     isEmailSent: boolean;
     isPhoneCallMade: boolean;
     isSocialPosted: boolean;
-}
+};
 
 export default function MobileScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted }: Props) {
     const percentDone = (+isEmailSent + +isPhoneCallMade + +isSocialPosted) * 20;
@@ -20,5 +20,5 @@ export default function MobileScrollSpy({ isEmailSent, isPhoneCallMade, isSocial
                 <ProgressLabel completed={isSocialPosted}>Social</ProgressLabel>
             </div>
         </div>
-    )
+    );
 }

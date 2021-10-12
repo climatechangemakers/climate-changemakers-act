@@ -1,7 +1,7 @@
 export type ActionInfo = {
     initiatorEmail: string;
     legislators: Legislator[];
-}
+};
 
 export type Legislator = {
     name: string;
@@ -15,14 +15,16 @@ export type Legislator = {
     partyAffiliation: string;
     lcvScores: {
         score: number;
-        scoreType: {
-            type: "lifetime";
-        } | {
-            type: "year";
-            year: number;
-        };
+        scoreType:
+            | {
+                  type: "lifetime";
+              }
+            | {
+                  type: "year";
+                  year: number;
+              };
     }[];
     phoneNumbers: string[];
     role: string;
     siteUrl: string;
-}
+};

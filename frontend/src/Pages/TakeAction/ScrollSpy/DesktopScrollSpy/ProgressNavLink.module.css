@@ -1,15 +1,15 @@
 .inactiveLink {
     pointer-events: none;
     cursor: default;
- }
+}
 
- .numbers,
- .bullets,
- .checkmark {
+.numbers,
+.bullets,
+.checkmark {
     font-weight: 600;
     top: 50%;
     transform: translate(0, -50%);
-    font-size: .9rem;
+    font-size: 0.9rem;
     display: flex;
     margin: auto 0;
     position: absolute;
@@ -20,5 +20,5 @@
 }
 
 .bullets {
-    font-size: .7rem;
+    font-size: 0.7rem;
 }

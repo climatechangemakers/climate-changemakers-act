@@ -1,9 +1,9 @@
 export type FormInfo = {
-    streetAddress: string,
-    city: string,
-    state: string,
-    postalCode: string,
-    email: string,
-    hasTrackingConsent: boolean,
-    hasEmailingConsent: boolean
-}
+    streetAddress: string;
+    city: string;
+    state: string;
+    postalCode: string;
+    email: string;
+    hasTrackingConsent: boolean;
+    hasEmailingConsent: boolean;
+};

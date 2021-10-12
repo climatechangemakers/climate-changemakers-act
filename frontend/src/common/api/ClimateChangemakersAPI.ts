@@ -5,43 +5,39 @@ type FetchResponse<T> = {
     successful: boolean;
     error?: string;
     data?: T;
-}
+};
 
 export const fetcher = async <T>(path: string) => {
     const res = await fetch("/api" + path);
 
-    if (!res.ok)
-        throw `Failed to fetch ${path}: ${res.statusText}`;
+    if (!res.ok) throw `Failed to fetch ${path}: ${res.statusText}`;
 
-    return await res.json() as T;
-}
+    return (await res.json()) as T;
+};
 
-const parseFetch = async<T>(response: Response): Promise<FetchResponse<T>> => {
+const parseFetch = async <T>(response: Response): Promise<FetchResponse<T>> => {
     try {
-        if (!response.ok)
-            return { successful: false }
+        if (!response.ok) return { successful: false };
 
-        if (response.status === 204)
-            return { successful: true };
+        if (response.status === 204) return { successful: true };
 
         return {
             successful: true,
-            data: await response.json() as T
-        }
+            data: (await response.json()) as T,
+        };
+    } catch (e: any) {
+        return { successful: false, error: e?.message };
     }
-    catch (e: any) {
-        return { successful: false, error: e?.message }
-    }
-}
+};
 
 const post = async <T>(path: string, content: Object): Promise<FetchResponse<T>> =>
     parseFetch(
         await fetch("/api" + path, {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'content-type': 'application/json;charset=UTF-8'
+                "content-type": "application/json;charset=UTF-8",
             },
-            body: JSON.stringify(content)
+            body: JSON.stringify(content),
         })
     );
 
@@ -53,8 +49,8 @@ export const initiateActionAPI = (form: FormInfo) =>
         state: form.state,
         postalCode: form.postalCode,
         consentToTrackImpact: form.hasTrackingConsent,
-        desiresInformationalEmails: form.hasEmailingConsent
-    })
+        desiresInformationalEmails: form.hasEmailingConsent,
+    });
 
 export const sendEmailAPI = (
     originatingEmailAddress: string,
@@ -69,23 +65,26 @@ export const sendEmailAPI = (
     emailSubject: string,
     emailBody: string,
     relatedIssueId: number,
-    contactedBioguideIds: string[]) =>
-    post<void>("/send-email",
-        {
-            originatingEmailAddress,
-            title,
-            firstName,
-            lastName,
-            streetAddress,
-            city,
-            state,
-            postalCode,
-            relatedTopics,
-            emailSubject,
-            emailBody,
-            relatedIssueId,
-            contactedBioguideIds
-        });
+    contactedBioguideIds: string[]
+) =>
+    post<void>("/send-email", {
+        originatingEmailAddress,
+        title,
+        firstName,
+        lastName,
+        streetAddress,
+        city,
+        state,
+        postalCode,
+        relatedTopics,
+        emailSubject,
+        emailBody,
+        relatedIssueId,
+        contactedBioguideIds,
+    });
 
-export const logTweetAPI = (originatingEmailAddress: string, relatedIssueId: number, contactedBioguideIds: ReadonlyArray<string>) =>
-    post<void>("/log-tweet", { originatingEmailAddress, relatedIssueId, contactedBioguideIds });
+export const logTweetAPI = (
+    originatingEmailAddress: string,
+    relatedIssueId: number,
+    contactedBioguideIds: ReadonlyArray<string>
+) => post<void>("/log-tweet", { originatingEmailAddress, relatedIssueId, contactedBioguideIds });
