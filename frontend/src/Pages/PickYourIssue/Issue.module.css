@@ -1,7 +1,7 @@
 .learnMore {
     color: var(--primary-orange) !important;
     font-weight: 500;
-    font-size: .9rem;
+    font-size: 0.9rem;
 }
 
 .issueCard {
@@ -9,7 +9,7 @@
 }
 
 .issueCard:disabled {
-    opacity: .8;
+    opacity: 0.8;
 }
 
 .issueCardSelected,

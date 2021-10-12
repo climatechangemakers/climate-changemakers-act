@@ -7,7 +7,7 @@ type Props = {
     isEmailSent: boolean;
     isPhoneCallMade: boolean;
     isSocialPosted: boolean;
-}
+};
 
 export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted }: Props) {
     return (
@@ -26,5 +26,6 @@ export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted
                     isSocialPosted={isSocialPosted}
                 />
             </div>
-        </div>)
+        </div>
+    );
 }

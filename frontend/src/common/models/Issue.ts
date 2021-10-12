@@ -5,4 +5,4 @@ export type Issue = {
         title: string;
         content: string;
     }[];
-}
+};

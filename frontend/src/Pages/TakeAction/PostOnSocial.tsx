@@ -15,8 +15,7 @@ type Props = {
     selectedIssue: Issue;
 };
 
-export const isTweetValid = (text: string) =>
-    text.length <= 1000 && text.trim().length > 0;
+export const isTweetValid = (text: string) => text.length <= 1000 && text.trim().length > 0;
 
 export default function PostOnSocial({
     isSocialPosted,
@@ -40,36 +39,35 @@ export default function PostOnSocial({
         if (!hasOpenedTwitter) {
             const openedWindow = window.open(getPostTweetUrl(tweet.trim()));
             if (openedWindow) {
-              setHasOpenedTwitter(true);
+                setHasOpenedTwitter(true);
             }
         } else {
             setIsSocialPosted(true);
             const bioguideIds = actionInfo.legislators.map((l) => l.bioguideId);
 
             const response = await logTweetAPI(actionInfo.initiatorEmail, selectedIssue.id, bioguideIds);
-            if (!response.successful)
-                console.warn(response.error ?? "Failed to log tweet");
+            if (!response.successful) console.warn(response.error ?? "Failed to log tweet");
         }
     };
 
     return (
         <div className="pt-2 pb-3">
             <div className="d-flex">
-                  <img
-                      src={postOnSocialIcon}
-                      alt=""
-                      height="40"
-                      width="40"
-                  />
-                  <h2 className="text-pink fw-bold mb-3 ms-3">Post on Social Media</h2>
+                <img src={postOnSocialIcon} alt="" height="40" width="40" />
+                <h2 className="text-pink fw-bold mb-3 ms-3">Post on Social Media</h2>
             </div>
-            {preComposedTweetError ? <p>Failed to load. Please try refreshing the page.</p>
-            : !preComposedTweet ? <p>Loading...</p>
-            : (
+            {preComposedTweetError ? (
+                <p>Failed to load. Please try refreshing the page.</p>
+            ) : !preComposedTweet ? (
+                <p>Loading...</p>
+            ) : (
                 <Form onSubmit={handleSubmit}>
                     <Form.Group>
                         <Form.Label htmlFor="draft-tweet-input">
-                            Plan your personalized script (the field below is editable and just a working space for you!), and then click below to make your calls. You're the expert on your own experiences and your own climate concern, and your advocacy is most effective when you speak from your unique perspective, so bring in personal details and anecdotes.
+                            Plan your personalized script (the field below is editable and just a working space for
+                            you!), and then click below to make your calls. You're the expert on your own experiences
+                            and your own climate concern, and your advocacy is most effective when you speak from your
+                            unique perspective, so bring in personal details and anecdotes.
                         </Form.Label>
                         <InputGroup hasValidation>
                             <Form.Control
@@ -102,11 +100,21 @@ export default function PostOnSocial({
                         </div>
                         <div className="col d-flex">
                             {!hasOpenedTwitter ? (
-                                <Button type="submit" className="flex-grow-1 ml-2 text-dark" variant="primary" disabled={isSocialPosted || !isTweetValid(tweet)}>
+                                <Button
+                                    type="submit"
+                                    className="flex-grow-1 ml-2 text-dark"
+                                    variant="primary"
+                                    disabled={isSocialPosted || !isTweetValid(tweet)}
+                                >
                                     Send Tweet
                                 </Button>
                             ) : (
-                                <Button type="submit" className="flex-grow-1 ml-2 text-dark" variant="primary" disabled={isSocialPosted}>
+                                <Button
+                                    type="submit"
+                                    className="flex-grow-1 ml-2 text-dark"
+                                    variant="primary"
+                                    disabled={isSocialPosted}
+                                >
                                     Done Tweeting
                                 </Button>
                             )}
@@ -115,5 +123,5 @@ export default function PostOnSocial({
                 </Form>
             )}
         </div>
-    )
+    );
 }

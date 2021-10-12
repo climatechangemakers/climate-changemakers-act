@@ -5,13 +5,11 @@ type Props = {
     isEmailSent: boolean;
     isPhoneCallMade: boolean;
     isSocialPosted: boolean;
-}
+};
 
 export default function DesktopProgressBar({ isEmailSent, isPhoneCallMade, isSocialPosted }: Props) {
     const linkState = (isComplete: boolean, isActive: boolean) =>
-        isComplete ? "complete"
-            : isActive ? "active"
-                : "disabled"
+        isComplete ? "complete" : isActive ? "active" : "disabled";
     return (
         <Navbar variant="dark" className="ps-1">
             <Nav className="d-flex flex-column fs-6">
@@ -29,5 +27,5 @@ export default function DesktopProgressBar({ isEmailSent, isPhoneCallMade, isSoc
                 </ProgressNavLink>
             </Nav>
         </Navbar>
-    )
+    );
 }

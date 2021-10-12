@@ -5,19 +5,17 @@ export default function useSessionStorage<T>(key: string, initialValue?: T): [T,
         try {
             const item = window.sessionStorage.getItem(key);
             return item ? JSON.parse(item) : initialValue;
-        }
-        catch (error) {
+        } catch (error) {
             console.log(error);
             return initialValue;
         }
-    })
+    });
     const setValue = (value: any) => {
         try {
             const valueToStore = value instanceof Function ? value(storedValue) : value;
             setStoredValue(valueToStore);
             window.sessionStorage.setItem(key, JSON.stringify(valueToStore));
-        }
-        catch (error) {
+        } catch (error) {
             console.log(error);
         }
     };

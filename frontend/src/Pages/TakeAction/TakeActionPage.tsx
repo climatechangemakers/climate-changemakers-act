@@ -16,37 +16,42 @@ import ScrollSpy from "./ScrollSpy/ScrollSpy";
 import SendAnEmail from "./SendAnEmail/SendAnEmail";
 
 export default function TakeActionPage() {
-    const [isEmailSent, setIsEmailSent] = useState(false);
-    const [isPhoneCallMade, setIsPhoneCallMade] = useState(false);
+    const [isEmailSent, setIsEmailSent] = useState(true);
+    const [isPhoneCallMade, setIsPhoneCallMade] = useState(true);
     const [isSocialPosted, setIsSocialPosted] = useState(false);
     const [selectedIssue] = useSessionStorage<Issue | undefined>("selectedIssue");
     const [actionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
     const [formInfo] = useSessionStorage<FormInfo | undefined>("formInfo");
 
-    const scrollToId = (id: string) =>
-        document.getElementById(id)?.scrollIntoView()
+    const scrollToId = (id: string) => document.getElementById(id)?.scrollIntoView();
 
-    useEffect(() => { isEmailSent && scrollToId("make_a_phone_call") }, [isEmailSent])
-    useEffect(() => { isPhoneCallMade && scrollToId("post_on_social") }, [isPhoneCallMade])
-    useEffect(() => { isSocialPosted && scrollToId("all_done") }, [isEmailSent, isPhoneCallMade, isSocialPosted])
+    useEffect(() => {
+        isEmailSent && scrollToId("make_a_phone_call");
+    }, [isEmailSent]);
+    useEffect(() => {
+        isPhoneCallMade && scrollToId("post_on_social");
+    }, [isPhoneCallMade]);
+    useEffect(() => {
+        isSocialPosted && scrollToId("all_done");
+    }, [isEmailSent, isPhoneCallMade, isSocialPosted]);
 
     const selectedIssueId = selectedIssue?.id;
-    const {
-        data: preComposedTweetData,
-        error: preComposedTweetError,
-    } = useSWR<{ tweet: string }, string>(() => (selectedIssueId !== undefined ? `/issues/${selectedIssueId}/precomposed-tweet` : null), fetcher);
+    const { data: preComposedTweetData, error: preComposedTweetError } = useSWR<{ tweet: string }, string>(
+        () => (selectedIssueId !== undefined ? `/issues/${selectedIssueId}/precomposed-tweet` : null),
+        fetcher
+    );
 
-    if (!actionInfo || !formInfo)
-        return <Redirect to="/" />
+    if (!actionInfo || !formInfo) return <Redirect to="/" />;
 
-    if (!selectedIssue)
-        return <Redirect to="/pick-your-issue" />
+    if (!selectedIssue) return <Redirect to="/pick-your-issue" />;
 
     return (
         <Layout>
             <Row className="d-flex">
                 <Col md="10" xs="12">
-                    <h1 className="text-start mb-4 pb-2 pt-4" id="introduction">Time to get started!</h1>
+                    <h1 className="text-start mb-4 pb-2 pt-4" id="introduction">
+                        Time to get started!
+                    </h1>
                     <MeetYourReps actionInfo={actionInfo} />
                     <hr id="send_an_email" />
                     <SendAnEmail
@@ -54,13 +59,15 @@ export default function TakeActionPage() {
                         formInfo={formInfo}
                         selectedIssue={selectedIssue}
                         isEmailSent={isEmailSent}
-                        setIsEmailSent={setIsEmailSent} />
-                    {isEmailSent &&
+                        setIsEmailSent={setIsEmailSent}
+                    />
+                    {isEmailSent && (
                         <>
                             <hr id="make_a_phone_call" />
                             <MakeAPhoneCall isPhoneCallMade={isPhoneCallMade} setIsPhoneCallMade={setIsPhoneCallMade} />
-                        </>}
-                    {isPhoneCallMade &&
+                        </>
+                    )}
+                    {isPhoneCallMade && (
                         <>
                             <hr id="post_on_social" />
                             <PostOnSocial
@@ -71,12 +78,14 @@ export default function TakeActionPage() {
                                 preComposedTweet={preComposedTweetData?.tweet}
                                 preComposedTweetError={preComposedTweetError}
                             />
-                        </>}
-                    {isSocialPosted &&
+                        </>
+                    )}
+                    {isSocialPosted && (
                         <>
                             <hr id="all_done" />
                             <AllDone />
-                        </>}
+                        </>
+                    )}
                 </Col>
                 <Col md="2" xs="12">
                     <ScrollSpy
