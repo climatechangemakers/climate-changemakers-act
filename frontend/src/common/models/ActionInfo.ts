@@ -4,6 +4,7 @@ export type ActionInfo = {
 }
 
 export type Legislator = {
+    name: string;
     bioguideId: string;
     imageUrl: string;
     twitter: string;
@@ -21,7 +22,6 @@ export type Legislator = {
             year: number;
         };
     }[];
-    name: string;
     phoneNumbers: string[];
     role: string;
     siteUrl: string;

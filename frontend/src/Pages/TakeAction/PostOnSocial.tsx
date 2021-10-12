@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { logTweetAPI } from "common/api/ClimateChangemakersAPI";
 import { ActionInfo } from "common/models/ActionInfo";
-import { Issue } from "common/models/IssuesResponse";
+import { Issue } from "common/models/Issue";
 import { getPostTweetUrl } from "common/lib/twitter";
 import postOnSocialIcon from "./post-on-social-icon.svg";
 

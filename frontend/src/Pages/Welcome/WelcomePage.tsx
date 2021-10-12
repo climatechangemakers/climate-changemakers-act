@@ -1,41 +1,29 @@
-import { areasAPI, initiateActionAPI } from "common/api/ClimateChangemakersAPI";
+import { fetcher, initiateActionAPI } from "common/api/ClimateChangemakersAPI";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import logo from "common/logo.png";
 import { ActionInfo } from "common/models/ActionInfo";
-import { AreasResponse } from "common/models/Areas";
-import { useEffect, useState } from "react";
+import { FormInfo } from "common/models/FormInfo";
+import { useState } from "react";
 import { Alert, Badge, Button, Col, Form, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import useSWR from "swr";
 import styles from "./WelcomePage.module.css";
 
 export default function WelcomePage() {
-    const [formInfo, setFormInfo] = useState(
-        {
-            streetAddress: "",
-            city: "",
-            state: "",
-            postalCode: "",
-            email: "",
-            hasTrackingConsent: false,
-            hasEmailingConsent: false
-        });
+    const [formInfo, setFormInfo] = useSessionStorage<FormInfo>("formInfo", {
+        streetAddress: "",
+        city: "",
+        state: "",
+        postalCode: "",
+        email: "",
+        hasTrackingConsent: false,
+        hasEmailingConsent: false
+    });
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [areas, setAreas] = useState<AreasResponse>();
     const [, setActionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
+    const { data: areas, error: areasError } = useSWR<{ shortName: string; fullName: string; }[]>("/values/areas", fetcher);
     const history = useHistory();
-
-    useEffect(() => {
-        const fetchAreas = async () => {
-            const response = await areasAPI();
-            if (!response.successful) {
-                setErrorMessage(response.error ?? "Failed to fetch areas");
-                return;
-            }
-            setAreas(response.data!);
-        }
-        fetchAreas();
-    }, [setAreas])
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -147,11 +135,11 @@ export default function WelcomePage() {
                     <p className="mt-2 text-start fs-7">Complete street address needed to identify your elected representatives. Climate Changemakers will not save your address or use it for any other purpose.</p>
                 </Form>
             </div>
-            {errorMessage &&
+            {(areasError || errorMessage) &&
                 <Row>
                     <Col>
                         <Alert variant="danger" className="p-1 mt-2">
-                            {errorMessage}
+                            {areasError || errorMessage}
                         </Alert>
                     </Col>
                 </Row>}
