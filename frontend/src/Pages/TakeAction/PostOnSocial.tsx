@@ -45,13 +45,10 @@ export default function PostOnSocial({
         } else {
             setIsSocialPosted(true);
             const bioguideIds = actionInfo.legislators.map((l) => l.bioguideId);
-            let error: unknown;
-            try {
-                ({ error } = await logTweetAPI(actionInfo.initiatorEmail, selectedIssue.id, bioguideIds));
-            } catch (err: unknown) {
-                error = err;
-            }
-            console.warn(error);
+
+            const response = await logTweetAPI(actionInfo.initiatorEmail, selectedIssue.id, bioguideIds);
+            if (!response.successful)
+                console.warn(response.error ?? "Failed to log tweet");
         }
     };
 
@@ -64,7 +61,7 @@ export default function PostOnSocial({
                       height="40"
                       width="40"
                   />
-                  <h2 className="text-pink fw-bold mb-3 ms-3">Send an Email</h2>
+                  <h2 className="text-pink fw-bold mb-3 ms-3">Post on Social Media</h2>
             </div>
             {preComposedTweetError ? <p>Failed to load. Please try refreshing the page.</p>
             : !preComposedTweet ? <p>Loading...</p>
