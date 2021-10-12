@@ -9,7 +9,7 @@ type Props = {
         phoneNumbersCalled: string[];
         isPhoneCallMade: boolean;
         logCall: (phoneNumber: string) => void;
-    }
+    };
 };
 
 export default function LegislatorCard({ legislator, call }: Props) {
@@ -23,8 +23,8 @@ export default function LegislatorCard({ legislator, call }: Props) {
                 <Card.Title className="text-dark fs-6 mb-2">
                     {surname} {legislator.name}
                 </Card.Title>
-                {!call
-                    ? <div>
+                {!call ? (
+                    <div>
                         <div className="text-dark fs-6 mb-2 fw-bold d-flex justify-content-center">
                             <Badge bg="purple" className="pt-2 pb-2 me-1 text-capitalize fw-light text-dark">
                                 {legislator.partyAffiliation}
@@ -44,22 +44,29 @@ export default function LegislatorCard({ legislator, call }: Props) {
                             </div>
                         )}
                     </div>
-                    : <div className="d-flex flex-column align-items-center">
-                        {legislator.phoneNumbers.map(n => {
+                ) : (
+                    <div className="d-flex flex-column align-items-center">
+                        {legislator.phoneNumbers.map((n) => {
                             const callMade = call.phoneNumbersCalled.includes(n);
                             return (
-                                <Form.Group key={n} className={`${styles.checkboxContainer} mb-2 d-flex justify-content-between`} controlId={`call${n}`}>
+                                <Form.Group
+                                    key={n}
+                                    className={`${styles.checkboxContainer} mb-2 d-flex justify-content-between`}
+                                    controlId={`call${n}`}
+                                >
                                     <Form.Check
                                         checked={callMade || call.isPhoneCallMade}
                                         disabled={callMade || call.isPhoneCallMade}
                                         onClick={() => call.logCall(n)}
                                         className={styles.formCheckInput}
-                                        type="checkbox" />
+                                        type="checkbox"
+                                    />
                                     <a href={`tel:${n.replace("-", "")}`}>{n}</a>
                                 </Form.Group>
-                            )
+                            );
                         })}
-                    </div>}
+                    </div>
+                )}
             </Card.Body>
         </Card>
     );

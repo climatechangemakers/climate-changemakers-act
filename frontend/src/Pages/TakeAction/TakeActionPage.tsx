@@ -69,7 +69,8 @@ export default function TakeActionPage() {
                                 relatedIssueId={selectedIssue.id}
                                 emailAddress={formInfo.email}
                                 isPhoneCallMade={isPhoneCallMade}
-                                setIsPhoneCallMade={setIsPhoneCallMade} />
+                                setIsPhoneCallMade={setIsPhoneCallMade}
+                            />
                         </>
                     )}
                     {isPhoneCallMade && (

@@ -14,20 +14,26 @@ type Props = {
     setIsPhoneCallMade: (bool: boolean) => void;
 };
 
-export default function MakeACall({ actionInfo, relatedIssueId, emailAddress, isPhoneCallMade, setIsPhoneCallMade }: Props) {
+export default function MakeACall({
+    actionInfo,
+    relatedIssueId,
+    emailAddress,
+    isPhoneCallMade,
+    setIsPhoneCallMade,
+}: Props) {
     const [phoneNumbersCalled, setPhoneNumbersCalled] = useState<string[]>([]);
     const [error, setError] = useState("");
 
-    const phoneNumbers = actionInfo.legislators.flatMap(l => l.phoneNumbers);
+    const phoneNumbers = actionInfo.legislators.flatMap((l) => l.phoneNumbers);
 
     const logCall = async (phoneNumber: string, contactedBioguideId: string) => {
         const response = await logCallAPI(emailAddress, relatedIssueId, phoneNumber, contactedBioguideId);
         if (!response.successful) {
             setError(response?.error ?? "Failed to log phone number");
-            return
+            return;
         }
-        setPhoneNumbersCalled(n => [...n, phoneNumber]);
-    }
+        setPhoneNumbersCalled((n) => [...n, phoneNumber]);
+    };
 
     return (
         <div className="pt-2 pb-3">
@@ -43,7 +49,11 @@ export default function MakeACall({ actionInfo, relatedIssueId, emailAddress, is
             <h4>Script</h4>
             {/* TO-DO: issue #118 use send-email result below when implemented */}
             <Card className="mb-4">
-                <Card.Body className="text-dark">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Card.Body>
+                <Card.Body className="text-dark">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat.
+                </Card.Body>
             </Card>
             <Row className="mb-2 d-flex flex-md-row flex-column justify-content-center text-center">
                 {actionInfo.legislators.map((legislator, i) => (
@@ -53,8 +63,9 @@ export default function MakeACall({ actionInfo, relatedIssueId, emailAddress, is
                             call={{
                                 phoneNumbersCalled,
                                 isPhoneCallMade,
-                                logCall: (phoneNumber: string) => logCall(phoneNumber, legislator.bioguideId)
-                            }} />
+                                logCall: (phoneNumber: string) => logCall(phoneNumber, legislator.bioguideId),
+                            }}
+                        />
                     </Col>
                 ))}
             </Row>

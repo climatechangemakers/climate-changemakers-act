@@ -5,15 +5,15 @@ type Props = {
 };
 
 export default function ErrorMessage({ message }: Props) {
-    return (
-        !message
-            ? <></>
-            : <Row>
-                <Col>
-                    <Alert variant="danger" className="p-1 mt-2 text-center">
-                        {message}
-                    </Alert>
-                </Col>
-            </Row>
+    return !message ? (
+        <></>
+    ) : (
+        <Row>
+            <Col>
+                <Alert variant="danger" className="p-1 mt-2 text-center">
+                    {message}
+                </Alert>
+            </Col>
+        </Row>
     );
 }
