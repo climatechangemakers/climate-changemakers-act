@@ -9,15 +9,15 @@ import { Col, Row } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import useSWR from "swr";
 import AllDone from "./AllDone/AllDone";
-import MakeAPhoneCall from "./MakeAPhoneCall";
+import MakeAPhoneCall from "./MakeACall/MakeACall";
 import MeetYourReps from "./MeetYourReps/MeetYourReps";
 import PostOnSocial from "./PostOnSocial";
 import ScrollSpy from "./ScrollSpy/ScrollSpy";
 import SendAnEmail from "./SendAnEmail/SendAnEmail";
 
 export default function TakeActionPage() {
-    const [isEmailSent, setIsEmailSent] = useState(true);
-    const [isPhoneCallMade, setIsPhoneCallMade] = useState(true);
+    const [isEmailSent, setIsEmailSent] = useState(false);
+    const [isPhoneCallMade, setIsPhoneCallMade] = useState(false);
     const [isSocialPosted, setIsSocialPosted] = useState(false);
     const [selectedIssue] = useSessionStorage<Issue | undefined>("selectedIssue");
     const [actionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
@@ -64,7 +64,12 @@ export default function TakeActionPage() {
                     {isEmailSent && (
                         <>
                             <hr id="make_a_phone_call" />
-                            <MakeAPhoneCall isPhoneCallMade={isPhoneCallMade} setIsPhoneCallMade={setIsPhoneCallMade} />
+                            <MakeAPhoneCall
+                                actionInfo={actionInfo}
+                                relatedIssueId={selectedIssue.id}
+                                emailAddress={formInfo.email}
+                                isPhoneCallMade={isPhoneCallMade}
+                                setIsPhoneCallMade={setIsPhoneCallMade} />
                         </>
                     )}
                     {isPhoneCallMade && (

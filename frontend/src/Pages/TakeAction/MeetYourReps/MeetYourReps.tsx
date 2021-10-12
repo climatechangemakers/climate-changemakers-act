@@ -1,6 +1,6 @@
+import LegislatorCard from "common/Components/LegislatorCard/LegislatorCard";
 import { ActionInfo } from "common/models/ActionInfo";
 import { Col, Row } from "react-bootstrap";
-import LegislatorCard from "./LegislatorCard";
 
 type Props = {
     actionInfo: ActionInfo;

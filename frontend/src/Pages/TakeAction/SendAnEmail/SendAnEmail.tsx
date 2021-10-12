@@ -185,6 +185,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                     defaultValue={emailInfo.selectedLocTopics}
                                     onChange={(e) => setEmailInfo({ ...emailInfo, selectedLocTopics: e })}
                                     options={topicOptions}
+                                    isDisabled={isEmailSent}
                                     styles={{
                                         option: (provided) => ({
                                             ...provided,
@@ -213,7 +214,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                 </Row>
                 <Row>
                     <Col md="6">
-                        <Button variant="secondary" className="w-100" disabled={isEmailSent}>
+                        <Button variant="secondary" className="w-100" disabled={isEmailSent} onClick={() => setIsEmailSent(true)}>
                             Skip to Call
                         </Button>
                     </Col>
