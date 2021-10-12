@@ -1,6 +1,7 @@
 package org.climatechangemakers.act.feature.issue.manager
 
 import org.climatechangemakers.act.feature.issue.model.Issue
+import org.climatechangemakers.act.feature.issue.model.PreComposedTweetResponse
 
 interface IssueManager {
 
@@ -23,5 +24,5 @@ interface IssueManager {
   /**
    * Get the designated pre-composed tweet for the given [issueId].
    */
-  suspend fun getPreComposedTweetForIssue(issueId: Long): String
+  suspend fun getPreComposedTweetForIssue(issueId: Long): PreComposedTweetResponse
 }

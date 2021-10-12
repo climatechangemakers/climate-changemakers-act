@@ -86,3 +86,6 @@ export const sendEmailAPI = (
             relatedIssueId,
             contactedBioguideIds
         });
+
+export const logTweetAPI = (originatingEmailAddress: string, relatedIssueId: number, contactedBioguideIds: ReadonlyArray<string>) =>
+    post<void>("/log-tweet", { originatingEmailAddress, relatedIssueId, contactedBioguideIds });

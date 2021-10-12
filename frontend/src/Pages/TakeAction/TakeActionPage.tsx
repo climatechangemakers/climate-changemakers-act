@@ -1,3 +1,4 @@
+import { fetcher } from "common/api/ClimateChangemakersAPI";
 import Layout from "common/Components/Layout";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import { ActionInfo } from "common/models/ActionInfo";
@@ -6,6 +7,7 @@ import { Issue } from "common/models/Issue";
 import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
+import useSWR from "swr";
 import AllDone from "./AllDone/AllDone";
 import MakeAPhoneCall from "./MakeAPhoneCall";
 import MeetYourReps from "./MeetYourReps/MeetYourReps";
@@ -27,6 +29,12 @@ export default function TakeActionPage() {
     useEffect(() => { isEmailSent && scrollToId("make_a_phone_call") }, [isEmailSent])
     useEffect(() => { isPhoneCallMade && scrollToId("post_on_social") }, [isPhoneCallMade])
     useEffect(() => { isSocialPosted && scrollToId("all_done") }, [isEmailSent, isPhoneCallMade, isSocialPosted])
+
+    const selectedIssueId = selectedIssue?.id;
+    const {
+        data: preComposedTweetData,
+        error: preComposedTweetError,
+    } = useSWR<{ tweet: string }, string>(() => (selectedIssueId !== undefined ? `/issues/${selectedIssueId}/precomposed-tweet` : null), fetcher);
 
     if (!actionInfo || !formInfo)
         return <Redirect to="/" />
@@ -55,7 +63,14 @@ export default function TakeActionPage() {
                     {isPhoneCallMade &&
                         <>
                             <hr id="post_on_social" />
-                            <PostOnSocial isSocialPosted={isSocialPosted} setIsSocialPosted={setIsSocialPosted} />
+                            <PostOnSocial
+                                isSocialPosted={isSocialPosted}
+                                setIsSocialPosted={setIsSocialPosted}
+                                actionInfo={actionInfo}
+                                selectedIssue={selectedIssue}
+                                preComposedTweet={preComposedTweetData?.tweet}
+                                preComposedTweetError={preComposedTweetError}
+                            />
                         </>}
                     {isSocialPosted &&
                         <>
