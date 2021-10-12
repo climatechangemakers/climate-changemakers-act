@@ -1,4 +1,5 @@
 import { fetcher } from "common/api/ClimateChangemakersAPI";
+import ErrorMessage from "common/Components/ErrorMessage";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import { ActionInfo } from "common/models/ActionInfo";
 import { Issue } from "common/models/Issue";
@@ -54,15 +55,7 @@ export default function PickYourIssuePage() {
                     </Row>
                 </>
             )}
-            {issuesError && (
-                <Row>
-                    <Col>
-                        <Alert variant="danger" className="p-1 mt-2">
-                            {issuesError}
-                        </Alert>
-                    </Col>
-                </Row>
-            )}
+            <ErrorMessage message={issuesError} />
         </div>
     );
 }

@@ -1,4 +1,5 @@
 import { fetcher, sendEmailAPI } from "common/api/ClimateChangemakersAPI";
+import ErrorMessage from "common/Components/ErrorMessage";
 import { ActionInfo } from "common/models/ActionInfo";
 import { FormInfo } from "common/models/FormInfo";
 import { Issue } from "common/models/Issue";
@@ -225,15 +226,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                     </Col>
                 </Row>
             </Form>
-            {!!error && (
-                <Row>
-                    <Col>
-                        <Alert variant="danger" className="p-1 mt-2 text-center">
-                            {error}
-                        </Alert>
-                    </Col>
-                </Row>
-            )}
+            <ErrorMessage message={error} />
         </div>
     );
 }

@@ -1,3 +1,5 @@
+import { logCallAPI } from "common/api/ClimateChangemakersAPI";
+import ErrorMessage from "common/Components/ErrorMessage";
 import LegislatorCard from "common/Components/LegislatorCard/LegislatorCard";
 import { ActionInfo } from "common/models/ActionInfo";
 import { useState } from "react";
@@ -14,9 +16,16 @@ type Props = {
 
 export default function MakeACall({ actionInfo, relatedIssueId, emailAddress, isPhoneCallMade, setIsPhoneCallMade }: Props) {
     const [phoneNumbersCalled, setPhoneNumbersCalled] = useState<string[]>([]);
+    const [error, setError] = useState("");
+
     const phoneNumbers = actionInfo.legislators.flatMap(l => l.phoneNumbers);
 
-    const logCall = (phoneNumber: string) => {
+    const logCall = async (phoneNumber: string, contactedBioguideId: string) => {
+        const response = await logCallAPI(emailAddress, relatedIssueId, phoneNumber, contactedBioguideId);
+        if (!response.successful) {
+            setError(response?.error ?? "Failed to log phone number");
+            return
+        }
         setPhoneNumbersCalled(n => [...n, phoneNumber]);
     }
 
@@ -44,7 +53,7 @@ export default function MakeACall({ actionInfo, relatedIssueId, emailAddress, is
                             call={{
                                 phoneNumbersCalled,
                                 isPhoneCallMade,
-                                logCall: (phoneNumber: string) => logCall(phoneNumber)
+                                logCall: (phoneNumber: string) => logCall(phoneNumber, legislator.bioguideId)
                             }} />
                     </Col>
                 ))}
@@ -72,6 +81,7 @@ export default function MakeACall({ actionInfo, relatedIssueId, emailAddress, is
                     </Button>
                 </div>
             </div>
+            <ErrorMessage message={error} />
         </div>
     );
 }
