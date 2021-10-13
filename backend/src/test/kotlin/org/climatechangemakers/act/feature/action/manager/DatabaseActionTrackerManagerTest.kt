@@ -11,7 +11,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
   private val manager = DatabaseActionTrackerManager(database, EmptyCoroutineContext)
 
   @Test fun `email action entries are recorded in both tables`() = suspendTest {
-    insertIssue(1, "this is an issue")
+    insertIssue(1, "this is an issue", "tweet")
     manager.trackActionSendEmail("foo@foo.com", "hello", 1)
 
     assertEquals(
@@ -32,7 +32,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
   }
 
   @Test fun `recording a legislator call insert into both tables`() = suspendTest {
-    insertIssue(1, "issue")
+    insertIssue(1, "issue", "tweet")
     manager.trackActionPhoneCall("foo@foo.com", "bioguide", 1, "8675309")
 
     assertEquals(
@@ -54,7 +54,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
 
   @OptIn(ExperimentalStdlibApi::class)
   @Test fun `recording a tweet inserts into both tables`() = suspendTest {
-    insertIssue(1, "issue")
+    insertIssue(1, "issue", "tweet")
     manager.trackTweet("foo@foo.com", listOf("foo", "bar"), 1)
 
     assertEquals(
@@ -78,10 +78,11 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
     )
   }
 
-  private fun insertIssue(id: Long, title: String) {
-    driver.execute(0, "INSERT INTO issue(id, title) VALUES(?,?)", 2) {
+  private fun insertIssue(id: Long, title: String, precomposedTweet: String) {
+    driver.execute(0, "INSERT INTO issue(id, title, precomposed_tweet_template) VALUES(?,?,?)", 2) {
       bindLong(1, id)
       bindString(2, title)
+      bindString(3, precomposedTweet)
     }
   }
 }

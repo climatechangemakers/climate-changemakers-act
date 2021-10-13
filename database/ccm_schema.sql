@@ -730,7 +730,8 @@ ALTER SEQUENCE public.hoa_events_id_seq OWNED BY public.hoa_events.id;
 
 CREATE TABLE public.issue (
     id bigint NOT NULL,
-    title character varying NOT NULL
+    title character varying NOT NULL,
+    precomposed_tweet_template character varying NOT NULL
 );
 
 
@@ -741,6 +742,7 @@ CREATE TABLE public.issue (
 CREATE VIEW public.issue_and_focus AS
  SELECT issue.id,
     issue.title,
+    issue.precomposed_tweet_template,
         CASE
             WHEN (( SELECT focus_issue.issue_id
                FROM public.focus_issue
@@ -2116,11 +2118,11 @@ COPY public.focus_issue (issue_id, focused_at) FROM stdin;
 -- Data for Name: issue; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.issue (id, title) FROM stdin;
-2	This is the focus issue
-4	This is not a focus issue
-5	This is also not a focus issue
-6	this is some random issue that might one day be focused
+COPY public.issue (id, title, precomposed_tweet_template) FROM stdin;
+2	This is the focus issue	This is a tweet to %s
+4	This is not a focus issue	This is a tweet to %s
+5	This is also not a focus issue	This is a tweet to %s
+6	this is some random issue that might one day be focused	This is a tweet to %s
 \.
 
 

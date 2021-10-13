@@ -25,7 +25,9 @@ class IssueListController @Inject constructor(
     manager.getExampleStatementsForIssue(issueId)
   )
 
-  suspend fun respondPreComposedTweet(call: ApplicationCall, issueId: Long) = call.respond(
-    manager.getPreComposedTweetForIssue(issueId)
-  )
+  suspend fun respondPreComposedTweet(call: ApplicationCall, issueId: Long, bioguideIds: List<String>) {
+    call.respond(
+      manager.getPreComposedTweetForIssue(issueId, bioguideIds)
+    )
+  }
 }

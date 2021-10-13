@@ -24,5 +24,8 @@ interface IssueManager {
   /**
    * Get the designated pre-composed tweet for the given [issueId].
    */
-  suspend fun getPreComposedTweetForIssue(issueId: Long): PreComposedTweetResponse
+  suspend fun getPreComposedTweetForIssue(
+    issueId: Long,
+    tweetedBioguideIds: List<String>,
+  ): PreComposedTweetResponse
 }
