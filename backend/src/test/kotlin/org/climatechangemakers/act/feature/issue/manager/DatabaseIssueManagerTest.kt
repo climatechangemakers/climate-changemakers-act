@@ -7,6 +7,7 @@ import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
 import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
 import org.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import org.climatechangemakers.act.feature.issue.model.Issue
+import org.climatechangemakers.act.feature.issue.model.PreComposedTweetResponse
 import org.climatechangemakers.act.feature.issue.model.TalkingPoint
 import org.climatechangemakers.act.feature.util.TestContainerProvider
 import org.junit.Test
@@ -108,7 +109,7 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   @Test fun `precomposed tweet is formatted correctly`() = suspendTest {
     insertIssue(1, "issue", "This is a tweet to %s")
     val tweet = issueManager.getPreComposedTweetForIssue(1, listOf("id"))
-    assertEquals("This is a tweet to @handle", tweet)
+    assertEquals(PreComposedTweetResponse("This is a tweet to @handle"), tweet)
   }
 
   private fun insertIssue(id: Long, title: String, precomposedTweet: String) {
