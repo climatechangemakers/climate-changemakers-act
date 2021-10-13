@@ -7,12 +7,16 @@ import org.climatechangemakers.act.feature.issue.model.TalkingPoint
 import org.climatechangemakers.act.feature.issue.model.PreComposedTweetResponse
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import org.climatechangemakers.act.common.util.exists
+import org.climatechangemakers.act.common.util.joinToPhrase
+import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongressManager
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class DatabaseIssueManager @Inject constructor(
+  private val memberOfCongressManager: MemberOfCongressManager,
   database: Database,
   @Io private val ioDispatcher: CoroutineContext,
 ) : IssueManager {
@@ -37,12 +41,18 @@ class DatabaseIssueManager @Inject constructor(
     exampleIssueWhyStatementQueries.selectForIssueId(issueId).executeAsList()
   }
 
-  override suspend fun getPreComposedTweetForIssue(issueId: Long): PreComposedTweetResponse {
-    // TODO(kcianfarini) remove mock
-    val tweet = """
-      This is a pre-composed tweet. This is an @twitterhandle. This is a #hashtag. 
-    """.trimIndent()
-    return PreComposedTweetResponse(tweet)
+  override suspend fun getPreComposedTweetForIssue(
+    issueId: Long,
+    tweetedBioguideIds: List<String>,
+  ): PreComposedTweetResponse {
+    val memberHandles = coroutineScope {
+      tweetedBioguideIds.map { id ->
+        async { "@${memberOfCongressManager.getMemberOfCongressForBioguide(id).twitterHandle}" }
+      }.awaitAll().joinToPhrase()
+    }
+    return withContext(ioDispatcher) {
+      PreComposedTweetResponse(issueQueries.selectTweetTemplate(issueId).executeAsOne().format(memberHandles))
+    }
   }
 
   private suspend fun getIssueTalkingPoints(issueId: Long): List<TalkingPoint> = withContext(ioDispatcher) {

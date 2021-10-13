@@ -1,7 +1,13 @@
 package org.climatechangemakers.act.feature.issue.manager
 
+import org.climatechangemakers.act.common.model.RepresentedArea
+import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongressManager
+import org.climatechangemakers.act.feature.findlegislator.model.LegislatorPoliticalParty
+import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
+import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
 import org.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import org.climatechangemakers.act.feature.issue.model.Issue
+import org.climatechangemakers.act.feature.issue.model.PreComposedTweetResponse
 import org.climatechangemakers.act.feature.issue.model.TalkingPoint
 import org.climatechangemakers.act.feature.util.TestContainerProvider
 import org.junit.Test
@@ -11,11 +17,24 @@ import kotlin.test.assertFailsWith
 
 class DatabaseIssueManagerTest : TestContainerProvider() {
 
-  private val issueManager = DatabaseIssueManager(database, EmptyCoroutineContext)
+  private val fakeMemberOfCongressManager = MemberOfCongressManager { bioguideId ->
+    MemberOfCongress(
+      bioguideId = bioguideId,
+      fullName = "name",
+      legislativeRole = LegislatorRole.Representative,
+      representedArea = RepresentedArea.Virginia,
+      congressionalDistrict = null,
+      party = LegislatorPoliticalParty.Democrat,
+      dcPhoneNumber = "1",
+      twitterHandle = "handle",
+      cwcOfficeCode = null,
+    )
+  }
+  private val issueManager = DatabaseIssueManager(fakeMemberOfCongressManager, database, EmptyCoroutineContext)
 
   @Test fun `getting focus issue returns most recently focused item`() = suspendTest {
-    insertIssue(1, "foo")
-    insertIssue(2, "bar")
+    insertIssue(1, "foo", "tweet")
+    insertIssue(2, "bar", "tweet")
     insertTalkingPoint(1, "foo talking point", "foo is cool")
     insertTalkingPoint(2, "bar talking point", "bar is cool")
 
@@ -41,8 +60,8 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   }
 
   @Test fun `getting unfocused issues returns correct values`() = suspendTest {
-    insertIssue(1, "foo")
-    insertIssue(2, "bar")
+    insertIssue(1, "foo", "tweet")
+    insertIssue(2, "bar", "tweet")
     insertTalkingPoint(1, "foo talking point", "foo is cool")
     insertTalkingPoint(2, "bar talking point", "bar is cool")
     focusIssue(1)
@@ -60,8 +79,8 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   }
 
   @Test fun `example statements for issue are correct`() = suspendTest {
-    insertIssue(1, "foo")
-    insertIssue(2, "bar")
+    insertIssue(1, "foo", "tweet")
+    insertIssue(2, "bar", "tweet")
     insertExampleWhyStatement(1, "This is correct")
     insertExampleWhyStatement(2, "this is incorrect")
 
@@ -72,7 +91,7 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   }
 
   @Test fun `example statements query produces max 5 results`() = suspendTest {
-    insertIssue(1, "foo")
+    insertIssue(1, "foo", "tweet")
     repeat(10) { insertExampleWhyStatement(1, "$it") }
 
     assertEquals(
@@ -87,10 +106,17 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
     }
   }
 
-  private fun insertIssue(id: Long, title: String) {
-    driver.execute(0, "INSERT INTO issue(id, title) VALUES(?,?)", 2) {
+  @Test fun `precomposed tweet is formatted correctly`() = suspendTest {
+    insertIssue(1, "issue", "This is a tweet to %s")
+    val tweet = issueManager.getPreComposedTweetForIssue(1, listOf("id"))
+    assertEquals(PreComposedTweetResponse("This is a tweet to @handle"), tweet)
+  }
+
+  private fun insertIssue(id: Long, title: String, precomposedTweet: String) {
+    driver.execute(0, "INSERT INTO issue(id, title, precomposed_tweet_template) VALUES(?,?,?)", 2) {
       bindLong(1, id)
       bindString(2, title)
+      bindString(3, precomposedTweet)
     }
   }
 

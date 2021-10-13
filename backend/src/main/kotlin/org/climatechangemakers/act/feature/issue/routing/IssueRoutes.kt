@@ -12,10 +12,17 @@ fun Route.issueRoutes(controller: IssueListController) = route("/issues") {
 
   route("/{issueId}") {
     get("/example-statements") {
-      controller.respondExampleWhyStatements(call, call.parameters.getOrFail<Long>("issueId"))
+      controller.respondExampleWhyStatements(
+        call,
+        call.parameters.getOrFail<Long>("issueId"),
+      )
     }
     get("/precomposed-tweet") {
-      controller.respondPreComposedTweet(call, call.parameters.getOrFail<Long>("issueId"))
+      controller.respondPreComposedTweet(
+        call,
+        call.parameters.getOrFail<Long>("issueId"),
+        call.request.queryParameters.getOrFail<List<String>>("bioguideIds"),
+      )
     }
   }
 }
