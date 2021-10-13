@@ -15,11 +15,11 @@ type Props = {
 export default function LegislatorCard({ legislator, call }: Props) {
     const surname = legislator.area.districtNumber ? "Rep." : "Sen.";
     return (
-        <Card key={legislator.name} bg="light-grey" className="pt-4 mb-2 pb-3" style={{ width: "12rem" }}>
+        <Card key={legislator.name} bg="light-grey" className={`${styles.cardContainer} pt-4 mb-2 pb-3`} style={{ width: "12rem" }}>
             <div className={`${styles.imageContainer} m-auto`}>
                 <img alt="" className={styles.image} src={legislator.imageUrl} />
             </div>
-            <Card.Body className="pt-2 pb-2 ps-1 pe-1 d-flex flex-column justify-content-between">
+            <Card.Body className="pt-2 pb-2 ps-2 pe-2 d-flex flex-column justify-content-between">
                 <Card.Title className="text-dark fs-6 mb-2">
                     {surname} {legislator.name}
                 </Card.Title>
@@ -61,7 +61,9 @@ export default function LegislatorCard({ legislator, call }: Props) {
                                         className={styles.formCheckInput}
                                         type="checkbox"
                                     />
-                                    <a href={`tel:${n.replace("-", "")}`}>{n}</a>
+                                    {callMade || call.isPhoneCallMade
+                                        ? <div className="text-dark">{n}</div>
+                                        : <a href={`tel:${n.replace("-", "")}`}>{n}</a>}
                                 </Form.Group>
                             );
                         })}

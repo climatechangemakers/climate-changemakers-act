@@ -119,3 +119,12 @@ hr {
     height: 1px !important;
     opacity: 1 !important;
 }
+
+.form-check-input:disabled {
+    background-color: grey !important;
+    border-color: grey !important;
+}
+
+.legislator-max-width {
+    max-width: 800px;
+}

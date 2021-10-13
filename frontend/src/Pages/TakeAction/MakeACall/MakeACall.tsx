@@ -55,7 +55,7 @@ export default function MakeACall({
                     aliquip ex ea commodo consequat.
                 </Card.Body>
             </Card>
-            <Row className="mb-2 d-flex flex-md-row flex-column justify-content-center text-center">
+            <Row className="legislator-max-width m-auto mb-2 d-flex flex-md-row flex-column justify-content-center text-center">
                 {actionInfo.legislators.map((legislator, i) => (
                     <Col className="d-flex justify-content-center" xs="12" md="4" key={i}>
                         <LegislatorCard
