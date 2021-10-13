@@ -4,7 +4,7 @@ inline fun exists(existenceCondition: Boolean, lazyMessage: () -> String) {
   if (!existenceCondition) throw NoSuchElementException(lazyMessage())
 }
 
-fun <T> List<T>.joinToSentence(
+fun <T> List<T>.joinToPhrase(
   separator: String = ", ",
   twoWordSeparator: String = " and ",
   endSeparator: String = ", and ",
@@ -16,7 +16,7 @@ fun <T> List<T>.joinToSentence(
     buildString {
       append(slice.joinToString(separator, transform = transform))
       append(endSeparator)
-      append(transform(this@joinToSentence.last()))
+      append(transform(this@joinToPhrase.last()))
     }
   }
 }

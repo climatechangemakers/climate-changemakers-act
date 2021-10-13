@@ -10,7 +10,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import org.climatechangemakers.act.common.util.exists
-import org.climatechangemakers.act.common.util.joinToSentence
+import org.climatechangemakers.act.common.util.joinToPhrase
 import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongressManager
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -48,7 +48,7 @@ class DatabaseIssueManager @Inject constructor(
     val memberHandles = coroutineScope {
       tweetedBioguideIds.map { id ->
         async { "@${memberOfCongressManager.getMemberOfCongressForBioguide(id).twitterHandle}" }
-      }.awaitAll().joinToSentence()
+      }.awaitAll().joinToPhrase()
     }
     return withContext(ioDispatcher) {
       PreComposedTweetResponse(issueQueries.selectTweetTemplate(issueId).executeAsOne().format(memberHandles))
