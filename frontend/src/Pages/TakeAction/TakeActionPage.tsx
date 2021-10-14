@@ -40,8 +40,8 @@ export default function TakeActionPage() {
         selectedIssueId === undefined || !actionInfo?.legislators
             ? null
             : `/issues/${selectedIssueId}/precomposed-tweet?${actionInfo.legislators.map(
-                (l) => `&bioguideIds=${l.bioguideId}`
-            )}`,
+                (l, i) => `${i !== 0 ? "&" : ""}bioguideIds=${l.bioguideId}`
+            ).join("")}`,
         fetcher
     );
 
