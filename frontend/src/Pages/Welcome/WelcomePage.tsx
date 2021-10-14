@@ -1,4 +1,5 @@
 import { fetcher, initiateActionAPI } from "common/api/ClimateChangemakersAPI";
+import ErrorMessage from "common/Components/ErrorMessage";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import logo from "common/logo.png";
 import { ActionInfo } from "common/models/ActionInfo";
@@ -174,15 +175,7 @@ export default function WelcomePage() {
                     </p>
                 </Form>
             </div>
-            {(areasError || errorMessage) && (
-                <Row>
-                    <Col>
-                        <Alert variant="danger" className="p-1 mt-2">
-                            {areasError || errorMessage}
-                        </Alert>
-                    </Col>
-                </Row>
-            )}
+            <ErrorMessage message={areasError || errorMessage} />
         </div>
     );
 }

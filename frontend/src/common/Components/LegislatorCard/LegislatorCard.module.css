@@ -15,3 +15,15 @@
 .lcvScoreContainer {
     height: 1.05rem;
 }
+
+.checkboxContainer {
+    width: 140px;
+}
+
+.formCheckInput input {
+    margin-top: 0.35rem;
+}
+
+.cardContainer {
+    border-radius: .5rem !important;
+}
