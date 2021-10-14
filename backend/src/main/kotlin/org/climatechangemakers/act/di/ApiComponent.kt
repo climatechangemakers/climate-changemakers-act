@@ -7,11 +7,12 @@ import kotlinx.serialization.json.Json
 import org.climatechangemakers.act.feature.values.controller.ValuesController
 
 @Component(modules = [
-  ServiceModule::class,
-  DatabaseModule::class,
-  CoroutineModule::class,
-  SerializationModule::class,
   BindingModule::class,
+  CoroutineModule::class,
+  DatabaseModule::class,
+  LoggerModule::class,
+  ServiceModule::class,
+  SerializationModule::class,
 ])
 interface ApiComponent {
 

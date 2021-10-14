@@ -10,6 +10,7 @@ import nl.adaptivity.xmlutil.serialization.XML
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import org.climatechangemakers.act.feature.communicatewithcongress.service.CommunicateWithCongressService
+import org.slf4j.Logger
 import retrofit2.Retrofit
 
 @Module object ServiceModule {
@@ -17,17 +18,21 @@ import retrofit2.Retrofit
   private fun createOkHttpClient(
     apiKeyName: String,
     apiKey: String,
+    logger: Logger,
   ): OkHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
     val originalRequest = chain.request()
     val originalUrl = originalRequest.url()
     val newUrl = originalUrl.newBuilder().addQueryParameter(apiKeyName, apiKey).build()
 
+    logger.info("${originalRequest.method()} ${originalUrl.redact()}")
+
     chain.proceed(originalRequest.newBuilder().url(newUrl).build())
   }.build()
 
-  @Provides @Geocodio fun providesGeocodioClient(): OkHttpClient = createOkHttpClient(
+  @Provides @Geocodio fun providesGeocodioClient(logger: Logger): OkHttpClient = createOkHttpClient(
     apiKeyName = "api_key",
     apiKey = getEnvironmentVariable(EnvironmentVariable.GeocodioApiKey),
+    logger = logger,
   )
 
   @Provides fun providesGeocodioService(@Geocodio client: OkHttpClient): GeocodioService = Retrofit.Builder()
@@ -39,9 +44,10 @@ import retrofit2.Retrofit
     .build()
     .create(GeocodioService::class.java)
 
-  @Provides @Senate fun providesSenateCWCClient(): OkHttpClient = createOkHttpClient(
+  @Provides @Senate fun providesSenateCWCClient(logger: Logger): OkHttpClient = createOkHttpClient(
     apiKeyName = "apikey",
     apiKey = getEnvironmentVariable(EnvironmentVariable.SCWCApiKey),
+    logger = logger,
   )
 
   @Provides @Senate fun providesSenateCWCService(

@@ -7,6 +7,7 @@ import io.ktor.application.log
 import io.ktor.features.StatusPages
 import io.ktor.http.HttpStatusCode
 import io.ktor.response.respond
+import io.ktor.util.error
 import kotlinx.serialization.SerializationException
 import org.climatechangemakers.act.common.extension.state
 import org.postgresql.util.PSQLException
@@ -22,7 +23,8 @@ fun Application.configureExceptionHandler() {
     }
 
     exception<HttpException> { cause ->
-      cause.message?.let(log::error)
+      log.error(cause)
+      cause.response()?.errorBody()?.string()?.let(log::error)
       call.respond(HttpStatusCode.InternalServerError, cause.message())
     }
 
