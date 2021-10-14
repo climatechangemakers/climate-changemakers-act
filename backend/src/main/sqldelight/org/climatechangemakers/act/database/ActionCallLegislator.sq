@@ -1,7 +1,7 @@
--- CREATE TABLE action_call_legislator(
---   action_contact_legislator_id BIGINT NOT NULL REFERENCES action_contact_legislator(id),
---   phone_number_called VARCHAR NOT NULL
--- );
+CREATE TABLE action_call_legislator(
+  action_contact_legislator_id BIGINT NOT NULL REFERENCES action_contact_legislator(id),
+  phone_number_called VARCHAR NOT NULL
+);
 
 insert:
 WITH items AS (

@@ -9,7 +9,7 @@ buildscript {
     repositories { gradlePluginPortal() }
     dependencies {
         classpath("gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0")
-        classpath("com.squareup.sqldelight:gradle-plugin:1.5.1")
+        classpath("com.squareup.sqldelight:gradle-plugin:1.5.2")
     }
 }
 
@@ -19,7 +19,7 @@ plugins {
     kotlin("plugin.serialization") version "1.5.21"
     kotlin("kapt") version "1.5.21"
     id("com.github.johnrengelman.shadow") version "7.0.0"
-    id("com.squareup.sqldelight") version "1.5.1"
+    id("com.squareup.sqldelight") version "1.5.2"
 }
 
 group = "org.climatechangemakers.act"
@@ -61,7 +61,7 @@ dependencies {
     implementation("com.google.dagger:dagger:2.37")
     kapt("com.google.dagger:dagger-compiler:2.37")
 
-    implementation("com.squareup.sqldelight:jdbc-driver:1.5.1")
+    implementation("com.squareup.sqldelight:jdbc-driver:1.5.2")
     implementation("org.postgresql:postgresql:42.2.16")
 
 

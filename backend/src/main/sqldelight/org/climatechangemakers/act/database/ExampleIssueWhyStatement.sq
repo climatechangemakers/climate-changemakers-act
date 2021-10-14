@@ -1,7 +1,7 @@
--- CREATE TABLE example_issue_why_statement(
---   issue_id BIGINT NOT NULL REFERENCES issue(id) ON DELETE CASCADE,
---   statement VARCHAR NOT NULL
--- );
+CREATE TABLE example_issue_why_statement(
+  issue_id BIGINT NOT NULL REFERENCES issue(id) ON DELETE CASCADE,
+  statement VARCHAR NOT NULL
+);
 
 selectForIssueId:
 SELECT statement FROM example_issue_why_statement
