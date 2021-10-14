@@ -1,6 +1,6 @@
--- CREATE TABLE action_email_legislator(
---   action_contact_legislator_id BIGINT NOT NULL REFERENCES action_contact_legislator(id) ON DELETE CASCADE
--- );
+CREATE TABLE action_email_legislator(
+  action_contact_legislator_id BIGINT NOT NULL REFERENCES action_contact_legislator(id) ON DELETE CASCADE
+);
 
 insert:
 WITH items AS (
