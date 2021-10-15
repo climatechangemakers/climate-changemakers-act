@@ -3259,516 +3259,516 @@ W000805	Mark R. Warner	sen	VA	\N	Democrat	202-224-2023	MarkWarner	SVA02
 G000555	Kirsten E. Gillibrand	sen	NY	\N	Democrat	202-224-4451	GillibrandNY	\N
 C001088	Christopher A. Coons	sen	DE	\N	Democrat	202-224-5042	ChrisCoons	\N
 M001183	Joe Manchin, III	sen	WV	\N	Democrat	202-224-3954	Sen_JoeManchin	\N
-A000055	Robert B. Aderholt	rep	AL	4	Republican	202-225-4876	Robert_Aderholt	\N
+R000600	Aumua Amata Coleman Radewagen	rep	AS	0	Republican	202-225-8577	RepAmata	HAQ00
 B001230	Tammy Baldwin	sen	WI	\N	Democrat	202-224-5653	SenatorBaldwin	\N
-B001270	Karen Bass	rep	CA	37	Democrat	202-225-7084	RepKarenBass	\N
 B001267	Michael F. Bennet	sen	CO	\N	Democrat	202-224-5852	SenatorBennet	\N
-B001257	Gus M. Bilirakis	rep	FL	12	Republican	202-225-5755	RepGusBilirakis	\N
-B000490	Sanford D. Bishop, Jr.	rep	GA	2	Democrat	202-225-3631	SanfordBishop	\N
 B001243	Marsha Blackburn	sen	TN	\N	Republican	202-224-3344	MarshaBlackburn	\N
-B000574	Earl Blumenauer	rep	OR	3	Democrat	202-225-4811	BlumenauerMedia	\N
 B001277	Richard Blumenthal	sen	CT	\N	Democrat	202-224-2823	SenBlumenthal	\N
 B000575	Roy Blunt	sen	MO	\N	Republican	202-224-5721	RoyBlunt	\N
 B001236	John Boozman	sen	AR	\N	Republican	202-224-4843	JohnBoozman	\N
-B000755	Kevin Brady	rep	TX	8	Republican	202-225-4901	RepKevinBrady	\N
-B001274	Mo Brooks	rep	AL	5	Republican	202-225-4801	RepMoBrooks	\N
-B001260	Vern Buchanan	rep	FL	16	Republican	202-225-5015	VernBuchanan	\N
-B001275	Larry Bucshon	rep	IN	8	Republican	202-225-4636	RepLarryBucshon	\N
-B001248	Michael C. Burgess	rep	TX	26	Republican	202-225-7772	MichaelCBurgess	\N
 B001135	Richard Burr	sen	NC	\N	Republican	202-224-3154	SenatorBurr	\N
-B001251	G. K. Butterfield	rep	NC	1	Democrat	202-225-3101	GKButterfield	\N
-C000059	Ken Calvert	rep	CA	42	Republican	202-225-1986	KenCalvert	\N
 C001047	Shelley Moore Capito	sen	WV	\N	Republican	202-224-6472	SenCapito	\N
-C001072	André Carson	rep	IN	7	Democrat	202-225-4011	RepAndreCarson	\N
-C001051	John R. Carter	rep	TX	31	Republican	202-225-3864	JudgeCarter	\N
 C001075	Bill Cassidy	sen	LA	\N	Republican	202-224-5824	SenBillCassidy	\N
-C001066	Kathy Castor	rep	FL	14	Democrat	202-225-3376	USRepKCastor	\N
-C000266	Steve Chabot	rep	OH	1	Republican	202-225-2216	RepSteveChabot	\N
-C001080	Judy Chu	rep	CA	27	Democrat	202-225-5464	RepJudyChu	\N
-C001084	David N. Cicilline	rep	RI	1	Democrat	202-225-4911	RepCicilline	\N
-C001067	Yvette D. Clarke	rep	NY	9	Democrat	202-225-6231	RepYvetteClarke	\N
-C001061	Emanuel Cleaver	rep	MO	5	Democrat	202-225-4535	RepCleaver	\N
-C000537	James E. Clyburn	rep	SC	6	Democrat	202-225-3315	WhipClyburn	\N
-C001068	Steve Cohen	rep	TN	9	Democrat	202-225-3265	RepCohen	\N
-C001053	Tom Cole	rep	OK	4	Republican	202-225-6165	TomColeOK04	\N
-C001078	Gerald E. Connolly	rep	VA	11	Democrat	202-225-1492	GerryConnolly	\N
-C000754	Jim Cooper	rep	TN	5	Democrat	202-225-4311	RepJimCooper	\N
-C001059	Jim Costa	rep	CA	16	Democrat	202-225-3341	RepJimCosta	\N
-C001069	Joe Courtney	rep	CT	2	Democrat	202-225-2076	RepJoeCourtney	\N
 C000880	Mike Crapo	sen	ID	\N	Republican	202-224-6142	MikeCrapo	\N
-C001087	Eric A. "Rick" Crawford	rep	AR	1	Republican	202-225-4076	RepRickCrawford	\N
-C001063	Henry Cuellar	rep	TX	28	Democrat	202-225-1640	RepCuellar	\N
-D000096	Danny K. Davis	rep	IL	7	Democrat	202-225-5006	RepDannyDavis	\N
-D000191	Peter A. DeFazio	rep	OR	4	Democrat	202-225-6416	RepPeterDeFazio	\N
-D000197	Diana DeGette	rep	CO	1	Democrat	202-225-4431	RepDianaDeGette	\N
-D000216	Rosa L. DeLauro	rep	CT	3	Democrat	202-225-3661	RosaDeLauro	\N
-D000616	Scott DesJarlais	rep	TN	4	Republican	202-225-6831	DesJarlaisTN04	\N
-D000610	Theodore E. Deutch	rep	FL	22	Democrat	202-225-3001	RepTedDeutch	\N
-D000600	Mario Diaz-Balart	rep	FL	25	Republican	202-225-4211	MarioDB	\N
-D000399	Lloyd Doggett	rep	TX	35	Democrat	202-225-4865	RepLloydDoggett	\N
-D000482	Michael F. Doyle	rep	PA	18	Democrat	202-225-2135	USRepMikeDoyle	\N
-D000615	Jeff Duncan	rep	SC	3	Republican	202-225-5301	RepJeffDuncan	\N
-E000215	Anna G. Eshoo	rep	CA	18	Democrat	202-225-8104	RepAnnaEshoo	\N
-F000459	Charles J. "Chuck" Fleischmann	rep	TN	3	Republican	202-225-3271	RepChuck	\N
-F000449	Jeff Fortenberry	rep	NE	1	Republican	202-225-4806	JeffFortenberry	\N
-F000450	Virginia Foxx	rep	NC	5	Republican	202-225-2071	VirginiaFoxx	\N
-G000559	John Garamendi	rep	CA	3	Democrat	202-225-1880	RepGaramendi	\N
-G000563	Bob Gibbs	rep	OH	7	Republican	202-225-6265	RepBobGibbs	\N
-G000552	Louie Gohmert	rep	TX	1	Republican	202-225-3035	RepLouieGohmert	\N
-G000565	Paul A. Gosar	rep	AZ	4	Republican	202-225-2315	RepGosar	\N
-G000377	Kay Granger	rep	TX	12	Republican	202-225-5071	RepKayGranger	\N
 G000386	Chuck Grassley	sen	IA	\N	Republican	202-224-3744	ChuckGrassley	\N
-G000546	Sam Graves	rep	MO	6	Republican	202-225-7041	RepSamGraves	\N
-G000553	Al Green	rep	TX	9	Democrat	202-225-7508	RepAlGreen	\N
-G000568	H. Morgan Griffith	rep	VA	9	Republican	202-225-3861	RepMGriffith	\N
-G000551	Raúl M. Grijalva	rep	AZ	3	Democrat	202-225-2435	RepraulGrijalva	\N
-G000558	Brett Guthrie	rep	KY	2	Republican	202-225-3501	RepGuthrie	\N
-H001052	Andy Harris	rep	MD	1	Republican	202-225-5311	RepAndyHarrisMD	\N
-H001053	Vicky Hartzler	rep	MO	4	Republican	202-225-2876	RepHartzler	\N
 H001046	Martin Heinrich	sen	NM	\N	Democrat	202-224-5521	MartinHeinrich	SNM01
-H001056	Jaime Herrera Beutler	rep	WA	3	Republican	202-225-3536	HerreraBeutler	\N
-H001038	Brian Higgins	rep	NY	26	Democrat	202-225-3306	RepBrianHiggins	\N
-H001047	James A. Himes	rep	CT	4	Democrat	202-225-5541	JAHimes	\N
 H001042	Mazie K. Hirono	sen	HI	\N	Democrat	202-224-6361	MazieHirono	SHI01
 H001061	John Hoeven	sen	ND	\N	Republican	202-224-2551	SenJohnHoeven	\N
-H000874	Steny H. Hoyer	rep	MD	5	Democrat	202-225-4131	LeaderHoyer	\N
-H001058	Bill Huizenga	rep	MI	2	Republican	202-225-4401	RepHuizenga	\N
-J000032	Sheila Jackson Lee	rep	TX	18	Democrat	202-225-3816	JacksonLeeTX18	\N
-J000292	Bill Johnson	rep	OH	6	Republican	202-225-5705	RepBillJohnson	\N
-J000126	Eddie Bernice Johnson	rep	TX	30	Democrat	202-225-8885	RepEBJ	\N
-J000288	Henry C. "Hank" Johnson, Jr.	rep	GA	4	Democrat	202-225-1605	RepHankJohnson	\N
 J000293	Ron Johnson	sen	WI	\N	Republican	202-224-5323	SenRonJohnson	\N
-J000289	Jim Jordan	rep	OH	4	Republican	202-225-2676	Jim_Jordan	\N
-K000009	Marcy Kaptur	rep	OH	9	Democrat	202-225-4146	RepMarcyKaptur	\N
-K000375	William R. Keating	rep	MA	9	Democrat	202-225-3111	USRepKeating	\N
-K000376	Mike Kelly	rep	PA	16	Republican	202-225-5406	MikeKellyPA	\N
-K000188	Ron Kind	rep	WI	3	Democrat	202-225-5506	RepRonKind	\N
-K000378	Adam Kinzinger	rep	IL	16	Republican	202-225-3635	RepKinzinger	\N
-L000564	Doug Lamborn	rep	CO	5	Republican	202-225-4422	RepDLamborn	\N
-L000559	James R. Langevin	rep	RI	2	Democrat	202-225-2735	JimLangevin	\N
 L000575	James Lankford	sen	OK	\N	Republican	202-224-5754	SenatorLankford	\N
-L000560	Rick Larsen	rep	WA	2	Democrat	202-225-2605	RepRickLarsen	\N
-L000557	John B. Larson	rep	CT	1	Democrat	202-225-2265	RepJohnLarson	\N
-L000566	Robert E. Latta	rep	OH	5	Republican	202-225-6405	BobLatta	\N
 L000174	Patrick J. Leahy	sen	VT	\N	Democrat	202-224-4242	SenatorLeahy	SVT03
-L000551	Barbara Lee	rep	CA	13	Democrat	202-225-2661	RepBarbaraLee	\N
 L000577	Mike Lee	sen	UT	\N	Republican	202-224-5444	SenMikeLee	\N
-L000397	Zoe Lofgren	rep	CA	19	Democrat	202-225-3072	RepZoeLofgren	\N
-L000576	Billy Long	rep	MO	7	Republican	202-225-6536	USRepLong	\N
-L000491	Frank D. Lucas	rep	OK	3	Republican	202-225-5565	RepFrankLucas	\N
-L000569	Blaine Luetkemeyer	rep	MO	3	Republican	202-225-2956	RepBlaine	\N
 L000570	Ben Ray Luján	sen	NM	\N	Democrat	202-224-6621	SenatorLujan	SNM02
-L000562	Stephen F. Lynch	rep	MA	8	Democrat	202-225-8273	RepStephenLynch	\N
-M000087	Carolyn B. Maloney	rep	NY	12	Democrat	202-225-7944	RepMaloney	\N
 M000133	Edward J. Markey	sen	MA	\N	Democrat	202-224-2742	SenMarkey	\N
-M001163	Doris O. Matsui	rep	CA	6	Democrat	202-225-7163	DorisMatsui	\N
-M001165	Kevin McCarthy	rep	CA	23	Republican	202-225-2915	GOPLeader	\N
-M001157	Michael T. McCaul	rep	TX	10	Republican	202-225-2401	RepMcCaul	\N
-M001177	Tom McClintock	rep	CA	4	Republican	202-225-2511	RepMcClintock	\N
-M001143	Betty McCollum	rep	MN	4	Democrat	202-225-6631	BettyMcCollum04	\N
-M000312	James P. McGovern	rep	MA	2	Democrat	202-225-6101	RepMcGovern	\N
-M001156	Patrick T. McHenry	rep	NC	10	Republican	202-225-2576	PatrickMcHenry	\N
-M001180	David B. McKinley	rep	WV	1	Republican	202-225-4172	RepMcKinley	\N
-M001159	Cathy McMorris Rodgers	rep	WA	5	Republican	202-225-2006	CathyMcMorris	\N
-M001166	Jerry McNerney	rep	CA	9	Democrat	202-225-1947	RepMcNerney	\N
-M001137	Gregory W. Meeks	rep	NY	5	Democrat	202-225-3461	RepGregoryMeeks	\N
-M001160	Gwen Moore	rep	WI	4	Democrat	202-225-4572	RepGwenMoore	\N
 M000934	Jerry Moran	sen	KS	\N	Republican	202-224-6521	JerryMoran	\N
 M001153	Lisa Murkowski	sen	AK	\N	Republican	202-224-6665	LisaMurkowski	\N
 M001169	Christopher Murphy	sen	CT	\N	Democrat	202-224-4041	senmurphyoffice	\N
 M001111	Patty Murray	sen	WA	\N	Democrat	202-224-2621	PattyMurray	SWA03
-N000002	Jerrold Nadler	rep	NY	10	Democrat	202-225-5635	RepJerryNadler	\N
-N000179	Grace F. Napolitano	rep	CA	32	Democrat	202-225-5256	GraceNapolitano	\N
-N000015	Richard E. Neal	rep	MA	1	Democrat	202-225-5601	RepRichardNeal	\N
-N000147	Eleanor Holmes Norton	rep	DC	0	Democrat	202-225-8050	EleanorNorton	\N
-N000181	Devin Nunes	rep	CA	22	Republican	202-225-2523	RepDevinNunes	\N
-P000601	Steven M. Palazzo	rep	MS	4	Republican	202-225-5772	CongPalazzo	\N
-P000034	Frank Pallone, Jr.	rep	NJ	6	Democrat	202-225-4671	FrankPallone	\N
-P000096	Bill Pascrell, Jr.	rep	NJ	9	Democrat	202-225-5751	BillPascrell	\N
 P000603	Rand Paul	sen	KY	\N	Republican	202-224-4343	RandPaul	\N
-P000197	Nancy Pelosi	rep	CA	12	Democrat	202-225-4965	SpeakerPelosi	\N
-P000593	Ed Perlmutter	rep	CO	7	Democrat	202-225-2645	RepPerlmutter	\N
 P000595	Gary C. Peters	sen	MI	\N	Democrat	202-224-6221	SenGaryPeters	\N
-P000597	Chellie Pingree	rep	ME	1	Democrat	202-225-6116	ChelliePingree	\N
 P000449	Rob Portman	sen	OH	\N	Republican	202-224-3353	SenRobPortman	\N
-P000599	Bill Posey	rep	FL	8	Republican	202-225-3671	CongBillPosey	\N
-P000523	David E. Price	rep	NC	4	Democrat	202-225-1784	RepDavidEPrice	\N
-Q000023	Mike Quigley	rep	IL	5	Democrat	202-225-4061	RepMikeQuigley	\N
-R000585	Tom Reed	rep	NY	23	Republican	202-225-3161	TomReedNY23	\N
-R000395	Harold Rogers	rep	KY	5	Republican	202-225-4601	RepHalRogers	\N
-R000575	Mike Rogers	rep	AL	3	Republican	202-225-3261	RepMikeRogersAL	\N
-R000486	Lucille Roybal-Allard	rep	CA	40	Democrat	202-225-1766	RepRoybalAllard	\N
 R000595	Marco Rubio	sen	FL	\N	Republican	202-224-3041	SenRubioPress	SFL03
-R000576	C. A. Dutch Ruppersberger	rep	MD	2	Democrat	202-225-3061	Call_Me_Dutch	\N
-R000515	Bobby L. Rush	rep	IL	1	Democrat	202-225-4372	RepBobbyRush	\N
-R000577	Tim Ryan	rep	OH	13	Democrat	202-225-5261	RepTimRyan	\N
-S001177	Gregorio Kilili Camacho Sablan	rep	MP	0	Democrat	202-225-2646	Kilili_Sablan	\N
-S001168	John P. Sarbanes	rep	MD	3	Democrat	202-225-4016	RepSarbanes	\N
-S001176	Steve Scalise	rep	LA	1	Republican	202-225-3015	SteveScalise	\N
-S001145	Janice D. Schakowsky	rep	IL	9	Democrat	202-225-2111	JanSchakowsky	\N
-S001150	Adam B. Schiff	rep	CA	28	Democrat	202-225-4176	RepAdamSchiff	\N
-S001180	Kurt Schrader	rep	OR	5	Democrat	202-225-5711	RepSchrader	\N
 S000148	Charles E. Schumer	sen	NY	\N	Democrat	202-224-6542	SenSchumer	SNY03
-S001183	David Schweikert	rep	AZ	6	Republican	202-225-2190	RepDavid	\N
-S001189	Austin Scott	rep	GA	8	Republican	202-225-6531	AustinScottGA08	\N
-S001157	David Scott	rep	GA	13	Democrat	202-225-2939	RepDavidScott	\N
-S000185	Robert C. "Bobby" Scott	rep	VA	3	Democrat	202-225-8351	BobbyScott	\N
 S001184	Tim Scott	sen	SC	\N	Republican	202-224-6121	SenatorTimScott	\N
-S001185	Terri Sewell	rep	AL	7	Democrat	202-225-2665	RepTerriSewell	\N
 S000320	Richard C. Shelby	sen	AL	\N	Republican	202-224-5744	SenShelby	\N
-S000344	Brad Sherman	rep	CA	30	Democrat	202-225-5911	BradSherman	\N
-S001148	Michael K. Simpson	rep	ID	2	Republican	202-225-5531	CongMikeSimpson	\N
-S001165	Albio Sires	rep	NJ	8	Democrat	202-225-7919	RepSires	\N
-S000510	Adam Smith	rep	WA	9	Democrat	202-225-8901	RepAdamSmith	\N
-S001172	Adrian Smith	rep	NE	3	Republican	202-225-6435	RepAdrianSmith	\N
-S000522	Christopher H. Smith	rep	NJ	4	Republican	202-225-3765	RepChrisSmith	\N
-S001175	Jackie Speier	rep	CA	14	Democrat	202-225-3531	RepSpeier	\N
-S001156	Linda T. Sánchez	rep	CA	38	Democrat	202-225-6676	RepLindaSanchez	\N
-T000193	Bennie G. Thompson	rep	MS	2	Democrat	202-225-5876	BennieGThompson	\N
-T000460	Mike Thompson	rep	CA	5	Democrat	202-225-3311	RepThompson	\N
-T000467	Glenn Thompson	rep	PA	15	Republican	202-225-5121	CongressmanGT	\N
 T000250	John Thune	sen	SD	\N	Republican	202-224-2321	SenJohnThune	\N
-T000469	Paul Tonko	rep	NY	20	Democrat	202-225-5076	RepPaulTonko	\N
 T000461	Patrick J. Toomey	sen	PA	\N	Republican	202-224-4254	SenToomey	\N
-T000463	Michael R. Turner	rep	OH	10	Republican	202-225-6465	RepMikeTurner	\N
-U000031	Fred Upton	rep	MI	6	Republican	202-225-3761	RepFredUpton	\N
 V000128	Chris Van Hollen	sen	MD	\N	Democrat	202-224-4654	ChrisVanHollen	\N
-V000081	Nydia M. Velázquez	rep	NY	7	Democrat	202-225-2361	NydiaVelazquez	\N
-W000798	Tim Walberg	rep	MI	7	Republican	202-225-6276	RepWalberg	\N
-W000797	Debbie Wasserman Schultz	rep	FL	23	Democrat	202-225-7931	RepDWStweets	\N
-W000187	Maxine Waters	rep	CA	43	Democrat	202-225-2201	RepMaxineWaters	\N
-W000806	Daniel Webster	rep	FL	11	Republican	202-225-1002	RepWebster	\N
-W000800	Peter Welch	rep	VT	0	Democrat	202-225-4115	PeterWelch	\N
-W000795	Joe Wilson	rep	SC	2	Republican	202-225-2452	RepJoeWilson	\N
-W000808	Frederica S. Wilson	rep	FL	24	Democrat	202-225-4506	RepWilson	\N
-W000804	Robert J. Wittman	rep	VA	1	Republican	202-225-4261	RobWittman	\N
-W000809	Steve Womack	rep	AR	3	Republican	202-225-4301	Rep_SteveWomack	\N
 W000779	Ron Wyden	sen	OR	\N	Democrat	202-224-5244	RonWyden	\N
-Y000062	John A. Yarmuth	rep	KY	3	Democrat	202-225-5401	RepJohnYarmuth	\N
-Y000033	Don Young	rep	AK	0	Republican	202-225-5765	RepDonYoung	\N
 Y000064	Todd Young	sen	IN	\N	Republican	202-224-5623	SenToddYoung	\N
-A000369	Mark E. Amodei	rep	NV	2	Republican	202-225-6155	MarkAmodeiNV2	\N
-B001278	Suzanne Bonamici	rep	OR	1	Democrat	202-225-0855	RepBonamici	\N
-D000617	Suzan K. DelBene	rep	WA	1	Democrat	202-225-6311	RepDelBene	\N
-M001184	Thomas Massie	rep	KY	4	Republican	202-225-3465	RepThomasMassie	\N
-P000604	Donald M. Payne, Jr.	rep	NJ	10	Democrat	202-225-3436	RepDonaldPayne	\N
 S001194	Brian Schatz	sen	HI	\N	Democrat	202-224-3934	SenBrianSchatz	\N
-F000454	Bill Foster	rep	IL	11	Democrat	202-225-3515	RepBillFoster	\N
-T000468	Dina Titus	rep	NV	1	Democrat	202-225-5965	RepDinaTitus	\N
 C001095	Tom Cotton	sen	AR	\N	Republican	202-224-2353	SenTomCotton	\N
 S001191	Kyrsten Sinema	sen	AZ	\N	Democrat	202-224-4521	SenatorSinema	\N
-L000578	Doug LaMalfa	rep	CA	1	Republican	202-225-3076	RepLaMalfa	\N
-H001068	Jared Huffman	rep	CA	2	Democrat	202-225-5161	RepHuffman	\N
-B001287	Ami Bera	rep	CA	7	Democrat	202-225-5716	RepBera	\N
-S001193	Eric Swalwell	rep	CA	15	Democrat	202-225-5065	RepSwalwell	\N
-B001285	Julia Brownley	rep	CA	26	Democrat	202-225-5811	RepBrownley	\N
-C001097	Tony Cárdenas	rep	CA	29	Democrat	202-225-6131	RepCardenas	\N
-R000599	Raul Ruiz	rep	CA	36	Democrat	202-225-5330	RepRaulRuizMD	\N
-T000472	Mark Takano	rep	CA	41	Democrat	202-225-2305	RepMarkTakano	\N
-L000579	Alan S. Lowenthal	rep	CA	47	Democrat	202-225-7924	RepLowenthal	\N
-V000130	Juan Vargas	rep	CA	51	Democrat	202-225-8045	RepJuanVargas	\N
-P000608	Scott H. Peters	rep	CA	52	Democrat	202-225-0508	RepScottPeters	\N
-F000462	Lois Frankel	rep	FL	21	Democrat	202-225-9890	RepLoisFrankel	\N
 D000622	Tammy Duckworth	sen	IL	\N	Democrat	202-224-2854	SenDuckworth	\N
-D000619	Rodney Davis	rep	IL	13	Republican	202-225-2371	RodneyDavis	\N
-B001286	Cheri Bustos	rep	IL	17	Democrat	202-225-5905	RepCheri	\N
-W000813	Jackie Walorski	rep	IN	2	Republican	202-225-3915	RepWalorski	\N
-B001282	Andy Barr	rep	KY	6	Republican	202-225-4706	RepAndyBarr	\N
 W000817	Elizabeth Warren	sen	MA	\N	Democrat	202-224-4543	SenWarren	\N
 K000383	Angus S. King, Jr.	sen	ME	\N	Independent	202-224-5344	SenAngusKing	SME01
-K000380	Daniel T. Kildee	rep	MI	5	Democrat	202-225-3611	RepDanKildee	\N
-W000812	Ann Wagner	rep	MO	2	Republican	202-225-1621	RepAnnWagner	\N
 D000618	Steve Daines	sen	MT	\N	Republican	202-224-2651	SteveDaines	\N
-H001067	Richard Hudson	rep	NC	8	Republican	202-225-3715	RepRichHudson	\N
 C001096	Kevin Cramer	sen	ND	\N	Republican	202-224-2043	SenKevinCramer	SND01
 F000463	Deb Fischer	sen	NE	\N	Republican	202-224-6551	SenatorFischer	SNE01
-K000382	Ann Kuster	rep	NH	2	Democrat	202-225-5206	RepAnnieKuster	\N
-M001188	Grace Meng	rep	NY	6	Democrat	202-225-2601	RepGraceMeng	\N
-J000294	Hakeem S. Jeffries	rep	NY	8	Democrat	202-225-5936	RepJeffries	\N
-M001185	Sean Patrick Maloney	rep	NY	18	Democrat	202-225-5441	RepSeanMaloney	\N
-W000815	Brad R. Wenstrup	rep	OH	2	Republican	202-225-3164	RepBradWenstrup	\N
-B001281	Joyce Beatty	rep	OH	3	Democrat	202-225-4324	RepBeatty	\N
-J000295	David P. Joyce	rep	OH	14	Republican	202-225-5731	RepDaveJoyce	\N
-M001190	Markwayne Mullin	rep	OK	2	Republican	202-225-2701	RepMullin	\N
-P000605	Scott Perry	rep	PA	10	Republican	202-225-5836	RepScottPerry	\N
-C001090	Matt Cartwright	rep	PA	8	Democrat	202-225-5546	RepCartwright	\N
-R000597	Tom Rice	rep	SC	7	Republican	202-225-9895	RepTomRice	\N
 C001098	Ted Cruz	sen	TX	\N	Republican	202-224-5922	SenTedCruz	\N
-W000814	Randy K. Weber, Sr.	rep	TX	14	Republican	202-225-2831	TXRandy14	\N
-C001091	Joaquin Castro	rep	TX	20	Democrat	202-225-3236	JoaquinCastrotx	\N
-W000816	Roger Williams	rep	TX	25	Republican	202-225-9896	RepRWilliams	\N
-V000131	Marc A. Veasey	rep	TX	33	Democrat	202-225-9897	RepVeasey	\N
-V000132	Filemon Vela	rep	TX	34	Democrat	202-225-9901	RepFilemonVela	\N
-S001192	Chris Stewart	rep	UT	2	Republican	202-225-9730	RepChrisStewart	\N
 K000384	Tim Kaine	sen	VA	\N	Democrat	202-224-4024	timkaine	SVA01
-K000381	Derek Kilmer	rep	WA	6	Democrat	202-225-5916	RepDerekKilmer	\N
-P000607	Mark Pocan	rep	WI	2	Democrat	202-225-2906	RepMarkPocan	\N
-K000385	Robin L. Kelly	rep	IL	2	Democrat	202-225-0773	RepRobinKelly	\N
-S001195	Jason Smith	rep	MO	8	Republican	202-225-4404	RepJasonSmith	\N
 B001288	Cory A. Booker	sen	NJ	\N	Democrat	202-224-3224	SenBooker	\N
-C001101	Katherine M. Clark	rep	MA	5	Democrat	202-225-2836	RepKClark	\N
-N000188	Donald Norcross	rep	NJ	1	Democrat	202-225-6501	DonaldNorcross	\N
-A000370	Alma S. Adams	rep	NC	12	Democrat	202-225-1510	RepAdams	\N
-P000609	Gary J. Palmer	rep	AL	6	Republican	202-225-4921	USRepGaryPalmer	\N
-H001072	J. Hill	rep	AR	2	Republican	202-225-2506	RepFrenchHill	\N
-W000821	Bruce Westerman	rep	AR	4	Republican	202-225-3772	RepWesterman	\N
-G000574	Ruben Gallego	rep	AZ	7	Democrat	202-225-4065	RepRubenGallego	\N
-D000623	Mark DeSaulnier	rep	CA	11	Democrat	202-225-2095	RepDeSaulnier	\N
-A000371	Pete Aguilar	rep	CA	31	Democrat	202-225-3201	reppeteaguilar	\N
-L000582	Ted Lieu	rep	CA	33	Democrat	202-225-3976	RepTedLieu	\N
-T000474	Norma J. Torres	rep	CA	35	Democrat	202-225-6161	NormaJTorres	\N
-B001297	Ken Buck	rep	CO	4	Republican	202-225-4676	RepKenBuck	\N
-C001103	Earl L. "Buddy" Carter	rep	GA	1	Republican	202-225-5831	RepBuddyCarter	\N
-H001071	Jody B. Hice	rep	GA	10	Republican	202-225-4101	congressmanhice	\N
-L000583	Barry Loudermilk	rep	GA	11	Republican	202-225-2931	RepLoudermilk	\N
-A000372	Rick W. Allen	rep	GA	12	Republican	202-225-2823	reprickallen	\N
-B001295	Mike Bost	rep	IL	12	Republican	202-225-5661	RepBost	\N
-G000577	Garret Graves	rep	LA	6	Republican	202-225-3901	RepGarretGraves	\N
-M001196	Seth Moulton	rep	MA	6	Democrat	202-225-8020	teammoulton	\N
-M001194	John R. Moolenaar	rep	MI	4	Republican	202-225-3561	RepMoolenaar	\N
-D000624	Debbie Dingell	rep	MI	12	Democrat	202-225-4071	RepDebDingell	\N
-L000581	Brenda L. Lawrence	rep	MI	14	Democrat	202-225-5802	RepLawrence	\N
-E000294	Tom Emmer	rep	MN	6	Republican	202-225-2331	RepTomEmmer	\N
-R000603	David Rouzer	rep	NC	7	Republican	202-225-2731	RepDavidRouzer	\N
-W000822	Bonnie Watson Coleman	rep	NJ	12	Democrat	202-225-5801	RepBonnie	\N
-Z000017	Lee M. Zeldin	rep	NY	1	Republican	202-225-3826	RepLeeZeldin	\N
-R000602	Kathleen M. Rice	rep	NY	4	Democrat	202-225-5516	RepKathleenRice	\N
-S001196	Elise M. Stefanik	rep	NY	21	Republican	202-225-4611	RepStefanik	\N
-K000386	John Katko	rep	NY	24	Republican	202-225-3701	RepJohnKatko	\N
-B001296	Brendan F. Boyle	rep	PA	2	Democrat	202-225-6111	CongBoyle	\N
-B001291	Brian Babin	rep	TX	36	Republican	202-225-1555	RepBrianBabin	\N
-B001292	Donald S. Beyer, Jr.	rep	VA	8	Democrat	202-225-4376	RepDonBeyer	\N
-P000610	Stacey E. Plaskett	rep	VI	0	Democrat	202-225-1790	staceyplaskett	\N
-N000189	Dan Newhouse	rep	WA	4	Republican	202-225-5816	RepNewhouse	\N
-G000576	Glenn Grothman	rep	WI	6	Republican	202-225-2476	RepGrothman	\N
-M001195	Alexander Mooney	rep	WV	2	Republican	202-225-2711	RepAlexMooney	\N
-R000600	Aumua Amata Coleman Radewagen	rep	AS	0	Republican	202-225-8577	RepAmata	\N
 S001198	Dan Sullivan	sen	AK	\N	Republican	202-224-3004	SenDanSullivan	\N
 E000295	Joni Ernst	sen	IA	\N	Republican	202-224-3254	SenJoniErnst	SIA02
 T000476	Thom Tillis	sen	NC	\N	Republican	202-224-6342	senthomtillis	\N
 R000605	Mike Rounds	sen	SD	\N	Republican	202-224-5842	SenatorRounds	\N
 S001197	Ben Sasse	sen	NE	\N	Republican	202-224-4224	SenSasse	\N
-K000388	Trent Kelly	rep	MS	1	Republican	202-225-4306	reptrentkelly	\N
-L000585	Darin LaHood	rep	IL	18	Republican	202-225-6201	RepLaHood	\N
-D000626	Warren Davidson	rep	OH	8	Republican	202-225-6205	WarrenDavidson	\N
-C001108	James Comer	rep	KY	1	Republican	202-225-3115	RepJamesComer	\N
-E000296	Dwight Evans	rep	PA	3	Democrat	202-225-4001	RepDwightEvans	\N
 K000393	John Kennedy	sen	LA	\N	Republican	202-224-4623	SenJohnKennedy	\N
 H001076	Margaret Wood Hassan	sen	NH	\N	Democrat	202-224-3324	Senatorhassan	\N
 C001113	Catherine Cortez Masto	sen	NV	\N	Democrat	202-224-3542	sencortezmasto	\N
-S001190	Bradley Scott Schneider	rep	IL	10	Democrat	202-225-4835	repschneider	\N
-O000171	Tom O’Halleran	rep	AZ	1	Democrat	202-225-3361	repohalleran	\N
-B001302	Andy Biggs	rep	AZ	5	Republican	202-225-2635	RepAndyBiggsAZ	\N
-K000389	Ro Khanna	rep	CA	17	Democrat	202-225-2631	RepRoKhanna	\N
-P000613	Jimmy Panetta	rep	CA	20	Democrat	202-225-2861	RepJimmyPanetta	\N
-C001112	Salud O. Carbajal	rep	CA	24	Democrat	202-225-3601	RepCarbajal	\N
-B001300	Nanette Diaz Barragán	rep	CA	44	Democrat	202-225-8220	RepBarragan	\N
-C001110	J. Luis Correa	rep	CA	46	Democrat	202-225-2965	reploucorrea	\N
-B001303	Lisa Blunt Rochester	rep	DE	0	Democrat	202-225-4165	RepLBR	\N
-G000578	Matt Gaetz	rep	FL	1	Republican	202-225-4136	RepMattGaetz	\N
-D000628	Neal P. Dunn	rep	FL	2	Republican	202-225-5235	drnealdunnfl2	\N
-R000609	John H. Rutherford	rep	FL	4	Republican	202-225-2501	RepRutherfordFL	\N
-L000586	Al Lawson, Jr.	rep	FL	5	Democrat	202-225-0123	RepAlLawsonJr	\N
-M001202	Stephanie N. Murphy	rep	FL	7	Democrat	202-225-4035	RepStephMurphy	\N
-S001200	Darren Soto	rep	FL	9	Democrat	202-225-9889	RepDarrenSoto	\N
-D000627	Val Butler Demings	rep	FL	10	Democrat	202-225-2176	RepValDemings	\N
-C001111	Charlie Crist	rep	FL	13	Democrat	202-225-5961	repcharliecrist	\N
-M001199	Brian J. Mast	rep	FL	18	Republican	202-225-3026	repbrianmast	\N
-F000465	A. Drew Ferguson IV	rep	GA	3	Republican	202-225-5901	RepDrewFerguson	\N
-K000391	Raja Krishnamoorthi	rep	IL	8	Democrat	202-225-3711	congressmanraja	\N
-B001299	Jim Banks	rep	IN	3	Republican	202-225-4436	RepJimBanks	\N
-H001074	Trey Hollingsworth	rep	IN	9	Republican	202-225-5315	reptrey	\N
 M001198	Roger Marshall	sen	KS	\N	Republican	202-224-4774	SenatorMarshall	SKS02
-H001077	Clay Higgins	rep	LA	3	Republican	202-225-2031	RepClayHiggins	\N
-J000299	Mike Johnson	rep	LA	4	Republican	202-225-2777	RepMikeJohnson	\N
-B001304	Anthony Brown	rep	MD	4	Democrat	202-225-8699	RepAnthonyBrown	\N
-R000606	Jamie Raskin	rep	MD	8	Democrat	202-225-5341	repraskin	\N
-B001301	Jack Bergman	rep	MI	1	Republican	202-225-4735	RepJackBergman	\N
-B001305	Ted Budd	rep	NC	13	Republican	202-225-4531	RepTedBudd	\N
-B001298	Don Bacon	rep	NE	2	Republican	202-225-4155	repdonbacon	\N
-G000583	Josh Gottheimer	rep	NJ	5	Democrat	202-225-4465	RepJoshG	\N
 R000608	Jacky Rosen	sen	NV	\N	Democrat	202-224-6244	SenJackyRosen	SNV01
-S001201	Thomas R. Suozzi	rep	NY	3	Democrat	202-225-3335	RepTomSuozzi	\N
-E000297	Adriano Espaillat	rep	NY	13	Democrat	202-225-4365	RepEspaillat	\N
-F000466	Brian K. Fitzpatrick	rep	PA	1	Republican	202-225-4276	repbrianfitz	\N
-S001199	Lloyd Smucker	rep	PA	11	Republican	202-225-2411	RepSmucker	\N
-G000582	Jenniffer González-Colón	rep	PR	0	Republican	202-225-2615	repjenniffer	\N
-K000392	David Kustoff	rep	TN	8	Republican	202-225-4714	repdavidkustoff	\N
-G000581	Vicente Gonzalez	rep	TX	15	Democrat	202-225-2531	RepGonzalez	\N
-A000375	Jodey C. Arrington	rep	TX	19	Republican	202-225-4005	RepArrington	\N
-M001200	A. Donald McEachin	rep	VA	4	Democrat	202-225-6365	RepMcEachin	\N
-J000298	Pramila Jayapal	rep	WA	7	Democrat	202-225-3106	RepJayapal	\N
-G000579	Mike Gallagher	rep	WI	8	Republican	202-225-5665	RepGallagher	\N
-C001109	Liz Cheney	rep	WY	0	Republican	202-225-2311	RepLizCheney	\N
-E000298	Ron Estes	rep	KS	4	Republican	202-225-6216	RepRonEstes	\N
-N000190	Ralph Norman	rep	SC	5	Republican	202-225-5501	RepRalphNorman	\N
-G000585	Jimmy Gomez	rep	CA	34	Democrat	202-225-6235	RepJimmyGomez	\N
-C001114	John R. Curtis	rep	UT	3	Republican	202-225-7751	RepJohnCurtis	\N
 S001203	Tina Smith	sen	MN	\N	Democrat	202-224-5641	SenTinaSmith	\N
 H001079	Cindy Hyde-Smith	sen	MS	\N	Republican	202-224-5054	SenHydeSmith	\N
-L000588	Conor Lamb	rep	PA	17	Democrat	202-225-2301	RepConorLamb	\N
-L000589	Debbie Lesko	rep	AZ	8	Republican	202-225-4576	RepDLesko	\N
-C001115	Michael Cloud	rep	TX	27	Republican	202-225-7742	RepCloudTX	\N
-B001306	Troy Balderson	rep	OH	12	Republican	202-225-5355	RepBalderson	\N
-H001082	Kevin Hern	rep	OK	1	Republican	202-225-2211	repkevinhern	\N
-M001206	Joseph D. Morelle	rep	NY	25	Democrat	202-225-3615	RepJoeMorelle	\N
-S001205	Mary Gay Scanlon	rep	PA	5	Democrat	202-225-2011	RepMGS	\N
-W000826	Susan Wild	rep	PA	7	Democrat	202-225-6411	RepSusanWild	\N
-C001055	Ed Case	rep	HI	1	Democrat	202-225-2726	RepEdCase	\N
-H001066	Steven Horsford	rep	NV	4	Democrat	202-225-9894	RepHorsford	\N
-K000368	Ann Kirkpatrick	rep	AZ	2	Democrat	202-225-2542	RepKirkpatrick	\N
-S001211	Greg Stanton	rep	AZ	9	Democrat	202-225-9888	RepGregStanton	\N
-H001090	Josh Harder	rep	CA	10	Democrat	202-225-4540	RepJoshHarder	\N
-P000618	Katie Porter	rep	CA	45	Democrat	202-225-5611	RepKatiePorter	\N
-L000593	Mike Levin	rep	CA	49	Democrat	202-225-3906	RepMikeLevin	\N
-N000191	Joe Neguse	rep	CO	2	Democrat	202-225-2161	RepJoeNeguse	\N
-C001121	Jason Crow	rep	CO	6	Democrat	202-225-7882	RepJasonCrow	\N
-H001081	Jahana Hayes	rep	CT	5	Democrat	202-225-4476	RepJahanaHayes	\N
-W000823	Michael Waltz	rep	FL	6	Republican	202-225-2706	RepWaltzPress	\N
-S001214	W. Gregory Steube	rep	FL	17	Republican	202-225-5792	RepGregSteube	\N
-M001208	Lucy McBath	rep	GA	6	Democrat	202-225-4501	replucymcbath	\N
-S001204	Michael F. Q. San Nicolas	rep	GU	0	Democrat	202-225-1188	GuamCongressman	\N
-A000378	Cynthia Axne	rep	IA	3	Democrat	202-225-5476	RepCindyAxne	\N
-F000469	Russ Fulcher	rep	ID	1	Republican	202-225-6611	RepRussFulcher	\N
-G000586	Jesús G. "Chuy" García	rep	IL	4	Democrat	202-225-8203	RepChuyGarcia	\N
-C001117	Sean Casten	rep	IL	6	Democrat	202-225-4561	RepCasten	\N
-U000040	Lauren Underwood	rep	IL	14	Democrat	202-225-2976	RepUnderwood	\N
-B001307	James R. Baird	rep	IN	4	Republican	202-225-5037	RepJimBaird	\N
-P000615	Greg Pence	rep	IN	6	Republican	202-225-3021	RepGregPence	\N
-D000629	Sharice Davids	rep	KS	3	Democrat	202-225-2865	RepDavids	\N
-T000482	Lori Trahan	rep	MA	3	Democrat	202-225-3411	RepLoriTrahan	\N
-P000617	Ayanna Pressley	rep	MA	7	Democrat	202-225-5111	RepPressley	\N
-T000483	David J. Trone	rep	MD	6	Democrat	202-225-2721	repdavidtrone	\N
-S001208	Elissa Slotkin	rep	MI	8	Democrat	202-225-4872	RepSlotkin	\N
-L000592	Andy Levin	rep	MI	9	Democrat	202-225-4961	RepAndyLevin	\N
-S001215	Haley M. Stevens	rep	MI	11	Democrat	202-225-8171	RepHaleyStevens	\N
-T000481	Rashida Tlaib	rep	MI	13	Democrat	202-225-5126	RepRashida	\N
-H001088	Jim Hagedorn	rep	MN	1	Republican	202-225-2472	RepHagedorn	\N
-C001119	Angie Craig	rep	MN	2	Democrat	202-225-2271	RepAngieCraig	\N
-P000616	Dean Phillips	rep	MN	3	Democrat	202-225-2871	RepDeanPhillips	\N
-O000173	Ilhan Omar	rep	MN	5	Democrat	202-225-4755	Ilhan	\N
-S001212	Pete Stauber	rep	MN	8	Republican	202-225-6211	RepPeteStauber	\N
-G000591	Michael Guest	rep	MS	3	Republican	202-225-5031	RepMichaelGuest	\N
-A000377	Kelly Armstrong	rep	ND	0	Republican	202-225-2611	RepArmstrongND	\N
-P000614	Chris Pappas	rep	NH	1	Democrat	202-225-5456	RepChrisPappas	\N
-V000133	Jefferson Van Drew	rep	NJ	2	Republican	202-225-6572	congressmanJVD	\N
-K000394	Andy Kim	rep	NJ	3	Democrat	202-225-4765	RepAndyKimNJ	\N
-M001203	Tom Malinowski	rep	NJ	7	Democrat	202-225-5361	RepMalinowski	\N
-S001207	Mikie Sherrill	rep	NJ	11	Democrat	202-225-5034	RepSherrill	\N
-L000590	Susie Lee	rep	NV	3	Democrat	202-225-3252	RepSusieLee	\N
-O000172	Alexandria Ocasio-Cortez	rep	NY	14	Democrat	202-225-3965	RepAOC	\N
-D000630	Antonio Delgado	rep	NY	19	Democrat	202-225-5614	repdelgado	\N
-G000588	Anthony Gonzalez	rep	OH	16	Republican	202-225-3876	RepAGonzalez	\N
-D000631	Madeleine Dean	rep	PA	4	Democrat	202-225-4731	RepDean	\N
-H001085	Chrissy Houlahan	rep	PA	6	Democrat	202-225-4315	RepHoulahan	\N
-M001204	Daniel Meuser	rep	PA	9	Republican	202-225-6511	RepMeuser	\N
-J000302	John Joyce	rep	PA	13	Republican	202-225-2431	RepJohnJoyce	\N
-R000610	Guy Reschenthaler	rep	PA	14	Republican	202-225-2065	GReschenthaler	\N
-T000480	William R. Timmons IV	rep	SC	4	Republican	202-225-6030	RepTimmons	\N
-J000301	Dusty Johnson	rep	SD	0	Republican	202-225-2801	RepDustyJohnson	\N
-B001309	Tim Burchett	rep	TN	2	Republican	202-225-5435	RepTimBurchett	\N
-R000612	John Rose	rep	TN	6	Republican	202-225-4231	RepJohnRose	\N
-G000590	Mark E. Green	rep	TN	7	Republican	202-225-2811	RepMarkGreen	\N
-C001120	Dan Crenshaw	rep	TX	2	Republican	202-225-6565	RepDanCrenshaw	\N
-T000479	Van Taylor	rep	TX	3	Republican	202-225-4201	RepVanTaylor	\N
-G000589	Lance Gooden	rep	TX	5	Republican	202-225-3484	Lancegooden	\N
-F000468	Lizzie Fletcher	rep	TX	7	Democrat	202-225-2571	RepFletcher	\N
-E000299	Veronica Escobar	rep	TX	16	Democrat	202-225-4831	RepEscobar	\N
-R000614	Chip Roy	rep	TX	21	Republican	202-225-4236	RepChipRoy	\N
-G000587	Sylvia R. Garcia	rep	TX	29	Democrat	202-225-1688	RepSylviaGarcia	\N
-A000376	Colin Z. Allred	rep	TX	32	Democrat	202-225-2231	RepColinAllred	\N
-L000591	Elaine G. Luria	rep	VA	2	Democrat	202-225-4215	RepElaineLuria	\N
-C001118	Ben Cline	rep	VA	6	Republican	202-225-5431	RepBenCline	\N
-S001209	Abigail Davis Spanberger	rep	VA	7	Democrat	202-225-2815	RepSpanberger	\N
-W000825	Jennifer Wexton	rep	VA	10	Democrat	202-225-5136	RepWexton	\N
-S001216	Kim Schrier	rep	WA	8	Democrat	202-225-7761	RepKimSchrier	\N
-S001213	Bryan Steil	rep	WI	1	Republican	202-225-3031	RepBryanSteil	\N
-M001205	Carol D. Miller	rep	WV	3	Republican	202-225-3452	RepCarolMiller	\N
 S001217	Rick Scott	sen	FL	\N	Republican	202-224-5274	SenRickScott	\N
 B001310	Mike Braun	sen	IN	\N	Republican	202-224-4814	SenatorBraun	\N
 H001089	Josh Hawley	sen	MO	\N	Republican	202-224-6154	SenHawleyPress	\N
 R000615	Mitt Romney	sen	UT	\N	Republican	202-224-5251	SenatorRomney	\N
-G000592	Jared F. Golden	rep	ME	2	Democrat	202-225-6306	repgolden	\N
-K000395	Fred Keller	rep	PA	12	Republican	202-225-3731	RepFredKeller	\N
-B001311	Dan Bishop	rep	NC	9	Republican	202-225-1976	RepDanBishop	\N
-M001210	Gregory F. Murphy	rep	NC	3	Republican	202-225-3415	RepGregMurphy	\N
-M000687	Kweisi Mfume	rep	MD	7	Democrat	202-225-4741	RepKweisiMfume	\N
-T000165	Thomas P. Tiffany	rep	WI	7	Republican	202-225-3365	RepTiffany	\N
-G000061	Mike Garcia	rep	CA	25	Republican	202-225-1956	repmikegarcia	\N
-J000020	Chris Jacobs	rep	NY	27	Republican	202-225-5265	RepJacobs	\N
 K000377	Mark Kelly	sen	AZ	\N	Democrat	202-224-2235	SenMarkKelly	SAZ03
 L000571	Cynthia M. Lummis	sen	WY	\N	Republican	202-224-3424	SenLummis	SWY02
-I000056	Darrell Issa	rep	CA	50	Republican	202-225-5672	RepDarrellIssa	\N
-S000250	Pete Sessions	rep	TX	17	Republican	202-225-6105	PeteSessions	\N
-V000129	David G. Valadao	rep	CA	21	Republican	202-225-4695	dgvaladao	\N
 T000278	Tommy Tuberville	sen	AL	\N	Republican	202-224-4124	SenTuberville	SAL02
 H000273	John W. Hickenlooper	sen	CO	\N	Democrat	202-224-5941	SenatorHick	SCO02
 H000601	Bill Hagerty	sen	TN	\N	Republican	202-224-4944	SenatorHagerty	STN02
-C001054	Jerry L. Carl	rep	AL	1	Republican	202-225-4931	RepJerryCarl	\N
-M001212	Barry Moore	rep	AL	2	Republican	202-225-2901	RepBarryMoore	\N
-O000019	Jay Obernolte	rep	CA	8	Republican	202-225-5861	JayObernolte	\N
-K000397	Young Kim	rep	CA	39	Republican	202-225-4111	RepYoungKim	\N
-S001135	Michelle Steel	rep	CA	48	Republican	202-225-2415	RepSteel	\N
-J000305	Sara Jacobs	rep	CA	53	Democrat	202-225-2040	RepSaraJacobs	\N
-B000825	Lauren Boebert	rep	CO	3	Republican	202-225-4761	RepBoebert	\N
-C001039	Kat Cammack	rep	FL	3	Republican	202-225-5744	RepKatCammack	\N
-F000472	C. Scott Franklin	rep	FL	15	Republican	202-225-1252	RepFranklin	\N
-D000032	Byron Donalds	rep	FL	19	Republican	202-225-2536	RepDonaldsPress	\N
-G000593	Carlos A. Gimenez	rep	FL	26	Republican	202-225-2778	RepCarlos	\N
-S000168	Maria Elvira Salazar	rep	FL	27	Republican	202-225-3931	RepMariaSalazar	\N
-W000788	Nikema Williams	rep	GA	5	Democrat	202-225-3801	RepNikema	\N
-B001312	Carolyn Bourdeaux	rep	GA	7	Democrat	202-225-4272	RepBourdeaux	\N
-C001116	Andrew S. Clyde	rep	GA	9	Republican	202-225-9893	Rep_Clyde	\N
-G000596	Marjorie Taylor Greene	rep	GA	14	Republican	202-225-5211	RepMTG	\N
-K000396	Kaiali’i Kahele	rep	HI	2	Democrat	202-225-4906	RepKahele	\N
-H001091	Ashley Hinson	rep	IA	1	Republican	202-225-2911	RepAshleyHinson	\N
-M001215	Mariannette Miller-Meeks	rep	IA	2	Republican	202-225-6576	RepMMM	\N
-F000446	Randy Feenstra	rep	IA	4	Republican	202-225-4426	RepFeenstra	\N
-N000192	Marie Newman	rep	IL	3	Democrat	202-225-5701	RepMarieNewman	\N
-M001211	Mary E. Miller	rep	IL	15	Republican	202-225-5271	RepMaryMiller	\N
-M001214	Frank J. Mrvan	rep	IN	1	Democrat	202-225-2461	RepMrvan	\N
-S000929	Victoria Spartz	rep	IN	5	Republican	202-225-2276	RepSpartz	\N
-M000871	Tracey Mann	rep	KS	1	Republican	202-225-2715	RepMann	\N
-L000266	Jake LaTurner	rep	KS	2	Republican	202-225-6601	RepLaTurner	\N
-A000148	Jake Auchincloss	rep	MA	4	Democrat	202-225-5931	RepAuchincloss	\N
-M001186	Peter Meijer	rep	MI	3	Republican	202-225-3831	RepMeijer	\N
-M001136	Lisa C. McClain	rep	MI	10	Republican	202-225-2106	RepLisaMcClain	\N
-F000470	Michelle Fischbach	rep	MN	7	Republican	202-225-2165	RepFischbach	\N
-B001224	Cori Bush	rep	MO	1	Democrat	202-225-2406	RepCori	\N
-R000103	Matthew M. Rosendale	rep	MT	0	Republican	202-225-3211	RepRosendale	\N
-R000305	Deborah K. Ross	rep	NC	2	Democrat	202-225-3032	RepDeborahRoss	\N
-M001135	Kathy E. Manning	rep	NC	6	Democrat	202-225-3065	RepKManning	\N
-C001104	Madison Cawthorn	rep	NC	11	Republican	202-225-6401	RepCawthorn	\N
-H001084	Yvette Herrell	rep	NM	2	Republican	202-225-2365	RepHerrell	\N
-L000273	Teresa Leger Fernandez	rep	NM	3	Democrat	202-225-6190	RepTeresaLF	\N
-G000597	Andrew R. Garbarino	rep	NY	2	Republican	202-225-7896	RepGarbarino	\N
-M000317	Nicole Malliotakis	rep	NY	11	Republican	202-225-3371	RepMalliotakis	\N
-T000486	Ritchie Torres	rep	NY	15	Democrat	202-225-4361	RepRitchie	\N
-B001223	Jamaal Bowman	rep	NY	16	Democrat	202-225-2464	RepBowman	\N
-J000306	Mondaire Jones	rep	NY	17	Democrat	202-225-6506	RepMondaire	\N
-B000740	Stephanie I. Bice	rep	OK	5	Republican	202-225-2132	RepBice	\N
-B000668	Cliff Bentz	rep	OR	2	Republican	202-225-6730	RepBentz	\N
-M000194	Nancy Mace	rep	SC	1	Republican	202-225-3176	RepNancyMace	\N
-H001086	Diana Harshbarger	rep	TN	1	Republican	202-225-6356	RepHarshbarger	\N
-F000246	Pat Fallon	rep	TX	4	Republican	202-225-6673	RepPatFallon	\N
-P000048	August Pfluger	rep	TX	11	Republican	202-225-3605	RepPfluger	\N
-J000304	Ronny Jackson	rep	TX	13	Republican	202-225-3706	RepRonnyJackson	\N
-N000026	Troy E. Nehls	rep	TX	22	Republican	202-225-5951	RepTroyNehls	\N
-G000594	Tony Gonzales	rep	TX	23	Republican	202-225-4511	RepTonyGonzales	\N
-V000134	Beth Van Duyne	rep	TX	24	Republican	202-225-6605	RepBethVanDuyne	\N
-M001213	Blake D. Moore	rep	UT	1	Republican	202-225-0453	RepBlakeMoore	\N
-O000086	Burgess Owens	rep	UT	4	Republican	202-225-3011	RepBurgessOwens	\N
-G000595	Bob Good	rep	VA	5	Republican	202-225-4711	RepBobGood	\N
-S001159	Marilyn Strickland	rep	WA	10	Democrat	202-225-9740	RepStricklandWA	\N
-F000471	Scott Fitzgerald	rep	WI	5	Republican	202-225-5101	RepFitzgerald	\N
 P000145	Alex Padilla	sen	CA	\N	Democrat	202-224-3553	SenAlexPadilla	SCA03
 O000174	Jon Ossoff	sen	GA	\N	Democrat	202-224-3521	SenOssoff	SGA02
 W000790	Raphael G. Warnock	sen	GA	\N	Democrat	202-224-3643	SenatorWarnock	SGA03
-T000478	Claudia Tenney	rep	NY	22	Republican	202-225-3665	RepTenney	\N
-L000595	Julia Letlow	rep	LA	5	Republican	202-225-8490	RepJuliaLetlow	\N
-C001125	Troy A. Carter	rep	LA	2	Democrat	202-225-6636	RepTroyCarter	\N
-S001218	Melanie A. Stansbury	rep	NM	1	Democrat	202-225-6316	Rep_Stansbury	\N
-E000071	Jake Ellzey	rep	TX	6	Republican	202-225-2002	RepEllzey	\N
+A000055	Robert B. Aderholt	rep	AL	4	Republican	202-225-4876	Robert_Aderholt	HAL04
+B001270	Karen Bass	rep	CA	37	Democrat	202-225-7084	RepKarenBass	HCA37
+B001257	Gus M. Bilirakis	rep	FL	12	Republican	202-225-5755	RepGusBilirakis	HFL12
+B000490	Sanford D. Bishop, Jr.	rep	GA	2	Democrat	202-225-3631	SanfordBishop	HGA02
+B000574	Earl Blumenauer	rep	OR	3	Democrat	202-225-4811	BlumenauerMedia	HOR03
+B000755	Kevin Brady	rep	TX	8	Republican	202-225-4901	RepKevinBrady	HTX08
+B001274	Mo Brooks	rep	AL	5	Republican	202-225-4801	RepMoBrooks	HAL05
+B001260	Vern Buchanan	rep	FL	16	Republican	202-225-5015	VernBuchanan	HFL16
+B001275	Larry Bucshon	rep	IN	8	Republican	202-225-4636	RepLarryBucshon	HIN08
+B001248	Michael C. Burgess	rep	TX	26	Republican	202-225-7772	MichaelCBurgess	HTX26
+B001251	G. K. Butterfield	rep	NC	1	Democrat	202-225-3101	GKButterfield	HNC01
+C000059	Ken Calvert	rep	CA	42	Republican	202-225-1986	KenCalvert	HCA42
+C001072	André Carson	rep	IN	7	Democrat	202-225-4011	RepAndreCarson	HIN07
+C001051	John R. Carter	rep	TX	31	Republican	202-225-3864	JudgeCarter	HTX31
+C001066	Kathy Castor	rep	FL	14	Democrat	202-225-3376	USRepKCastor	HFL14
+C000266	Steve Chabot	rep	OH	1	Republican	202-225-2216	RepSteveChabot	HOH01
+C001080	Judy Chu	rep	CA	27	Democrat	202-225-5464	RepJudyChu	HCA27
+C001084	David N. Cicilline	rep	RI	1	Democrat	202-225-4911	RepCicilline	HRI01
+C001067	Yvette D. Clarke	rep	NY	9	Democrat	202-225-6231	RepYvetteClarke	HNY09
+C001061	Emanuel Cleaver	rep	MO	5	Democrat	202-225-4535	RepCleaver	HMO05
+C000537	James E. Clyburn	rep	SC	6	Democrat	202-225-3315	WhipClyburn	HSC06
+C001068	Steve Cohen	rep	TN	9	Democrat	202-225-3265	RepCohen	HTN09
+C001053	Tom Cole	rep	OK	4	Republican	202-225-6165	TomColeOK04	HOK04
+C001078	Gerald E. Connolly	rep	VA	11	Democrat	202-225-1492	GerryConnolly	HVA11
+C000754	Jim Cooper	rep	TN	5	Democrat	202-225-4311	RepJimCooper	HTN05
+C001059	Jim Costa	rep	CA	16	Democrat	202-225-3341	RepJimCosta	HCA16
+C001069	Joe Courtney	rep	CT	2	Democrat	202-225-2076	RepJoeCourtney	HCT02
+C001087	Eric A. "Rick" Crawford	rep	AR	1	Republican	202-225-4076	RepRickCrawford	HAR01
+C001063	Henry Cuellar	rep	TX	28	Democrat	202-225-1640	RepCuellar	HTX28
+D000096	Danny K. Davis	rep	IL	7	Democrat	202-225-5006	RepDannyDavis	HIL07
+D000191	Peter A. DeFazio	rep	OR	4	Democrat	202-225-6416	RepPeterDeFazio	HOR04
+D000197	Diana DeGette	rep	CO	1	Democrat	202-225-4431	RepDianaDeGette	HCO01
+D000216	Rosa L. DeLauro	rep	CT	3	Democrat	202-225-3661	RosaDeLauro	HCT03
+D000616	Scott DesJarlais	rep	TN	4	Republican	202-225-6831	DesJarlaisTN04	HTN04
+D000610	Theodore E. Deutch	rep	FL	22	Democrat	202-225-3001	RepTedDeutch	HFL22
+D000600	Mario Diaz-Balart	rep	FL	25	Republican	202-225-4211	MarioDB	HFL25
+D000399	Lloyd Doggett	rep	TX	35	Democrat	202-225-4865	RepLloydDoggett	HTX35
+D000482	Michael F. Doyle	rep	PA	18	Democrat	202-225-2135	USRepMikeDoyle	HPA18
+D000615	Jeff Duncan	rep	SC	3	Republican	202-225-5301	RepJeffDuncan	HSC03
+E000215	Anna G. Eshoo	rep	CA	18	Democrat	202-225-8104	RepAnnaEshoo	HCA18
+F000459	Charles J. "Chuck" Fleischmann	rep	TN	3	Republican	202-225-3271	RepChuck	HTN03
+F000449	Jeff Fortenberry	rep	NE	1	Republican	202-225-4806	JeffFortenberry	HNE01
+F000450	Virginia Foxx	rep	NC	5	Republican	202-225-2071	VirginiaFoxx	HNC05
+G000559	John Garamendi	rep	CA	3	Democrat	202-225-1880	RepGaramendi	HCA03
+G000563	Bob Gibbs	rep	OH	7	Republican	202-225-6265	RepBobGibbs	HOH07
+G000552	Louie Gohmert	rep	TX	1	Republican	202-225-3035	RepLouieGohmert	HTX01
+G000565	Paul A. Gosar	rep	AZ	4	Republican	202-225-2315	RepGosar	HAZ04
+G000377	Kay Granger	rep	TX	12	Republican	202-225-5071	RepKayGranger	HTX12
+G000546	Sam Graves	rep	MO	6	Republican	202-225-7041	RepSamGraves	HMO06
+G000553	Al Green	rep	TX	9	Democrat	202-225-7508	RepAlGreen	HTX09
+G000568	H. Morgan Griffith	rep	VA	9	Republican	202-225-3861	RepMGriffith	HVA09
+G000551	Raúl M. Grijalva	rep	AZ	3	Democrat	202-225-2435	RepraulGrijalva	HAZ03
+G000558	Brett Guthrie	rep	KY	2	Republican	202-225-3501	RepGuthrie	HKY02
+H001052	Andy Harris	rep	MD	1	Republican	202-225-5311	RepAndyHarrisMD	HMD01
+H001053	Vicky Hartzler	rep	MO	4	Republican	202-225-2876	RepHartzler	HMO04
+H001056	Jaime Herrera Beutler	rep	WA	3	Republican	202-225-3536	HerreraBeutler	HWA03
+H001038	Brian Higgins	rep	NY	26	Democrat	202-225-3306	RepBrianHiggins	HNY26
+H001047	James A. Himes	rep	CT	4	Democrat	202-225-5541	JAHimes	HCT04
+H000874	Steny H. Hoyer	rep	MD	5	Democrat	202-225-4131	LeaderHoyer	HMD05
+H001058	Bill Huizenga	rep	MI	2	Republican	202-225-4401	RepHuizenga	HMI02
+J000032	Sheila Jackson Lee	rep	TX	18	Democrat	202-225-3816	JacksonLeeTX18	HTX18
+J000292	Bill Johnson	rep	OH	6	Republican	202-225-5705	RepBillJohnson	HOH06
+J000126	Eddie Bernice Johnson	rep	TX	30	Democrat	202-225-8885	RepEBJ	HTX30
+J000288	Henry C. "Hank" Johnson, Jr.	rep	GA	4	Democrat	202-225-1605	RepHankJohnson	HGA04
+J000289	Jim Jordan	rep	OH	4	Republican	202-225-2676	Jim_Jordan	HOH04
+K000009	Marcy Kaptur	rep	OH	9	Democrat	202-225-4146	RepMarcyKaptur	HOH09
+K000375	William R. Keating	rep	MA	9	Democrat	202-225-3111	USRepKeating	HMA09
+K000376	Mike Kelly	rep	PA	16	Republican	202-225-5406	MikeKellyPA	HPA16
+K000188	Ron Kind	rep	WI	3	Democrat	202-225-5506	RepRonKind	HWI03
+K000378	Adam Kinzinger	rep	IL	16	Republican	202-225-3635	RepKinzinger	HIL16
+L000564	Doug Lamborn	rep	CO	5	Republican	202-225-4422	RepDLamborn	HCO05
+L000559	James R. Langevin	rep	RI	2	Democrat	202-225-2735	JimLangevin	HRI02
+L000560	Rick Larsen	rep	WA	2	Democrat	202-225-2605	RepRickLarsen	HWA02
+L000557	John B. Larson	rep	CT	1	Democrat	202-225-2265	RepJohnLarson	HCT01
+L000566	Robert E. Latta	rep	OH	5	Republican	202-225-6405	BobLatta	HOH05
+L000551	Barbara Lee	rep	CA	13	Democrat	202-225-2661	RepBarbaraLee	HCA13
+L000397	Zoe Lofgren	rep	CA	19	Democrat	202-225-3072	RepZoeLofgren	HCA19
+L000576	Billy Long	rep	MO	7	Republican	202-225-6536	USRepLong	HMO07
+L000491	Frank D. Lucas	rep	OK	3	Republican	202-225-5565	RepFrankLucas	HOK03
+L000569	Blaine Luetkemeyer	rep	MO	3	Republican	202-225-2956	RepBlaine	HMO03
+L000562	Stephen F. Lynch	rep	MA	8	Democrat	202-225-8273	RepStephenLynch	HMA08
+M000087	Carolyn B. Maloney	rep	NY	12	Democrat	202-225-7944	RepMaloney	HNY12
+M001163	Doris O. Matsui	rep	CA	6	Democrat	202-225-7163	DorisMatsui	HCA06
+M001165	Kevin McCarthy	rep	CA	23	Republican	202-225-2915	GOPLeader	HCA23
+M001157	Michael T. McCaul	rep	TX	10	Republican	202-225-2401	RepMcCaul	HTX10
+M001177	Tom McClintock	rep	CA	4	Republican	202-225-2511	RepMcClintock	HCA04
+M001143	Betty McCollum	rep	MN	4	Democrat	202-225-6631	BettyMcCollum04	HMN04
+M000312	James P. McGovern	rep	MA	2	Democrat	202-225-6101	RepMcGovern	HMA02
+M001156	Patrick T. McHenry	rep	NC	10	Republican	202-225-2576	PatrickMcHenry	HNC10
+M001180	David B. McKinley	rep	WV	1	Republican	202-225-4172	RepMcKinley	HWV01
+M001159	Cathy McMorris Rodgers	rep	WA	5	Republican	202-225-2006	CathyMcMorris	HWA05
+M001166	Jerry McNerney	rep	CA	9	Democrat	202-225-1947	RepMcNerney	HCA09
+M001137	Gregory W. Meeks	rep	NY	5	Democrat	202-225-3461	RepGregoryMeeks	HNY05
+M001160	Gwen Moore	rep	WI	4	Democrat	202-225-4572	RepGwenMoore	HWI04
+N000002	Jerrold Nadler	rep	NY	10	Democrat	202-225-5635	RepJerryNadler	HNY10
+N000179	Grace F. Napolitano	rep	CA	32	Democrat	202-225-5256	GraceNapolitano	HCA32
+N000015	Richard E. Neal	rep	MA	1	Democrat	202-225-5601	RepRichardNeal	HMA01
+N000147	Eleanor Holmes Norton	rep	DC	0	Democrat	202-225-8050	EleanorNorton	HDC00
+N000181	Devin Nunes	rep	CA	22	Republican	202-225-2523	RepDevinNunes	HCA22
+P000601	Steven M. Palazzo	rep	MS	4	Republican	202-225-5772	CongPalazzo	HMS04
+P000034	Frank Pallone, Jr.	rep	NJ	6	Democrat	202-225-4671	FrankPallone	HNJ06
+P000096	Bill Pascrell, Jr.	rep	NJ	9	Democrat	202-225-5751	BillPascrell	HNJ09
+P000197	Nancy Pelosi	rep	CA	12	Democrat	202-225-4965	SpeakerPelosi	HCA12
+P000593	Ed Perlmutter	rep	CO	7	Democrat	202-225-2645	RepPerlmutter	HCO07
+P000597	Chellie Pingree	rep	ME	1	Democrat	202-225-6116	ChelliePingree	HME01
+P000599	Bill Posey	rep	FL	8	Republican	202-225-3671	CongBillPosey	HFL08
+P000523	David E. Price	rep	NC	4	Democrat	202-225-1784	RepDavidEPrice	HNC04
+Q000023	Mike Quigley	rep	IL	5	Democrat	202-225-4061	RepMikeQuigley	HIL05
+R000585	Tom Reed	rep	NY	23	Republican	202-225-3161	TomReedNY23	HNY23
+R000395	Harold Rogers	rep	KY	5	Republican	202-225-4601	RepHalRogers	HKY05
+R000575	Mike Rogers	rep	AL	3	Republican	202-225-3261	RepMikeRogersAL	HAL03
+R000486	Lucille Roybal-Allard	rep	CA	40	Democrat	202-225-1766	RepRoybalAllard	HCA40
+R000576	C. A. Dutch Ruppersberger	rep	MD	2	Democrat	202-225-3061	Call_Me_Dutch	HMD02
+R000515	Bobby L. Rush	rep	IL	1	Democrat	202-225-4372	RepBobbyRush	HIL01
+R000577	Tim Ryan	rep	OH	13	Democrat	202-225-5261	RepTimRyan	HOH13
+S001177	Gregorio Kilili Camacho Sablan	rep	MP	0	Democrat	202-225-2646	Kilili_Sablan	HMP00
+S001168	John P. Sarbanes	rep	MD	3	Democrat	202-225-4016	RepSarbanes	HMD03
+S001176	Steve Scalise	rep	LA	1	Republican	202-225-3015	SteveScalise	HLA01
+S001145	Janice D. Schakowsky	rep	IL	9	Democrat	202-225-2111	JanSchakowsky	HIL09
+S001150	Adam B. Schiff	rep	CA	28	Democrat	202-225-4176	RepAdamSchiff	HCA28
+S001180	Kurt Schrader	rep	OR	5	Democrat	202-225-5711	RepSchrader	HOR05
+S001183	David Schweikert	rep	AZ	6	Republican	202-225-2190	RepDavid	HAZ06
+S001189	Austin Scott	rep	GA	8	Republican	202-225-6531	AustinScottGA08	HGA08
+S001157	David Scott	rep	GA	13	Democrat	202-225-2939	RepDavidScott	HGA13
+S000185	Robert C. "Bobby" Scott	rep	VA	3	Democrat	202-225-8351	BobbyScott	HVA03
+S001185	Terri Sewell	rep	AL	7	Democrat	202-225-2665	RepTerriSewell	HAL07
+S000344	Brad Sherman	rep	CA	30	Democrat	202-225-5911	BradSherman	HCA30
+S001148	Michael K. Simpson	rep	ID	2	Republican	202-225-5531	CongMikeSimpson	HID02
+S001165	Albio Sires	rep	NJ	8	Democrat	202-225-7919	RepSires	HNJ08
+S000510	Adam Smith	rep	WA	9	Democrat	202-225-8901	RepAdamSmith	HWA09
+S001172	Adrian Smith	rep	NE	3	Republican	202-225-6435	RepAdrianSmith	HNE03
+S000522	Christopher H. Smith	rep	NJ	4	Republican	202-225-3765	RepChrisSmith	HNJ04
+S001175	Jackie Speier	rep	CA	14	Democrat	202-225-3531	RepSpeier	HCA14
+S001156	Linda T. Sánchez	rep	CA	38	Democrat	202-225-6676	RepLindaSanchez	HCA38
+T000193	Bennie G. Thompson	rep	MS	2	Democrat	202-225-5876	BennieGThompson	HMS02
+T000460	Mike Thompson	rep	CA	5	Democrat	202-225-3311	RepThompson	HCA05
+T000467	Glenn Thompson	rep	PA	15	Republican	202-225-5121	CongressmanGT	HPA15
+T000469	Paul Tonko	rep	NY	20	Democrat	202-225-5076	RepPaulTonko	HNY20
+T000463	Michael R. Turner	rep	OH	10	Republican	202-225-6465	RepMikeTurner	HOH10
+U000031	Fred Upton	rep	MI	6	Republican	202-225-3761	RepFredUpton	HMI06
+V000081	Nydia M. Velázquez	rep	NY	7	Democrat	202-225-2361	NydiaVelazquez	HNY07
+W000798	Tim Walberg	rep	MI	7	Republican	202-225-6276	RepWalberg	HMI07
+W000797	Debbie Wasserman Schultz	rep	FL	23	Democrat	202-225-7931	RepDWStweets	HFL23
+W000187	Maxine Waters	rep	CA	43	Democrat	202-225-2201	RepMaxineWaters	HCA43
+W000806	Daniel Webster	rep	FL	11	Republican	202-225-1002	RepWebster	HFL11
+W000800	Peter Welch	rep	VT	0	Democrat	202-225-4115	PeterWelch	HVT00
+W000795	Joe Wilson	rep	SC	2	Republican	202-225-2452	RepJoeWilson	HSC02
+W000808	Frederica S. Wilson	rep	FL	24	Democrat	202-225-4506	RepWilson	HFL24
+W000804	Robert J. Wittman	rep	VA	1	Republican	202-225-4261	RobWittman	HVA01
+W000809	Steve Womack	rep	AR	3	Republican	202-225-4301	Rep_SteveWomack	HAR03
+Y000062	John A. Yarmuth	rep	KY	3	Democrat	202-225-5401	RepJohnYarmuth	HKY03
+Y000033	Don Young	rep	AK	0	Republican	202-225-5765	RepDonYoung	HAK00
+A000369	Mark E. Amodei	rep	NV	2	Republican	202-225-6155	MarkAmodeiNV2	HNV02
+B001278	Suzanne Bonamici	rep	OR	1	Democrat	202-225-0855	RepBonamici	HOR01
+D000617	Suzan K. DelBene	rep	WA	1	Democrat	202-225-6311	RepDelBene	HWA01
+M001184	Thomas Massie	rep	KY	4	Republican	202-225-3465	RepThomasMassie	HKY04
+P000604	Donald M. Payne, Jr.	rep	NJ	10	Democrat	202-225-3436	RepDonaldPayne	HNJ10
+F000454	Bill Foster	rep	IL	11	Democrat	202-225-3515	RepBillFoster	HIL11
+T000468	Dina Titus	rep	NV	1	Democrat	202-225-5965	RepDinaTitus	HNV01
+L000578	Doug LaMalfa	rep	CA	1	Republican	202-225-3076	RepLaMalfa	HCA01
+H001068	Jared Huffman	rep	CA	2	Democrat	202-225-5161	RepHuffman	HCA02
+B001287	Ami Bera	rep	CA	7	Democrat	202-225-5716	RepBera	HCA07
+S001193	Eric Swalwell	rep	CA	15	Democrat	202-225-5065	RepSwalwell	HCA15
+B001285	Julia Brownley	rep	CA	26	Democrat	202-225-5811	RepBrownley	HCA26
+C001097	Tony Cárdenas	rep	CA	29	Democrat	202-225-6131	RepCardenas	HCA29
+R000599	Raul Ruiz	rep	CA	36	Democrat	202-225-5330	RepRaulRuizMD	HCA36
+T000472	Mark Takano	rep	CA	41	Democrat	202-225-2305	RepMarkTakano	HCA41
+L000579	Alan S. Lowenthal	rep	CA	47	Democrat	202-225-7924	RepLowenthal	HCA47
+V000130	Juan Vargas	rep	CA	51	Democrat	202-225-8045	RepJuanVargas	HCA51
+P000608	Scott H. Peters	rep	CA	52	Democrat	202-225-0508	RepScottPeters	HCA52
+F000462	Lois Frankel	rep	FL	21	Democrat	202-225-9890	RepLoisFrankel	HFL21
+D000619	Rodney Davis	rep	IL	13	Republican	202-225-2371	RodneyDavis	HIL13
+B001286	Cheri Bustos	rep	IL	17	Democrat	202-225-5905	RepCheri	HIL17
+W000813	Jackie Walorski	rep	IN	2	Republican	202-225-3915	RepWalorski	HIN02
+B001282	Andy Barr	rep	KY	6	Republican	202-225-4706	RepAndyBarr	HKY06
+K000380	Daniel T. Kildee	rep	MI	5	Democrat	202-225-3611	RepDanKildee	HMI05
+W000812	Ann Wagner	rep	MO	2	Republican	202-225-1621	RepAnnWagner	HMO02
+H001067	Richard Hudson	rep	NC	8	Republican	202-225-3715	RepRichHudson	HNC08
+K000382	Ann Kuster	rep	NH	2	Democrat	202-225-5206	RepAnnieKuster	HNH02
+M001188	Grace Meng	rep	NY	6	Democrat	202-225-2601	RepGraceMeng	HNY06
+J000294	Hakeem S. Jeffries	rep	NY	8	Democrat	202-225-5936	RepJeffries	HNY08
+M001185	Sean Patrick Maloney	rep	NY	18	Democrat	202-225-5441	RepSeanMaloney	HNY18
+W000815	Brad R. Wenstrup	rep	OH	2	Republican	202-225-3164	RepBradWenstrup	HOH02
+B001281	Joyce Beatty	rep	OH	3	Democrat	202-225-4324	RepBeatty	HOH03
+J000295	David P. Joyce	rep	OH	14	Republican	202-225-5731	RepDaveJoyce	HOH14
+M001190	Markwayne Mullin	rep	OK	2	Republican	202-225-2701	RepMullin	HOK02
+P000605	Scott Perry	rep	PA	10	Republican	202-225-5836	RepScottPerry	HPA10
+C001090	Matt Cartwright	rep	PA	8	Democrat	202-225-5546	RepCartwright	HPA08
+R000597	Tom Rice	rep	SC	7	Republican	202-225-9895	RepTomRice	HSC07
+W000814	Randy K. Weber, Sr.	rep	TX	14	Republican	202-225-2831	TXRandy14	HTX14
+C001091	Joaquin Castro	rep	TX	20	Democrat	202-225-3236	JoaquinCastrotx	HTX20
+W000816	Roger Williams	rep	TX	25	Republican	202-225-9896	RepRWilliams	HTX25
+V000131	Marc A. Veasey	rep	TX	33	Democrat	202-225-9897	RepVeasey	HTX33
+V000132	Filemon Vela	rep	TX	34	Democrat	202-225-9901	RepFilemonVela	HTX34
+S001192	Chris Stewart	rep	UT	2	Republican	202-225-9730	RepChrisStewart	HUT02
+K000381	Derek Kilmer	rep	WA	6	Democrat	202-225-5916	RepDerekKilmer	HWA06
+P000607	Mark Pocan	rep	WI	2	Democrat	202-225-2906	RepMarkPocan	HWI02
+K000385	Robin L. Kelly	rep	IL	2	Democrat	202-225-0773	RepRobinKelly	HIL02
+S001195	Jason Smith	rep	MO	8	Republican	202-225-4404	RepJasonSmith	HMO08
+C001101	Katherine M. Clark	rep	MA	5	Democrat	202-225-2836	RepKClark	HMA05
+N000188	Donald Norcross	rep	NJ	1	Democrat	202-225-6501	DonaldNorcross	HNJ01
+A000370	Alma S. Adams	rep	NC	12	Democrat	202-225-1510	RepAdams	HNC12
+P000609	Gary J. Palmer	rep	AL	6	Republican	202-225-4921	USRepGaryPalmer	HAL06
+H001072	J. Hill	rep	AR	2	Republican	202-225-2506	RepFrenchHill	HAR02
+W000821	Bruce Westerman	rep	AR	4	Republican	202-225-3772	RepWesterman	HAR04
+G000574	Ruben Gallego	rep	AZ	7	Democrat	202-225-4065	RepRubenGallego	HAZ07
+D000623	Mark DeSaulnier	rep	CA	11	Democrat	202-225-2095	RepDeSaulnier	HCA11
+A000371	Pete Aguilar	rep	CA	31	Democrat	202-225-3201	reppeteaguilar	HCA31
+L000582	Ted Lieu	rep	CA	33	Democrat	202-225-3976	RepTedLieu	HCA33
+T000474	Norma J. Torres	rep	CA	35	Democrat	202-225-6161	NormaJTorres	HCA35
+B001297	Ken Buck	rep	CO	4	Republican	202-225-4676	RepKenBuck	HCO04
+C001103	Earl L. "Buddy" Carter	rep	GA	1	Republican	202-225-5831	RepBuddyCarter	HGA01
+H001071	Jody B. Hice	rep	GA	10	Republican	202-225-4101	congressmanhice	HGA10
+L000583	Barry Loudermilk	rep	GA	11	Republican	202-225-2931	RepLoudermilk	HGA11
+A000372	Rick W. Allen	rep	GA	12	Republican	202-225-2823	reprickallen	HGA12
+B001295	Mike Bost	rep	IL	12	Republican	202-225-5661	RepBost	HIL12
+G000577	Garret Graves	rep	LA	6	Republican	202-225-3901	RepGarretGraves	HLA06
+M001196	Seth Moulton	rep	MA	6	Democrat	202-225-8020	teammoulton	HMA06
+M001194	John R. Moolenaar	rep	MI	4	Republican	202-225-3561	RepMoolenaar	HMI04
+D000624	Debbie Dingell	rep	MI	12	Democrat	202-225-4071	RepDebDingell	HMI12
+L000581	Brenda L. Lawrence	rep	MI	14	Democrat	202-225-5802	RepLawrence	HMI14
+E000294	Tom Emmer	rep	MN	6	Republican	202-225-2331	RepTomEmmer	HMN06
+R000603	David Rouzer	rep	NC	7	Republican	202-225-2731	RepDavidRouzer	HNC07
+W000822	Bonnie Watson Coleman	rep	NJ	12	Democrat	202-225-5801	RepBonnie	HNJ12
+Z000017	Lee M. Zeldin	rep	NY	1	Republican	202-225-3826	RepLeeZeldin	HNY01
+R000602	Kathleen M. Rice	rep	NY	4	Democrat	202-225-5516	RepKathleenRice	HNY04
+S001196	Elise M. Stefanik	rep	NY	21	Republican	202-225-4611	RepStefanik	HNY21
+K000386	John Katko	rep	NY	24	Republican	202-225-3701	RepJohnKatko	HNY24
+B001296	Brendan F. Boyle	rep	PA	2	Democrat	202-225-6111	CongBoyle	HPA02
+B001291	Brian Babin	rep	TX	36	Republican	202-225-1555	RepBrianBabin	HTX36
+B001292	Donald S. Beyer, Jr.	rep	VA	8	Democrat	202-225-4376	RepDonBeyer	HVA08
+P000610	Stacey E. Plaskett	rep	VI	0	Democrat	202-225-1790	staceyplaskett	HVI00
+N000189	Dan Newhouse	rep	WA	4	Republican	202-225-5816	RepNewhouse	HWA04
+G000576	Glenn Grothman	rep	WI	6	Republican	202-225-2476	RepGrothman	HWI06
+M001195	Alexander Mooney	rep	WV	2	Republican	202-225-2711	RepAlexMooney	HWV02
+K000388	Trent Kelly	rep	MS	1	Republican	202-225-4306	reptrentkelly	HMS01
+L000585	Darin LaHood	rep	IL	18	Republican	202-225-6201	RepLaHood	HIL18
+D000626	Warren Davidson	rep	OH	8	Republican	202-225-6205	WarrenDavidson	HOH08
+C001108	James Comer	rep	KY	1	Republican	202-225-3115	RepJamesComer	HKY01
+E000296	Dwight Evans	rep	PA	3	Democrat	202-225-4001	RepDwightEvans	HPA03
+S001190	Bradley Scott Schneider	rep	IL	10	Democrat	202-225-4835	repschneider	HIL10
+O000171	Tom O’Halleran	rep	AZ	1	Democrat	202-225-3361	repohalleran	HAZ01
+B001302	Andy Biggs	rep	AZ	5	Republican	202-225-2635	RepAndyBiggsAZ	HAZ05
+K000389	Ro Khanna	rep	CA	17	Democrat	202-225-2631	RepRoKhanna	HCA17
+P000613	Jimmy Panetta	rep	CA	20	Democrat	202-225-2861	RepJimmyPanetta	HCA20
+C001112	Salud O. Carbajal	rep	CA	24	Democrat	202-225-3601	RepCarbajal	HCA24
+B001300	Nanette Diaz Barragán	rep	CA	44	Democrat	202-225-8220	RepBarragan	HCA44
+C001110	J. Luis Correa	rep	CA	46	Democrat	202-225-2965	reploucorrea	HCA46
+B001303	Lisa Blunt Rochester	rep	DE	0	Democrat	202-225-4165	RepLBR	HDE00
+G000578	Matt Gaetz	rep	FL	1	Republican	202-225-4136	RepMattGaetz	HFL01
+D000628	Neal P. Dunn	rep	FL	2	Republican	202-225-5235	drnealdunnfl2	HFL02
+R000609	John H. Rutherford	rep	FL	4	Republican	202-225-2501	RepRutherfordFL	HFL04
+L000586	Al Lawson, Jr.	rep	FL	5	Democrat	202-225-0123	RepAlLawsonJr	HFL05
+M001202	Stephanie N. Murphy	rep	FL	7	Democrat	202-225-4035	RepStephMurphy	HFL07
+S001200	Darren Soto	rep	FL	9	Democrat	202-225-9889	RepDarrenSoto	HFL09
+D000627	Val Butler Demings	rep	FL	10	Democrat	202-225-2176	RepValDemings	HFL10
+C001111	Charlie Crist	rep	FL	13	Democrat	202-225-5961	repcharliecrist	HFL13
+M001199	Brian J. Mast	rep	FL	18	Republican	202-225-3026	repbrianmast	HFL18
+F000465	A. Drew Ferguson IV	rep	GA	3	Republican	202-225-5901	RepDrewFerguson	HGA03
+K000391	Raja Krishnamoorthi	rep	IL	8	Democrat	202-225-3711	congressmanraja	HIL08
+B001299	Jim Banks	rep	IN	3	Republican	202-225-4436	RepJimBanks	HIN03
+H001074	Trey Hollingsworth	rep	IN	9	Republican	202-225-5315	reptrey	HIN09
+H001077	Clay Higgins	rep	LA	3	Republican	202-225-2031	RepClayHiggins	HLA03
+J000299	Mike Johnson	rep	LA	4	Republican	202-225-2777	RepMikeJohnson	HLA04
+B001304	Anthony Brown	rep	MD	4	Democrat	202-225-8699	RepAnthonyBrown	HMD04
+R000606	Jamie Raskin	rep	MD	8	Democrat	202-225-5341	repraskin	HMD08
+B001301	Jack Bergman	rep	MI	1	Republican	202-225-4735	RepJackBergman	HMI01
+B001305	Ted Budd	rep	NC	13	Republican	202-225-4531	RepTedBudd	HNC13
+B001298	Don Bacon	rep	NE	2	Republican	202-225-4155	repdonbacon	HNE02
+G000583	Josh Gottheimer	rep	NJ	5	Democrat	202-225-4465	RepJoshG	HNJ05
+S001201	Thomas R. Suozzi	rep	NY	3	Democrat	202-225-3335	RepTomSuozzi	HNY03
+E000297	Adriano Espaillat	rep	NY	13	Democrat	202-225-4365	RepEspaillat	HNY13
+F000466	Brian K. Fitzpatrick	rep	PA	1	Republican	202-225-4276	repbrianfitz	HPA01
+S001199	Lloyd Smucker	rep	PA	11	Republican	202-225-2411	RepSmucker	HPA11
+G000582	Jenniffer González-Colón	rep	PR	0	Republican	202-225-2615	repjenniffer	HPR00
+K000392	David Kustoff	rep	TN	8	Republican	202-225-4714	repdavidkustoff	HTN08
+G000581	Vicente Gonzalez	rep	TX	15	Democrat	202-225-2531	RepGonzalez	HTX15
+A000375	Jodey C. Arrington	rep	TX	19	Republican	202-225-4005	RepArrington	HTX19
+M001200	A. Donald McEachin	rep	VA	4	Democrat	202-225-6365	RepMcEachin	HVA04
+J000298	Pramila Jayapal	rep	WA	7	Democrat	202-225-3106	RepJayapal	HWA07
+G000579	Mike Gallagher	rep	WI	8	Republican	202-225-5665	RepGallagher	HWI08
+C001109	Liz Cheney	rep	WY	0	Republican	202-225-2311	RepLizCheney	HWY00
+E000298	Ron Estes	rep	KS	4	Republican	202-225-6216	RepRonEstes	HKS04
+N000190	Ralph Norman	rep	SC	5	Republican	202-225-5501	RepRalphNorman	HSC05
+G000585	Jimmy Gomez	rep	CA	34	Democrat	202-225-6235	RepJimmyGomez	HCA34
+C001114	John R. Curtis	rep	UT	3	Republican	202-225-7751	RepJohnCurtis	HUT03
+L000588	Conor Lamb	rep	PA	17	Democrat	202-225-2301	RepConorLamb	HPA17
+L000589	Debbie Lesko	rep	AZ	8	Republican	202-225-4576	RepDLesko	HAZ08
+C001115	Michael Cloud	rep	TX	27	Republican	202-225-7742	RepCloudTX	HTX27
+B001306	Troy Balderson	rep	OH	12	Republican	202-225-5355	RepBalderson	HOH12
+H001082	Kevin Hern	rep	OK	1	Republican	202-225-2211	repkevinhern	HOK01
+M001206	Joseph D. Morelle	rep	NY	25	Democrat	202-225-3615	RepJoeMorelle	HNY25
+S001205	Mary Gay Scanlon	rep	PA	5	Democrat	202-225-2011	RepMGS	HPA05
+W000826	Susan Wild	rep	PA	7	Democrat	202-225-6411	RepSusanWild	HPA07
+C001055	Ed Case	rep	HI	1	Democrat	202-225-2726	RepEdCase	HHI01
+H001066	Steven Horsford	rep	NV	4	Democrat	202-225-9894	RepHorsford	HNV04
+K000368	Ann Kirkpatrick	rep	AZ	2	Democrat	202-225-2542	RepKirkpatrick	HAZ02
+S001211	Greg Stanton	rep	AZ	9	Democrat	202-225-9888	RepGregStanton	HAZ09
+H001090	Josh Harder	rep	CA	10	Democrat	202-225-4540	RepJoshHarder	HCA10
+P000618	Katie Porter	rep	CA	45	Democrat	202-225-5611	RepKatiePorter	HCA45
+L000593	Mike Levin	rep	CA	49	Democrat	202-225-3906	RepMikeLevin	HCA49
+N000191	Joe Neguse	rep	CO	2	Democrat	202-225-2161	RepJoeNeguse	HCO02
+C001121	Jason Crow	rep	CO	6	Democrat	202-225-7882	RepJasonCrow	HCO06
+H001081	Jahana Hayes	rep	CT	5	Democrat	202-225-4476	RepJahanaHayes	HCT05
+W000823	Michael Waltz	rep	FL	6	Republican	202-225-2706	RepWaltzPress	HFL06
+S001214	W. Gregory Steube	rep	FL	17	Republican	202-225-5792	RepGregSteube	HFL17
+M001208	Lucy McBath	rep	GA	6	Democrat	202-225-4501	replucymcbath	HGA06
+S001204	Michael F. Q. San Nicolas	rep	GU	0	Democrat	202-225-1188	GuamCongressman	HGU00
+A000378	Cynthia Axne	rep	IA	3	Democrat	202-225-5476	RepCindyAxne	HIA03
+F000469	Russ Fulcher	rep	ID	1	Republican	202-225-6611	RepRussFulcher	HID01
+G000586	Jesús G. "Chuy" García	rep	IL	4	Democrat	202-225-8203	RepChuyGarcia	HIL04
+C001117	Sean Casten	rep	IL	6	Democrat	202-225-4561	RepCasten	HIL06
+U000040	Lauren Underwood	rep	IL	14	Democrat	202-225-2976	RepUnderwood	HIL14
+B001307	James R. Baird	rep	IN	4	Republican	202-225-5037	RepJimBaird	HIN04
+P000615	Greg Pence	rep	IN	6	Republican	202-225-3021	RepGregPence	HIN06
+D000629	Sharice Davids	rep	KS	3	Democrat	202-225-2865	RepDavids	HKS03
+T000482	Lori Trahan	rep	MA	3	Democrat	202-225-3411	RepLoriTrahan	HMA03
+P000617	Ayanna Pressley	rep	MA	7	Democrat	202-225-5111	RepPressley	HMA07
+T000483	David J. Trone	rep	MD	6	Democrat	202-225-2721	repdavidtrone	HMD06
+S001208	Elissa Slotkin	rep	MI	8	Democrat	202-225-4872	RepSlotkin	HMI08
+L000592	Andy Levin	rep	MI	9	Democrat	202-225-4961	RepAndyLevin	HMI09
+S001215	Haley M. Stevens	rep	MI	11	Democrat	202-225-8171	RepHaleyStevens	HMI11
+T000481	Rashida Tlaib	rep	MI	13	Democrat	202-225-5126	RepRashida	HMI13
+H001088	Jim Hagedorn	rep	MN	1	Republican	202-225-2472	RepHagedorn	HMN01
+C001119	Angie Craig	rep	MN	2	Democrat	202-225-2271	RepAngieCraig	HMN02
+P000616	Dean Phillips	rep	MN	3	Democrat	202-225-2871	RepDeanPhillips	HMN03
+O000173	Ilhan Omar	rep	MN	5	Democrat	202-225-4755	Ilhan	HMN05
+S001212	Pete Stauber	rep	MN	8	Republican	202-225-6211	RepPeteStauber	HMN08
+G000591	Michael Guest	rep	MS	3	Republican	202-225-5031	RepMichaelGuest	HMS03
+A000377	Kelly Armstrong	rep	ND	0	Republican	202-225-2611	RepArmstrongND	HND00
+P000614	Chris Pappas	rep	NH	1	Democrat	202-225-5456	RepChrisPappas	HNH01
+V000133	Jefferson Van Drew	rep	NJ	2	Republican	202-225-6572	congressmanJVD	HNJ02
+K000394	Andy Kim	rep	NJ	3	Democrat	202-225-4765	RepAndyKimNJ	HNJ03
+M001203	Tom Malinowski	rep	NJ	7	Democrat	202-225-5361	RepMalinowski	HNJ07
+S001207	Mikie Sherrill	rep	NJ	11	Democrat	202-225-5034	RepSherrill	HNJ11
+L000590	Susie Lee	rep	NV	3	Democrat	202-225-3252	RepSusieLee	HNV03
+O000172	Alexandria Ocasio-Cortez	rep	NY	14	Democrat	202-225-3965	RepAOC	HNY14
+D000630	Antonio Delgado	rep	NY	19	Democrat	202-225-5614	repdelgado	HNY19
+G000588	Anthony Gonzalez	rep	OH	16	Republican	202-225-3876	RepAGonzalez	HOH16
+D000631	Madeleine Dean	rep	PA	4	Democrat	202-225-4731	RepDean	HPA04
+H001085	Chrissy Houlahan	rep	PA	6	Democrat	202-225-4315	RepHoulahan	HPA06
+M001204	Daniel Meuser	rep	PA	9	Republican	202-225-6511	RepMeuser	HPA09
+J000302	John Joyce	rep	PA	13	Republican	202-225-2431	RepJohnJoyce	HPA13
+R000610	Guy Reschenthaler	rep	PA	14	Republican	202-225-2065	GReschenthaler	HPA14
+T000480	William R. Timmons IV	rep	SC	4	Republican	202-225-6030	RepTimmons	HSC04
+J000301	Dusty Johnson	rep	SD	0	Republican	202-225-2801	RepDustyJohnson	HSD00
+B001309	Tim Burchett	rep	TN	2	Republican	202-225-5435	RepTimBurchett	HTN02
+R000612	John Rose	rep	TN	6	Republican	202-225-4231	RepJohnRose	HTN06
+G000590	Mark E. Green	rep	TN	7	Republican	202-225-2811	RepMarkGreen	HTN07
+C001120	Dan Crenshaw	rep	TX	2	Republican	202-225-6565	RepDanCrenshaw	HTX02
+T000479	Van Taylor	rep	TX	3	Republican	202-225-4201	RepVanTaylor	HTX03
+G000589	Lance Gooden	rep	TX	5	Republican	202-225-3484	Lancegooden	HTX05
+F000468	Lizzie Fletcher	rep	TX	7	Democrat	202-225-2571	RepFletcher	HTX07
+E000299	Veronica Escobar	rep	TX	16	Democrat	202-225-4831	RepEscobar	HTX16
+R000614	Chip Roy	rep	TX	21	Republican	202-225-4236	RepChipRoy	HTX21
+G000587	Sylvia R. Garcia	rep	TX	29	Democrat	202-225-1688	RepSylviaGarcia	HTX29
+A000376	Colin Z. Allred	rep	TX	32	Democrat	202-225-2231	RepColinAllred	HTX32
+L000591	Elaine G. Luria	rep	VA	2	Democrat	202-225-4215	RepElaineLuria	HVA02
+C001118	Ben Cline	rep	VA	6	Republican	202-225-5431	RepBenCline	HVA06
+S001209	Abigail Davis Spanberger	rep	VA	7	Democrat	202-225-2815	RepSpanberger	HVA07
+W000825	Jennifer Wexton	rep	VA	10	Democrat	202-225-5136	RepWexton	HVA10
+S001216	Kim Schrier	rep	WA	8	Democrat	202-225-7761	RepKimSchrier	HWA08
+S001213	Bryan Steil	rep	WI	1	Republican	202-225-3031	RepBryanSteil	HWI01
+M001205	Carol D. Miller	rep	WV	3	Republican	202-225-3452	RepCarolMiller	HWV03
+G000592	Jared F. Golden	rep	ME	2	Democrat	202-225-6306	repgolden	HME02
+K000395	Fred Keller	rep	PA	12	Republican	202-225-3731	RepFredKeller	HPA12
+B001311	Dan Bishop	rep	NC	9	Republican	202-225-1976	RepDanBishop	HNC09
+M001210	Gregory F. Murphy	rep	NC	3	Republican	202-225-3415	RepGregMurphy	HNC03
+M000687	Kweisi Mfume	rep	MD	7	Democrat	202-225-4741	RepKweisiMfume	HMD07
+T000165	Thomas P. Tiffany	rep	WI	7	Republican	202-225-3365	RepTiffany	HWI07
+G000061	Mike Garcia	rep	CA	25	Republican	202-225-1956	repmikegarcia	HCA25
+J000020	Chris Jacobs	rep	NY	27	Republican	202-225-5265	RepJacobs	HNY27
+I000056	Darrell Issa	rep	CA	50	Republican	202-225-5672	RepDarrellIssa	HCA50
+S000250	Pete Sessions	rep	TX	17	Republican	202-225-6105	PeteSessions	HTX17
+V000129	David G. Valadao	rep	CA	21	Republican	202-225-4695	dgvaladao	HCA21
+C001054	Jerry L. Carl	rep	AL	1	Republican	202-225-4931	RepJerryCarl	HAL01
+M001212	Barry Moore	rep	AL	2	Republican	202-225-2901	RepBarryMoore	HAL02
+O000019	Jay Obernolte	rep	CA	8	Republican	202-225-5861	JayObernolte	HCA08
+K000397	Young Kim	rep	CA	39	Republican	202-225-4111	RepYoungKim	HCA39
+S001135	Michelle Steel	rep	CA	48	Republican	202-225-2415	RepSteel	HCA48
+J000305	Sara Jacobs	rep	CA	53	Democrat	202-225-2040	RepSaraJacobs	HCA53
+B000825	Lauren Boebert	rep	CO	3	Republican	202-225-4761	RepBoebert	HCO03
+C001039	Kat Cammack	rep	FL	3	Republican	202-225-5744	RepKatCammack	HFL03
+F000472	C. Scott Franklin	rep	FL	15	Republican	202-225-1252	RepFranklin	HFL15
+D000032	Byron Donalds	rep	FL	19	Republican	202-225-2536	RepDonaldsPress	HFL19
+G000593	Carlos A. Gimenez	rep	FL	26	Republican	202-225-2778	RepCarlos	HFL26
+S000168	Maria Elvira Salazar	rep	FL	27	Republican	202-225-3931	RepMariaSalazar	HFL27
+W000788	Nikema Williams	rep	GA	5	Democrat	202-225-3801	RepNikema	HGA05
+B001312	Carolyn Bourdeaux	rep	GA	7	Democrat	202-225-4272	RepBourdeaux	HGA07
+C001116	Andrew S. Clyde	rep	GA	9	Republican	202-225-9893	Rep_Clyde	HGA09
+G000596	Marjorie Taylor Greene	rep	GA	14	Republican	202-225-5211	RepMTG	HGA14
+K000396	Kaiali’i Kahele	rep	HI	2	Democrat	202-225-4906	RepKahele	HHI02
+H001091	Ashley Hinson	rep	IA	1	Republican	202-225-2911	RepAshleyHinson	HIA01
+M001215	Mariannette Miller-Meeks	rep	IA	2	Republican	202-225-6576	RepMMM	HIA02
+F000446	Randy Feenstra	rep	IA	4	Republican	202-225-4426	RepFeenstra	HIA04
+N000192	Marie Newman	rep	IL	3	Democrat	202-225-5701	RepMarieNewman	HIL03
+M001211	Mary E. Miller	rep	IL	15	Republican	202-225-5271	RepMaryMiller	HIL15
+M001214	Frank J. Mrvan	rep	IN	1	Democrat	202-225-2461	RepMrvan	HIN01
+S000929	Victoria Spartz	rep	IN	5	Republican	202-225-2276	RepSpartz	HIN05
+M000871	Tracey Mann	rep	KS	1	Republican	202-225-2715	RepMann	HKS01
+L000266	Jake LaTurner	rep	KS	2	Republican	202-225-6601	RepLaTurner	HKS02
+A000148	Jake Auchincloss	rep	MA	4	Democrat	202-225-5931	RepAuchincloss	HMA04
+M001186	Peter Meijer	rep	MI	3	Republican	202-225-3831	RepMeijer	HMI03
+M001136	Lisa C. McClain	rep	MI	10	Republican	202-225-2106	RepLisaMcClain	HMI10
+F000470	Michelle Fischbach	rep	MN	7	Republican	202-225-2165	RepFischbach	HMN07
+B001224	Cori Bush	rep	MO	1	Democrat	202-225-2406	RepCori	HMO01
+R000103	Matthew M. Rosendale	rep	MT	0	Republican	202-225-3211	RepRosendale	HMT00
+R000305	Deborah K. Ross	rep	NC	2	Democrat	202-225-3032	RepDeborahRoss	HNC02
+M001135	Kathy E. Manning	rep	NC	6	Democrat	202-225-3065	RepKManning	HNC06
+C001104	Madison Cawthorn	rep	NC	11	Republican	202-225-6401	RepCawthorn	HNC11
+H001084	Yvette Herrell	rep	NM	2	Republican	202-225-2365	RepHerrell	HNM02
+L000273	Teresa Leger Fernandez	rep	NM	3	Democrat	202-225-6190	RepTeresaLF	HNM03
+G000597	Andrew R. Garbarino	rep	NY	2	Republican	202-225-7896	RepGarbarino	HNY02
+M000317	Nicole Malliotakis	rep	NY	11	Republican	202-225-3371	RepMalliotakis	HNY11
+T000486	Ritchie Torres	rep	NY	15	Democrat	202-225-4361	RepRitchie	HNY15
+B001223	Jamaal Bowman	rep	NY	16	Democrat	202-225-2464	RepBowman	HNY16
+J000306	Mondaire Jones	rep	NY	17	Democrat	202-225-6506	RepMondaire	HNY17
+B000740	Stephanie I. Bice	rep	OK	5	Republican	202-225-2132	RepBice	HOK05
+B000668	Cliff Bentz	rep	OR	2	Republican	202-225-6730	RepBentz	HOR02
+M000194	Nancy Mace	rep	SC	1	Republican	202-225-3176	RepNancyMace	HSC01
+H001086	Diana Harshbarger	rep	TN	1	Republican	202-225-6356	RepHarshbarger	HTN01
+F000246	Pat Fallon	rep	TX	4	Republican	202-225-6673	RepPatFallon	HTX04
+P000048	August Pfluger	rep	TX	11	Republican	202-225-3605	RepPfluger	HTX11
+J000304	Ronny Jackson	rep	TX	13	Republican	202-225-3706	RepRonnyJackson	HTX13
+N000026	Troy E. Nehls	rep	TX	22	Republican	202-225-5951	RepTroyNehls	HTX22
+G000594	Tony Gonzales	rep	TX	23	Republican	202-225-4511	RepTonyGonzales	HTX23
+V000134	Beth Van Duyne	rep	TX	24	Republican	202-225-6605	RepBethVanDuyne	HTX24
+M001213	Blake D. Moore	rep	UT	1	Republican	202-225-0453	RepBlakeMoore	HUT01
+O000086	Burgess Owens	rep	UT	4	Republican	202-225-3011	RepBurgessOwens	HUT04
+G000595	Bob Good	rep	VA	5	Republican	202-225-4711	RepBobGood	HVA05
+S001159	Marilyn Strickland	rep	WA	10	Democrat	202-225-9740	RepStricklandWA	HWA10
+F000471	Scott Fitzgerald	rep	WI	5	Republican	202-225-5101	RepFitzgerald	HWI05
+T000478	Claudia Tenney	rep	NY	22	Republican	202-225-3665	RepTenney	HNY22
+L000595	Julia Letlow	rep	LA	5	Republican	202-225-8490	RepJuliaLetlow	HLA05
+C001125	Troy A. Carter	rep	LA	2	Democrat	202-225-6636	RepTroyCarter	HLA02
+S001218	Melanie A. Stansbury	rep	NM	1	Democrat	202-225-6316	Rep_Stansbury	HNM01
+E000071	Jake Ellzey	rep	TX	6	Republican	202-225-2002	RepEllzey	HTX06
 \.
 
 

@@ -5,11 +5,11 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import dagger.Module
 import dagger.Provides
 import kotlinx.serialization.json.Json
-import nl.adaptivity.xmlutil.XmlDeclMode
 import nl.adaptivity.xmlutil.serialization.XML
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
-import org.climatechangemakers.act.feature.communicatewithcongress.service.CommunicateWithCongressService
+import org.climatechangemakers.act.feature.communicatewithcongress.service.HouseCommunicateWithCongressService
+import org.climatechangemakers.act.feature.communicatewithcongress.service.SenateCommunicateWithCongressService
 import org.slf4j.Logger
 import retrofit2.Retrofit
 
@@ -50,14 +50,29 @@ import retrofit2.Retrofit
     logger = logger,
   )
 
-  @Provides @Senate fun providesSenateCWCService(
-    @Senate client: OkHttpClient
-  ): CommunicateWithCongressService = Retrofit.Builder()
+  @Provides fun providesSenateCWCService(
+    @Senate client: OkHttpClient,
+    xml: XML,
+  ): SenateCommunicateWithCongressService = Retrofit.Builder()
     .baseUrl(getEnvironmentVariable(EnvironmentVariable.SCWCUrl))
-    .addConverterFactory(
-      XML { xmlDeclMode = XmlDeclMode.Charset }.asConverterFactory(MediaType.get("application/xml"))
-    )
+    .addConverterFactory(xml.asConverterFactory(MediaType.get("application/xml")))
     .client(client)
     .build()
-    .create(CommunicateWithCongressService::class.java)
+    .create(SenateCommunicateWithCongressService::class.java)
+
+  @Provides @House fun providesHouseCWCClient(logger: Logger): OkHttpClient = createOkHttpClient(
+    apiKeyName = "apikey",
+    apiKey = getEnvironmentVariable(EnvironmentVariable.HCWCApiKey),
+    logger = logger,
+  )
+
+  @Provides fun providesHouseCWCService(
+    @House client: OkHttpClient,
+    xml: XML,
+  ): HouseCommunicateWithCongressService = Retrofit.Builder()
+    .baseUrl(getEnvironmentVariable(EnvironmentVariable.HCWCUrl))
+    .addConverterFactory(xml.asConverterFactory(MediaType.get("application/xml")))
+    .client(client)
+    .build()
+    .create(HouseCommunicateWithCongressService::class.java)
 }

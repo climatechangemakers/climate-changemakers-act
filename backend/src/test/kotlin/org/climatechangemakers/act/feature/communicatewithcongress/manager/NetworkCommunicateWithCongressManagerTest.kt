@@ -20,7 +20,7 @@ class NetworkCommunicateWithCongressManagerTest {
     MemberOfCongress(
       bioguideId = bioguideId,
       fullName = "Frank McDoodle",
-      legislativeRole = LegislatorRole.Senator,
+      legislativeRole = if (bioguideId == "2") LegislatorRole.Senator else LegislatorRole.Representative,
       representedArea = RepresentedArea.WestVirginia,
       congressionalDistrict = null,
       party = LegislatorPoliticalParty.Republican,
@@ -31,8 +31,14 @@ class NetworkCommunicateWithCongressManagerTest {
   }
 
   private val fakeActionManager = FakeActionTrackerManager()
-  private val fakeService = FakeCommunicateWithCongressService()
-  private val manager = NetworkCommunicateWithCongressManager(fakeService, fakeMemberOfCongressManager, fakeActionManager)
+  private val fakeSenteService = FakeCommunicateWithCongressService()
+  private val fakeHouseService = FakeCommunicateWithCongressService()
+  private val manager = NetworkCommunicateWithCongressManager(
+    senateService = fakeSenteService,
+    houseService = fakeHouseService,
+    memberOfCongressManager = fakeMemberOfCongressManager,
+    actionTrackerManager = fakeActionManager,
+  )
 
 
   @Test fun `sendEmails logs emails for every bioguide contacted`() = suspendTest {
@@ -79,7 +85,8 @@ class NetworkCommunicateWithCongressManagerTest {
     manager.sendEmails(request)
 
     request.contactedBioguideIds.drop(1).forEach { id ->
-      assertEquals("this-office-$id", fakeService.capturedBodies.receive().recipient.officeCode)
+      val service = if (id == "2") fakeSenteService else fakeHouseService
+      assertEquals("this-office-$id", service.capturedBodies.tryReceive().getOrThrow().recipient.officeCode)
     }
   }
 

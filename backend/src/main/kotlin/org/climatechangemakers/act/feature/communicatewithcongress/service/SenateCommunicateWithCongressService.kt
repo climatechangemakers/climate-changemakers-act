@@ -4,7 +4,7 @@ import org.climatechangemakers.act.feature.communicatewithcongress.model.Communi
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface CommunicateWithCongressService {
+interface SenateCommunicateWithCongressService {
 
   @POST(".") suspend fun contact(@Body request: CommunicateWithCogressRequest)
 }
