@@ -4,6 +4,8 @@ import org.climatechangemakers.act.feature.util.TestContainerProvider
 import org.climatechangemakers.act.feature.lcvscore.model.LcvScore
 import org.climatechangemakers.act.feature.lcvscore.model.LcvScoreType
 import kotlinx.coroutines.runBlocking
+import org.climatechangemakers.act.feature.util.DEFAULT_MEMBER_OF_CONGRESS
+import org.climatechangemakers.act.feature.util.insertMemberOfCongress
 import kotlin.test.Test
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.assertEquals
@@ -13,6 +15,8 @@ class DatabaseLcvScoreManagerTest : TestContainerProvider() {
   private val manager = DatabaseLcvScoreManager(database, EmptyCoroutineContext)
 
   @Test fun `select lifetime by id returns correct value`() = runBlocking {
+    driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "foo"))
+    driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "bar"))
     insert("foo", LcvScore(99, LcvScoreType.LifetimeScore))
     insert("foo", LcvScore(88, LcvScoreType.YearlyScore(2020)))
     insert("bar", LcvScore(1, LcvScoreType.LifetimeScore))
@@ -24,6 +28,8 @@ class DatabaseLcvScoreManagerTest : TestContainerProvider() {
   }
 
   @Test fun `select yearly by id returns correct values in correct order`() = runBlocking {
+    driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "foo"))
+    driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "bar"))
     insert("foo", LcvScore(99, LcvScoreType.LifetimeScore))
     insert("foo", LcvScore(65, LcvScoreType.YearlyScore(2018)))
     insert("foo", LcvScore(70, LcvScoreType.YearlyScore(2019)))

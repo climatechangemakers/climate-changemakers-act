@@ -1,5 +1,5 @@
 CREATE TABLE lcv_score_lifetime (
-  bioguide_id VARCHAR PRIMARY KEY,
+  bioguide_id VARCHAR PRIMARY KEY REFERENCES member_of_congress(bioguide_id),
   score INTEGER AS Int NOT NULL
 );
 
