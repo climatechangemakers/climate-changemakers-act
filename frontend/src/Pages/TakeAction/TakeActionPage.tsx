@@ -39,9 +39,9 @@ export default function TakeActionPage() {
     const { data: preComposedTweetData, error: preComposedTweetError } = useSWR<{ tweet: string }, string>(
         selectedIssueId === undefined || !actionInfo?.legislators?.length
             ? null
-            : `/issues/${selectedIssueId}/precomposed-tweet?${actionInfo.legislators.map(
-                (l, i) => `${i !== 0 ? "&" : ""}bioguideIds=${l.bioguideId}`
-            ).join("")}`,
+            : `/issues/${selectedIssueId}/precomposed-tweet?${(new URLSearchParams(actionInfo.legislators.map((l) =>
+                ["bioguideIds", l.bioguideId]))).toString()}`
+        ,
         fetcher
     );
 
