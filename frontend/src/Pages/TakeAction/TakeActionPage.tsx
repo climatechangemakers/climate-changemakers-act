@@ -37,7 +37,11 @@ export default function TakeActionPage() {
 
     const selectedIssueId = selectedIssue?.id;
     const { data: preComposedTweetData, error: preComposedTweetError } = useSWR<{ tweet: string }, string>(
-        () => (selectedIssueId !== undefined ? `/issues/${selectedIssueId}/precomposed-tweet` : null),
+        selectedIssueId === undefined || !actionInfo?.legislators?.length
+            ? null
+            : `/issues/${selectedIssueId}/precomposed-tweet?${new URLSearchParams(
+                  actionInfo.legislators.map((l) => ["bioguideIds", l.bioguideId])
+              ).toString()}`,
         fetcher
     );
 
