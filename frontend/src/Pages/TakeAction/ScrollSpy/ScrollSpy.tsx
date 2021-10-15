@@ -1,4 +1,4 @@
-import { Container } from "react-bootstrap";
+import { Col, Container } from "react-bootstrap";
 import DesktopProgressBar from "./DesktopScrollSpy/DesktopScrollSpy";
 import MobileProgressBar from "./MobileScrollSpy/MobileScrollSpy";
 import styles from "./ScrollSpy.module.css";
@@ -11,14 +11,15 @@ type Props = {
 
 export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted }: Props) {
     return (
-        <div className="flex-grow-1 d-flex justify-content-center">
-            <div className="position-fixed d-none d-lg-block">
-                <DesktopProgressBar
+        <>
+            <Col xs="12" md="2" className="d-none d-lg-block">
+                <MobileProgressBar
                     isEmailSent={isEmailSent}
                     isPhoneCallMade={isPhoneCallMade}
                     isSocialPosted={isSocialPosted}
+                    desktop
                 />
-            </div>
+            </Col>
             <div className={`d-block d-lg-none w-100 position-fixed ${styles.mobileProgress}`}>
                 <MobileProgressBar
                     isEmailSent={isEmailSent}
@@ -26,6 +27,6 @@ export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted
                     isSocialPosted={isSocialPosted}
                 />
             </div>
-        </div>
+        </>
     );
 }

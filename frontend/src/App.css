@@ -102,6 +102,14 @@
     background-color: var(--bg-light-grey) !important;
 }
 
+.border-purple {
+    border: 1px solid var(--primary-purple);
+}
+
+.bg-dark-purple {
+    background-color: var(--primary-purple);
+}
+
 .bg-purple {
     background-color: rgba(53, 31, 117, 0.15);
 }
@@ -127,4 +135,8 @@ hr {
 
 .legislator-max-width {
     max-width: 800px;
+}
+
+.font-weight-very-bold {
+    font-weight: 800;
 }
