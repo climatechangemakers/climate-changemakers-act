@@ -11,7 +11,7 @@ type Props = {
     desktop?: boolean;
 };
 
-export default function MobileScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted, desktop = false }: Props) {
+export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted, desktop = false }: Props) {
     const [introSectionDistanceFromTop, setIntroSectionDistanceFromTop] = useState(1);
     const [scrolledPastIntro, setScrolledPastIntro] = useState(false);
 
