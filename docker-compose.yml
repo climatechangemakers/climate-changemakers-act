@@ -18,6 +18,8 @@ services:
         - POSTGRES_PORT=${POSTGRES_PORT}
         - SCWC_API_KEY=${SCWC_API_KEY}
         - SCWC_URL=${SCWC_URL}
+        - HCWC_API_KEY=${HCWC_API_KEY}
+        - HCWC_URL=${HCWC_URL}
       ports:
         - ${KOTLIN_PORT}:8080
     database:
