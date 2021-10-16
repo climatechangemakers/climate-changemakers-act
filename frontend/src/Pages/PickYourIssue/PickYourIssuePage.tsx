@@ -1,5 +1,6 @@
 import { fetcher } from "common/api/ClimateChangemakersAPI";
 import ErrorMessage from "common/Components/ErrorMessage";
+import Layout from "common/Components/Layout";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import { ActionInfo } from "common/models/ActionInfo";
 import { Issue } from "common/models/Issue";
@@ -25,13 +26,13 @@ export default function PickYourIssuePage() {
     if (!actionInfo) return <Redirect to="/" />;
 
     return (
-        <div className="pt-2 pb-3">
-            <h2 className="text-start pb-4">Which issue do you care most about?</h2>
-            {!!issues && (
-                <>
-                    <Row className="pb-4">
-                        <Col md="6">
-                            <h3 className="text-start">Featured</h3>
+        <Layout>
+            <Row className="pt-2 pb-3">
+                <h2 className="text-start pb-4">Choose an issue</h2>
+                {!!issues && (
+                    <>
+                        <Row className="pb-4">
+                            <h3 className="text-start">Focus Issue</h3>
                             <div>
                                 <IssueCard
                                     onClick={() => handleIssueSelect(issues.focusIssue)}
@@ -39,23 +40,23 @@ export default function PickYourIssuePage() {
                                     selectedIssue={selectedIssue}
                                 />
                             </div>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <h3 className="text-start">Top issues</h3>
-                        {issues.otherIssues.map((issue) => (
-                            <Col key={issue.title} className="pb-3 d-flex align-items-center" md="4" sm="6">
-                                <IssueCard
-                                    onClick={() => handleIssueSelect(issue)}
-                                    title={issue.title}
-                                    selectedIssue={selectedIssue}
-                                />
-                            </Col>
-                        ))}
-                    </Row>
-                </>
-            )}
-            <ErrorMessage message={issuesError} />
-        </div>
+                        </Row>
+                        <Row>
+                            <h3 className="text-start">Other Issues</h3>
+                            {issues.otherIssues.map((issue) => (
+                                <Col key={issue.title} className="pb-3 d-flex align-items-center" md="4" sm="6">
+                                    <IssueCard
+                                        onClick={() => handleIssueSelect(issue)}
+                                        title={issue.title}
+                                        selectedIssue={selectedIssue}
+                                    />
+                                </Col>
+                            ))}
+                        </Row>
+                    </>
+                )}
+                <ErrorMessage message={issuesError} />
+            </Row>
+        </Layout >
     );
 }
