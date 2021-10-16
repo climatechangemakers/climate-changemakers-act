@@ -18,8 +18,7 @@ export default function Step({ children, step, id, state, desktop, last = false 
                     className={cx(
                         "rounded-circle d-flex justify-content-center align-items-center me-4 step-icon-desktop",
                         {
-                            "text-pink": state === "complete",
-                            "bg-dark-purple font-weight-800": state === "complete",
+                            "text-pink bg-dark-purple font-weight-800": state === "complete"
                         }
                     )}
                 >
