@@ -47,6 +47,7 @@ export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted
             <Card.Body
                 className={cx("d-flex justify-content-between text-dark pt-3 pb-2 ps-0 pe-0", {
                     "flex-column bg-dark-purple text-white": desktop,
+                    "bg-light-grey": !desktop
                 })}
             >
                 {desktop && (
