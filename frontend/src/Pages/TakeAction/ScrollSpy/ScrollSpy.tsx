@@ -16,8 +16,8 @@ export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted
     const [scrolledPastIntro, setScrolledPastIntro] = useState(false);
 
     useEffect(() => {
-        if (introSectionDistanceFromTop <= 0) setScrolledPastIntro(true)
-    }, [introSectionDistanceFromTop])
+        if (introSectionDistanceFromTop <= 0) setScrolledPastIntro(true);
+    }, [introSectionDistanceFromTop]);
 
     useEffect(() => {
         const handleResize = () =>
