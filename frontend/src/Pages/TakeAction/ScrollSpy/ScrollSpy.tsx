@@ -1,7 +1,6 @@
 import cx from "classnames";
 import { useEffect, useState } from "react";
-import { Card, ProgressBar } from "react-bootstrap";
-import styles from "./MobileScrollSpy.module.css";
+import { Card } from "react-bootstrap";
 import Step from "./Step";
 
 type Props = {
@@ -12,23 +11,21 @@ type Props = {
 };
 
 export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted, desktop = false }: Props) {
-    const [introSectionDistanceFromTop, setIntroSectionDistanceFromTop] = useState(1);
-    const [scrolledPastIntro, setScrolledPastIntro] = useState(false);
+    const [scrollY, setScrollY] = useState(0);
+    const [scrolledPastTop, setScrolledPastTop] = useState(false);
 
     useEffect(() => {
-        if (introSectionDistanceFromTop <= 0) setScrolledPastIntro(true);
-    }, [introSectionDistanceFromTop]);
+        if (scrollY > 0) setScrolledPastTop(true);
+    }, [scrollY]);
 
     useEffect(() => {
-        const handleResize = () =>
-            setIntroSectionDistanceFromTop(document.getElementById("send_an_email")!.getBoundingClientRect()!.top);
+        const handleScroll = () =>
+            setScrollY(window.scrollY);
 
-        handleResize();
-        window.addEventListener("scroll", handleResize);
-        window.addEventListener("resize", handleResize);
+        handleScroll();
+        window.addEventListener("scroll", handleScroll);
         return () => {
-            window.removeEventListener("scroll", handleResize);
-            window.removeEventListener("resize", handleResize);
+            window.removeEventListener("scroll", handleScroll);
         };
     }, []);
 
@@ -53,7 +50,7 @@ export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted
                         Steps
                     </h3>
                 )}
-                <Step step={1} id="#introduction" state={linkState(scrolledPastIntro, true)} desktop={desktop}>
+                <Step step={1} id="#introduction" state={linkState(scrolledPastTop, true)} desktop={desktop}>
                     {desktop ? "Introduction" : "Intro"}
                 </Step>
                 <Step step={2} id="#send_an_email" state={linkState(isEmailSent, true)} desktop={desktop}>
