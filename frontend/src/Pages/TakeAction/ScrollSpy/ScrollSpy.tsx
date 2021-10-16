@@ -47,7 +47,8 @@ export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted
             >
                 {desktop && (
                     <h3 className="mb-0">
-                        <span className="step-icon-desktop ms-4 invisible">&#10003;</span>Steps
+                        <span className="ms-4 ps-3" />
+                        Steps
                     </h3>
                 )}
                 <Step step={1} id="#introduction" state={linkState(scrolledPastIntro, true)} desktop={desktop}>
