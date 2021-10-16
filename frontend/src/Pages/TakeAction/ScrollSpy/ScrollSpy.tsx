@@ -12,11 +12,12 @@ type Props = {
 };
 
 export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted, desktop = false }: Props) {
-    const [introSectionDistanceFromTop, setIntroSectionDistanceFromTop] = useState(1);
+    const [introSectionDistanceFromTop, setIntroSectionDistanceFromTop] = useState(Math.min);
     const [scrolledPastIntro, setScrolledPastIntro] = useState(false);
+    const introScrollBuffer = 40;
 
     useEffect(() => {
-        if (introSectionDistanceFromTop <= 0) setScrolledPastIntro(true)
+        if (introSectionDistanceFromTop - introScrollBuffer <= 0) setScrolledPastIntro(true)
     }, [introSectionDistanceFromTop])
 
     useEffect(() => {
