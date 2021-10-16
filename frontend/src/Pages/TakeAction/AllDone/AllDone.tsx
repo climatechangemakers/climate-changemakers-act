@@ -14,7 +14,7 @@ export default function AllDone() {
             spread: 60,
             origin: { x: 0, y: 1 },
             angle: 60,
-            startVelocity: velocity
+            startVelocity: velocity,
         });
 
         confetti({
@@ -22,7 +22,7 @@ export default function AllDone() {
             spread: 60,
             origin: { x: 1, y: 1 },
             angle: 120,
-            startVelocity: velocity
+            startVelocity: velocity,
         });
     }, []);
 
@@ -31,7 +31,8 @@ export default function AllDone() {
             <div className="mb-5 pb-5 text-center">
                 <h2 className="text-uppercase">Nice Work!</h2>
                 <p className="fs-5 mb-0">
-                    Thank you for taking action to support our planet. Every action in our community is a step towards climate justice.
+                    Thank you for taking action to support our planet. Every action in our community is a step towards
+                    climate justice.
                 </p>
                 <div className="d-flex m-auto justify-content-center w-100 mt-3">
                     <div className={styles.buttonWidth}>
@@ -43,11 +44,7 @@ export default function AllDone() {
                         >
                             Choose Another Issue
                         </Button>
-                        <Button
-                            className="w-100 mt-2"
-                            variant="secondary"
-                            onClick={() => window.close()}
-                        >
+                        <Button className="w-100 mt-2" variant="secondary" onClick={() => window.close()}>
                             End Session
                         </Button>
                     </div>
