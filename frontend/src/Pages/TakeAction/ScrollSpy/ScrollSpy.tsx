@@ -15,11 +15,13 @@ export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted
     const [introSectionDistanceFromTop, setIntroSectionDistanceFromTop] = useState(1);
     const [scrolledPastIntro, setScrolledPastIntro] = useState(false);
 
-    const handleResize = () =>
-        setIntroSectionDistanceFromTop(document.getElementById("send_an_email")!.getBoundingClientRect()!.top);
+    useEffect(() => {
+        if (introSectionDistanceFromTop <= 0) setScrolledPastIntro(true)
+    }, [introSectionDistanceFromTop])
 
     useEffect(() => {
-        if (introSectionDistanceFromTop <= 0) setScrolledPastIntro(true);
+        const handleResize = () =>
+            setIntroSectionDistanceFromTop(document.getElementById("send_an_email")!.getBoundingClientRect()!.top);
 
         handleResize();
         window.addEventListener("scroll", handleResize);
@@ -28,7 +30,7 @@ export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted
             window.removeEventListener("scroll", handleResize);
             window.removeEventListener("resize", handleResize);
         };
-    });
+    }, []);
 
     const linkState = (isComplete: boolean, isActive: boolean) =>
         isComplete ? "complete" : isActive ? "active" : "disabled";
