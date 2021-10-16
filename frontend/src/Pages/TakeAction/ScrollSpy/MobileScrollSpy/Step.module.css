@@ -1,9 +1,25 @@
-.stepIcon {
-    font-size: 12px;
-    width: 18px;
-    height: 18px;
-}
-
 .scrollSpyLine {
     height: 2px !important;
+}
+
+.activeLine {
+    color: rgb(var(--bs-dark-rgb));
+}
+
+.disabled {
+    color: var(--disabled);
+}
+
+.disableHover:hover {
+    color: inherit;
+}
+
+.disableAnchor {
+    pointer-events: none;
+}
+
+.linkComplete:hover,
+.linkComplete {
+    font-weight: 700;
+    color: var(--text-pink);
 }

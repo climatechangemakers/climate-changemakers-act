@@ -1,3 +1,5 @@
+import cx from "classnames";
+import { useEffect, useState } from "react";
 import { Card, ProgressBar } from "react-bootstrap";
 import styles from "./MobileScrollSpy.module.css";
 import Step from "./Step";
@@ -10,35 +12,65 @@ type Props = {
 };
 
 export default function MobileScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted, desktop = false }: Props) {
+    const [introSectionDistanceFromTop, setIntroSectionDistanceFromTop] = useState(1);
+    const [scrolledPastIntro, setScrolledPastIntro] = useState(false);
+
+    const handleResize = () =>
+        setIntroSectionDistanceFromTop(document.getElementById("send_an_email")!.getBoundingClientRect()!.top);
+
+    useEffect(() => {
+        if (introSectionDistanceFromTop <= 0) setScrolledPastIntro(true);
+
+        handleResize();
+        window.addEventListener("scroll", handleResize);
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("scroll", handleResize);
+            window.removeEventListener("resize", handleResize);
+        };
+    });
+
     const linkState = (isComplete: boolean, isActive: boolean) =>
         isComplete ? "complete" : isActive ? "active" : "disabled";
 
     return (
-        <Card className={desktop ? "position-fixed border-0" : "ms-3 me-3"}>
-            <Card.Body className={`d-flex ${desktop ? "flex-column bg-dark-purple text-white" : ""} justify-content-between text-dark pt-3 pb-2 ps-0 pe-0`}>
-                <Step
-                    step={1}
-                    state={linkState(isEmailSent, true)}
-                    desktop={desktop}>
+        <Card
+            className={cx({
+                "position-fixed border-0 mt-4": desktop,
+                "ms-3 me-3": !desktop,
+            })}
+        >
+            <Card.Body
+                className={cx("d-flex justify-content-between text-dark pt-3 pb-2 ps-0 pe-0", {
+                    "flex-column bg-dark-purple text-white": desktop,
+                })}
+            >
+                {desktop && (
+                    <h3 className="mb-0">
+                        <span className="step-icon-desktop ms-4 invisible">&#10003;</span>Steps
+                    </h3>
+                )}
+                <Step step={1} id="#introduction" state={linkState(scrolledPastIntro, true)} desktop={desktop}>
                     {desktop ? "Introduction" : "Intro"}
                 </Step>
-                <Step
-                    step={2}
-                    state={linkState(isEmailSent, true)}
-                    desktop={desktop}>
+                <Step step={2} id="#send_an_email" state={linkState(isEmailSent, true)} desktop={desktop}>
                     {desktop ? "Send an Email" : "Email"}
                 </Step>
                 <Step
                     step={3}
+                    id="#make_a_phone_call"
                     state={linkState(isPhoneCallMade, isEmailSent)}
-                    desktop={desktop}>
+                    desktop={desktop}
+                >
                     {desktop ? "Make a Call" : "Call"}
                 </Step>
                 <Step
                     step={4}
+                    id="#post_on_social"
                     state={linkState(isSocialPosted, isPhoneCallMade)}
                     last
-                    desktop={desktop}>
+                    desktop={desktop}
+                >
                     {desktop ? "Post on Social" : "Post"}
                 </Step>
             </Card.Body>
