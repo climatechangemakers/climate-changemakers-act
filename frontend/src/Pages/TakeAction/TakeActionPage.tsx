@@ -93,11 +93,21 @@ export default function TakeActionPage() {
                         </>
                     )}
                 </Col>
-                <ScrollSpy
-                    isEmailSent={isEmailSent}
-                    isPhoneCallMade={isPhoneCallMade}
-                    isSocialPosted={isSocialPosted}
-                />
+                <Col xs="12" md="2" className="d-none d-lg-block">
+                    <ScrollSpy
+                        isEmailSent={isEmailSent}
+                        isPhoneCallMade={isPhoneCallMade}
+                        isSocialPosted={isSocialPosted}
+                        desktop
+                    />
+                </Col>
+                <div className="d-block d-lg-none w-100 position-fixed mobileScrollSpy">
+                    <ScrollSpy
+                        isEmailSent={isEmailSent}
+                        isPhoneCallMade={isPhoneCallMade}
+                        isSocialPosted={isSocialPosted}
+                    />
+                </div>
             </Row>
         </Layout>
     );
