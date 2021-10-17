@@ -5,6 +5,7 @@
     --text-pink: #f3b6fb;
     --bg-light-grey: #eeefff;
     --primary-purple: #351f75;
+    --disabled: #c4c4c4;
 }
 
 .btn-primary {
@@ -91,7 +92,6 @@
 
 .text-pink {
     color: var(--text-pink);
-    font-weight: 600;
 }
 
 .text-purple {
@@ -100,6 +100,18 @@
 
 .bg-light-grey {
     background-color: var(--bg-light-grey) !important;
+}
+
+.border-purple {
+    border: 1px solid var(--primary-purple);
+}
+
+.border-disabled {
+    border: 1px solid var(--disabled);
+}
+
+.bg-dark-purple {
+    background-color: var(--primary-purple);
 }
 
 .bg-purple {
@@ -127,4 +139,32 @@ hr {
 
 .legislator-max-width {
     max-width: 800px;
+}
+
+.font-weight-700 {
+    font-weight: 700;
+}
+
+.font-weight-800 {
+    font-weight: 800;
+}
+
+.step-icon-desktop {
+    font-size: 20px;
+    width: 18px;
+    height: 18px;
+}
+
+.step-icon-mobile {
+    font-size: 12px;
+    width: 18px;
+    height: 18px;
+}
+
+.mobileScrollSpy {
+    padding: 1rem 0;
+    z-index: 99;
+    background-color: rgb(var(--bs-dark-rgb));
+    bottom: 0;
+    left: 0;
 }
