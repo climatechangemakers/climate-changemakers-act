@@ -1,7 +1,10 @@
 package org.climatechangemakers.act.feature.action.manager
 
 import org.climatechangemakers.act.feature.findlegislator.util.suspendTest
+import org.climatechangemakers.act.feature.util.DEFAULT_MEMBER_OF_CONGRESS
 import org.climatechangemakers.act.feature.util.TestContainerProvider
+import org.climatechangemakers.act.feature.util.insertIssue
+import org.climatechangemakers.act.feature.util.insertMemberOfCongress
 import org.junit.Test
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.assertEquals
@@ -11,7 +14,8 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
   private val manager = DatabaseActionTrackerManager(database, EmptyCoroutineContext)
 
   @Test fun `email action entries are recorded in both tables`() = suspendTest {
-    insertIssue(1, "this is an issue", "tweet")
+    driver.insertIssue(1, "this is an issue", "tweet")
+    driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "hello"))
     manager.trackActionSendEmail("foo@foo.com", "hello", 1)
 
     assertEquals(
@@ -32,7 +36,8 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
   }
 
   @Test fun `recording a legislator call insert into both tables`() = suspendTest {
-    insertIssue(1, "issue", "tweet")
+    driver.insertIssue(1, "issue", "tweet")
+    driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "bioguide"))
     manager.trackActionPhoneCall("foo@foo.com", "bioguide", 1, "8675309")
 
     assertEquals(
@@ -54,7 +59,9 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
 
   @OptIn(ExperimentalStdlibApi::class)
   @Test fun `recording a tweet inserts into both tables`() = suspendTest {
-    insertIssue(1, "issue", "tweet")
+    driver.insertIssue(1, "issue", "tweet")
+    driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "foo"))
+    driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "bar"))
     manager.trackTweet("foo@foo.com", listOf("foo", "bar"), 1)
 
     assertEquals(
@@ -76,13 +83,5 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
         }
       }
     )
-  }
-
-  private fun insertIssue(id: Long, title: String, precomposedTweet: String) {
-    driver.execute(0, "INSERT INTO issue(id, title, precomposed_tweet_template) VALUES(?,?,?)", 2) {
-      bindLong(1, id)
-      bindString(2, title)
-      bindString(3, precomposedTweet)
-    }
   }
 }

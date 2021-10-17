@@ -3,5 +3,5 @@ CREATE TABLE action_contact_legislator(
   email VARCHAR NOT NULL,
   contacted_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
   issue_id BIGINT NOT NULL REFERENCES issue ON DELETE CASCADE,
-  contacted_bioguide_id VARCHAR NOT NULL
+  contacted_bioguide_id VARCHAR NOT NULL REFERENCES member_of_congress(bioguide_id)
 );
