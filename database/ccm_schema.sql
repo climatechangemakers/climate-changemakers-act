@@ -3775,7 +3775,7 @@ ALTER TABLE ONLY public.district_office
 --
 
 ALTER TABLE ONLY public.lcv_score_lifetime
-    ADD CONSTRAINT constraint_fk_bioguide FOREIGN KEY (bioguide_id) REFERENCES public.member_of_congress(bioguide_id);
+    ADD CONSTRAINT constraint_fk_bioguide FOREIGN KEY (bioguide_id) REFERENCES public.member_of_congress(bioguide_id) ON DELETE CASCADE;
 
 
 --
@@ -3783,7 +3783,7 @@ ALTER TABLE ONLY public.lcv_score_lifetime
 --
 
 ALTER TABLE ONLY public.lcv_score_year
-    ADD CONSTRAINT constraint_fk_bioguide FOREIGN KEY (bioguide_id) REFERENCES public.member_of_congress(bioguide_id);
+    ADD CONSTRAINT constraint_fk_bioguide FOREIGN KEY (bioguide_id) REFERENCES public.member_of_congress(bioguide_id) ON DELETE CASCADE;
 
 
 --

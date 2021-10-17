@@ -1,5 +1,5 @@
 CREATE TABLE lcv_score_year(
-  bioguide_id VARCHAR NOT NULL REFERENCES member_of_congress(bioguide_id),
+  bioguide_id VARCHAR NOT NULL REFERENCES member_of_congress(bioguide_id) ON DELETE CASCADE,
   score_year INTEGER NOT NULL,
   score INTEGER AS Int NOT NULL,
   PRIMARY KEY(bioguide_id, score_year)
