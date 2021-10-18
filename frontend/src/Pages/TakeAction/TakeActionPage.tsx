@@ -51,7 +51,7 @@ export default function TakeActionPage() {
 
     return (
         <Layout>
-            <Row className="d-flex">
+            <Row className="d-flex flex-column flex-lg-row">
                 <Col md="10" xs="12">
                     <h1 className="text-start mb-4 pb-2 pt-4" id="introduction">
                         Time to get started!
@@ -97,13 +97,21 @@ export default function TakeActionPage() {
                         </>
                     )}
                 </Col>
-                <Col md="2" xs="12">
+                <Col xs="12" md="2" className="d-none d-lg-block">
+                    <ScrollSpy
+                        isEmailSent={isEmailSent}
+                        isPhoneCallMade={isPhoneCallMade}
+                        isSocialPosted={isSocialPosted}
+                        desktop
+                    />
+                </Col>
+                <div className="d-block d-lg-none w-100 position-fixed mobileScrollSpy">
                     <ScrollSpy
                         isEmailSent={isEmailSent}
                         isPhoneCallMade={isPhoneCallMade}
                         isSocialPosted={isSocialPosted}
                     />
-                </Col>
+                </div>
             </Row>
         </Layout>
     );
