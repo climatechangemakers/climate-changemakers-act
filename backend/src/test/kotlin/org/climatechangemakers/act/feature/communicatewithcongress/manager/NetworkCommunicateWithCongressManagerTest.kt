@@ -1,5 +1,7 @@
 package org.climatechangemakers.act.feature.communicatewithcongress.manager
 
+import okhttp3.MediaType
+import okhttp3.ResponseBody
 import org.climatechangemakers.act.common.model.RepresentedArea
 import org.climatechangemakers.act.feature.action.manager.FakeActionTrackerManager
 import org.climatechangemakers.act.feature.action.model.SendEmailRequest
@@ -12,6 +14,8 @@ import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
 import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
 import org.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import org.junit.Test
+import org.slf4j.LoggerFactory
+import retrofit2.Response
 import kotlin.test.assertEquals
 
 class NetworkCommunicateWithCongressManagerTest {
@@ -31,13 +35,14 @@ class NetworkCommunicateWithCongressManagerTest {
   }
 
   private val fakeActionManager = FakeActionTrackerManager()
-  private val fakeSenteService = FakeCommunicateWithCongressService()
-  private val fakeHouseService = FakeCommunicateWithCongressService()
+  private val fakeSenteService = FakeCommunicateWithCongressService { Response.success(Unit) }
+  private val fakeHouseService = FakeCommunicateWithCongressService { Response.success(Unit) }
   private val manager = NetworkCommunicateWithCongressManager(
     senateService = fakeSenteService,
     houseService = fakeHouseService,
     memberOfCongressManager = fakeMemberOfCongressManager,
     actionTrackerManager = fakeActionManager,
+    LoggerFactory.getLogger(this::class.java),
   )
 
 
@@ -60,7 +65,7 @@ class NetworkCommunicateWithCongressManagerTest {
 
     manager.sendEmails(request)
 
-    request.contactedBioguideIds.forEach { id ->
+    request.contactedBioguideIds.drop(1).forEach { id ->
       assertActionEntryMatches(request.originatingEmailAddress, id, request.relatedIssueId)
     }
   }
@@ -88,6 +93,38 @@ class NetworkCommunicateWithCongressManagerTest {
       val service = if (id == "2") fakeSenteService else fakeHouseService
       assertEquals("this-office-$id", service.capturedBodies.tryReceive().getOrThrow().recipient.officeCode)
     }
+  }
+
+  @Test fun `failed request is returned from sendEmails`() = suspendTest {
+    val error = Response.error<Unit>(500, ResponseBody.create(MediaType.get("application/json"), "error"))
+    val fakeSenteService = FakeCommunicateWithCongressService { error }
+    val fakeHouseService = FakeCommunicateWithCongressService { error }
+    val manager = NetworkCommunicateWithCongressManager(
+      senateService = fakeSenteService,
+      houseService = fakeHouseService,
+      memberOfCongressManager = fakeMemberOfCongressManager,
+      actionTrackerManager = fakeActionManager,
+      LoggerFactory.getLogger(this::class.java),
+    )
+    val request = SendEmailRequest(
+      originatingEmailAddress = "k@c.com",
+      title = Prefix.Dr,
+      firstName = "Foo",
+      lastName = "McBar",
+      streetAddress = "123 Main Street",
+      city = "Richmond",
+      state = RepresentedArea.Virginia,
+      postalCode = "23223",
+      relatedTopics = listOf(Topic.Energy),
+      emailBody = "Body",
+      emailSubject = "subject",
+      relatedIssueId = 1,
+      contactedBioguideIds = listOf("1", "2", "3"),
+    )
+
+    val failed = manager.sendEmails(request)
+
+    assertEquals(setOf("2", "3"), failed.toSet())
   }
 
   private suspend fun assertActionEntryMatches(
