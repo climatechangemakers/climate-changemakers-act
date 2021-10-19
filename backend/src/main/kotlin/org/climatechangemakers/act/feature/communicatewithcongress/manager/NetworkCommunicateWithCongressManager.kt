@@ -1,7 +1,8 @@
 package org.climatechangemakers.act.feature.communicatewithcongress.manager
 
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import org.climatechangemakers.act.feature.action.manager.ActionTrackerManager
 import org.climatechangemakers.act.feature.action.model.SendEmailRequest
 import org.climatechangemakers.act.feature.communicatewithcongress.model.CommunicateWithCogressRequest
@@ -14,6 +15,8 @@ import org.climatechangemakers.act.feature.communicatewithcongress.service.Senat
 import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongressManager
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
 import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
+import org.slf4j.Logger
+import retrofit2.Response
 import javax.inject.Inject
 
 class NetworkCommunicateWithCongressManager @Inject constructor(
@@ -21,29 +24,38 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
   private val houseService: HouseCommunicateWithCongressService,
   private val memberOfCongressManager: MemberOfCongressManager,
   private val actionTrackerManager: ActionTrackerManager,
+  private val logger: Logger,
 ) : CommunicateWithCongressManager {
 
-  override suspend fun sendEmails(request: SendEmailRequest) = coroutineScope {
-    request.contactedBioguideIds.forEach { bioguideId ->
-      launch {
-        sendEmailToMemberOfCongress(bioguideId, request)
-        actionTrackerManager.trackActionSendEmail(
-          request.originatingEmailAddress,
-          bioguideId,
-          request.relatedIssueId,
-        )
+  override suspend fun sendEmails(request: SendEmailRequest): List<String> = coroutineScope {
+    request.contactedBioguideIds.map { bioguideId ->
+      async {
+        if (sendEmailToMemberOfCongress(bioguideId, request)) null else bioguideId
       }
-    }
+    }.awaitAll().filterNotNull()
   }
 
-  private suspend fun sendEmailToMemberOfCongress(bioguideId: String, request: SendEmailRequest) {
+  private suspend fun sendEmailToMemberOfCongress(bioguideId: String, request: SendEmailRequest): Boolean {
     val memberOfCongress = memberOfCongressManager.getMemberOfCongressForBioguide(bioguideId)
-    if (memberOfCongress.cwcOfficeCode != null) {
-      sendEmailViaCWC(memberOfCongress, request)
+    return if (memberOfCongress.cwcOfficeCode != null) {
+      val response = sendEmailViaCWC(memberOfCongress, request)
+
+      if (response.isSuccessful) {
+        actionTrackerManager.trackActionSendEmail(request.originatingEmailAddress, bioguideId, request.relatedIssueId)
+      } else {
+        response.errorBody()?.string()?.let(logger::error)
+      }
+
+      response.isSuccessful
+    } else {
+      true
     }
   }
 
-  private suspend fun sendEmailViaCWC(memberOfConress: MemberOfCongress, emailRequest: SendEmailRequest) {
+  private suspend fun sendEmailViaCWC(
+    memberOfConress: MemberOfCongress,
+    emailRequest: SendEmailRequest,
+  ): Response<Unit> {
     val cwcRequest = CommunicateWithCogressRequest(
       delivery = Delivery(campaignId = "campaign Id"), // TODO(kcianfarini)
       recipient = Recipient(officeCode = memberOfConress.cwcOfficeCode!!),
@@ -65,7 +77,7 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
       ),
     )
 
-    when (memberOfConress.legislativeRole) {
+    return when (memberOfConress.legislativeRole) {
       LegislatorRole.Senator -> senateService.contact(cwcRequest)
       LegislatorRole.Representative -> houseService.contact(cwcRequest)
     }
