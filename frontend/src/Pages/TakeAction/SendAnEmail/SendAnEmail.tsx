@@ -213,8 +213,8 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                         />
                     </Form.Group>
                 </Row>
-                <Row>
-                    <Col md="6">
+                <div className="row mt-2">
+                    <div className="col d-flex">
                         <Button
                             variant="secondary"
                             className="w-100"
@@ -223,13 +223,13 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                         >
                             Skip to Call
                         </Button>
-                    </Col>
-                    <Col md="6">
+                    </div>
+                    <div className="col d-flex">
                         <Button type="submit" className="w-100 text-dark" disabled={isEmailSent}>
                             {!sendEmailError ? "Send Email" : "Try again"}
                         </Button>
-                    </Col>
-                </Row>
+                    </div>
+                </div>
             </Form>
             <ErrorMessage message={error} />
         </div>
