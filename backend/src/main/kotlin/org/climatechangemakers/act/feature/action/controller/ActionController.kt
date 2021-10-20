@@ -15,8 +15,11 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import org.climatechangemakers.act.common.extension.respondNothing
+import org.climatechangemakers.act.common.model.Failure
+import org.climatechangemakers.act.common.model.Success
 import org.climatechangemakers.act.feature.action.model.LogTweetRequest
 import org.climatechangemakers.act.feature.action.model.SendEmailErrorResponse
+import org.climatechangemakers.act.feature.action.model.SendEmailResponse
 import org.climatechangemakers.act.feature.communicatewithcongress.manager.CommunicateWithCongressManager
 import javax.inject.Inject
 
@@ -41,12 +44,9 @@ class ActionController @Inject constructor(
 
   suspend fun sendEmailToLegislators(call: ApplicationCall) {
     val request = call.receive<SendEmailRequest>()
-    val failedIds = communicateWithCongressManager.sendEmails(request)
-
-    if (failedIds.isEmpty()) {
-      call.respondNothing()
-    } else {
-      call.respond(HttpStatusCode.InternalServerError, SendEmailErrorResponse(failedIds))
+    when (val result = communicateWithCongressManager.sendEmails(request)) {
+      is Success -> call.respond(HttpStatusCode.OK, SendEmailResponse(result.data))
+      is Failure -> call.respond(HttpStatusCode.InternalServerError, SendEmailErrorResponse(result.errorData))
     }
   }
 

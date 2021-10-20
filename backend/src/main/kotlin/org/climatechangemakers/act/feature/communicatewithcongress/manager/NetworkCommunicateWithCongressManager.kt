@@ -3,6 +3,9 @@ package org.climatechangemakers.act.feature.communicatewithcongress.manager
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import org.climatechangemakers.act.common.model.Result
+import org.climatechangemakers.act.common.model.Success
+import org.climatechangemakers.act.common.model.Failure
 import org.climatechangemakers.act.feature.action.manager.ActionTrackerManager
 import org.climatechangemakers.act.feature.action.model.SendEmailRequest
 import org.climatechangemakers.act.feature.communicatewithcongress.model.CommunicateWithCogressRequest
@@ -27,12 +30,16 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
   private val logger: Logger,
 ) : CommunicateWithCongressManager {
 
-  override suspend fun sendEmails(request: SendEmailRequest): List<String> = coroutineScope {
-    request.contactedBioguideIds.map { bioguideId ->
-      async {
-        if (sendEmailToMemberOfCongress(bioguideId, request)) null else bioguideId
-      }
-    }.awaitAll().filterNotNull()
+  override suspend fun sendEmails(request: SendEmailRequest): Result<String, List<String>> {
+    val failedIds = coroutineScope {
+      request.contactedBioguideIds.map { bioguideId ->
+        async {
+          if (sendEmailToMemberOfCongress(bioguideId, request)) null else bioguideId
+        }
+      }.awaitAll().filterNotNull()
+    }
+
+    return if (failedIds.isEmpty()) Success(request.emailBody) else Failure(failedIds)
   }
 
   private suspend fun sendEmailToMemberOfCongress(bioguideId: String, request: SendEmailRequest): Boolean {

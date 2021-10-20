@@ -2,7 +2,9 @@ package org.climatechangemakers.act.feature.communicatewithcongress.manager
 
 import okhttp3.MediaType
 import okhttp3.ResponseBody
+import org.climatechangemakers.act.common.model.Failure
 import org.climatechangemakers.act.common.model.RepresentedArea
+import org.climatechangemakers.act.common.model.Success
 import org.climatechangemakers.act.feature.action.manager.FakeActionTrackerManager
 import org.climatechangemakers.act.feature.action.model.SendEmailRequest
 import org.climatechangemakers.act.feature.communicatewithcongress.model.Prefix
@@ -17,6 +19,7 @@ import org.junit.Test
 import org.slf4j.LoggerFactory
 import retrofit2.Response
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class NetworkCommunicateWithCongressManagerTest {
 
@@ -63,8 +66,8 @@ class NetworkCommunicateWithCongressManagerTest {
       contactedBioguideIds = listOf("1", "2", "3"),
     )
 
-    manager.sendEmails(request)
-
+    val result = manager.sendEmails(request)
+    assertTrue(result is Success)
     request.contactedBioguideIds.drop(1).forEach { id ->
       assertActionEntryMatches(request.originatingEmailAddress, id, request.relatedIssueId)
     }
@@ -87,7 +90,8 @@ class NetworkCommunicateWithCongressManagerTest {
       contactedBioguideIds = listOf("1", "2", "3"),
     )
 
-    manager.sendEmails(request)
+    val result = manager.sendEmails(request)
+    assertTrue(result is Success)
 
     request.contactedBioguideIds.drop(1).forEach { id ->
       val service = if (id == "2") fakeSenteService else fakeHouseService
@@ -123,8 +127,7 @@ class NetworkCommunicateWithCongressManagerTest {
     )
 
     val failed = manager.sendEmails(request)
-
-    assertEquals(setOf("2", "3"), failed.toSet())
+    assertTrue(failed is Failure)
   }
 
   private suspend fun assertActionEntryMatches(
