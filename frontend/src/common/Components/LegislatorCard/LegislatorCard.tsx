@@ -60,7 +60,7 @@ export default function LegislatorCard({ legislator, call }: Props) {
                                     controlId={`call${n}`}
                                 >
                                     <Form.Check
-                                        checked={callMade || call.isPhoneCallMade}
+                                        checked={callMade}
                                         disabled={callMade || call.isPhoneCallMade}
                                         onClick={() => call.logCall(n)}
                                         className={styles.formCheckInput}

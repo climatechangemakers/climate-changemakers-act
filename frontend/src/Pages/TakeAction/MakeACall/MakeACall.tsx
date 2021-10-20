@@ -24,8 +24,6 @@ export default function MakeACall({
     const [phoneNumbersCalled, setPhoneNumbersCalled] = useState<string[]>([]);
     const [error, setError] = useState("");
 
-    const phoneNumbers = actionInfo.legislators.flatMap((l) => l.phoneNumbers);
-
     const logCall = async (phoneNumber: string, contactedBioguideId: string) => {
         const response = await logCallAPI(emailAddress, relatedIssueId, phoneNumber, contactedBioguideId);
         if (!response.successful) {
@@ -85,7 +83,7 @@ export default function MakeACall({
                         type="submit"
                         className="flex-grow-1 ml-2 text-dark"
                         variant="primary"
-                        disabled={phoneNumbersCalled.length < phoneNumbers.length}
+                        disabled={!phoneNumbersCalled.length || isPhoneCallMade}
                         onClick={() => setIsPhoneCallMade(true)}
                     >
                         Done Calling
