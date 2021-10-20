@@ -1,5 +1,5 @@
 CREATE VIEW issue_and_focus AS
-SELECT issue.id, issue.title, issue.precomposed_tweet_template,
+SELECT issue.*,
    CASE
        WHEN (SELECT focus_issue.issue_id FROM focus_issue ORDER BY focus_issue.focused_at DESC LIMIT 1) = issue.id THEN TRUE
        ELSE FALSE
@@ -7,12 +7,12 @@ SELECT issue.id, issue.title, issue.precomposed_tweet_template,
 FROM issue;
 
 selectFocused:
-SELECT id, title
+SELECT id, title, image_url
 FROM issue_and_focus
 WHERE is_focused = TRUE;
 
 selectUnfocused:
-SELECT id, title
+SELECT id, title, image_url
 FROM issue_and_focus
 WHERE is_focused = FALSE;
 
