@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
-import { Button, Form, InputGroup } from "react-bootstrap";
 import { logTweetAPI } from "common/api/ClimateChangemakersAPI";
+import ErrorMessage from "common/Components/ErrorMessage";
+import { getPostTweetUrl } from "common/lib/twitter";
 import { ActionInfo } from "common/models/ActionInfo";
 import { Issue } from "common/models/Issue";
-import { getPostTweetUrl } from "common/lib/twitter";
+import { useState } from "react";
+import { Button, Form, InputGroup } from "react-bootstrap";
 import postOnSocialIcon from "./post-on-social-icon.svg";
 
 type Props = {
@@ -25,19 +26,15 @@ export default function PostOnSocial({
     actionInfo,
     selectedIssue,
 }: Props) {
-    const [tweet, setTweet] = useState("");
+    const [tweet, setTweet] = useState(preComposedTweet);
     const [hasOpenedTwitter, setHasOpenedTwitter] = useState(false);
-
-    useEffect(() => {
-        if (typeof preComposedTweet === "string") setTweet(preComposedTweet);
-    }, [preComposedTweet]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         e.stopPropagation();
 
         if (!hasOpenedTwitter) {
-            const openedWindow = window.open(getPostTweetUrl(tweet.trim()));
+            const openedWindow = window.open(getPostTweetUrl(tweet!.trim()));
             if (openedWindow) {
                 setHasOpenedTwitter(true);
             }
@@ -56,11 +53,7 @@ export default function PostOnSocial({
                 <img src={postOnSocialIcon} alt="" height="40" width="40" />
                 <h2 className="text-pink fw-bold mb-3 ms-3">Post on Social Media</h2>
             </div>
-            {preComposedTweetError ? (
-                <p>Failed to load. Please try refreshing the page.</p>
-            ) : !preComposedTweet ? (
-                <p>Loading...</p>
-            ) : (
+            {tweet &&
                 <Form onSubmit={handleSubmit}>
                     <Form.Group>
                         <Form.Label htmlFor="draft-tweet-input">
@@ -120,8 +113,8 @@ export default function PostOnSocial({
                             )}
                         </div>
                     </div>
-                </Form>
-            )}
+                </Form>}
+            <ErrorMessage message={preComposedTweetError && "Failed to load precomposed tweet"} />
         </div>
     );
 }
