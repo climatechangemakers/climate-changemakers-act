@@ -28,9 +28,8 @@ export default function IssueCard({ onClick, issue, selectedIssue, focusIssue }:
                 <img className={styles.issueImage} alt="" src={issue.imageUrl} />
             </div>
             <div
-                className={cx("flex-grow-1 d-flex align-items-between flex-column h-100", {
-                    "ms-sm-3 mt-3 mt-md-0": focusIssue,
-                    "mt-3": !focusIssue,
+                className={cx("flex-grow-1 d-flex align-items-between flex-column h-100 mt-3", {
+                    "ms-sm-3 mt-sm-0": focusIssue,
                 })}
             >
                 <div>
