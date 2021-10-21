@@ -15,7 +15,7 @@ export default function AllDone() {
             origin: { x: 0, y: 1 },
             angle: 60,
             startVelocity: velocity,
-            disableForReducedMotion: true
+            disableForReducedMotion: true,
         });
 
         confetti({
@@ -24,7 +24,7 @@ export default function AllDone() {
             origin: { x: 1, y: 1 },
             angle: 120,
             startVelocity: velocity,
-            disableForReducedMotion: true
+            disableForReducedMotion: true,
         });
     }, []);
 
