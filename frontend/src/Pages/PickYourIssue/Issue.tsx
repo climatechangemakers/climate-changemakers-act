@@ -32,7 +32,7 @@ export default function IssueCard({ onClick, issue, selectedIssue, focusIssue }:
             })}>
                 <div>
                     <Card.Title className={styles.issueText}>{issue.title}</Card.Title>
-                    <p className={`${styles.issueText} fs-7 mt-2`}>{issue.description}</p>
+                    <p className={`${styles.issueText} fs-6 mt-2`}>{issue.description}</p>
                 </div>
                 <p className={`${styles.learnMore} fw-bold fs-7 mt-auto mb-0`}>Choose issue &#10230;</p>
             </div>
