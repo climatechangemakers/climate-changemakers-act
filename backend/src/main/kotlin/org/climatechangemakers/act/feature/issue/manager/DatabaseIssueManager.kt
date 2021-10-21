@@ -32,13 +32,21 @@ class DatabaseIssueManager @Inject constructor(
       title = issue.title,
       imageUrl = issue.image_url,
       description = issue.description,
-      talkingPoints = getIssueTalkingPoints(issue.id)
+      talkingPoints = getIssueTalkingPoints(issue.id),
     )
   }
 
   override suspend fun getUnfocusedIssues(): List<Issue> = withContext(ioDispatcher) {
     issueQueries.selectUnfocused().executeAsList().map { issue ->
-      async { Issue(issue.id, issue.title, issue.image_url, issue.description, getIssueTalkingPoints(issue.id)) }
+      async {
+        Issue(
+          id = issue.id,
+          title = issue.title,
+          imageUrl = issue.image_url,
+          description = issue.description,
+          talkingPoints = getIssueTalkingPoints(issue.id),
+        )
+      }
     }.awaitAll()
   }
 
