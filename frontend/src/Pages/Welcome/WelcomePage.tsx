@@ -28,10 +28,7 @@ export default function WelcomePage() {
         "/values/areas",
         fetcher
     );
-    useSWR<{ focusIssue: Issue; otherIssues: Issue[] }, string>(
-        "/issues",
-        fetcher
-    );
+    useSWR<{ focusIssue: Issue; otherIssues: Issue[] }, string>("/issues", fetcher);
     const history = useHistory();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

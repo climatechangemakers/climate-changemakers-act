@@ -14,22 +14,25 @@ export default function IssueCard({ onClick, issue, selectedIssue, focusIssue }:
     return (
         <Button
             onClick={onClick}
-            className={
-                cx(styles.issueCard, "border-0 d-flex card bg-light-grey text-start h-100 w-100", {
-                    [styles.issueCardSelected]: selectedIssue?.title === issue.title,
-                    "align-items-md-center flex-sm-row px-4 py-4": focusIssue,
-                    "px-3 py-3": !focusIssue
-                })}
+            className={cx(styles.issueCard, "border-0 d-flex card bg-light-grey text-start h-100 w-100", {
+                [styles.issueCardSelected]: selectedIssue?.title === issue.title,
+                "align-items-md-center flex-sm-row px-4 py-4": focusIssue,
+                "px-3 py-3": !focusIssue,
+            })}
         >
-            <div className={cx({
-                [styles.focusImageContainer]: focusIssue
-            })}>
+            <div
+                className={cx({
+                    [styles.focusImageContainer]: focusIssue,
+                })}
+            >
                 <img className={styles.issueImage} alt="" src={issue.imageUrl} />
             </div>
-            <div className={cx("flex-grow-1 d-flex align-items-between flex-column h-100", {
-                "ms-sm-3 mt-3 mt-md-0": focusIssue,
-                "mt-3": !focusIssue
-            })}>
+            <div
+                className={cx("flex-grow-1 d-flex align-items-between flex-column h-100", {
+                    "ms-sm-3 mt-3 mt-md-0": focusIssue,
+                    "mt-3": !focusIssue,
+                })}
+            >
                 <div>
                     <Card.Title className={styles.issueText}>{issue.title}</Card.Title>
                     <p className={`${styles.issueText} fs-6 mt-2`}>{issue.description}</p>

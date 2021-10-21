@@ -21,7 +21,7 @@ export default function PickYourIssuePage() {
 
     useEffect(() => {
         setSelectedIssue(undefined);
-    }, [])
+    }, []);
 
     const handleIssueSelect = (issue: Issue) => {
         setSelectedIssue(issue);
@@ -35,10 +35,11 @@ export default function PickYourIssuePage() {
             <Row className="pt-4 pb-3">
                 <div className="d-flex">
                     <h2 className="text-start pb-4 me-3">Choose an issue</h2>
-                    {!issues &&
+                    {!issues && (
                         <Spinner animation="border" role="status">
                             <span className="visually-hidden">Loading...</span>
-                        </Spinner>}
+                        </Spinner>
+                    )}
                 </div>
                 {issues && (
                     <>

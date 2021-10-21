@@ -18,12 +18,14 @@ export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted
     const [scrolledPastIntro, setScrolledPastIntro] = useState(false);
 
     useEffect(() => {
-        if (introSectionDistanceFromTop - INTRO_SCROLL_BUFFER <= 0) setScrolledPastIntro(true)
-    }, [introSectionDistanceFromTop])
+        if (introSectionDistanceFromTop - INTRO_SCROLL_BUFFER <= 0) setScrolledPastIntro(true);
+    }, [introSectionDistanceFromTop]);
 
     useEffect(() => {
         const handleResize = () =>
-            setIntroSectionDistanceFromTop(document.getElementById("send_an_email")?.getBoundingClientRect()?.top ?? Math.min);
+            setIntroSectionDistanceFromTop(
+                document.getElementById("send_an_email")?.getBoundingClientRect()?.top ?? Math.min
+            );
 
         handleResize();
         window.addEventListener("scroll", handleResize);
@@ -47,7 +49,7 @@ export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted
             <Card.Body
                 className={cx("d-flex justify-content-between text-dark pt-3 pb-2 ps-0 pe-0", {
                     "flex-column bg-dark-purple text-white": desktop,
-                    "bg-light-grey": !desktop
+                    "bg-light-grey": !desktop,
                 })}
             >
                 {desktop && (
