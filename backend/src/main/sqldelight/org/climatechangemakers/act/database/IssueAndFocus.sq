@@ -7,12 +7,12 @@ SELECT issue.*,
 FROM issue;
 
 selectFocused:
-SELECT id, title, image_url
+SELECT id, title, image_url, description
 FROM issue_and_focus
 WHERE is_focused = TRUE;
 
 selectUnfocused:
-SELECT id, title, image_url
+SELECT id, title, image_url, description
 FROM issue_and_focus
 WHERE is_focused = FALSE;
 
