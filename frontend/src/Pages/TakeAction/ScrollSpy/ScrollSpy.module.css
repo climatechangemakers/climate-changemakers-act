@@ -1,7 +1,0 @@
-.mobileProgress {
-    padding: 1rem 0;
-    z-index: 99;
-    background-color: rgb(var(--bs-dark-rgb));
-    bottom: 0;
-    left: 0;
-}

@@ -1,5 +1,7 @@
 CREATE TABLE issue (
   id BIGSERIAL PRIMARY KEY,
   title VARCHAR NOT NULL,
-  precomposed_tweet_template VARCHAR NOT NULL
+  precomposed_tweet_template VARCHAR NOT NULL,
+  image_url VARCHAR NOT NULL,
+  description VARCHAR NOT NULL
 );

@@ -1,5 +1,5 @@
 CREATE TABLE district_office (
-  bioguide_id VARCHAR NOT NULL,
+  bioguide_id VARCHAR NOT NULL REFERENCES member_of_congress(bioguide_id),
   phone_number VARCHAR,
   lat DOUBLE PRECISION,
   long DOUBLE PRECISION

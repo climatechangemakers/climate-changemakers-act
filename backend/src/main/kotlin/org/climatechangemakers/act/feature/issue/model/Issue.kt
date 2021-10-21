@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 @Serializable data class Issue(
   val id: Long,
   val title: String,
+  val imageUrl: String,
+  val description: String,
   val talkingPoints: List<TalkingPoint>,
 )
 

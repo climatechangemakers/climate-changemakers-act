@@ -8,13 +8,18 @@ import org.climatechangemakers.act.feature.action.model.SendEmailRequest
 import org.climatechangemakers.act.feature.findlegislator.manager.LegislatorsManager
 import org.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsByAddressRequest
 import io.ktor.application.ApplicationCall
+import io.ktor.http.HttpStatusCode
 import io.ktor.request.receive
 import io.ktor.response.respond
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import org.climatechangemakers.act.common.extension.respondNothing
+import org.climatechangemakers.act.common.model.Failure
+import org.climatechangemakers.act.common.model.Success
 import org.climatechangemakers.act.feature.action.model.LogTweetRequest
+import org.climatechangemakers.act.feature.action.model.SendEmailErrorResponse
+import org.climatechangemakers.act.feature.action.model.SendEmailResponse
 import org.climatechangemakers.act.feature.communicatewithcongress.manager.CommunicateWithCongressManager
 import javax.inject.Inject
 
@@ -39,8 +44,10 @@ class ActionController @Inject constructor(
 
   suspend fun sendEmailToLegislators(call: ApplicationCall) {
     val request = call.receive<SendEmailRequest>()
-    communicateWithCongressManager.sendEmails(request)
-    call.respondNothing()
+    when (val result = communicateWithCongressManager.sendEmails(request)) {
+      is Success -> call.respond(HttpStatusCode.OK, SendEmailResponse(result.data))
+      is Failure -> call.respond(HttpStatusCode.InternalServerError, SendEmailErrorResponse(result.errorData))
+    }
   }
 
   suspend fun logLegislatorCallAction(call: ApplicationCall) {

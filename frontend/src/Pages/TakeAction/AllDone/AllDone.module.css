@@ -1,4 +1,9 @@
 .doneContainer {
     height: 80vh;
     max-height: 500px;
+    max-width: 700px;
+}
+
+.buttonWidth {
+    width: 200px;
 }
