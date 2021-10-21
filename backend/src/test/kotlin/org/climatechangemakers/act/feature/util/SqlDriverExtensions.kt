@@ -6,12 +6,19 @@ import org.climatechangemakers.act.feature.findlegislator.model.LegislatorPoliti
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
 import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
 
-fun SqlDriver.insertIssue(id: Long, title: String, precomposedTweet: String, imageUrl: String) {
-  execute(0, "INSERT INTO issue(id, title, precomposed_tweet_template, image_url) VALUES(?,?,?,?)", 2) {
+fun SqlDriver.insertIssue(
+  id: Long,
+  title: String,
+  precomposedTweet: String,
+  imageUrl: String,
+  description: String = "description",
+) {
+  execute(0, "INSERT INTO issue(id, title, precomposed_tweet_template, image_url, description) VALUES(?,?,?,?,?)", 2) {
     bindLong(1, id)
     bindString(2, title)
     bindString(3, precomposedTweet)
     bindString(4, imageUrl)
+    bindString(5, description)
   }
 }
 

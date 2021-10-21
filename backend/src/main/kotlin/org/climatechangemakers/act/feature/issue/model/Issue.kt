@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
   val id: Long,
   val title: String,
   val imageUrl: String,
+  val description: String,
   val talkingPoints: List<TalkingPoint>,
 )
 

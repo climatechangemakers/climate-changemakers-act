@@ -732,7 +732,8 @@ CREATE TABLE public.issue (
     id bigint NOT NULL,
     title character varying NOT NULL,
     precomposed_tweet_template character varying NOT NULL,
-    image_url character varying NOT NULL
+    image_url character varying NOT NULL,
+    description character varying NOT NULL
 );
 
 
@@ -745,6 +746,7 @@ CREATE VIEW public.issue_and_focus AS
     issue.title,
     issue.precomposed_tweet_template,
     issue.image_url,
+    issue.description,
         CASE
             WHEN (( SELECT focus_issue.issue_id
                FROM public.focus_issue
@@ -2120,11 +2122,11 @@ COPY public.focus_issue (issue_id, focused_at) FROM stdin;
 -- Data for Name: issue; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.issue (id, title, precomposed_tweet_template, image_url) FROM stdin;
-2	This is the focus issue	This is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg
-4	This is not a focus issue	This is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg
-5	This is also not a focus issue	This is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg
-6	this is some random issue that might one day be focused	This is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg
+COPY public.issue (id, title, precomposed_tweet_template, image_url, description) FROM stdin;
+2	This is the focus issue	This is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg	This is a description of the issue
+4	This is not a focus issue	This is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg	This is a description of the issue
+5	This is also not a focus issue	This is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg	This is a description of the issue
+6	this is some random issue that might one day be focused	This is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg	This is a description of the issue
 \.
 
 

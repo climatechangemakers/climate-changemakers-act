@@ -45,6 +45,7 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
         1,
         "foo",
         "url.com",
+        "description",
         listOf(TalkingPoint("foo talking point", "foo is cool"))
       ),
       issueManager.getFocusIssue()
@@ -56,6 +57,7 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
         2,
         "bar",
         "url.com",
+        "description",
         listOf(TalkingPoint("bar talking point", "bar is cool"))
       ),
       issueManager.getFocusIssue()
@@ -75,6 +77,7 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
           2,
           "bar",
           "url.com",
+          "description",
           listOf(TalkingPoint("bar talking point", "bar is cool"))
         )
       ),
