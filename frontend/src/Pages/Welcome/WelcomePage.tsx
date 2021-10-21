@@ -4,6 +4,7 @@ import useSessionStorage from "common/hooks/useSessionStorage";
 import logo from "common/logo.png";
 import { ActionInfo } from "common/models/ActionInfo";
 import { FormInfo } from "common/models/FormInfo";
+import { Issue } from "common/models/Issue";
 import { useState } from "react";
 import { Alert, Badge, Button, Col, Form, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
@@ -25,6 +26,10 @@ export default function WelcomePage() {
     const [, setActionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
     const { data: areas, error: areasError } = useSWR<{ shortName: string; fullName: string }[]>(
         "/values/areas",
+        fetcher
+    );
+    useSWR<{ focusIssue: Issue; otherIssues: Issue[] }, string>(
+        "/issues",
         fetcher
     );
     const history = useHistory();

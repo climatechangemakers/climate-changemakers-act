@@ -4,7 +4,8 @@ import Layout from "common/Components/Layout";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import { ActionInfo } from "common/models/ActionInfo";
 import { Issue } from "common/models/Issue";
-import { Alert, Col, Row } from "react-bootstrap";
+import { useEffect } from "react";
+import { Col, Row, Spinner } from "react-bootstrap";
 import { Redirect, useHistory } from "react-router-dom";
 import useSWR from "swr";
 import IssueCard from "./Issue";
@@ -18,6 +19,10 @@ export default function PickYourIssuePage() {
     const [actionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
     const history = useHistory();
 
+    useEffect(() => {
+        setSelectedIssue(undefined);
+    }, [])
+
     const handleIssueSelect = (issue: Issue) => {
         setSelectedIssue(issue);
         history.push("/take-action");
@@ -27,27 +32,34 @@ export default function PickYourIssuePage() {
 
     return (
         <Layout>
-            <Row className="pt-2 pb-3">
-                <h2 className="text-start pb-4">Choose an issue</h2>
-                {!!issues && (
+            <Row className="pt-4 pb-3">
+                <div className="d-flex">
+                    <h2 className="text-start pb-4 me-3">Choose an issue</h2>
+                    {!issues &&
+                        <Spinner animation="border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </Spinner>}
+                </div>
+                {issues && (
                     <>
-                        <Row className="pb-4">
-                            <h3 className="text-start">Focus Issue</h3>
+                        <Row className="pb-5">
+                            <h4 className="text-start mb-3">Focus Issue</h4>
                             <div>
                                 <IssueCard
                                     onClick={() => handleIssueSelect(issues.focusIssue)}
-                                    title={issues.focusIssue.title}
+                                    issue={issues.focusIssue}
                                     selectedIssue={selectedIssue}
+                                    focusIssue
                                 />
                             </div>
                         </Row>
                         <Row>
-                            <h3 className="text-start">Other Issues</h3>
+                            <h4 className="text-start mb-3">Other Issues</h4>
                             {issues.otherIssues.map((issue) => (
                                 <Col key={issue.title} className="pb-3 d-flex align-items-center" md="4" sm="6">
                                     <IssueCard
                                         onClick={() => handleIssueSelect(issue)}
-                                        title={issue.title}
+                                        issue={issue}
                                         selectedIssue={selectedIssue}
                                     />
                                 </Col>
@@ -57,6 +69,6 @@ export default function PickYourIssuePage() {
                 )}
                 <ErrorMessage message={issuesError} />
             </Row>
-        </Layout >
+        </Layout>
     );
 }

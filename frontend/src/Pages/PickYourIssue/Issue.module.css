@@ -4,8 +4,19 @@
     font-size: 0.9rem;
 }
 
+.focusImageContainer {
+    max-width: 100%;
+    width: 450px;
+}
+
+.issueImage {
+    max-width: 100%;
+    height: 100%;
+}
+
 .issueCard {
     transition: background-color 0.25s ease !important;
+    border-radius: 0.75rem !important;
 }
 
 .issueCard:disabled {
@@ -18,13 +29,13 @@
     background-color: var(--primary-orange) !important;
 }
 
-.issueTitle {
+.issueText {
     color: rgb(var(--bs-dark-rgb));
 }
 
-.issueCardSelected .issueTitle,
+.issueCardSelected .issueText,
 .issueCardSelected .learnMore,
-.issueCard:hover .issueTitle,
+.issueCard:hover .issueText,
 .issueCard:hover .learnMore {
     color: white !important;
 }
