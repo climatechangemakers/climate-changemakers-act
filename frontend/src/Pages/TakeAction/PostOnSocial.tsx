@@ -53,7 +53,7 @@ export default function PostOnSocial({
                 <img src={postOnSocialIcon} alt="" height="40" width="40" />
                 <h2 className="text-pink fw-bold mb-3 ms-3">Post on Social Media</h2>
             </div>
-            {tweet &&
+            {tweet && (
                 <Form onSubmit={handleSubmit}>
                     <Form.Group>
                         <Form.Label htmlFor="draft-tweet-input">
@@ -113,7 +113,8 @@ export default function PostOnSocial({
                             )}
                         </div>
                     </div>
-                </Form>}
+                </Form>
+            )}
             <ErrorMessage message={preComposedTweetError && "Failed to load precomposed tweet"} />
         </div>
     );
