@@ -27,12 +27,12 @@ class DatabaseIssueManager @Inject constructor(
 
   override suspend fun getFocusIssue(): Issue = withContext(ioDispatcher) {
     val issue = issueQueries.selectFocused().executeAsOne()
-    Issue(id = issue.id, title = issue.title, talkingPoints = getIssueTalkingPoints(issue.id))
+    Issue(id = issue.id, title = issue.title, issue.image_url, talkingPoints = getIssueTalkingPoints(issue.id))
   }
 
   override suspend fun getUnfocusedIssues(): List<Issue> = withContext(ioDispatcher) {
     issueQueries.selectUnfocused().executeAsList().map { issue ->
-      async { Issue(issue.id, issue.title, getIssueTalkingPoints(issue.id)) }
+      async { Issue(issue.id, issue.title, issue.image_url, getIssueTalkingPoints(issue.id)) }
     }.awaitAll()
   }
 

@@ -10,6 +10,7 @@ import org.climatechangemakers.act.feature.issue.model.Issue
 import org.climatechangemakers.act.feature.issue.model.PreComposedTweetResponse
 import org.climatechangemakers.act.feature.issue.model.TalkingPoint
 import org.climatechangemakers.act.feature.util.TestContainerProvider
+import org.climatechangemakers.act.feature.util.insertIssue
 import org.junit.Test
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.assertEquals
@@ -33,8 +34,8 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   private val issueManager = DatabaseIssueManager(fakeMemberOfCongressManager, database, EmptyCoroutineContext)
 
   @Test fun `getting focus issue returns most recently focused item`() = suspendTest {
-    insertIssue(1, "foo", "tweet")
-    insertIssue(2, "bar", "tweet")
+    driver.insertIssue(1, "foo", "tweet", "url.com")
+    driver.insertIssue(2, "bar", "tweet", "url.com")
     insertTalkingPoint(1, "foo talking point", "foo is cool")
     insertTalkingPoint(2, "bar talking point", "bar is cool")
 
@@ -43,6 +44,7 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
       Issue(
         1,
         "foo",
+        "url.com",
         listOf(TalkingPoint("foo talking point", "foo is cool"))
       ),
       issueManager.getFocusIssue()
@@ -53,6 +55,7 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
       Issue(
         2,
         "bar",
+        "url.com",
         listOf(TalkingPoint("bar talking point", "bar is cool"))
       ),
       issueManager.getFocusIssue()
@@ -60,8 +63,8 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   }
 
   @Test fun `getting unfocused issues returns correct values`() = suspendTest {
-    insertIssue(1, "foo", "tweet")
-    insertIssue(2, "bar", "tweet")
+    driver.insertIssue(1, "foo", "tweet", "url.com")
+    driver.insertIssue(2, "bar", "tweet", "url.com")
     insertTalkingPoint(1, "foo talking point", "foo is cool")
     insertTalkingPoint(2, "bar talking point", "bar is cool")
     focusIssue(1)
@@ -71,6 +74,7 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
         Issue(
           2,
           "bar",
+          "url.com",
           listOf(TalkingPoint("bar talking point", "bar is cool"))
         )
       ),
@@ -79,8 +83,8 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   }
 
   @Test fun `example statements for issue are correct`() = suspendTest {
-    insertIssue(1, "foo", "tweet")
-    insertIssue(2, "bar", "tweet")
+    driver.insertIssue(1, "foo", "tweet", "url.com")
+    driver.insertIssue(2, "bar", "tweet", "url.com")
     insertExampleWhyStatement(1, "This is correct")
     insertExampleWhyStatement(2, "this is incorrect")
 
@@ -91,7 +95,7 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   }
 
   @Test fun `example statements query produces max 5 results`() = suspendTest {
-    insertIssue(1, "foo", "tweet")
+    driver.insertIssue(1, "foo", "tweet", "url.com")
     repeat(10) { insertExampleWhyStatement(1, "$it") }
 
     assertEquals(
@@ -107,17 +111,9 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   }
 
   @Test fun `precomposed tweet is formatted correctly`() = suspendTest {
-    insertIssue(1, "issue", "This is a tweet to %s")
+    driver.insertIssue(1, "issue", "This is a tweet to %s", "url.com")
     val tweet = issueManager.getPreComposedTweetForIssue(1, listOf("id"))
     assertEquals(PreComposedTweetResponse("This is a tweet to @handle"), tweet)
-  }
-
-  private fun insertIssue(id: Long, title: String, precomposedTweet: String) {
-    driver.execute(0, "INSERT INTO issue(id, title, precomposed_tweet_template) VALUES(?,?,?)", 2) {
-      bindLong(1, id)
-      bindString(2, title)
-      bindString(3, precomposedTweet)
-    }
   }
 
   private fun insertExampleWhyStatement(issueId: Long, statement: String) {
