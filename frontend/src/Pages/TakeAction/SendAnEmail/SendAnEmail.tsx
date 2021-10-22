@@ -203,7 +203,12 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                             className="position-absolute"
                                             tabIndex={-1}
                                             autoComplete="off"
-                                            style={{ opacity: 0, height: 0, top: "calc(100% - 6px)", visibility: "hidden" }}
+                                            style={{
+                                                opacity: 0,
+                                                height: 0,
+                                                top: "calc(100% - 6px)",
+                                                visibility: "hidden",
+                                            }}
                                             required
                                         />
                                     )}

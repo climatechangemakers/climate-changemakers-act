@@ -9,7 +9,7 @@ type FetchResponse<T> = {
 
 export type ErrorResponse = Error & {
     status: number;
-}
+};
 
 export const fetcher = async <T>(path: string) => {
     const res = await fetch("/api" + path);
