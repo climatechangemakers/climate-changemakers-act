@@ -104,6 +104,34 @@ class NetworkCommunicateWithCongressManagerTest {
       val service = if (id == "2") fakeSenteService else fakeHouseService
       val body = service.capturedBodies.tryReceive().getOrThrow()
       assertEquals("this-office-$id", body.recipient.officeCode)
+    }
+  }
+
+  @Test fun `sendEmails associates with the correct campaignId`() = suspendTest {
+    val request = SendEmailRequest(
+      originatingEmailAddress = "k@c.com",
+      title = Prefix.Dr,
+      firstName = "Foo",
+      lastName = "McBar",
+      streetAddress = "123 Main Street",
+      city = "Richmond",
+      state = RepresentedArea.Virginia,
+      postalCode = "23223",
+      relatedTopics = listOf(Topic.Energy),
+      emailBody = "Body",
+      emailSubject = "subject",
+      relatedIssueId = 1,
+      contactedBioguideIds = listOf("1", "2", "3"),
+    )
+
+    repeat(3) { fakeIssueManager.titles.send("issue title") }
+
+    val result = manager.sendEmails(request)
+    assertTrue(result is Success)
+
+    request.contactedBioguideIds.drop(1).forEach { id ->
+      val service = if (id == "2") fakeSenteService else fakeHouseService
+      val body = service.capturedBodies.tryReceive().getOrThrow()
       assertEquals("cf9133df63e2b5eb9a567c3e7b4f1a0f4688719d33730833dee1ea591047c293", body.delivery.campaignId)
     }
   }
