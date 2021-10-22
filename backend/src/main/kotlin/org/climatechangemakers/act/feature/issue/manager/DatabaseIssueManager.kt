@@ -50,6 +50,10 @@ class DatabaseIssueManager @Inject constructor(
     }.awaitAll()
   }
 
+  override suspend fun getIssueTitleForId(issueId: Long): String = withContext(ioDispatcher) {
+    issueQueries.selectTitleForId(issueId).executeAsOne()
+  }
+
   override suspend fun getExampleStatementsForIssue(issueId: Long): List<String> = withContext(ioDispatcher) {
     ensureIssueExists(issueId)
     exampleIssueWhyStatementQueries.selectForIssueId(issueId).executeAsList()

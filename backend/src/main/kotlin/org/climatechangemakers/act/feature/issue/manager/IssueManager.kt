@@ -16,6 +16,11 @@ interface IssueManager {
   suspend fun getUnfocusedIssues(): List<Issue>
 
   /**
+   * Get the [Issue.title] corresponding to [issueId].
+   */
+  suspend fun getIssueTitleForId(issueId: Long): String
+
+  /**
    * Get a list of example "Why" statements that explain why this issue is important
    * to a constituent.
    */
