@@ -4,6 +4,7 @@ import useSessionStorage from "common/hooks/useSessionStorage";
 import logo from "common/logo.png";
 import { ActionInfo } from "common/models/ActionInfo";
 import { FormInfo } from "common/models/FormInfo";
+import { Issue } from "common/models/Issue";
 import { useState } from "react";
 import { Badge, Button, Col, Form, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
@@ -27,6 +28,7 @@ export default function WelcomePage() {
         "/values/areas",
         fetcher
     );
+    useSWR<{ focusIssue: Issue; otherIssues: Issue[] }, string>("/issues", fetcher);
     const history = useHistory();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

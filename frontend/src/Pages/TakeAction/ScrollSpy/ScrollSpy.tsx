@@ -22,7 +22,9 @@ export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted
 
     useEffect(() => {
         const handleResize = () =>
-            setIntroSectionDistanceFromTop(document.getElementById("send_an_email")!.getBoundingClientRect()!.top);
+            setIntroSectionDistanceFromTop(
+                document.getElementById("send_an_email")?.getBoundingClientRect()?.top ?? Math.min
+            );
 
         handleResize();
         window.addEventListener("scroll", handleResize);
