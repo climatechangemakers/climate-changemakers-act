@@ -1,10 +1,10 @@
-import { fetcher, sendEmailAPI } from "common/api/ClimateChangemakersAPI";
+import { ErrorResponse, fetcher, sendEmailAPI } from "common/api/ClimateChangemakersAPI";
 import ErrorMessage from "common/Components/ErrorMessage";
 import { ActionInfo } from "common/models/ActionInfo";
 import { FormInfo } from "common/models/FormInfo";
 import { Issue } from "common/models/Issue";
 import { useState } from "react";
-import { Accordion, Alert, Button, Col, Form, Row } from "react-bootstrap";
+import { Accordion, Button, Col, Form, Row } from "react-bootstrap";
 import Select, { MultiValue } from "react-select";
 import useSWR from "swr";
 import emailIcon from "./email-icon.svg";
@@ -27,8 +27,8 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
         selectedLocTopics: [] as MultiValue<{ value: string; label: string }>,
     });
     const [sendEmailError, setSendEmailError] = useState("");
-    const { data: prefixes, error: prefixError } = useSWR<string[], string>("/values/prefixes", fetcher);
-    const { data: locTopics, error: locTopicsError } = useSWR<string[], string>(
+    const { data: prefixes, error: prefixError } = useSWR<string[], ErrorResponse>("/values/prefixes", fetcher);
+    const { data: locTopics, error: locTopicsError } = useSWR<string[], ErrorResponse>(
         "/values/library-of-congress-topics",
         fetcher
     );
@@ -59,7 +59,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
     };
 
     const topicOptions = locTopics?.map((t) => ({ value: t, label: t })) || [];
-    const error = prefixError || locTopicsError || sendEmailError;
+    const error = prefixError?.message || locTopicsError?.message || sendEmailError;
 
     return (
         <div className="pt-2 pb-3 text-start">
@@ -74,7 +74,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
             </p>
             {selectedIssue.talkingPoints.length > 0 && (
                 <div className="mb-3">
-                    <h4>Issue Guide</h4>
+                    <div className="h-4">Issue Guide</div>
                     <Accordion defaultActiveKey="0">
                         {selectedIssue.talkingPoints.map((point, i) => (
                             <Accordion.Item key={i} eventKey={i.toString()}>
@@ -93,7 +93,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
             <Form onSubmit={sendEmail}>
                 <Row>
                     <Col lg="4">
-                        <h4>Tips</h4>
+                        <div className="h4">Tips</div>
                         <ul>
                             {[
                                 "Identify yourself as a constituent",
@@ -106,7 +106,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                 <li key={m}>{m}</li>
                             ))}
                         </ul>
-                        <h4>Prompts</h4>
+                        <div className="h4">Prompts</div>
                         <ul className="fs-6">
                             {[
                                 "Where are you from and what do you do?",
@@ -119,7 +119,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                         </ul>
                     </Col>
                     <Col className="mt-auto" lg="8">
-                        <h4>Draft Your Email</h4>
+                        <div className="h-4">Draft Your Email</div>
                         <Row>
                             <Col lg="3">
                                 <Form.Group className="mb-3 h-100" controlId="emailForm.prefix">
@@ -182,19 +182,32 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                         <Row>
                             <Col>
                                 <Form.Label>Letter Topic</Form.Label>
-                                <Select
-                                    defaultValue={emailInfo.selectedLocTopics}
-                                    onChange={(e) => setEmailInfo({ ...emailInfo, selectedLocTopics: e })}
-                                    options={topicOptions}
-                                    isDisabled={isEmailSent}
-                                    styles={{
-                                        option: (provided) => ({
-                                            ...provided,
-                                            color: "black",
-                                        }),
-                                    }}
-                                    isMulti
-                                />
+                                <div className="position-relative">
+                                    <Select
+                                        defaultValue={emailInfo.selectedLocTopics}
+                                        onChange={(e) => setEmailInfo({ ...emailInfo, selectedLocTopics: e })}
+                                        options={topicOptions}
+                                        isDisabled={isEmailSent}
+                                        styles={{
+                                            option: (provided) => ({
+                                                ...provided,
+                                                color: "black",
+                                            }),
+                                        }}
+                                        isMulti
+                                        aria-label="Choose a Letter topic"
+                                    />
+                                    {/* Added this invisible input to make react-select dropdown simulate HTML validation. Open issue at https://github.com/JedWatson/react-select/issues/4327*/}
+                                    {!emailInfo.selectedLocTopics.length && (
+                                        <input
+                                            className="position-absolute"
+                                            tabIndex={-1}
+                                            autoComplete="off"
+                                            style={{ opacity: 0, height: 0, top: "calc(100% - 6px)", visibility: "hidden" }}
+                                            required
+                                        />
+                                    )}
+                                </div>
                             </Col>
                         </Row>
                     </Col>

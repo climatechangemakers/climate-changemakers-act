@@ -1,15 +1,15 @@
-import { fetcher } from "common/api/ClimateChangemakersAPI";
+import { ErrorResponse, fetcher } from "common/api/ClimateChangemakersAPI";
 import ErrorMessage from "common/Components/ErrorMessage";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import { ActionInfo } from "common/models/ActionInfo";
 import { Issue } from "common/models/Issue";
-import { Alert, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { Redirect, useHistory } from "react-router-dom";
 import useSWR from "swr";
 import IssueCard from "./Issue";
 
 export default function PickYourIssuePage() {
-    const { data: issues, error: issuesError } = useSWR<{ focusIssue: Issue; otherIssues: Issue[] }, string>(
+    const { data: issues, error: issuesError } = useSWR<{ focusIssue: Issue; otherIssues: Issue[] }, ErrorResponse>(
         "/issues",
         fetcher
     );
@@ -55,7 +55,7 @@ export default function PickYourIssuePage() {
                     </Row>
                 </>
             )}
-            <ErrorMessage message={issuesError} />
+            <ErrorMessage message={issuesError?.message} />
         </div>
     );
 }

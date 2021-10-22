@@ -1,7 +1,6 @@
 import cx from "classnames";
 import { useEffect, useState } from "react";
-import { Card, ProgressBar } from "react-bootstrap";
-import styles from "./MobileScrollSpy.module.css";
+import { Card } from "react-bootstrap";
 import Step from "./Step";
 
 type Props = {

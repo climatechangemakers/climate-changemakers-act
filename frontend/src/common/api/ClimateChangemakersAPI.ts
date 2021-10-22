@@ -7,10 +7,19 @@ type FetchResponse<T> = {
     data?: T;
 };
 
+export type ErrorResponse = Error & {
+    status: number;
+}
+
 export const fetcher = async <T>(path: string) => {
     const res = await fetch("/api" + path);
 
-    if (!res.ok) throw `Failed to fetch ${path}: ${res.statusText}`;
+    if (!res.ok) {
+        const error = new Error(`Failed to fetch ${path}: ${res.statusText}`) as ErrorResponse;
+        error.status = res.status;
+
+        throw error;
+    }
 
     return (await res.json()) as T;
 };
