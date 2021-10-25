@@ -1,4 +1,4 @@
-import { fetcher } from "common/api/ClimateChangemakersAPI";
+import { ErrorResponse, fetcher } from "common/api/ClimateChangemakersAPI";
 import ErrorMessage from "common/Components/ErrorMessage";
 import Layout from "common/Components/Layout";
 import useSessionStorage from "common/hooks/useSessionStorage";
@@ -11,7 +11,7 @@ import useSWR from "swr";
 import IssueCard from "./Issue";
 
 export default function PickYourIssuePage() {
-    const { data: issues, error: issuesError } = useSWR<{ focusIssue: Issue; otherIssues: Issue[] }, string>(
+    const { data: issues, error: issuesError } = useSWR<{ focusIssue: Issue; otherIssues: Issue[] }, ErrorResponse>(
         "/issues",
         fetcher
     );
@@ -44,7 +44,7 @@ export default function PickYourIssuePage() {
                 {issues && (
                     <>
                         <Row className="pb-5">
-                            <h4 className="text-start mb-3">Focus Issue</h4>
+                            <h3 className="text-start mb-3 h4">Focus Issue</h3>
                             <div>
                                 <IssueCard
                                     onClick={() => handleIssueSelect(issues.focusIssue)}
@@ -55,7 +55,7 @@ export default function PickYourIssuePage() {
                             </div>
                         </Row>
                         <Row>
-                            <h4 className="text-start mb-3">Other Issues</h4>
+                            <h3 className="text-start mb-3 h4">Other Issues</h3>
                             {issues.otherIssues.map((issue) => (
                                 <Col key={issue.title} className="pb-3 d-flex align-items-center" md="4" sm="6">
                                     <IssueCard
@@ -68,7 +68,7 @@ export default function PickYourIssuePage() {
                         </Row>
                     </>
                 )}
-                <ErrorMessage message={issuesError} />
+                <ErrorMessage message={issuesError?.message} />
             </Row>
         </Layout>
     );

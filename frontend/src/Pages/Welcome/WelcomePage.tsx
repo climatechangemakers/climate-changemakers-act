@@ -1,4 +1,4 @@
-import { fetcher, initiateActionAPI } from "common/api/ClimateChangemakersAPI";
+import { ErrorResponse, fetcher, initiateActionAPI } from "common/api/ClimateChangemakersAPI";
 import ErrorMessage from "common/Components/ErrorMessage";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import logo from "common/logo.png";
@@ -6,7 +6,7 @@ import { ActionInfo } from "common/models/ActionInfo";
 import { FormInfo } from "common/models/FormInfo";
 import { Issue } from "common/models/Issue";
 import { useState } from "react";
-import { Alert, Badge, Button, Col, Form, Row } from "react-bootstrap";
+import { Badge, Button, Col, Form, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import useSWR from "swr";
 import styles from "./WelcomePage.module.css";
@@ -24,7 +24,7 @@ export default function WelcomePage() {
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [, setActionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
-    const { data: areas, error: areasError } = useSWR<{ shortName: string; fullName: string }[]>(
+    const { data: areas, error: areasError } = useSWR<{ shortName: string; fullName: string }[], ErrorResponse>(
         "/values/areas",
         fetcher
     );
@@ -177,7 +177,7 @@ export default function WelcomePage() {
                     </p>
                 </Form>
             </div>
-            <ErrorMessage message={areasError || errorMessage} />
+            <ErrorMessage message={areasError?.message || errorMessage} />
         </div>
     );
 }

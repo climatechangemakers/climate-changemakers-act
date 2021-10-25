@@ -1,4 +1,4 @@
-import { fetcher } from "common/api/ClimateChangemakersAPI";
+import { ErrorResponse, fetcher } from "common/api/ClimateChangemakersAPI";
 import Layout from "common/Components/Layout";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import { ActionInfo } from "common/models/ActionInfo";
@@ -36,7 +36,7 @@ export default function TakeActionPage() {
     }, [isEmailSent, isPhoneCallMade, isSocialPosted]);
 
     const selectedIssueId = selectedIssue?.id;
-    const { data: preComposedTweetData, error: preComposedTweetError } = useSWR<{ tweet: string }, string>(
+    const { data: preComposedTweetData, error: preComposedTweetError } = useSWR<{ tweet: string }, ErrorResponse>(
         selectedIssueId === undefined || !actionInfo?.legislators?.length
             ? null
             : `/issues/${selectedIssueId}/precomposed-tweet?${new URLSearchParams(
@@ -52,7 +52,7 @@ export default function TakeActionPage() {
     return (
         <Layout>
             <Row className="d-flex flex-column flex-lg-row">
-                <Col md="10" xs="12">
+                <Col lg="10" xs="12">
                     <h1 className="text-start mb-4 pb-2 pt-4" id="introduction">
                         Time to get started!
                     </h1>
@@ -86,7 +86,7 @@ export default function TakeActionPage() {
                                 actionInfo={actionInfo}
                                 selectedIssue={selectedIssue}
                                 preComposedTweet={preComposedTweetData?.tweet}
-                                preComposedTweetError={preComposedTweetError}
+                                preComposedTweetError={preComposedTweetError?.message}
                             />
                         </>
                     )}
