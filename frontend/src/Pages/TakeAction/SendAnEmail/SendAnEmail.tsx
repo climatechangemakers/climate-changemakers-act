@@ -74,7 +74,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
             </p>
             {selectedIssue.talkingPoints.length > 0 && (
                 <div className="mb-3">
-                    <div className="h-4">Issue Guide</div>
+                    <h3 className="h-4">Issue Guide</h3>
                     <Accordion defaultActiveKey="0">
                         {selectedIssue.talkingPoints.map((point, i) => (
                             <Accordion.Item key={i} eventKey={i.toString()}>
@@ -93,7 +93,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
             <Form onSubmit={sendEmail}>
                 <Row>
                     <Col lg="4">
-                        <div className="h4">Tips</div>
+                        <h3 className="h4">Tips</h3>
                         <ul>
                             {[
                                 "Identify yourself as a constituent",
@@ -106,7 +106,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                 <li key={m}>{m}</li>
                             ))}
                         </ul>
-                        <div className="h4">Prompts</div>
+                        <h3 className="h4">Prompts</h3>
                         <ul className="fs-6">
                             {[
                                 "Where are you from and what do you do?",
@@ -119,7 +119,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                         </ul>
                     </Col>
                     <Col className="mt-auto" lg="8">
-                        <div className="h-4">Draft Your Email</div>
+                        <h3 className="h-4">Draft Your Email</h3>
                         <Row>
                             <Col lg="3">
                                 <Form.Group className="mb-3 h-100" controlId="emailForm.prefix">
