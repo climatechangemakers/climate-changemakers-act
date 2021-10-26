@@ -260,7 +260,12 @@ export default function SendAnEmail({
                     </Col>
                 </Row>
                 {emailState !== "titleing" && (
-                    <Prompts emailState={emailState} setEmailState={setEmailState} setEmailBody={(body: string) => setEmailInfo(info => ({ ...info, body }))} />)}
+                    <Prompts
+                        emailState={emailState}
+                        setEmailState={setEmailState}
+                        setEmailBody={(body: string) => setEmailInfo((info) => ({ ...info, body }))}
+                    />
+                )}
                 {(emailState === "reviewing" || emailState === "done") && (
                     <>
                         <hr id="review_email" />

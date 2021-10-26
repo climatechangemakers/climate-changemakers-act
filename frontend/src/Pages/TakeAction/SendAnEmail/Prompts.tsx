@@ -5,7 +5,7 @@ type Props = {
     emailState: "prompting" | "reviewing" | "done";
     setEmailState: React.Dispatch<React.SetStateAction<"titleing" | "prompting" | "reviewing" | "done">>;
     setEmailBody: (body: string) => void;
-}
+};
 
 export default function Prompts({ emailState, setEmailState, setEmailBody }: Props) {
     const [emailPrompts, setEmailPrompts] = useState({
@@ -17,12 +17,14 @@ export default function Prompts({ emailState, setEmailState, setEmailBody }: Pro
     });
 
     const addPromptsToEmail = () => {
-        setEmailBody(Object.values(emailPrompts)
-            .filter((o) => !!o)
-            .join("\n\n"));
+        setEmailBody(
+            Object.values(emailPrompts)
+                .filter((o) => !!o)
+                .join("\n\n")
+        );
 
         setEmailState("reviewing");
-    }
+    };
 
     return (
         <>
@@ -33,9 +35,7 @@ export default function Prompts({ emailState, setEmailState, setEmailBody }: Pro
                         <Form.Label>Salutation</Form.Label>
                         <Form.Control
                             value={emailPrompts.salutation}
-                            onChange={(e) =>
-                                setEmailPrompts({ ...emailPrompts, salutation: e.currentTarget.value })
-                            }
+                            onChange={(e) => setEmailPrompts({ ...emailPrompts, salutation: e.currentTarget.value })}
                             disabled={emailState !== "prompting"}
                             placeholder="Dear..."
                         />
@@ -50,9 +50,7 @@ export default function Prompts({ emailState, setEmailState, setEmailBody }: Pro
                             as="textarea"
                             rows={4}
                             value={emailPrompts.policyAsk}
-                            onChange={(e) =>
-                                setEmailPrompts({ ...emailPrompts, policyAsk: e.currentTarget.value })
-                            }
+                            onChange={(e) => setEmailPrompts({ ...emailPrompts, policyAsk: e.currentTarget.value })}
                             disabled={emailState !== "prompting"}
                             placeholder="I am writing to urge you to..."
                         />
@@ -67,9 +65,7 @@ export default function Prompts({ emailState, setEmailState, setEmailBody }: Pro
                             as="textarea"
                             rows={4}
                             value={emailPrompts.whyItMatters}
-                            onChange={(e) =>
-                                setEmailPrompts({ ...emailPrompts, whyItMatters: e.currentTarget.value })
-                            }
+                            onChange={(e) => setEmailPrompts({ ...emailPrompts, whyItMatters: e.currentTarget.value })}
                             disabled={emailState !== "prompting"}
                             placeholder="This policy would..."
                         />
@@ -84,9 +80,7 @@ export default function Prompts({ emailState, setEmailState, setEmailBody }: Pro
                             as="textarea"
                             rows={4}
                             value={emailPrompts.whyYouCare}
-                            onChange={(e) =>
-                                setEmailPrompts({ ...emailPrompts, whyYouCare: e.currentTarget.value })
-                            }
+                            onChange={(e) => setEmailPrompts({ ...emailPrompts, whyYouCare: e.currentTarget.value })}
                             disabled={emailState !== "prompting"}
                             placeholder="As a constituent I am concerned because..."
                         />
@@ -134,5 +128,6 @@ export default function Prompts({ emailState, setEmailState, setEmailBody }: Pro
                     </Button>
                 </Col>
             </Row>
-        </>)
+        </>
+    );
 }
