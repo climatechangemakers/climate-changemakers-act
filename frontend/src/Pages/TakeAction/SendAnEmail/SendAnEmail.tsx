@@ -9,6 +9,7 @@ import { Accordion, Button, Col, Form, Row } from "react-bootstrap";
 import Select, { MultiValue } from "react-select";
 import useSWR from "swr";
 import emailIcon from "./email-icon.svg";
+import Prompts from "./Prompts";
 
 type Props = {
     actionInfo: ActionInfo;
@@ -41,29 +42,14 @@ export default function SendAnEmail({
         body: "",
         selectedLocTopics: [] as MultiValue<{ value: string; label: string }>,
     });
-    const [emailPrompts, setEmailPrompts] = useState({
-        salutation: "",
-        policyAsk: "",
-        whyItMatters: "",
-        whyYouCare: "",
-        reiteratePolicyAsk: "",
-    });
     const [sendEmailError, setSendEmailError] = useState("");
     const [emailState, setEmailState] = useState<"titleing" | "prompting" | "reviewing" | "done">("titleing");
 
     useEffect(() => {
         emailState === "prompting" && scrollToId("email_prompts");
-        if (emailState === "reviewing") {
-            setEmailInfo((info) => ({
-                ...info,
-                body: Object.values(emailPrompts)
-                    .filter((o) => !!o)
-                    .join("\n\n"),
-            }));
-            scrollToId("review_email");
-        }
+        emailState === "reviewing" && scrollToId("review_email");
         emailState === "done" && setIsEmailSent(true);
-    }, [emailState, emailPrompts, setIsEmailSent]);
+    }, [emailState, setIsEmailSent]);
 
     const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -241,18 +227,16 @@ export default function SendAnEmail({
                 <Row className="mt-2 mb-4 pb-2">
                     <Col>
                         <Button
-                            type="submit"
                             variant="secondary"
                             className="w-100"
                             disabled={emailState !== "titleing"}
                             onClick={() => setEmailState("done")}
                         >
-                            Skip Email
+                            Skip to Call
                         </Button>
                     </Col>
                     <Col>
                         <Button
-                            type="submit"
                             variant="secondary"
                             className="w-100"
                             disabled={emailState !== "titleing"}
@@ -265,7 +249,6 @@ export default function SendAnEmail({
                     </Col>
                     <Col>
                         <Button
-                            type="submit"
                             className="w-100 text-dark"
                             disabled={emailState !== "titleing"}
                             onClick={() => {
@@ -277,117 +260,7 @@ export default function SendAnEmail({
                     </Col>
                 </Row>
                 {emailState !== "titleing" && (
-                    <>
-                        <hr id="email_prompts" />
-                        <Row>
-                            <Col lg="4">
-                                <Form.Group className="mb-3 h-100" controlId="emailForm.salutation">
-                                    <Form.Label>Salutation</Form.Label>
-                                    <Form.Control
-                                        value={emailPrompts.salutation}
-                                        onChange={(e) =>
-                                            setEmailPrompts({ ...emailPrompts, salutation: e.currentTarget.value })
-                                        }
-                                        disabled={emailState !== "prompting"}
-                                        placeholder="Dear..."
-                                    />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs="12">
-                                <Form.Group className="mb-3 h-100" controlId="emailForm.policyAsk">
-                                    <Form.Label>Policy Ask</Form.Label>
-                                    <Form.Control
-                                        as="textarea"
-                                        rows={4}
-                                        value={emailPrompts.policyAsk}
-                                        onChange={(e) =>
-                                            setEmailPrompts({ ...emailPrompts, policyAsk: e.currentTarget.value })
-                                        }
-                                        disabled={emailState !== "prompting"}
-                                        placeholder="I am writing to urge you to..."
-                                    />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs="12">
-                                <Form.Group className="mb-3 h-100" controlId="emailForm.whyItMatters">
-                                    <Form.Label>Why It Matters</Form.Label>
-                                    <Form.Control
-                                        as="textarea"
-                                        rows={4}
-                                        value={emailPrompts.whyItMatters}
-                                        onChange={(e) =>
-                                            setEmailPrompts({ ...emailPrompts, whyItMatters: e.currentTarget.value })
-                                        }
-                                        disabled={emailState !== "prompting"}
-                                        placeholder="This policy would..."
-                                    />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs="12">
-                                <Form.Group className="mb-3 h-100" controlId="emailForm.whyYouCare">
-                                    <Form.Label>Why You Care</Form.Label>
-                                    <Form.Control
-                                        as="textarea"
-                                        rows={4}
-                                        value={emailPrompts.whyYouCare}
-                                        onChange={(e) =>
-                                            setEmailPrompts({ ...emailPrompts, whyYouCare: e.currentTarget.value })
-                                        }
-                                        disabled={emailState !== "prompting"}
-                                        placeholder="As a constituent I am concerned because..."
-                                    />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs="12">
-                                <Form.Group className="mb-3 h-100" controlId="emailForm.reiteratePolicyAsk">
-                                    <Form.Label>Reiterate Policy Ask</Form.Label>
-                                    <Form.Control
-                                        as="textarea"
-                                        rows={4}
-                                        value={emailPrompts.reiteratePolicyAsk}
-                                        onChange={(e) =>
-                                            setEmailPrompts({
-                                                ...emailPrompts,
-                                                reiteratePolicyAsk: e.currentTarget.value,
-                                            })
-                                        }
-                                        disabled={emailState !== "prompting"}
-                                        placeholder="As my elected representative, I urge you to take action by..."
-                                    />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row className="mt-2 mb-4 pb-2">
-                            <Col>
-                                <Button
-                                    variant="secondary"
-                                    className="w-100"
-                                    disabled={emailState !== "prompting"}
-                                    onClick={() => setEmailState("reviewing")}
-                                >
-                                    Draft from Scratch
-                                </Button>
-                            </Col>
-                            <Col>
-                                <Button
-                                    className="w-100 text-dark"
-                                    disabled={emailState !== "prompting"}
-                                    onClick={() => setEmailState("reviewing")}
-                                >
-                                    Review Email
-                                </Button>
-                            </Col>
-                        </Row>
-                    </>
-                )}
+                    <Prompts emailState={emailState} setEmailState={setEmailState} setEmailBody={(body: string) => setEmailInfo(info => ({ ...info, body }))} />)}
                 {(emailState === "reviewing" || emailState === "done") && (
                     <>
                         <hr id="review_email" />
