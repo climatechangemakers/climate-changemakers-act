@@ -269,7 +269,7 @@ export default function SendAnEmail({
                                 <Form.Label>Your Email</Form.Label>
                                 <Form.Control
                                     as="textarea"
-                                    rows={8}
+                                    rows={9}
                                     placeholder="Write your why..."
                                     value={emailInfo.body}
                                     onChange={(e) => setEmailInfo({ ...emailInfo, body: e.currentTarget.value })}
