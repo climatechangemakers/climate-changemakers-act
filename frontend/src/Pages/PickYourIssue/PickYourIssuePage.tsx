@@ -21,7 +21,7 @@ export default function PickYourIssuePage() {
 
     useEffect(() => {
         setSelectedIssue(undefined);
-    }, []);
+    }, [setSelectedIssue]);
 
     const handleIssueSelect = (issue: Issue) => {
         setSelectedIssue(issue);

@@ -1,9 +1,10 @@
 import { ErrorResponse, fetcher, sendEmailAPI } from "common/api/ClimateChangemakersAPI";
 import ErrorMessage from "common/Components/ErrorMessage";
+import { scrollToId } from "common/lib/scrollToId";
 import { ActionInfo } from "common/models/ActionInfo";
 import { FormInfo } from "common/models/FormInfo";
 import { Issue } from "common/models/Issue";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Accordion, Button, Col, Form, Row } from "react-bootstrap";
 import Select, { MultiValue } from "react-select";
 import useSWR from "swr";
@@ -15,9 +16,16 @@ type Props = {
     isEmailSent: boolean;
     setIsEmailSent: (bool: boolean) => void;
     selectedIssue: Issue;
+    setEmailBody: React.Dispatch<React.SetStateAction<string>>
 };
 
-export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEmailSent, selectedIssue }: Props) {
+export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEmailSent, selectedIssue, setEmailBody }: Props) {
+    const { data: prefixes, error: prefixError } = useSWR<string[], ErrorResponse>("/values/prefixes", fetcher);
+    const { data: locTopics, error: locTopicsError } = useSWR<string[], ErrorResponse>(
+        "/values/library-of-congress-topics",
+        fetcher
+    );
+    const formRef = useRef<HTMLFormElement>(null);
     const [emailInfo, setEmailInfo] = useState({
         prefix: "",
         firstName: "",
@@ -26,12 +34,27 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
         body: "",
         selectedLocTopics: [] as MultiValue<{ value: string; label: string }>,
     });
+    const [emailPrompts, setEmailPrompts] = useState({
+        salutation: "",
+        policyAsk: "",
+        whyItMatters: "",
+        whyYouCare: "",
+        reiteratePolicyAsk: ""
+    })
     const [sendEmailError, setSendEmailError] = useState("");
-    const { data: prefixes, error: prefixError } = useSWR<string[], ErrorResponse>("/values/prefixes", fetcher);
-    const { data: locTopics, error: locTopicsError } = useSWR<string[], ErrorResponse>(
-        "/values/library-of-congress-topics",
-        fetcher
-    );
+    const [emailState, setEmailState] = useState<"titleing" | "prompting" | "reviewing" | "done">("titleing");
+
+    useEffect(() => {
+        emailState === "prompting" && scrollToId("email_prompts");
+        if (emailState === "reviewing") {
+            setEmailInfo(info => ({
+                ...info,
+                body: Object.values(emailPrompts).filter(o => !!o).join("\n\n")
+            }))
+            scrollToId("review_email");
+        }
+        emailState === "done" && setIsEmailSent(true);
+    }, [emailState, emailPrompts, setIsEmailSent]);
 
     const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -55,6 +78,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
             setSendEmailError(response?.error ?? "Failed to send email");
             return;
         }
+        setEmailBody(emailInfo.body);
         setIsEmailSent(true);
     };
 
@@ -90,7 +114,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                     </Accordion>
                 </div>
             )}
-            <Form onSubmit={sendEmail}>
+            <Form ref={formRef} onSubmit={sendEmail}>
                 <Row>
                     <Col lg="4">
                         <h3 className="h4">Tips</h3>
@@ -106,19 +130,8 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                 <li key={m}>{m}</li>
                             ))}
                         </ul>
-                        <h3 className="h4">Prompts</h3>
-                        <ul className="fs-6">
-                            {[
-                                "Where are you from and what do you do?",
-                                "Why is this climate issue important to you?",
-                                "What conerns is this issue causing you?",
-                                "How do you think it could be different?",
-                            ].map((m) => (
-                                <li key={m}>{m}</li>
-                            ))}
-                        </ul>
                     </Col>
-                    <Col className="mt-auto" lg="8">
+                    <Col lg="8">
                         <h3 className="h-4">Draft Your Email</h3>
                         <Row>
                             <Col lg="3">
@@ -182,7 +195,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                         <Row>
                             <Col>
                                 <Form.Label>Letter Topic</Form.Label>
-                                <div className="position-relative">
+                                <div className="position-relative mb-3">
                                     <Select
                                         defaultValue={emailInfo.selectedLocTopics}
                                         onChange={(e) => setEmailInfo({ ...emailInfo, selectedLocTopics: e })}
@@ -206,8 +219,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                             style={{
                                                 opacity: 0,
                                                 height: 0,
-                                                top: "calc(100% - 6px)",
-                                                visibility: "hidden",
+                                                top: "calc(100% - 6px)"
                                             }}
                                             required
                                         />
@@ -217,37 +229,177 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                         </Row>
                     </Col>
                 </Row>
-                <Row className="mt-1">
-                    <Form.Group className="mb-3 h-100" controlId="emailForm.body">
-                        <Form.Label>Body</Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            rows={6}
-                            placeholder="Write your why..."
-                            value={emailInfo.body}
-                            onChange={(e) => setEmailInfo({ ...emailInfo, body: e.currentTarget.value })}
-                            disabled={isEmailSent}
-                            required
-                        />
-                    </Form.Group>
-                </Row>
-                <div className="row mt-2">
-                    <div className="col d-flex">
+                <Row className="mt-2 mb-4 pb-2">
+                    <Col>
                         <Button
+                            type="submit"
                             variant="secondary"
                             className="w-100"
-                            disabled={isEmailSent}
-                            onClick={() => setIsEmailSent(true)}
+                            disabled={emailState !== "titleing"}
+                            onClick={() => setEmailState("done")}
                         >
-                            Skip to Call
+                            Skip Email
                         </Button>
-                    </div>
-                    <div className="col d-flex">
-                        <Button type="submit" className="w-100 text-dark" disabled={isEmailSent}>
-                            {!sendEmailError ? "Send Email" : "Try again"}
+                    </Col>
+                    <Col>
+                        <Button
+                            type="submit"
+                            variant="secondary"
+                            className="w-100"
+                            disabled={emailState !== "titleing"}
+                            onClick={() => { if (formRef.current!.reportValidity()) setEmailState("reviewing") }}
+                        >
+                            Draft from Scratch
                         </Button>
-                    </div>
-                </div>
+                    </Col>
+                    <Col>
+                        <Button type="submit" className="w-100 text-dark" disabled={emailState !== "titleing"} onClick={() => {
+                            if (formRef.current!.reportValidity()) setEmailState("prompting")
+                        }}>
+                            Draft with Prompts
+                        </Button>
+                    </Col>
+                </Row>
+                {emailState !== "titleing" &&
+                    <>
+                        <hr id="email_prompts" />
+                        <Row>
+                            <Col lg="4">
+                                <Form.Group className="mb-3 h-100" controlId="emailForm.salutation">
+                                    <Form.Label>Salutation</Form.Label>
+                                    <Form.Control
+                                        value={emailPrompts.salutation}
+                                        onChange={(e) =>
+                                            setEmailPrompts({ ...emailPrompts, salutation: e.currentTarget.value })
+                                        }
+                                        disabled={emailState !== "prompting"}
+                                        placeholder="Dear..."
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs="12">
+                                <Form.Group className="mb-3 h-100" controlId="emailForm.policyAsk">
+                                    <Form.Label>Policy Ask</Form.Label>
+                                    <Form.Control
+                                        as="textarea"
+                                        rows={4}
+                                        value={emailPrompts.policyAsk}
+                                        onChange={(e) =>
+                                            setEmailPrompts({ ...emailPrompts, policyAsk: e.currentTarget.value })
+                                        }
+                                        disabled={emailState !== "prompting"}
+                                        placeholder="I am writing to urge you to..."
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs="12">
+                                <Form.Group className="mb-3 h-100" controlId="emailForm.whyItMatters">
+                                    <Form.Label>Why It Matters</Form.Label>
+                                    <Form.Control
+                                        as="textarea"
+                                        rows={4}
+                                        value={emailPrompts.whyItMatters}
+                                        onChange={(e) =>
+                                            setEmailPrompts({ ...emailPrompts, whyItMatters: e.currentTarget.value })
+                                        }
+                                        disabled={emailState !== "prompting"}
+                                        placeholder="This policy would..."
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs="12">
+                                <Form.Group className="mb-3 h-100" controlId="emailForm.whyYouCare">
+                                    <Form.Label>Why You Care</Form.Label>
+                                    <Form.Control
+                                        as="textarea"
+                                        rows={4}
+                                        value={emailPrompts.whyYouCare}
+                                        onChange={(e) =>
+                                            setEmailPrompts({ ...emailPrompts, whyYouCare: e.currentTarget.value })
+                                        }
+                                        disabled={emailState !== "prompting"}
+                                        placeholder="As a constituent I am concerned because..."
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs="12">
+                                <Form.Group className="mb-3 h-100" controlId="emailForm.reiteratePolicyAsk">
+                                    <Form.Label>Reiterate Policy Ask</Form.Label>
+                                    <Form.Control
+                                        as="textarea"
+                                        rows={4}
+                                        value={emailPrompts.reiteratePolicyAsk}
+                                        onChange={(e) =>
+                                            setEmailPrompts({ ...emailPrompts, reiteratePolicyAsk: e.currentTarget.value })
+                                        }
+                                        disabled={emailState !== "prompting"}
+                                        placeholder="As my elected representative, I urge you to take action by..."
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row className="mt-2 mb-4 pb-2">
+                            <Col>
+                                <Button
+                                    variant="secondary"
+                                    className="w-100"
+                                    disabled={emailState !== "prompting"}
+                                    onClick={() => setEmailState("reviewing")}
+                                >
+                                    Draft from Scratch
+                                </Button>
+                            </Col>
+                            <Col>
+                                <Button className="w-100 text-dark" disabled={emailState !== "prompting"} onClick={() => setEmailState("reviewing")}>
+                                    Review Email
+                                </Button>
+                            </Col>
+                        </Row>
+                    </>
+                }
+                {(emailState === "reviewing" || emailState === "done") &&
+                    <>
+                        <hr id="review_email" />
+                        <Row className="mt-4">
+                            <Form.Group className="mb-3 h-100" controlId="emailForm.body">
+                                <Form.Label>Your Email</Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={8}
+                                    placeholder="Write your why..."
+                                    value={emailInfo.body}
+                                    onChange={(e) => setEmailInfo({ ...emailInfo, body: e.currentTarget.value })}
+                                    disabled={isEmailSent}
+                                    required={emailState === "reviewing"}
+                                />
+                            </Form.Group>
+                        </Row>
+                        <Row className="mt-2">
+                            <Col>
+                                <Button
+                                    variant="secondary"
+                                    className="w-100"
+                                    disabled={isEmailSent}
+                                    onClick={() => setIsEmailSent(true)}
+                                >
+                                    Skip to Call
+                                </Button>
+                            </Col>
+                            <Col>
+                                <Button type="submit" className="w-100 text-dark" disabled={isEmailSent}>
+                                    {!sendEmailError ? "Send Email" : "Try again"}
+                                </Button>
+                            </Col>
+                        </Row>
+                    </>}
             </Form>
             <ErrorMessage message={error} />
         </div>
