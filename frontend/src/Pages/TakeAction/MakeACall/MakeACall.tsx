@@ -12,7 +12,7 @@ type Props = {
     emailAddress: string;
     isPhoneCallMade: boolean;
     setIsPhoneCallMade: (bool: boolean) => void;
-    emailBody: string
+    emailBody: string;
 };
 
 export default function MakeACall({
@@ -21,7 +21,7 @@ export default function MakeACall({
     emailAddress,
     isPhoneCallMade,
     setIsPhoneCallMade,
-    emailBody
+    emailBody,
 }: Props) {
     const [phoneNumbersCalled, setPhoneNumbersCalled] = useState<string[]>([]);
     const [error, setError] = useState("");
@@ -46,15 +46,14 @@ export default function MakeACall({
                 plenty of ‘fill-in-the-blank’ spaces, so you should weave in your freshly-drafted ‘why’ to make your
                 message stand out.
             </p>
-            {emailBody &&
+            {emailBody && (
                 <>
                     <h4>Script</h4>
                     <Card className="mb-4">
-                        <Card.Body className="text-dark">
-                            {emailBody}
-                        </Card.Body>
+                        <Card.Body className="text-dark">{emailBody}</Card.Body>
                     </Card>
-                </>}
+                </>
+            )}
             <Row className="legislator-max-width m-auto mb-2 d-flex flex-md-row flex-column justify-content-center text-center">
                 {actionInfo.legislators.map((legislator, i) => (
                     <Col className="d-flex justify-content-center" xs="12" md="4" key={i}>

@@ -16,10 +16,17 @@ type Props = {
     isEmailSent: boolean;
     setIsEmailSent: (bool: boolean) => void;
     selectedIssue: Issue;
-    setEmailBody: React.Dispatch<React.SetStateAction<string>>
+    setEmailBody: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEmailSent, selectedIssue, setEmailBody }: Props) {
+export default function SendAnEmail({
+    actionInfo,
+    formInfo,
+    isEmailSent,
+    setIsEmailSent,
+    selectedIssue,
+    setEmailBody,
+}: Props) {
     const { data: prefixes, error: prefixError } = useSWR<string[], ErrorResponse>("/values/prefixes", fetcher);
     const { data: locTopics, error: locTopicsError } = useSWR<string[], ErrorResponse>(
         "/values/library-of-congress-topics",
@@ -39,18 +46,20 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
         policyAsk: "",
         whyItMatters: "",
         whyYouCare: "",
-        reiteratePolicyAsk: ""
-    })
+        reiteratePolicyAsk: "",
+    });
     const [sendEmailError, setSendEmailError] = useState("");
     const [emailState, setEmailState] = useState<"titleing" | "prompting" | "reviewing" | "done">("titleing");
 
     useEffect(() => {
         emailState === "prompting" && scrollToId("email_prompts");
         if (emailState === "reviewing") {
-            setEmailInfo(info => ({
+            setEmailInfo((info) => ({
                 ...info,
-                body: Object.values(emailPrompts).filter(o => !!o).join("\n\n")
-            }))
+                body: Object.values(emailPrompts)
+                    .filter((o) => !!o)
+                    .join("\n\n"),
+            }));
             scrollToId("review_email");
         }
         emailState === "done" && setIsEmailSent(true);
@@ -219,7 +228,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                             style={{
                                                 opacity: 0,
                                                 height: 0,
-                                                top: "calc(100% - 6px)"
+                                                top: "calc(100% - 6px)",
                                             }}
                                             required
                                         />
@@ -247,20 +256,27 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                             variant="secondary"
                             className="w-100"
                             disabled={emailState !== "titleing"}
-                            onClick={() => { if (formRef.current!.reportValidity()) setEmailState("reviewing") }}
+                            onClick={() => {
+                                if (formRef.current!.reportValidity()) setEmailState("reviewing");
+                            }}
                         >
                             Draft from Scratch
                         </Button>
                     </Col>
                     <Col>
-                        <Button type="submit" className="w-100 text-dark" disabled={emailState !== "titleing"} onClick={() => {
-                            if (formRef.current!.reportValidity()) setEmailState("prompting")
-                        }}>
+                        <Button
+                            type="submit"
+                            className="w-100 text-dark"
+                            disabled={emailState !== "titleing"}
+                            onClick={() => {
+                                if (formRef.current!.reportValidity()) setEmailState("prompting");
+                            }}
+                        >
                             Draft with Prompts
                         </Button>
                     </Col>
                 </Row>
-                {emailState !== "titleing" &&
+                {emailState !== "titleing" && (
                     <>
                         <hr id="email_prompts" />
                         <Row>
@@ -338,7 +354,10 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                         rows={4}
                                         value={emailPrompts.reiteratePolicyAsk}
                                         onChange={(e) =>
-                                            setEmailPrompts({ ...emailPrompts, reiteratePolicyAsk: e.currentTarget.value })
+                                            setEmailPrompts({
+                                                ...emailPrompts,
+                                                reiteratePolicyAsk: e.currentTarget.value,
+                                            })
                                         }
                                         disabled={emailState !== "prompting"}
                                         placeholder="As my elected representative, I urge you to take action by..."
@@ -358,14 +377,18 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                 </Button>
                             </Col>
                             <Col>
-                                <Button className="w-100 text-dark" disabled={emailState !== "prompting"} onClick={() => setEmailState("reviewing")}>
+                                <Button
+                                    className="w-100 text-dark"
+                                    disabled={emailState !== "prompting"}
+                                    onClick={() => setEmailState("reviewing")}
+                                >
                                     Review Email
                                 </Button>
                             </Col>
                         </Row>
                     </>
-                }
-                {(emailState === "reviewing" || emailState === "done") &&
+                )}
+                {(emailState === "reviewing" || emailState === "done") && (
                     <>
                         <hr id="review_email" />
                         <Row className="mt-4">
@@ -399,7 +422,8 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                 </Button>
                             </Col>
                         </Row>
-                    </>}
+                    </>
+                )}
             </Form>
             <ErrorMessage message={error} />
         </div>
