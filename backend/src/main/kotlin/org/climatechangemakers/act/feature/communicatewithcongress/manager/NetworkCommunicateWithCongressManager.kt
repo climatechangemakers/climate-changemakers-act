@@ -3,6 +3,7 @@ package org.climatechangemakers.act.feature.communicatewithcongress.manager
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import okio.ByteString
 import org.climatechangemakers.act.common.model.Result
 import org.climatechangemakers.act.common.model.Success
 import org.climatechangemakers.act.common.model.Failure
@@ -18,6 +19,7 @@ import org.climatechangemakers.act.feature.communicatewithcongress.service.Senat
 import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongressManager
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
 import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
+import org.climatechangemakers.act.feature.issue.manager.IssueManager
 import org.slf4j.Logger
 import retrofit2.Response
 import javax.inject.Inject
@@ -27,6 +29,7 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
   private val houseService: HouseCommunicateWithCongressService,
   private val memberOfCongressManager: MemberOfCongressManager,
   private val actionTrackerManager: ActionTrackerManager,
+  private val issueManager: IssueManager,
   private val logger: Logger,
 ) : CommunicateWithCongressManager {
 
@@ -64,7 +67,7 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
     emailRequest: SendEmailRequest,
   ): Response<Unit> {
     val cwcRequest = CommunicateWithCogressRequest(
-      delivery = Delivery(campaignId = "campaign Id"), // TODO(kcianfarini)
+      delivery = Delivery(campaignId = getCampaignIdForIssue(emailRequest.relatedIssueId)),
       recipient = Recipient(officeCode = memberOfConress.cwcOfficeCode!!),
       constituent = Constituent(
         prefix = emailRequest.title,
@@ -88,5 +91,11 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
       LegislatorRole.Senator -> senateService.contact(cwcRequest)
       LegislatorRole.Representative -> houseService.contact(cwcRequest)
     }
+  }
+
+  private suspend fun getCampaignIdForIssue(issueId: Long): String {
+    // TODO(kcianfarini) This value should live in the DB, but currently SQLDelight doesn't support the type BYTEA
+    val issueTitle = issueManager.getIssueTitleForId(issueId)
+    return ByteString.encodeUtf8(issueTitle).sha256().hex()
   }
 }

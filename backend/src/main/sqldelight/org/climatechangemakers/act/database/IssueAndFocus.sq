@@ -6,6 +6,11 @@ SELECT issue.*,
    END AS is_focused
 FROM issue;
 
+selectTitleForId:
+SELECT title
+FROM issue_and_focus
+WHERE id = :issueId;
+
 selectFocused:
 SELECT id, title, image_url, description
 FROM issue_and_focus

@@ -119,6 +119,13 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
     assertEquals(PreComposedTweetResponse("This is a tweet to @handle"), tweet)
   }
 
+  @Test fun `getting issue title by id gets correct result`() = suspendTest {
+    driver.insertIssue(1, "issue", "This is a tweet to %s", "url.com")
+    driver.insertIssue(2, "issue 2", "This is a tweet to %s", "url.com")
+    val issueTitle = issueManager.getIssueTitleForId(2)
+    assertEquals("issue 2", issueTitle)
+  }
+
   private fun insertExampleWhyStatement(issueId: Long, statement: String) {
     driver.execute(0, "INSERT INTO example_issue_why_statement(issue_id, statement) VALUES(?,?)", 2) {
       bindLong(1, issueId)
