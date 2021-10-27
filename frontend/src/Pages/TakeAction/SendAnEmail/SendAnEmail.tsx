@@ -2,6 +2,7 @@ import { ErrorResponse, fetcher, sendEmailAPI } from "common/api/ClimateChangema
 import ErrorMessage from "common/Components/ErrorMessage";
 import { scrollToId } from "common/lib/scrollToId";
 import { ActionInfo } from "common/models/ActionInfo";
+import { EmailState } from "common/models/EmailState";
 import { FormInfo } from "common/models/FormInfo";
 import { Issue } from "common/models/Issue";
 import { useEffect, useRef, useState } from "react";
@@ -43,7 +44,7 @@ export default function SendAnEmail({
         selectedLocTopics: [] as MultiValue<{ value: string; label: string }>,
     });
     const [sendEmailError, setSendEmailError] = useState("");
-    const [emailState, setEmailState] = useState<"titleing" | "prompting" | "reviewing" | "done">("titleing");
+    const [emailState, setEmailState] = useState<EmailState>("titleing");
 
     useEffect(() => {
         emailState === "prompting" && scrollToId("email_prompts");

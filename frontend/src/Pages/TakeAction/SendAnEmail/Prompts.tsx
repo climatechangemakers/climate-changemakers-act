@@ -1,9 +1,10 @@
+import { EmailState } from "common/models/EmailState";
 import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
 type Props = {
-    emailState: "prompting" | "reviewing" | "done";
-    setEmailState: React.Dispatch<React.SetStateAction<"titleing" | "prompting" | "reviewing" | "done">>;
+    emailState: EmailState;
+    setEmailState: React.Dispatch<React.SetStateAction<EmailState>>;
     setEmailBody: (body: string) => void;
 };
 
