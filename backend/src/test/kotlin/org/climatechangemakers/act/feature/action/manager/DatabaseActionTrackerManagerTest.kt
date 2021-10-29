@@ -14,7 +14,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
   private val manager = DatabaseActionTrackerManager(database, EmptyCoroutineContext)
 
   @Test fun `email action entries are recorded in both tables`() = suspendTest {
-    driver.insertIssue(1, "this is an issue", "tweet", "url.com")
+    val id = driver.insertIssue("this is an issue", "tweet", "url.com")
     driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "hello"))
     manager.trackActionSendEmail("foo@foo.com", "hello", 1)
 
@@ -27,7 +27,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
     )
 
     assertEquals(
-      1,
+      id,
       driver.executeQuery(0, "SELECT action_contact_legislator_id FROM action_email_legislator", 0).let {
         it.next()
         it.getLong(0)
@@ -36,12 +36,12 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
   }
 
   @Test fun `recording a legislator call insert into both tables`() = suspendTest {
-    driver.insertIssue(1, "issue", "tweet", "url.com")
+    val id = driver.insertIssue("issue", "tweet", "url.com")
     driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "bioguide"))
     manager.trackActionPhoneCall("foo@foo.com", "bioguide", 1, "8675309")
 
     assertEquals(
-      1,
+      id,
       driver.executeQuery(0, "SELECT COUNT(*) FROM action_contact_legislator", 0).let {
         it.next()
         it.getLong(0)
@@ -59,7 +59,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
 
   @OptIn(ExperimentalStdlibApi::class)
   @Test fun `recording a tweet inserts into both tables`() = suspendTest {
-    driver.insertIssue(1, "issue", "tweet", "url.com")
+    val id = driver.insertIssue("issue", "tweet", "url.com")
     driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "foo"))
     driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "bar"))
     manager.trackTweet("foo@foo.com", listOf("foo", "bar"), 1)

@@ -6,7 +6,9 @@ COPY . /appbuild
 
 WORKDIR /appbuild
 
-RUN ./gradlew clean build -x test --no-daemon
+# TODO(kcianfarini) this is a bug in SQLDelight, the verifyMainDatabaseMigration task should not run.
+# sqldelight github issue 2654
+RUN ./gradlew clean build -x test -x verifyMainDatabaseMigration --no-daemon
 # End App Building phase --------
 
 # Container setup --------
