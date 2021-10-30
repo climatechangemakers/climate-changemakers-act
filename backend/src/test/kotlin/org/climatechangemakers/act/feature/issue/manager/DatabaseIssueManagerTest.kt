@@ -34,15 +34,15 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   private val issueManager = DatabaseIssueManager(fakeMemberOfCongressManager, database, EmptyCoroutineContext)
 
   @Test fun `getting focus issue returns most recently focused item`() = suspendTest {
-    driver.insertIssue(1, "foo", "tweet", "url.com")
-    driver.insertIssue(2, "bar", "tweet", "url.com")
-    insertTalkingPoint(1, "foo talking point", "foo is cool")
-    insertTalkingPoint(2, "bar talking point", "bar is cool")
+    val id1 = driver.insertIssue("foo", "tweet", "url.com")
+    val id2 = driver.insertIssue("bar", "tweet", "url.com")
+    insertTalkingPoint(id1, "foo talking point", "foo is cool")
+    insertTalkingPoint(id2, "bar talking point", "bar is cool")
 
-    focusIssue(1)
+    focusIssue(id1)
     assertEquals(
       Issue(
-        1,
+        id1,
         "foo",
         "url.com",
         "description",
@@ -51,10 +51,10 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
       issueManager.getFocusIssue()
     )
 
-    focusIssue(2)
+    focusIssue(id2)
     assertEquals(
       Issue(
-        2,
+        id2,
         "bar",
         "url.com",
         "description",
@@ -65,16 +65,16 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   }
 
   @Test fun `getting unfocused issues returns correct values`() = suspendTest {
-    driver.insertIssue(1, "foo", "tweet", "url.com")
-    driver.insertIssue(2, "bar", "tweet", "url.com")
-    insertTalkingPoint(1, "foo talking point", "foo is cool")
-    insertTalkingPoint(2, "bar talking point", "bar is cool")
-    focusIssue(1)
+    val id1 = driver.insertIssue("foo", "tweet", "url.com")
+    val id2 = driver.insertIssue("bar", "tweet", "url.com")
+    insertTalkingPoint(id1, "foo talking point", "foo is cool")
+    insertTalkingPoint(id2, "bar talking point", "bar is cool")
+    focusIssue(id1)
 
     assertEquals(
       listOf(
         Issue(
-          2,
+          id2,
           "bar",
           "url.com",
           "description",
@@ -86,24 +86,24 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   }
 
   @Test fun `example statements for issue are correct`() = suspendTest {
-    driver.insertIssue(1, "foo", "tweet", "url.com")
-    driver.insertIssue(2, "bar", "tweet", "url.com")
-    insertExampleWhyStatement(1, "This is correct")
-    insertExampleWhyStatement(2, "this is incorrect")
+    val id1 = driver.insertIssue("foo", "tweet", "url.com")
+    val id2 = driver.insertIssue("bar", "tweet", "url.com")
+    insertExampleWhyStatement(id1, "This is correct")
+    insertExampleWhyStatement(id2, "this is incorrect")
 
     assertEquals(
       listOf("This is correct"),
-      issueManager.getExampleStatementsForIssue(1),
+      issueManager.getExampleStatementsForIssue(id1),
     )
   }
 
   @Test fun `example statements query produces max 5 results`() = suspendTest {
-    driver.insertIssue(1, "foo", "tweet", "url.com")
-    repeat(10) { insertExampleWhyStatement(1, "$it") }
+    val id1 = driver.insertIssue("foo", "tweet", "url.com")
+    repeat(10) { insertExampleWhyStatement(id1, "$it") }
 
     assertEquals(
       5,
-      issueManager.getExampleStatementsForIssue(1).size,
+      issueManager.getExampleStatementsForIssue(id1).size,
     )
   }
 
@@ -114,16 +114,16 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   }
 
   @Test fun `precomposed tweet is formatted correctly`() = suspendTest {
-    driver.insertIssue(1, "issue", "This is a tweet to %s", "url.com")
-    val tweet = issueManager.getPreComposedTweetForIssue(1, listOf("id"))
+    val id1 = driver.insertIssue("issue", "This is a tweet to %s", "url.com")
+    val tweet = issueManager.getPreComposedTweetForIssue(id1, listOf("id"))
     assertEquals(PreComposedTweetResponse("This is a tweet to @handle"), tweet)
   }
 
   @Test fun `getting issue title by id gets correct result`() = suspendTest {
-    driver.insertIssue(1, "issue", "This is a tweet to %s", "url.com")
-    driver.insertIssue(2, "issue 2", "This is a tweet to %s", "url.com")
-    val issueTitle = issueManager.getIssueTitleForId(2)
-    assertEquals("issue 2", issueTitle)
+    driver.insertIssue("foo", "tweet", "url.com")
+    val id2 = driver.insertIssue("bar", "tweet", "url.com")
+    val issueTitle = issueManager.getIssueTitleForId(id2)
+    assertEquals("bar", issueTitle)
   }
 
   private fun insertExampleWhyStatement(issueId: Long, statement: String) {

@@ -7,19 +7,19 @@ import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
 import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
 
 fun SqlDriver.insertIssue(
-  id: Long,
   title: String,
   precomposedTweet: String,
   imageUrl: String,
   description: String = "description",
-) {
-  execute(0, "INSERT INTO issue(id, title, precomposed_tweet_template, image_url, description) VALUES(?,?,?,?,?)", 2) {
-    bindLong(1, id)
-    bindString(2, title)
-    bindString(3, precomposedTweet)
-    bindString(4, imageUrl)
-    bindString(5, description)
+): Long {
+  val cursor = executeQuery(0, "INSERT INTO issue(title, precomposed_tweet_template, image_url, description) VALUES(?,?,?,?) RETURNING id;", 4) {
+    bindString(1, title)
+    bindString(2, precomposedTweet)
+    bindString(3, imageUrl)
+    bindString(4, description)
   }
+
+  return checkNotNull(cursor.also { it.next() }.getLong(0))
 }
 
 fun SqlDriver.insertMemberOfCongress(member: MemberOfCongress) = execute(

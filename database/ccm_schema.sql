@@ -616,19 +616,14 @@ CREATE TABLE public.action_contact_legislator (
 -- Name: action_contact_legislator_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.action_contact_legislator_id_seq
+ALTER TABLE public.action_contact_legislator ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.action_contact_legislator_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: action_contact_legislator_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.action_contact_legislator_id_seq OWNED BY public.action_contact_legislator.id;
+    CACHE 1
+);
 
 
 --
@@ -761,19 +756,14 @@ CREATE VIEW public.issue_and_focus AS
 -- Name: issue_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.issue_id_seq
+ALTER TABLE public.issue ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.issue_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: issue_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.issue_id_seq OWNED BY public.issue.id;
+    CACHE 1
+);
 
 
 --
@@ -869,26 +859,14 @@ CREATE TABLE public.talking_point (
 -- Name: talking_point_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.talking_point_id_seq
+ALTER TABLE public.talking_point ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.talking_point_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: talking_point_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.talking_point_id_seq OWNED BY public.talking_point.id;
-
-
---
--- Name: action_contact_legislator id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.action_contact_legislator ALTER COLUMN id SET DEFAULT nextval('public.action_contact_legislator_id_seq'::regclass);
+    CACHE 1
+);
 
 
 --
@@ -896,20 +874,6 @@ ALTER TABLE ONLY public.action_contact_legislator ALTER COLUMN id SET DEFAULT ne
 --
 
 ALTER TABLE ONLY public.hoa_events ALTER COLUMN id SET DEFAULT nextval('public.hoa_events_id_seq'::regclass);
-
-
---
--- Name: issue id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.issue ALTER COLUMN id SET DEFAULT nextval('public.issue_id_seq'::regclass);
-
-
---
--- Name: talking_point id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.talking_point ALTER COLUMN id SET DEFAULT nextval('public.talking_point_id_seq'::regclass);
 
 
 --
@@ -2114,7 +2078,7 @@ COPY public.example_issue_why_statement (issue_id, statement) FROM stdin;
 --
 
 COPY public.focus_issue (issue_id, focused_at) FROM stdin;
-2	2021-09-07 12:19:46.258849
+1	2021-10-29 16:21:20.285411
 \.
 
 
@@ -2123,10 +2087,10 @@ COPY public.focus_issue (issue_id, focused_at) FROM stdin;
 --
 
 COPY public.issue (id, title, precomposed_tweet_template, image_url, description) FROM stdin;
-2	This is the focus issue	This is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg	This is a description of the issue
-4	This is not a focus issue	This is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg	This is a description of the issue
-5	This is also not a focus issue	This is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg	This is a description of the issue
-6	this is some random issue that might one day be focused	This is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg	This is a description of the issue
+1	This is the focus issue	this is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg	This is an issue description
+2	This is not the focus issue	this is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg	This is an issue description
+3	This is also not the focus issue	this is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg	This is an issue description
+4	This is some random issue which might one day be focused	this is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg	This is an issue description
 \.
 
 
@@ -3627,8 +3591,8 @@ E000071	Jake Ellzey	rep	TX	6	Republican	202-225-2002	RepEllzey	HTX06
 --
 
 COPY public.talking_point (id, title, issue_id, content) FROM stdin;
-2	Talking point 1	2	<b>This is bold</b
-3	Talking point 2	2	<em>This is italics</em>
+1	Bold talking point	1	<b>This is bold</b>
+2	Italics talking point	1	<em>This is italics</em>
 \.
 
 
@@ -3636,14 +3600,14 @@ COPY public.talking_point (id, title, issue_id, content) FROM stdin;
 -- Name: issue_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.issue_id_seq', 6, true);
+SELECT pg_catalog.setval('public.issue_id_seq', 4, true);
 
 
 --
 -- Name: talking_point_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.talking_point_id_seq', 3, true);
+SELECT pg_catalog.setval('public.talking_point_id_seq', 2, true);
 
 
 --
@@ -3727,6 +3691,14 @@ ALTER TABLE ONLY public.action_call_legislator
 
 
 --
+-- Name: action_contact_legislator action_contact_legislator_contacted_bioguide_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.action_contact_legislator
+    ADD CONSTRAINT action_contact_legislator_contacted_bioguide_id_fkey FOREIGN KEY (contacted_bioguide_id) REFERENCES public.member_of_congress(bioguide_id);
+
+
+--
 -- Name: action_contact_legislator action_contact_legislator_issue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3756,14 +3728,6 @@ ALTER TABLE ONLY public.action_tweet_legislator
 
 ALTER TABLE ONLY public.attendance_preview
     ADD CONSTRAINT attendance_preview_airtable_id_fkey FOREIGN KEY (airtable_id) REFERENCES public.contacts(airtable_id) ON DELETE RESTRICT;
-
-
---
--- Name: action_contact_legislator constraint_fk_bioguide; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.action_contact_legislator
-    ADD CONSTRAINT constraint_fk_bioguide FOREIGN KEY (contacted_bioguide_id) REFERENCES public.member_of_congress(bioguide_id);
 
 
 --
