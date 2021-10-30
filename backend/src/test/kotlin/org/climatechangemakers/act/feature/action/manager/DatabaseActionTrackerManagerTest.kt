@@ -16,7 +16,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
   @Test fun `email action entries are recorded in both tables`() = suspendTest {
     val id = driver.insertIssue("this is an issue", "tweet", "url.com")
     driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "hello"))
-    manager.trackActionSendEmail("foo@foo.com", "hello", 1)
+    manager.trackActionSendEmail("foo@foo.com", "hello", id)
 
     assertEquals(
       "hello",
@@ -38,10 +38,10 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
   @Test fun `recording a legislator call insert into both tables`() = suspendTest {
     val id = driver.insertIssue("issue", "tweet", "url.com")
     driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "bioguide"))
-    manager.trackActionPhoneCall("foo@foo.com", "bioguide", 1, "8675309")
+    manager.trackActionPhoneCall("foo@foo.com", "bioguide", id, "8675309")
 
     assertEquals(
-      id,
+      1,
       driver.executeQuery(0, "SELECT COUNT(*) FROM action_contact_legislator", 0).let {
         it.next()
         it.getLong(0)
@@ -62,7 +62,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
     val id = driver.insertIssue("issue", "tweet", "url.com")
     driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "foo"))
     driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "bar"))
-    manager.trackTweet("foo@foo.com", listOf("foo", "bar"), 1)
+    manager.trackTweet("foo@foo.com", listOf("foo", "bar"), id)
 
     assertEquals(
       2,

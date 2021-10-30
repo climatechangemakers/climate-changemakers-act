@@ -103,7 +103,7 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
 
     assertEquals(
       5,
-      issueManager.getExampleStatementsForIssue(1).size,
+      issueManager.getExampleStatementsForIssue(id1).size,
     )
   }
 
