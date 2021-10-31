@@ -1,5 +1,6 @@
 import { ErrorResponse, fetcher, sendEmailAPI } from "common/api/ClimateChangemakersAPI";
 import ErrorMessage from "common/Components/ErrorMessage";
+import HiddenValidationInput from "common/Components/HiddenValidationInput";
 import { scrollToId } from "common/lib/scrollToId";
 import { ActionInfo } from "common/models/ActionInfo";
 import { EmailState } from "common/models/EmailState";
@@ -207,19 +208,7 @@ export default function SendAnEmail({
                                         aria-label="Choose a Letter topic"
                                     />
                                     {/* Added this invisible input to make react-select dropdown simulate HTML validation. Open issue at https://github.com/JedWatson/react-select/issues/4327*/}
-                                    {!emailInfo.selectedLocTopics.length && (
-                                        <input
-                                            className="position-absolute"
-                                            tabIndex={-1}
-                                            autoComplete="off"
-                                            style={{
-                                                opacity: 0,
-                                                height: 0,
-                                                top: "calc(100% - 6px)",
-                                            }}
-                                            required
-                                        />
-                                    )}
+                                    <HiddenValidationInput when={!emailInfo.selectedLocTopics.length} />
                                 </div>
                             </Col>
                         </Row>
@@ -262,7 +251,7 @@ export default function SendAnEmail({
                 </Row>
                 {emailState !== "titleing" && (
                     <Prompts
-                        emailState={emailState}
+                        formRef={formRef}
                         setEmailState={setEmailState}
                         setEmailBody={(body: string) => setEmailInfo((info) => ({ ...info, body }))}
                     />
@@ -272,11 +261,13 @@ export default function SendAnEmail({
                         <hr id="review_email" />
                         <Row className="mt-4">
                             <Form.Group className="mb-3 h-100" controlId="emailForm.body">
-                                <Form.Label>Your Email</Form.Label>
+                                <Form.Label>
+                                    <h3 className="h-4">Your Email</h3>
+                                </Form.Label>
                                 <Form.Control
                                     as="textarea"
                                     rows={9}
-                                    placeholder="Write your why..."
+                                    placeholder="Draft your email"
                                     value={emailInfo.body}
                                     onChange={(e) => setEmailInfo({ ...emailInfo, body: e.currentTarget.value })}
                                     disabled={isEmailSent}
