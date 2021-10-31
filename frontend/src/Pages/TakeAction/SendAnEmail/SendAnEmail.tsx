@@ -1,13 +1,17 @@
 import { ErrorResponse, fetcher, sendEmailAPI } from "common/api/ClimateChangemakersAPI";
 import ErrorMessage from "common/Components/ErrorMessage";
+import HiddenValidationInput from "common/Components/HiddenValidationInput";
+import { scrollToId } from "common/lib/scrollToId";
 import { ActionInfo } from "common/models/ActionInfo";
+import { EmailState } from "common/models/EmailState";
 import { FormInfo } from "common/models/FormInfo";
 import { Issue } from "common/models/Issue";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Accordion, Button, Col, Form, Row } from "react-bootstrap";
 import Select, { MultiValue } from "react-select";
 import useSWR from "swr";
 import emailIcon from "./email-icon.svg";
+import Prompts from "./Prompts";
 
 type Props = {
     actionInfo: ActionInfo;
@@ -15,9 +19,23 @@ type Props = {
     isEmailSent: boolean;
     setIsEmailSent: (bool: boolean) => void;
     selectedIssue: Issue;
+    setEmailBody: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEmailSent, selectedIssue }: Props) {
+export default function SendAnEmail({
+    actionInfo,
+    formInfo,
+    isEmailSent,
+    setIsEmailSent,
+    selectedIssue,
+    setEmailBody,
+}: Props) {
+    const { data: prefixes, error: prefixError } = useSWR<string[], ErrorResponse>("/values/prefixes", fetcher);
+    const { data: locTopics, error: locTopicsError } = useSWR<string[], ErrorResponse>(
+        "/values/library-of-congress-topics",
+        fetcher
+    );
+    const formRef = useRef<HTMLFormElement>(null);
     const [emailInfo, setEmailInfo] = useState({
         prefix: "",
         firstName: "",
@@ -27,11 +45,13 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
         selectedLocTopics: [] as MultiValue<{ value: string; label: string }>,
     });
     const [sendEmailError, setSendEmailError] = useState("");
-    const { data: prefixes, error: prefixError } = useSWR<string[], ErrorResponse>("/values/prefixes", fetcher);
-    const { data: locTopics, error: locTopicsError } = useSWR<string[], ErrorResponse>(
-        "/values/library-of-congress-topics",
-        fetcher
-    );
+    const [emailState, setEmailState] = useState<EmailState>("titleing");
+
+    useEffect(() => {
+        emailState === "prompting" && scrollToId("email_prompts");
+        emailState === "reviewing" && scrollToId("review_email");
+        emailState === "done" && setIsEmailSent(true);
+    }, [emailState, setIsEmailSent]);
 
     const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -55,6 +75,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
             setSendEmailError(response?.error ?? "Failed to send email");
             return;
         }
+        setEmailBody(emailInfo.body);
         setIsEmailSent(true);
     };
 
@@ -90,7 +111,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                     </Accordion>
                 </div>
             )}
-            <Form onSubmit={sendEmail}>
+            <Form ref={formRef} onSubmit={sendEmail}>
                 <Row>
                     <Col lg="4">
                         <h3 className="h4">Tips</h3>
@@ -106,19 +127,8 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                 <li key={m}>{m}</li>
                             ))}
                         </ul>
-                        <h3 className="h4">Prompts</h3>
-                        <ul className="fs-6">
-                            {[
-                                "Where are you from and what do you do?",
-                                "Why is this climate issue important to you?",
-                                "What conerns is this issue causing you?",
-                                "How do you think it could be different?",
-                            ].map((m) => (
-                                <li key={m}>{m}</li>
-                            ))}
-                        </ul>
                     </Col>
-                    <Col className="mt-auto" lg="8">
+                    <Col lg="8">
                         <h3 className="h-4">Draft Your Email</h3>
                         <Row>
                             <Col lg="3">
@@ -182,7 +192,7 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                         <Row>
                             <Col>
                                 <Form.Label>Letter Topic</Form.Label>
-                                <div className="position-relative">
+                                <div className="position-relative mb-3">
                                     <Select
                                         defaultValue={emailInfo.selectedLocTopics}
                                         onChange={(e) => setEmailInfo({ ...emailInfo, selectedLocTopics: e })}
@@ -198,56 +208,92 @@ export default function SendAnEmail({ actionInfo, formInfo, isEmailSent, setIsEm
                                         aria-label="Choose a Letter topic"
                                     />
                                     {/* Added this invisible input to make react-select dropdown simulate HTML validation. Open issue at https://github.com/JedWatson/react-select/issues/4327*/}
-                                    {!emailInfo.selectedLocTopics.length && (
-                                        <input
-                                            className="position-absolute"
-                                            tabIndex={-1}
-                                            autoComplete="off"
-                                            style={{
-                                                opacity: 0,
-                                                height: 0,
-                                                top: "calc(100% - 6px)",
-                                                visibility: "hidden",
-                                            }}
-                                            required
-                                        />
-                                    )}
+                                    <HiddenValidationInput when={!emailInfo.selectedLocTopics.length} />
                                 </div>
                             </Col>
                         </Row>
                     </Col>
                 </Row>
-                <Row className="mt-1">
-                    <Form.Group className="mb-3 h-100" controlId="emailForm.body">
-                        <Form.Label>Body</Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            rows={6}
-                            placeholder="Write your why..."
-                            value={emailInfo.body}
-                            onChange={(e) => setEmailInfo({ ...emailInfo, body: e.currentTarget.value })}
-                            disabled={isEmailSent}
-                            required
-                        />
-                    </Form.Group>
-                </Row>
-                <div className="row mt-2">
-                    <div className="col d-flex">
+                <Row className="mt-2 mb-4 pb-2">
+                    <Col>
                         <Button
                             variant="secondary"
                             className="w-100"
-                            disabled={isEmailSent}
-                            onClick={() => setIsEmailSent(true)}
+                            disabled={emailState !== "titleing"}
+                            onClick={() => setEmailState("done")}
                         >
                             Skip to Call
                         </Button>
-                    </div>
-                    <div className="col d-flex">
-                        <Button type="submit" className="w-100 text-dark" disabled={isEmailSent}>
-                            {!sendEmailError ? "Send Email" : "Try again"}
+                    </Col>
+                    <Col>
+                        <Button
+                            variant="secondary"
+                            className="w-100"
+                            disabled={emailState !== "titleing"}
+                            onClick={() => {
+                                if (formRef.current!.reportValidity()) setEmailState("reviewing");
+                            }}
+                        >
+                            Draft from Scratch
                         </Button>
-                    </div>
-                </div>
+                    </Col>
+                    <Col>
+                        <Button
+                            className="w-100 text-dark"
+                            disabled={emailState !== "titleing"}
+                            onClick={() => {
+                                if (formRef.current!.reportValidity()) setEmailState("prompting");
+                            }}
+                        >
+                            Draft with Prompts
+                        </Button>
+                    </Col>
+                </Row>
+                {emailState !== "titleing" && (
+                    <Prompts
+                        formRef={formRef}
+                        setEmailState={setEmailState}
+                        setEmailBody={(body: string) => setEmailInfo((info) => ({ ...info, body }))}
+                    />
+                )}
+                {(emailState === "reviewing" || emailState === "done") && (
+                    <>
+                        <hr id="review_email" />
+                        <Row className="mt-4">
+                            <Form.Group className="mb-3 h-100" controlId="emailForm.body">
+                                <Form.Label>
+                                    <h3 className="h-4">Your Email</h3>
+                                </Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={9}
+                                    placeholder="Draft your email"
+                                    value={emailInfo.body}
+                                    onChange={(e) => setEmailInfo({ ...emailInfo, body: e.currentTarget.value })}
+                                    disabled={isEmailSent}
+                                    required={emailState === "reviewing"}
+                                />
+                            </Form.Group>
+                        </Row>
+                        <Row className="mt-2">
+                            <Col>
+                                <Button
+                                    variant="secondary"
+                                    className="w-100"
+                                    disabled={isEmailSent}
+                                    onClick={() => setIsEmailSent(true)}
+                                >
+                                    Skip to Call
+                                </Button>
+                            </Col>
+                            <Col>
+                                <Button type="submit" className="w-100 text-dark" disabled={isEmailSent}>
+                                    {!sendEmailError ? "Send Email" : "Try again"}
+                                </Button>
+                            </Col>
+                        </Row>
+                    </>
+                )}
             </Form>
             <ErrorMessage message={error} />
         </div>

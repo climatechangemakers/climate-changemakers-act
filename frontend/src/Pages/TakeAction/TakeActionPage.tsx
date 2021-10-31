@@ -1,6 +1,7 @@
 import { ErrorResponse, fetcher } from "common/api/ClimateChangemakersAPI";
 import Layout from "common/Components/Layout";
 import useSessionStorage from "common/hooks/useSessionStorage";
+import { scrollToId } from "common/lib/scrollToId";
 import { ActionInfo } from "common/models/ActionInfo";
 import { FormInfo } from "common/models/FormInfo";
 import { Issue } from "common/models/Issue";
@@ -19,11 +20,10 @@ export default function TakeActionPage() {
     const [isEmailSent, setIsEmailSent] = useState(false);
     const [isPhoneCallMade, setIsPhoneCallMade] = useState(false);
     const [isSocialPosted, setIsSocialPosted] = useState(false);
+    const [emailBody, setEmailBody] = useState("");
     const [selectedIssue] = useSessionStorage<Issue | undefined>("selectedIssue");
     const [actionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
     const [formInfo] = useSessionStorage<FormInfo | undefined>("formInfo");
-
-    const scrollToId = (id: string) => document.getElementById(id)?.scrollIntoView();
 
     useEffect(() => {
         isEmailSent && scrollToId("make_a_phone_call");
@@ -64,6 +64,7 @@ export default function TakeActionPage() {
                         selectedIssue={selectedIssue}
                         isEmailSent={isEmailSent}
                         setIsEmailSent={setIsEmailSent}
+                        setEmailBody={setEmailBody}
                     />
                     {isEmailSent && (
                         <>
@@ -74,6 +75,7 @@ export default function TakeActionPage() {
                                 emailAddress={formInfo.email}
                                 isPhoneCallMade={isPhoneCallMade}
                                 setIsPhoneCallMade={setIsPhoneCallMade}
+                                emailBody={emailBody}
                             />
                         </>
                     )}
