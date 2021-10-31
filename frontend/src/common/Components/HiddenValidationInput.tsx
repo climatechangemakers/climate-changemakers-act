@@ -1,12 +1,13 @@
 type Props = {
     when: boolean;
     message?: string;
-}
+};
 
 export default function HiddenValidationInput({ when, message }: Props) {
-    return (!when
-        ? <></>
-        : <input
+    return !when ? (
+        <></>
+    ) : (
+        <input
             className="position-absolute"
             tabIndex={-1}
             autoComplete="off"
@@ -19,5 +20,5 @@ export default function HiddenValidationInput({ when, message }: Props) {
             onInvalid={(e: React.ChangeEvent<HTMLInputElement>) => message && e.target.setCustomValidity(message)}
             required
         />
-    )
+    );
 }

@@ -22,11 +22,7 @@ export default function Prompts({ formRef, setEmailState, setEmailBody }: Props)
 
     const addPromptsToEmail = () => {
         if (formRef.current!.reportValidity()) {
-            setEmailBody(
-                [salutation, ...Object.values(emailPrompts)
-                    .filter((o) => !!o)]
-                    .join("\n\n")
-            );
+            setEmailBody([salutation, ...Object.values(emailPrompts).filter((o) => !!o)].join("\n\n"));
             setAddedPrompts(true);
             setEmailState("reviewing");
         }
@@ -113,14 +109,13 @@ export default function Prompts({ formRef, setEmailState, setEmailBody }: Props)
                     </Button>
                 </Col>
                 <Col className="position-relative">
-                    <Button
-                        className="w-100 text-dark"
-                        disabled={addedPrompts}
-                        onClick={addPromptsToEmail}
-                    >
+                    <Button className="w-100 text-dark" disabled={addedPrompts} onClick={addPromptsToEmail}>
                         Review Email
                     </Button>
-                    <HiddenValidationInput when={Object.values(emailPrompts).every(p => !p)} message="Please fill out at least one prompt" />
+                    <HiddenValidationInput
+                        when={Object.values(emailPrompts).every((p) => !p)}
+                        message="Please fill out at least one prompt"
+                    />
                 </Col>
             </Row>
         </>
