@@ -74,6 +74,11 @@ class ActionController @Inject constructor(
 
     call.respondNothing()
   }
+
+  suspend fun signUp(call: ApplicationCall) {
+    // TODO(kcianfarini) implement
+    call.respond(HttpStatusCode.Created)
+  }
 }
 
 private fun InitiateActionRequest.toGetLegislatorsRequest() = GetLegislatorsByAddressRequest(
