@@ -6,6 +6,7 @@ import org.climatechangemakers.act.feature.issue.routing.issueRoutes
 import io.ktor.routing.*
 import io.ktor.application.*
 import org.climatechangemakers.act.di.ApiComponent
+import org.climatechangemakers.act.feature.membership.routing.membershipRoutes
 import org.climatechangemakers.act.feature.values.routing.valuesRoutes
 
 fun Application.configureRouting(apiComponent: ApiComponent) {
@@ -14,6 +15,7 @@ fun Application.configureRouting(apiComponent: ApiComponent) {
     route("/api") {
       actionRoutes(apiComponent.actionController())
       issueRoutes(apiComponent.issueController())
+      membershipRoutes(apiComponent.membershipController())
       route("/values") { valuesRoutes(apiComponent.valuesController()) }
     }
   }
