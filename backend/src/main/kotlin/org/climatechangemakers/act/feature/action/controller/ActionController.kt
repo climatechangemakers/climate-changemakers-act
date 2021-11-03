@@ -20,6 +20,7 @@ import org.climatechangemakers.act.common.model.Success
 import org.climatechangemakers.act.feature.action.model.LogTweetRequest
 import org.climatechangemakers.act.feature.action.model.SendEmailErrorResponse
 import org.climatechangemakers.act.feature.action.model.SendEmailResponse
+import org.climatechangemakers.act.feature.action.model.SignUpRequest
 import org.climatechangemakers.act.feature.communicatewithcongress.manager.CommunicateWithCongressManager
 import javax.inject.Inject
 
@@ -77,6 +78,7 @@ class ActionController @Inject constructor(
 
   suspend fun signUp(call: ApplicationCall) {
     // TODO(kcianfarini) implement
+    call.receive<SignUpRequest>()
     call.respond(HttpStatusCode.Created)
   }
 }
