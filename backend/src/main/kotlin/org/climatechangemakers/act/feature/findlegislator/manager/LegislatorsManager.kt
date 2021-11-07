@@ -18,7 +18,6 @@ class LegislatorsManager @Inject constructor(
   private val lcvScoreManager: LcvScoreManager,
   private val districtOfficerManager: DistrictOfficerManager,
   private val memberOfCongressManager: MemberOfCongressManager,
-  private val logger: Logger,
 ) {
 
   suspend fun getLegislators(request: GetLegislatorsByAddressRequest): List<Legislator> = coroutineScope {
