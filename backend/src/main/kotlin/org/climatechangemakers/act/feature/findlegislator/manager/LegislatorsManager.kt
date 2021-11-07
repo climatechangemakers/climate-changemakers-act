@@ -10,7 +10,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
-import org.slf4j.Logger
 import javax.inject.Inject
 
 class LegislatorsManager @Inject constructor(
