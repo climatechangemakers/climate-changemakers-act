@@ -10,6 +10,7 @@ variables:
 
 stages: 
   - test
+  - build 
 
 before_script: 
   - export GRADLE_USER_HOME=`pwd`/backend/.gradle
@@ -24,6 +25,14 @@ test-backend:
   script: 
     - cd backend
     - ./gradlew test
+  only: 
+    - trunk 
+    - external_pull_requests
+
+build-production-container:
+  stage: build
+  script: 
+    - docker build .
   only: 
     - trunk 
     - external_pull_requests

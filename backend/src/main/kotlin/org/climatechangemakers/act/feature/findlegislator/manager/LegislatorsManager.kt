@@ -10,6 +10,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
+import org.slf4j.Logger
 import javax.inject.Inject
 
 class LegislatorsManager @Inject constructor(
@@ -17,6 +18,7 @@ class LegislatorsManager @Inject constructor(
   private val lcvScoreManager: LcvScoreManager,
   private val districtOfficerManager: DistrictOfficerManager,
   private val memberOfCongressManager: MemberOfCongressManager,
+  private val logger: Logger,
 ) {
 
   suspend fun getLegislators(request: GetLegislatorsByAddressRequest): List<Legislator> = coroutineScope {
