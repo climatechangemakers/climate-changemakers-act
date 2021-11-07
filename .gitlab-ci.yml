@@ -1,5 +1,3 @@
-image: openjdk:11.0.12
-
 services:
   - docker:dind
 
@@ -21,6 +19,7 @@ cache:
     - ./backend/.gradle/caches
 
 test-backend:
+  image: openjdk:11.0.12
   stage: test
   script: 
     - cd backend
@@ -30,6 +29,7 @@ test-backend:
     - external_pull_requests
 
 build-production-container:
+  image: docker:stable
   stage: build
   script: 
     - docker build .
