@@ -14,6 +14,8 @@ import org.climatechangemakers.act.feature.communicatewithcongress.manager.Commu
 import org.climatechangemakers.act.feature.communicatewithcongress.manager.NetworkCommunicateWithCongressManager
 import org.climatechangemakers.act.feature.findlegislator.manager.DatabaseMemberOfCongressManager
 import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongressManager
+import org.climatechangemakers.act.feature.membership.manager.AirtableMembershipManager
+import org.climatechangemakers.act.feature.membership.manager.MembershipManager
 
 @Module interface BindingModule {
 
@@ -22,5 +24,6 @@ import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongre
   @Binds fun bindsActionTrackerManager(manager: DatabaseActionTrackerManager): ActionTrackerManager
   @Binds fun bindsDistrictOfficeManager(manager: DatabaseDistrictOfficeManager): DistrictOfficerManager
   @Binds fun bindsMemberOfCongressManager(manager: DatabaseMemberOfCongressManager): MemberOfCongressManager
+  @Binds fun bindsMembershipManager(manager: AirtableMembershipManager): MembershipManager
   @Binds fun bindsNetworkCommunicateWithCongressManager(manager: NetworkCommunicateWithCongressManager): CommunicateWithCongressManager
 }

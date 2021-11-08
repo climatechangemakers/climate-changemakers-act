@@ -22,12 +22,14 @@ import org.climatechangemakers.act.feature.action.model.SendEmailErrorResponse
 import org.climatechangemakers.act.feature.action.model.SendEmailResponse
 import org.climatechangemakers.act.feature.action.model.SignUpRequest
 import org.climatechangemakers.act.feature.communicatewithcongress.manager.CommunicateWithCongressManager
+import org.climatechangemakers.act.feature.membership.manager.MembershipManager
 import javax.inject.Inject
 
 class ActionController @Inject constructor(
   private val legislatorsManager: LegislatorsManager,
   private val actionTrackerManager: ActionTrackerManager,
   private val communicateWithCongressManager: CommunicateWithCongressManager,
+  private val membershipManager: MembershipManager,
 ) {
 
   suspend fun initiateAction(call: ApplicationCall) {
@@ -77,8 +79,8 @@ class ActionController @Inject constructor(
   }
 
   suspend fun signUp(call: ApplicationCall) {
-    // TODO(kcianfarini) implement
-    call.receive<SignUpRequest>()
+    val request = call.receive<SignUpRequest>()
+    membershipManager.signUp(request.email)
     call.respond(HttpStatusCode.Created)
   }
 }

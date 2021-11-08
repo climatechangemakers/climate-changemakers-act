@@ -22,4 +22,8 @@ interface ActionTrackerManager {
     contactedBioguideIds: List<String>,
     relatedIssueId: Long,
   )
+
+  suspend fun trackActionSignUp(
+    email: String,
+  )
 }

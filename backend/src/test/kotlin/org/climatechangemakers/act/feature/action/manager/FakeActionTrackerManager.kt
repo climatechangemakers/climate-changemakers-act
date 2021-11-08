@@ -25,4 +25,8 @@ class FakeActionTrackerManager : ActionTrackerManager {
   override suspend fun trackTweet(email: String, contactedBioguideIds: List<String>, relatedIssueId: Long) {
     TODO("Not yet implemented")
   }
+
+  override suspend fun trackActionSignUp(email: String) {
+    TODO("Not yet implemented")
+  }
 }

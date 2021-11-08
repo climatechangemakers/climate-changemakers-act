@@ -1,0 +1,8 @@
+CREATE TABLE action_sign_up(
+  email CITEXT NOT NULL,
+  signed_up_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+insert:
+INSERT INTO action_sign_up(email)
+VALUES(:email);
