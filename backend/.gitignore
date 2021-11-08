@@ -3,3 +3,4 @@ build/*
 log/
 .gradle
 .swp
+src/main/resources/client

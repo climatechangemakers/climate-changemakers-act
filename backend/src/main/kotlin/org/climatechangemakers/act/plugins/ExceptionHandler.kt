@@ -29,6 +29,8 @@ fun Application.configureExceptionHandler() {
     }
 
     exception<PSQLException> { cause ->
+      cause.message?.let(log::error)
+
       val responseCode = when (cause.state) {
         PSQLState.FOREIGN_KEY_VIOLATION -> HttpStatusCode.NotFound
         else -> HttpStatusCode.InternalServerError
