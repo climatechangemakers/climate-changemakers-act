@@ -1,5 +1,5 @@
 # App Building phase --------
-FROM node:alpine3.14
+FROM node:lts-alpine3.14
 
 RUN mkdir -p /app
 COPY package*.json ./
