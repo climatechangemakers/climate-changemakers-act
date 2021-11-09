@@ -43,7 +43,7 @@ publish-production-container:
     - echo $CI_DEPLOY_USER
     - echo $CI_DEPLOY_PASSWORD
     - echo $CI_DEPLOY_REGISTRY
-    - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
+    - docker login -u kevincianfarini -p $GITLAB_API_KEY registry.gitlab.com 
     - docker build -t $IMAGE_TAG .
   only: 
     - trunk
