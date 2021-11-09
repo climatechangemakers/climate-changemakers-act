@@ -11,8 +11,6 @@ COPY frontend/ .
 
 RUN npm run build
 
-RUN mv build/ client/
-
 # build the backend
 
 FROM openjdk:11.0.12 AS build_backend
@@ -23,7 +21,7 @@ COPY backend/ /appbuild
 RUN rm -rf /appbuild/src/main/resources/client
 RUN mkdir -p /appbuild/src/main/resources/client
 
-COPY --from=build_client /app/client/ /appbuild/src/main/resources/client
+COPY --from=build_client /app/build/ /appbuild/src/main/resources/client
 
 WORKDIR /appbuild
 
@@ -38,9 +36,8 @@ FROM openjdk:11.0.12-jre
 ENV APPLICATION_USER 1033
 RUN useradd $APPLICATION_USER
 
-RUN mkdir /app
-RUN mkdir /app/resources
-RUN mkdir /app/log
+RUN mkdir -p /app/resources
+RUN mkdir -p /app/log
 RUN chown -R $APPLICATION_USER /app
 RUN chmod -R 777 /app
 
