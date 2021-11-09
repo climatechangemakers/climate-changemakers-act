@@ -8,7 +8,7 @@ variables:
 
 stages: 
   - test
-  - build 
+  - build
 
 before_script: 
   - export GRADLE_USER_HOME=`pwd`/backend/.gradle
@@ -32,7 +32,17 @@ build-production-container:
   image: docker:stable
   stage: build
   script: 
-    - docker build .
+    - docker build $IMAGE_TAG .
   only: 
-    - trunk 
+    - external_pull_requests
+
+publish-production-container:
+  image: docker:stable
+  stage: build
+  script: 
+    - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
+    - docker build -t $IMAGE_TAG .
+  only: 
+    - trunk
+    # TODO(kcianfarini) remove just for testing
     - external_pull_requests
