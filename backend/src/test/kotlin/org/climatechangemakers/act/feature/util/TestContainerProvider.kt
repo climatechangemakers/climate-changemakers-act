@@ -27,6 +27,10 @@ abstract class TestContainerProvider {
     ),
   )
 
-  @BeforeTest fun before() = Database.Schema.create(driver)
+  @BeforeTest fun before() {
+    driver.execute(0, "CREATE EXTENSION IF NOT EXISTS citext;", 0)
+    Database.Schema.create(driver)
+  }
+
   @AfterTest fun after() = connection.close()
 }
