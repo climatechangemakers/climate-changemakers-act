@@ -10,31 +10,31 @@ stages:
   - test
   - build
 
-before_script: 
-  - export GRADLE_USER_HOME=`pwd`/backend/.gradle
-
-cache:
-  paths:
-    - ./bakcned/.gradle/wrapper
-    - ./backend/.gradle/caches
-
-test-backend:
-  image: openjdk:11.0.12
-  stage: test
-  script: 
-    - cd backend
-    - ./gradlew test
-  only: 
-    - trunk 
-    - external_pull_requests
-
-build-production-container:
-  image: docker:stable
-  stage: build
-  script: 
-    - docker build $IMAGE_TAG .
-  only: 
-    - external_pull_requests
+    # before_script: 
+    #   - export GRADLE_USER_HOME=`pwd`/backend/.gradle
+    # 
+    # cache:
+    #   paths:
+    #     - ./bakcned/.gradle/wrapper
+    #     - ./backend/.gradle/caches
+    # 
+    # test-backend:
+    #   image: openjdk:11.0.12
+    #   stage: test
+    #   script: 
+    #     - cd backend
+    #     - ./gradlew test
+    #   only: 
+    #     - trunk 
+    #     - external_pull_requests
+    # 
+    # build-production-container:
+    #   image: docker:stable
+    #   stage: build
+    #   script: 
+    #     - docker build $IMAGE_TAG .
+    #   only: 
+    #     - external_pull_requests
 
 publish-production-container:
   image: docker:stable
