@@ -8,7 +8,7 @@ variables:
 
 stages: 
   - test
-  - build 
+  - build
 
 before_script: 
   - export GRADLE_USER_HOME=`pwd`/backend/.gradle
@@ -32,7 +32,16 @@ build-production-container:
   image: docker:stable
   stage: build
   script: 
-    - docker build .
+    - docker build -t $IMAGE_TAG .
   only: 
-    - trunk 
     - external_pull_requests
+
+publish-production-container:
+  image: docker:stable
+  stage: build
+  script: 
+    - docker login -u $GITLAB_USER_LOGIN -p $GITLAB_API_KEY registry.gitlab.com 
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+  only: 
+    - trunk
