@@ -42,6 +42,7 @@ publish-production-container:
   script: 
     - docker login -u $GITLAB_USER_LOGIN -p $GITLAB_API_KEY registry.gitlab.com 
     - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
   only: 
     - trunk
     # TODO(kcianfarini) remove just for testing
