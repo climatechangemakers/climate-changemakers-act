@@ -32,7 +32,7 @@ build-production-container:
   image: docker:stable
   stage: build
   script: 
-    - docker build $IMAGE_TAG .
+    - docker build -t $IMAGE_TAG .
   only: 
     - external_pull_requests
 
