@@ -41,7 +41,7 @@ publish-production-container:
   stage: build
   script: 
     - echo $GITLAB_API_KEY
-    - docker login -u kevincianfarini -p $GITLAB_API_KEY registry.gitlab.com 
+    - docker login -u kevincianfarini -p glpat-9sFwydFzShCwxudyZev5 registry.gitlab.com 
     - docker build -t $IMAGE_TAG .
   only: 
     - trunk
