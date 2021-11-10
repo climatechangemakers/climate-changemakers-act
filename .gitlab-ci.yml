@@ -40,7 +40,7 @@ publish-production-container:
   image: docker:stable
   stage: build
   script: 
-    - echo $GITLAB_API_KEY
+    - printenv
     - docker login -u kevincianfarini -p glpat-9sFwydFzShCwxudyZev5 registry.gitlab.com 
     - docker build -t $IMAGE_TAG .
   only: 
