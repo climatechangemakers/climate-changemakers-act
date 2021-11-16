@@ -35,6 +35,20 @@ export default function TakeActionPage() {
         body: "",
         selectedLocTopics: [] as MultiValue<{ value: string; label: string }>,
     });
+    const { data: membershipInfo, error: membershipInfoError } = useSWR<{ isMember: boolean }, ErrorResponse>([!formInfo?.email ? null : "/check-membership", JSON.stringify({ email: formInfo?.email ?? "" }),], fetcher);
+    const selectedIssueId = selectedIssue?.id;
+    const { data: preComposedTweetData, error: preComposedTweetError } = useSWR<{ tweet: string }, ErrorResponse>(
+        selectedIssueId === undefined || !actionInfo?.legislators?.length
+            ? null
+            : `/issues/${selectedIssueId}/precomposed-tweet?${new URLSearchParams(
+                actionInfo.legislators.map((l) => ["bioguideIds", l.bioguideId])
+            ).toString()}`,
+        fetcher
+    );
+    const { data: areas, error: areasError } = useSWR<{ shortName: string; fullName: string }[], ErrorResponse>(
+        "/values/areas",
+        fetcher
+    );
 
     useEffect(() => {
         isEmailSent && scrollToId("make_a_phone_call");
@@ -43,25 +57,19 @@ export default function TakeActionPage() {
         isPhoneCallMade && scrollToId("post_on_social");
     }, [isPhoneCallMade]);
     useEffect(() => {
-        isSocialPosted && scrollToId("join_our_mission");
-    }, [isSocialPosted]);
+        if (isSocialPosted) {
+            if (membershipInfo?.isMember) {
+                setIsJoinedMission(true);
+                scrollToId("all_done");
+            }
+            else {
+                scrollToId("join_our_mission");
+            }
+        }
+    }, [isSocialPosted, membershipInfo]);
     useEffect(() => {
         isJoinedMission && scrollToId("all_done");
     }, [isJoinedMission]);
-
-    const selectedIssueId = selectedIssue?.id;
-    const { data: preComposedTweetData, error: preComposedTweetError } = useSWR<{ tweet: string }, ErrorResponse>(
-        selectedIssueId === undefined || !actionInfo?.legislators?.length
-            ? null
-            : `/issues/${selectedIssueId}/precomposed-tweet?${new URLSearchParams(
-                  actionInfo.legislators.map((l) => ["bioguideIds", l.bioguideId])
-              ).toString()}`,
-        fetcher
-    );
-    const { data: areas, error: areasError } = useSWR<{ shortName: string; fullName: string }[], ErrorResponse>(
-        "/values/areas",
-        fetcher
-    );
 
     if (!actionInfo || !formInfo) return <Redirect to="/" />;
 
@@ -111,7 +119,7 @@ export default function TakeActionPage() {
                             />
                         </>
                     )}
-                    {isSocialPosted && (
+                    {isSocialPosted && !membershipInfo?.isMember && (
                         <>
                             <hr id="join_our_mission" />
                             <JoinMission
