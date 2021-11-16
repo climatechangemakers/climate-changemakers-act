@@ -35,7 +35,10 @@ export default function TakeActionPage() {
         body: "",
         selectedLocTopics: [] as MultiValue<{ value: string; label: string }>,
     });
-    const { data: membershipInfo, error: membershipInfoError } = useSWR<{ isMember: boolean }, ErrorResponse>([!formInfo?.email ? null : "/check-membership", JSON.stringify({ email: formInfo?.email ?? "" }),], fetcher);
+    const { data: membershipInfo } = useSWR<{ isMember: boolean }, ErrorResponse>(
+        [!formInfo?.email ? null : "/check-membership", JSON.stringify({ email: formInfo?.email ?? "" })],
+        fetcher
+    );
     const selectedIssueId = selectedIssue?.id;
     const { data: preComposedTweetData, error: preComposedTweetError } = useSWR<{ tweet: string }, ErrorResponse>(
         selectedIssueId === undefined || !actionInfo?.legislators?.length
@@ -61,8 +64,7 @@ export default function TakeActionPage() {
             if (membershipInfo?.isMember) {
                 setIsJoinedMission(true);
                 scrollToId("all_done");
-            }
-            else {
+            } else {
                 scrollToId("join_our_mission");
             }
         }
@@ -145,6 +147,7 @@ export default function TakeActionPage() {
                         isPhoneCallMade={isPhoneCallMade}
                         isSocialPosted={isSocialPosted}
                         isJoinedMission={isJoinedMission}
+                        isMember={membershipInfo?.isMember}
                         desktop
                     />
                 </Col>
@@ -154,6 +157,7 @@ export default function TakeActionPage() {
                         isPhoneCallMade={isPhoneCallMade}
                         isSocialPosted={isSocialPosted}
                         isJoinedMission={isJoinedMission}
+                        isMember={membershipInfo?.isMember}
                     />
                 </div>
             </Row>

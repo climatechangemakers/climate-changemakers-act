@@ -8,6 +8,7 @@ type Props = {
     isPhoneCallMade: boolean;
     isSocialPosted: boolean;
     isJoinedMission: boolean;
+    isMember?: boolean
     desktop?: boolean;
 };
 
@@ -18,6 +19,7 @@ export default function ScrollSpy({
     isPhoneCallMade,
     isSocialPosted,
     isJoinedMission,
+    isMember,
     desktop = false,
 }: Props) {
     const [introSectionDistanceFromTop, setIntroSectionDistanceFromTop] = useState(Math.min);
@@ -83,18 +85,20 @@ export default function ScrollSpy({
                     id="#post_on_social"
                     state={linkState(isSocialPosted, isPhoneCallMade)}
                     desktop={desktop}
+                    last={isMember}
                 >
                     {desktop ? "Post on Social" : "Post"}
                 </Step>
-                <Step
-                    step={5}
-                    id="#join_our_mission"
-                    state={linkState(isJoinedMission, isSocialPosted)}
-                    last
-                    desktop={desktop}
-                >
-                    {desktop ? "Join Our Mission" : "Join"}
-                </Step>
+                {!isMember &&
+                    <Step
+                        step={5}
+                        id="#join_our_mission"
+                        state={linkState(isJoinedMission, isSocialPosted)}
+                        desktop={desktop}
+                        last
+                    >
+                        {desktop ? "Join Our Mission" : "Join"}
+                    </Step>}
             </Card.Body>
         </Card>
     );

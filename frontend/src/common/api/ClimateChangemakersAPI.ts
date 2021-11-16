@@ -11,7 +11,7 @@ export type ErrorResponse = Error & {
     status: number;
 };
 
-export const fetcher = async <T>(path: string, payload?: string,) => {
+export const fetcher = async <T>(path: string, payload?: string) => {
     const res = await fetch("/api" + path, {
         method: payload ? "POST" : "GET",
         ...(payload && { body: payload }),
