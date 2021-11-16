@@ -104,3 +104,12 @@ export const logCallAPI = (
     contactedPhoneNumber: string,
     contactedBioguideId: string
 ) => post<void>("/log-call", { originatingEmailAddress, relatedIssueId, contactedPhoneNumber, contactedBioguideId });
+
+export const signUpAPI = (
+    email: string,
+    firstName: string,
+    lastName: string,
+    state: string,
+    postalCode: string,
+    priorExperience: boolean
+) => post<void>("/sign-up", { email, firstName, lastName, state, postalCode, priorExperience });
