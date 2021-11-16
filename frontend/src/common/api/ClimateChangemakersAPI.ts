@@ -1,10 +1,10 @@
 import { ActionInfo } from "common/models/ActionInfo";
 import { FormInfo } from "common/models/FormInfo";
 
-type FetchResponse<T> = {
+type FetchResponse<Data, Error = string> = {
     successful: boolean;
-    error?: string;
-    data?: T;
+    error?: Error;
+    data?: Data;
 };
 
 export type ErrorResponse = Error & {
@@ -24,15 +24,15 @@ export const fetcher = async <T>(path: string) => {
     return (await res.json()) as T;
 };
 
-const parseFetch = async <T>(response: Response): Promise<FetchResponse<T>> => {
+const parseFetch = async <Data, Error = string>(response: Response): Promise<FetchResponse<Data, Error>> => {
     try {
-        if (!response.ok) return { successful: false };
+        if (!response.ok) return { successful: false, error: (await response.json()) as Error };
 
         if (response.status === 204) return { successful: true };
 
         return {
             successful: true,
-            data: (await response.json()) as T,
+            data: (await response.json()) as Data,
         };
     } catch (e: any) {
         return { successful: false, error: e?.message };

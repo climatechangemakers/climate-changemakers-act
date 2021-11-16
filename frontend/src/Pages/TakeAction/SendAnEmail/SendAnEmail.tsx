@@ -46,6 +46,7 @@ export default function SendAnEmail({
     });
     const [sendEmailError, setSendEmailError] = useState("");
     const [emailState, setEmailState] = useState<EmailState>("titleing");
+    const [isSending, setIsSending] = useState(false);
 
     useEffect(() => {
         emailState === "prompting" && scrollToId("email_prompts");
@@ -56,6 +57,8 @@ export default function SendAnEmail({
     const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSendEmailError("");
+
+        setIsSending(true);
         const response = await sendEmailAPI(
             formInfo.email,
             emailInfo.prefix,
@@ -71,6 +74,8 @@ export default function SendAnEmail({
             selectedIssue.id,
             actionInfo.legislators.map((l) => l.bioguideId)
         );
+        setIsSending(false);
+
         if (!response.successful) {
             setSendEmailError(response?.error ?? "Failed to send email");
             return;
@@ -251,6 +256,7 @@ export default function SendAnEmail({
                 </Row>
                 {emailState !== "titleing" && (
                     <Prompts
+                        emailState={emailState}
                         formRef={formRef}
                         setEmailState={setEmailState}
                         setEmailBody={(body: string) => setEmailInfo((info) => ({ ...info, body }))}
@@ -288,7 +294,7 @@ export default function SendAnEmail({
                             </Col>
                             <Col>
                                 <Button type="submit" className="w-100 text-dark" disabled={isEmailSent}>
-                                    {!sendEmailError ? "Send Email" : "Try again"}
+                                    {isSending ? "Sending..." : !sendEmailError ? "Send Email" : "Try again"}
                                 </Button>
                             </Col>
                         </Row>
