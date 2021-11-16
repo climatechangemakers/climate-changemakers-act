@@ -3,12 +3,13 @@ import ErrorMessage from "common/Components/ErrorMessage";
 import HiddenValidationInput from "common/Components/HiddenValidationInput";
 import { scrollToId } from "common/lib/scrollToId";
 import { ActionInfo } from "common/models/ActionInfo";
+import { EmailInfo } from "common/models/EmailInfo";
 import { EmailState } from "common/models/EmailState";
 import { FormInfo } from "common/models/FormInfo";
 import { Issue } from "common/models/Issue";
 import { useEffect, useRef, useState } from "react";
 import { Accordion, Button, Col, Form, Row } from "react-bootstrap";
-import Select, { MultiValue } from "react-select";
+import Select from "react-select";
 import useSWR from "swr";
 import emailIcon from "./email-icon.svg";
 import Prompts from "./Prompts";
@@ -19,7 +20,8 @@ type Props = {
     isEmailSent: boolean;
     setIsEmailSent: (bool: boolean) => void;
     selectedIssue: Issue;
-    setEmailBody: React.Dispatch<React.SetStateAction<string>>;
+    emailInfo: EmailInfo;
+    setEmailInfo: React.Dispatch<React.SetStateAction<EmailInfo>>;
 };
 
 export default function SendAnEmail({
@@ -28,7 +30,8 @@ export default function SendAnEmail({
     isEmailSent,
     setIsEmailSent,
     selectedIssue,
-    setEmailBody,
+    emailInfo,
+    setEmailInfo,
 }: Props) {
     const { data: prefixes, error: prefixError } = useSWR<string[], ErrorResponse>("/values/prefixes", fetcher);
     const { data: locTopics, error: locTopicsError } = useSWR<string[], ErrorResponse>(
@@ -36,14 +39,6 @@ export default function SendAnEmail({
         fetcher
     );
     const formRef = useRef<HTMLFormElement>(null);
-    const [emailInfo, setEmailInfo] = useState({
-        prefix: "",
-        firstName: "",
-        lastName: "",
-        subject: "",
-        body: "",
-        selectedLocTopics: [] as MultiValue<{ value: string; label: string }>,
-    });
     const [sendEmailError, setSendEmailError] = useState("");
     const [emailState, setEmailState] = useState<EmailState>("titleing");
 
@@ -75,7 +70,6 @@ export default function SendAnEmail({
             setSendEmailError(response?.error ?? "Failed to send email");
             return;
         }
-        setEmailBody(emailInfo.body);
         setIsEmailSent(true);
     };
 

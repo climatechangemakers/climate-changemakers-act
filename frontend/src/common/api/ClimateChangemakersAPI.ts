@@ -11,8 +11,15 @@ export type ErrorResponse = Error & {
     status: number;
 };
 
-export const fetcher = async <T>(path: string) => {
-    const res = await fetch("/api" + path);
+export const fetcher = async <T>(path: string, payload?: string) => {
+    const res = await fetch("/api" + path, {
+        method: payload ? "POST" : "GET",
+        ...(payload && { body: payload }),
+        headers: {
+            accept: "application/json",
+            "Content-Type": "application/json",
+        },
+    });
 
     if (!res.ok) {
         const error = new Error(`Failed to fetch ${path}: ${res.statusText}`) as ErrorResponse;
@@ -104,3 +111,12 @@ export const logCallAPI = (
     contactedPhoneNumber: string,
     contactedBioguideId: string
 ) => post<void>("/log-call", { originatingEmailAddress, relatedIssueId, contactedPhoneNumber, contactedBioguideId });
+
+export const signUpAPI = (
+    email: string,
+    firstName: string,
+    lastName: string,
+    state: string,
+    postalCode: string,
+    priorExperience: boolean
+) => post<void>("/sign-up", { email, firstName, lastName, state, postalCode, priorExperience });

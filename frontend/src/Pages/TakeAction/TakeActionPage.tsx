@@ -3,13 +3,16 @@ import Layout from "common/Components/Layout";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import { scrollToId } from "common/lib/scrollToId";
 import { ActionInfo } from "common/models/ActionInfo";
+import { EmailInfo } from "common/models/EmailInfo";
 import { FormInfo } from "common/models/FormInfo";
 import { Issue } from "common/models/Issue";
 import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
+import { MultiValue } from "react-select";
 import useSWR from "swr";
 import AllDone from "./AllDone/AllDone";
+import JoinMission from "./JoinMission/JoinMission";
 import MakeAPhoneCall from "./MakeACall/MakeACall";
 import MeetYourReps from "./MeetYourReps/MeetYourReps";
 import PostOnSocial from "./PostOnSocial";
@@ -20,10 +23,35 @@ export default function TakeActionPage() {
     const [isEmailSent, setIsEmailSent] = useState(false);
     const [isPhoneCallMade, setIsPhoneCallMade] = useState(false);
     const [isSocialPosted, setIsSocialPosted] = useState(false);
-    const [emailBody, setEmailBody] = useState("");
+    const [isJoinedMission, setIsJoinedMission] = useState(false);
     const [selectedIssue] = useSessionStorage<Issue | undefined>("selectedIssue");
     const [actionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
     const [formInfo] = useSessionStorage<FormInfo | undefined>("formInfo");
+    const [emailInfo, setEmailInfo] = useState<EmailInfo>({
+        prefix: "",
+        firstName: "",
+        lastName: "",
+        subject: "",
+        body: "",
+        selectedLocTopics: [] as MultiValue<{ value: string; label: string }>,
+    });
+    const { data: membershipInfo } = useSWR<{ isMember: boolean }, ErrorResponse>(
+        [!formInfo?.email ? null : "/check-membership", JSON.stringify({ email: formInfo?.email ?? "" })],
+        fetcher
+    );
+    const selectedIssueId = selectedIssue?.id;
+    const { data: preComposedTweetData, error: preComposedTweetError } = useSWR<{ tweet: string }, ErrorResponse>(
+        selectedIssueId === undefined || !actionInfo?.legislators?.length
+            ? null
+            : `/issues/${selectedIssueId}/precomposed-tweet?${new URLSearchParams(
+                actionInfo.legislators.map((l) => ["bioguideIds", l.bioguideId])
+            ).toString()}`,
+        fetcher
+    );
+    const { data: areas, error: areasError } = useSWR<{ shortName: string; fullName: string }[], ErrorResponse>(
+        "/values/areas",
+        fetcher
+    );
 
     useEffect(() => {
         isEmailSent && scrollToId("make_a_phone_call");
@@ -32,18 +60,18 @@ export default function TakeActionPage() {
         isPhoneCallMade && scrollToId("post_on_social");
     }, [isPhoneCallMade]);
     useEffect(() => {
-        isSocialPosted && scrollToId("all_done");
-    }, [isEmailSent, isPhoneCallMade, isSocialPosted]);
-
-    const selectedIssueId = selectedIssue?.id;
-    const { data: preComposedTweetData, error: preComposedTweetError } = useSWR<{ tweet: string }, ErrorResponse>(
-        selectedIssueId === undefined || !actionInfo?.legislators?.length
-            ? null
-            : `/issues/${selectedIssueId}/precomposed-tweet?${new URLSearchParams(
-                  actionInfo.legislators.map((l) => ["bioguideIds", l.bioguideId])
-              ).toString()}`,
-        fetcher
-    );
+        if (isSocialPosted) {
+            if (membershipInfo?.isMember) {
+                setIsJoinedMission(true);
+                scrollToId("all_done");
+            } else {
+                scrollToId("join_our_mission");
+            }
+        }
+    }, [isSocialPosted, membershipInfo]);
+    useEffect(() => {
+        isJoinedMission && scrollToId("all_done");
+    }, [isJoinedMission]);
 
     if (!actionInfo || !formInfo) return <Redirect to="/" />;
 
@@ -64,7 +92,8 @@ export default function TakeActionPage() {
                         selectedIssue={selectedIssue}
                         isEmailSent={isEmailSent}
                         setIsEmailSent={setIsEmailSent}
-                        setEmailBody={setEmailBody}
+                        emailInfo={emailInfo}
+                        setEmailInfo={setEmailInfo}
                     />
                     {isEmailSent && (
                         <>
@@ -75,7 +104,7 @@ export default function TakeActionPage() {
                                 emailAddress={formInfo.email}
                                 isPhoneCallMade={isPhoneCallMade}
                                 setIsPhoneCallMade={setIsPhoneCallMade}
-                                emailBody={emailBody}
+                                emailBody={emailInfo.body}
                             />
                         </>
                     )}
@@ -92,7 +121,20 @@ export default function TakeActionPage() {
                             />
                         </>
                     )}
-                    {isSocialPosted && (
+                    {isSocialPosted && !membershipInfo?.isMember && (
+                        <>
+                            <hr id="join_our_mission" />
+                            <JoinMission
+                                formInfo={formInfo}
+                                emailInfo={emailInfo}
+                                areas={areas}
+                                areasError={areasError}
+                                isJoinedMission={isJoinedMission}
+                                setIsJoinedMission={setIsJoinedMission}
+                            />
+                        </>
+                    )}
+                    {isJoinedMission && (
                         <>
                             <hr id="all_done" />
                             <AllDone />
@@ -104,6 +146,8 @@ export default function TakeActionPage() {
                         isEmailSent={isEmailSent}
                         isPhoneCallMade={isPhoneCallMade}
                         isSocialPosted={isSocialPosted}
+                        isJoinedMission={isJoinedMission}
+                        isMember={membershipInfo?.isMember}
                         desktop
                     />
                 </Col>
@@ -112,6 +156,8 @@ export default function TakeActionPage() {
                         isEmailSent={isEmailSent}
                         isPhoneCallMade={isPhoneCallMade}
                         isSocialPosted={isSocialPosted}
+                        isJoinedMission={isJoinedMission}
+                        isMember={membershipInfo?.isMember}
                     />
                 </div>
             </Row>
