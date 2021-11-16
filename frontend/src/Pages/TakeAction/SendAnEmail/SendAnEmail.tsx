@@ -20,7 +20,7 @@ type Props = {
     isEmailSent: boolean;
     setIsEmailSent: (bool: boolean) => void;
     selectedIssue: Issue;
-    emailInfo: EmailInfo
+    emailInfo: EmailInfo;
     setEmailInfo: React.Dispatch<React.SetStateAction<EmailInfo>>;
 };
 
@@ -31,7 +31,7 @@ export default function SendAnEmail({
     setIsEmailSent,
     selectedIssue,
     emailInfo,
-    setEmailInfo
+    setEmailInfo,
 }: Props) {
     const { data: prefixes, error: prefixError } = useSWR<string[], ErrorResponse>("/values/prefixes", fetcher);
     const { data: locTopics, error: locTopicsError } = useSWR<string[], ErrorResponse>(

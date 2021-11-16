@@ -9,19 +9,26 @@ type Props = {
     formInfo: FormInfo;
     emailInfo: EmailInfo;
     areas: { shortName: string; fullName: string }[] | undefined;
-    areasError: ErrorResponse | undefined
+    areasError: ErrorResponse | undefined;
     isJoinedMission: boolean;
     setIsJoinedMission: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function JoinMission({ formInfo, emailInfo, areas, areasError, isJoinedMission, setIsJoinedMission }: Props) {
+export default function JoinMission({
+    formInfo,
+    emailInfo,
+    areas,
+    areasError,
+    isJoinedMission,
+    setIsJoinedMission,
+}: Props) {
     const [joinInfo, setJoinInfo] = useState({
         email: formInfo.email,
         firstName: emailInfo.firstName,
         lastName: emailInfo.lastName,
         postalCode: formInfo.postalCode,
         state: formInfo.state,
-        priorExperience: false
+        priorExperience: false,
     });
     const [isSending, setIsSending] = useState(false);
     const [signUpError, setSignUpError] = useState("");
@@ -45,15 +52,13 @@ export default function JoinMission({ formInfo, emailInfo, areas, areasError, is
             return;
         }
         setIsJoinedMission(true);
-    }
+    };
 
     return (
         <div className="pb-2">
             <h2 className="text-pink fw-bold mb-3">Join Our Mission</h2>
-            <p>
-                Sign up to be a changemaker to make productive, political action a habit!
-            </p>
-            {areas &&
+            <p>Sign up to be a changemaker to make productive, political action a habit!</p>
+            {areas && (
                 <Form onSubmit={signUp}>
                     <Row>
                         <Col lg="6">
@@ -61,9 +66,7 @@ export default function JoinMission({ formInfo, emailInfo, areas, areasError, is
                                 <Form.Label>First Name</Form.Label>
                                 <Form.Control
                                     value={joinInfo.firstName}
-                                    onChange={(e) =>
-                                        setJoinInfo({ ...joinInfo, firstName: e.currentTarget.value })
-                                    }
+                                    onChange={(e) => setJoinInfo({ ...joinInfo, firstName: e.currentTarget.value })}
                                     disabled={isJoinedMission}
                                     required
                                 />
@@ -74,9 +77,7 @@ export default function JoinMission({ formInfo, emailInfo, areas, areasError, is
                                 <Form.Label>Last Name</Form.Label>
                                 <Form.Control
                                     value={joinInfo.lastName}
-                                    onChange={(e) =>
-                                        setJoinInfo({ ...joinInfo, lastName: e.currentTarget.value })
-                                    }
+                                    onChange={(e) => setJoinInfo({ ...joinInfo, lastName: e.currentTarget.value })}
                                     disabled={isJoinedMission}
                                     required
                                 />
@@ -89,9 +90,7 @@ export default function JoinMission({ formInfo, emailInfo, areas, areasError, is
                                 <Form.Label>Email</Form.Label>
                                 <Form.Control
                                     value={joinInfo.email}
-                                    onChange={(e) =>
-                                        setJoinInfo({ ...joinInfo, email: e.currentTarget.value })
-                                    }
+                                    onChange={(e) => setJoinInfo({ ...joinInfo, email: e.currentTarget.value })}
                                     disabled={isJoinedMission}
                                     required
                                 />
@@ -102,19 +101,14 @@ export default function JoinMission({ formInfo, emailInfo, areas, areasError, is
                                 <Form.Label>Zip Code</Form.Label>
                                 <Form.Control
                                     value={joinInfo.postalCode}
-                                    onChange={(e) =>
-                                        setJoinInfo({ ...joinInfo, postalCode: e.currentTarget.value })
-                                    }
+                                    onChange={(e) => setJoinInfo({ ...joinInfo, postalCode: e.currentTarget.value })}
                                     disabled={isJoinedMission}
                                     required
                                 />
                             </Form.Group>
                         </Col>
                         <Col lg="4">
-                            <Form.Group
-                                className="mb-2"
-                                controlId="signUp.state"
-                            >
+                            <Form.Group className="mb-2" controlId="signUp.state">
                                 <Form.Label>State</Form.Label>
                                 <Form.Select
                                     value={formInfo.state}
@@ -144,7 +138,10 @@ export default function JoinMission({ formInfo, emailInfo, areas, areasError, is
                                 label="Do you have any prior political action or organizing experience?"
                                 disabled={isJoinedMission}
                             />
-                            <Form.Text className="text-white">No experience, no problem! Over half of our community members are doing this for the first time.</Form.Text>
+                            <Form.Text className="text-white">
+                                No experience, no problem! Over half of our community members are doing this for the
+                                first time.
+                            </Form.Text>
                         </Form.Group>
                     </Row>
                     <Row className="mt-2">
@@ -164,7 +161,8 @@ export default function JoinMission({ formInfo, emailInfo, areas, areasError, is
                             </Button>
                         </Col>
                     </Row>
-                </Form>}
+                </Form>
+            )}
             <ErrorMessage message={signUpError || areasError?.message} />
         </div>
     );

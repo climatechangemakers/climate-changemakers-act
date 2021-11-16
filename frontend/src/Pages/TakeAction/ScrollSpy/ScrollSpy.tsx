@@ -13,7 +13,13 @@ type Props = {
 
 const INTRO_SCROLL_BUFFER = 200;
 
-export default function ScrollSpy({ isEmailSent, isPhoneCallMade, isSocialPosted, isJoinedMission, desktop = false }: Props) {
+export default function ScrollSpy({
+    isEmailSent,
+    isPhoneCallMade,
+    isSocialPosted,
+    isJoinedMission,
+    desktop = false,
+}: Props) {
     const [introSectionDistanceFromTop, setIntroSectionDistanceFromTop] = useState(Math.min);
     const [scrolledPastIntro, setScrolledPastIntro] = useState(false);
 
