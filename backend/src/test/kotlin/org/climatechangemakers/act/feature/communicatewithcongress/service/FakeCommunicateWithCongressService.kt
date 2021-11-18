@@ -5,13 +5,13 @@ import org.climatechangemakers.act.feature.communicatewithcongress.model.Communi
 import retrofit2.Response
 
 class FakeCommunicateWithCongressService(
-  private val responseCreator: () -> Response<Unit>,
+  private val action: () -> Unit,
 ) : SenateCommunicateWithCongressService, HouseCommunicateWithCongressService {
 
   val capturedBodies = Channel<CommunicateWithCogressRequest>(Channel.BUFFERED)
 
-  override suspend fun contact(request: CommunicateWithCogressRequest): Response<Unit> {
+  override suspend fun contact(request: CommunicateWithCogressRequest) {
     capturedBodies.trySend(request)
-    return responseCreator()
+    return action()
   }
 }

@@ -1,7 +1,5 @@
 package org.climatechangemakers.act.feature.communicatewithcongress.manager
 
-import okhttp3.MediaType
-import okhttp3.ResponseBody
 import org.climatechangemakers.act.common.model.Failure
 import org.climatechangemakers.act.common.model.RepresentedArea
 import org.climatechangemakers.act.common.model.Success
@@ -137,9 +135,8 @@ class NetworkCommunicateWithCongressManagerTest {
   }
 
   @Test fun `failed request is returned from sendEmails`() = suspendTest {
-    val error = Response.error<Unit>(500, ResponseBody.create(MediaType.get("application/json"), "error"))
-    val fakeSenteService = FakeCommunicateWithCongressService { error }
-    val fakeHouseService = FakeCommunicateWithCongressService { error }
+    val fakeSenteService = FakeCommunicateWithCongressService { error("foo") }
+    val fakeHouseService = FakeCommunicateWithCongressService { error("blah") }
     val manager = NetworkCommunicateWithCongressManager(
       senateService = fakeSenteService,
       houseService = fakeHouseService,

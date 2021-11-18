@@ -1,5 +1,6 @@
 package org.climatechangemakers.act.feature.communicatewithcongress.manager
 
+import io.ktor.util.error
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -21,6 +22,7 @@ import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
 import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
 import org.climatechangemakers.act.feature.issue.manager.IssueManager
 import org.slf4j.Logger
+import retrofit2.HttpException
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -48,15 +50,17 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
   private suspend fun sendEmailToMemberOfCongress(bioguideId: String, request: SendEmailRequest): Boolean {
     val memberOfCongress = memberOfCongressManager.getMemberOfCongressForBioguide(bioguideId)
     return if (memberOfCongress.cwcOfficeCode != null) {
-      val response = sendEmailViaCWC(memberOfCongress, request)
-
-      if (response.isSuccessful) {
+      try {
+        sendEmailViaCWC(memberOfCongress, request)
         actionTrackerManager.trackActionSendEmail(request.originatingEmailAddress, bioguideId, request.relatedIssueId)
-      } else {
-        response.errorBody()?.string()?.let(logger::error)
+        true
+      } catch (e: HttpException) {
+        e.response()?.errorBody()?.string()?.let(logger::error)
+        false
+      } catch (e: Exception) {
+        logger.error(e)
+        false
       }
-
-      response.isSuccessful
     } else {
       true
     }
@@ -65,7 +69,7 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
   private suspend fun sendEmailViaCWC(
     memberOfConress: MemberOfCongress,
     emailRequest: SendEmailRequest,
-  ): Response<Unit> {
+  ) {
     val cwcRequest = CommunicateWithCogressRequest(
       delivery = Delivery(campaignId = getCampaignIdForIssue(emailRequest.relatedIssueId)),
       recipient = Recipient(officeCode = memberOfConress.cwcOfficeCode!!),
@@ -87,7 +91,7 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
       ),
     )
 
-    return when (memberOfConress.legislativeRole) {
+    when (memberOfConress.legislativeRole) {
       LegislatorRole.Senator -> senateService.contact(cwcRequest)
       LegislatorRole.Representative -> houseService.contact(cwcRequest)
     }

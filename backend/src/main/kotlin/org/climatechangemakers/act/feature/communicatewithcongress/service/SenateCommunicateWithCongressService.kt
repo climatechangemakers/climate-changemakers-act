@@ -7,5 +7,5 @@ import retrofit2.http.POST
 
 interface SenateCommunicateWithCongressService {
 
-  @POST(".") suspend fun contact(@Body request: CommunicateWithCogressRequest): Response<Unit>
+  @POST(".") suspend fun contact(@Body request: CommunicateWithCogressRequest)
 }
