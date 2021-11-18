@@ -23,7 +23,6 @@ import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
 import org.climatechangemakers.act.feature.issue.manager.IssueManager
 import org.slf4j.Logger
 import retrofit2.HttpException
-import retrofit2.Response
 import javax.inject.Inject
 
 class NetworkCommunicateWithCongressManager @Inject constructor(
