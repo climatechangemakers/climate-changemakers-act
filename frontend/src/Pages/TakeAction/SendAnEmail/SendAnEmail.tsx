@@ -47,6 +47,7 @@ export default function SendAnEmail({
     const [sendEmailError, setSendEmailError] = useState("");
     const [emailState, setEmailState] = useState<EmailState>("titleing");
     const [isSending, setIsSending] = useState(false);
+    const [bioguideIdsToSend, setBioguideIdsToSend] = useState(actionInfo.legislators.map((l) => l.bioguideId));
 
     useEffect(() => {
         emailState === "prompting" && scrollToId("email_prompts");
@@ -72,11 +73,20 @@ export default function SendAnEmail({
             emailInfo.subject,
             emailInfo.body,
             selectedIssue.id,
-            actionInfo.legislators.map((l) => l.bioguideId)
+            bioguideIdsToSend
         );
         setIsSending(false);
 
         if (!response.successful) {
+            if (typeof response.error === "object") {
+                setBioguideIdsToSend(response.error.failedBioguideIds);
+                setSendEmailError(
+                    `Failed to send ${response.error.failedBioguideIds.length} email${
+                        response.error.failedBioguideIds.length > 1 ? "s" : ""
+                    }. Click to retry.`
+                );
+                return;
+            }
             setSendEmailError(response?.error ?? "Failed to send email");
             return;
         }
