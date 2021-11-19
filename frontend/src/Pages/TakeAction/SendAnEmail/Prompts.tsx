@@ -1,6 +1,6 @@
 import HiddenValidationInput from "common/Components/HiddenValidationInput";
 import { EmailState } from "common/models/EmailState";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
 type Props = {
