@@ -52,9 +52,11 @@ const post = async <Data, Error = string>(path: string, content: Object): Promis
 
 const retryThreeTimes = async <Data, Error = string>(fetch: () => Promise<FetchResponse<Data, Error>>) => {
     let response = await fetch();
-    for (var i = 0; i < 3; i++) {
-        response = await fetch();
-        if (response.successful) return response;
+    if (!response.successful) {
+        for (var i = 0; i < 3; i++) {
+            response = await fetch();
+            if (response.successful) return response;
+        }
     }
     return response;
 };
