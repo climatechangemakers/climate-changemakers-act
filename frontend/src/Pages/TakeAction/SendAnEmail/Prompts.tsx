@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
 type Props = {
+    emailState: EmailState;
     formRef: React.RefObject<HTMLFormElement>;
     setEmailState: React.Dispatch<React.SetStateAction<EmailState>>;
     setEmailBody: (body: string) => void;
@@ -11,7 +12,7 @@ type Props = {
 
 const salutation = "To whom it may concern,";
 
-export default function Prompts({ formRef, setEmailState, setEmailBody }: Props) {
+export default function Prompts({ emailState, formRef, setEmailState, setEmailBody }: Props) {
     const [emailPrompts, setEmailPrompts] = useState({
         policyAsk: "",
         whyItMatters: "",
@@ -113,7 +114,7 @@ export default function Prompts({ formRef, setEmailState, setEmailBody }: Props)
                         Review Email
                     </Button>
                     <HiddenValidationInput
-                        when={Object.values(emailPrompts).every((p) => !p)}
+                        when={emailState === "prompting" && Object.values(emailPrompts).every((p) => !p)}
                         message="Please fill out at least one prompt"
                     />
                 </Col>

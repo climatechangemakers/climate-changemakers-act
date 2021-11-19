@@ -41,6 +41,8 @@ export default function SendAnEmail({
     const formRef = useRef<HTMLFormElement>(null);
     const [sendEmailError, setSendEmailError] = useState("");
     const [emailState, setEmailState] = useState<EmailState>("titleing");
+    const [isSending, setIsSending] = useState(false);
+    const [bioguideIdsToSend, setBioguideIdsToSend] = useState(actionInfo.legislators.map((l) => l.bioguideId));
 
     useEffect(() => {
         emailState === "prompting" && scrollToId("email_prompts");
@@ -51,6 +53,8 @@ export default function SendAnEmail({
     const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSendEmailError("");
+
+        setIsSending(true);
         const response = await sendEmailAPI(
             formInfo.email,
             emailInfo.prefix,
@@ -64,9 +68,20 @@ export default function SendAnEmail({
             emailInfo.subject,
             emailInfo.body,
             selectedIssue.id,
-            actionInfo.legislators.map((l) => l.bioguideId)
+            bioguideIdsToSend
         );
+        setIsSending(false);
+
         if (!response.successful) {
+            if (typeof response.error === "object") {
+                setBioguideIdsToSend(response.error.failedBioguideIds);
+                setSendEmailError(
+                    `Failed to send ${response.error.failedBioguideIds.length} email${
+                        response.error.failedBioguideIds.length > 1 ? "s" : ""
+                    }. Click to retry.`
+                );
+                return;
+            }
             setSendEmailError(response?.error ?? "Failed to send email");
             return;
         }
@@ -245,6 +260,7 @@ export default function SendAnEmail({
                 </Row>
                 {emailState !== "titleing" && (
                     <Prompts
+                        emailState={emailState}
                         formRef={formRef}
                         setEmailState={setEmailState}
                         setEmailBody={(body: string) => setEmailInfo((info) => ({ ...info, body }))}
@@ -282,7 +298,7 @@ export default function SendAnEmail({
                             </Col>
                             <Col>
                                 <Button type="submit" className="w-100 text-dark" disabled={isEmailSent}>
-                                    {!sendEmailError ? "Send Email" : "Try again"}
+                                    {isSending ? "Sending..." : !sendEmailError ? "Send Email" : "Try again"}
                                 </Button>
                             </Col>
                         </Row>
