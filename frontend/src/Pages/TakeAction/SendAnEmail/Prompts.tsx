@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
 type Props = {
-    emailState: EmailState;
     formRef: React.RefObject<HTMLFormElement>;
     firstName: string;
     emailState: EmailState;
@@ -26,7 +25,7 @@ export default function Prompts({ formRef, firstName, emailState, setEmailState,
     const addPromptsToEmail = () => {
         if (emailState === "reviewing" || formRef.current!.reportValidity()) {
             setEmailBody(
-                [salutation, ...Object.values(emailPrompts).filter((o) => !!o), `Sincerely, ${firstName}`].join("\n\n")
+                [salutation, ...Object.values(emailPrompts).filter((o) => !!o), `Sincerely,\n${firstName}`].join("\n\n")
             );
             setAddedPrompts(true);
             setEmailState("reviewing");
