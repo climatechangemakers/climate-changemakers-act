@@ -8,7 +8,7 @@ type Props = {
     isPhoneCallMade: boolean;
     isSocialPosted: boolean;
     isJoinedMission: boolean;
-    isMember?: boolean
+    isMember?: boolean;
     desktop?: boolean;
 };
 
@@ -89,7 +89,7 @@ export default function ScrollSpy({
                 >
                     {desktop ? "Post on Social" : "Post"}
                 </Step>
-                {!isMember &&
+                {!isMember && (
                     <Step
                         step={5}
                         id="#join_our_mission"
@@ -98,7 +98,8 @@ export default function ScrollSpy({
                         last
                     >
                         {desktop ? "Join Our Mission" : "Join"}
-                    </Step>}
+                    </Step>
+                )}
             </Card.Body>
         </Card>
     );

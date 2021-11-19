@@ -4,15 +4,16 @@ import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
 type Props = {
-    emailState: EmailState;
     formRef: React.RefObject<HTMLFormElement>;
+    firstName: string;
+    emailState: EmailState;
     setEmailState: React.Dispatch<React.SetStateAction<EmailState>>;
     setEmailBody: (body: string) => void;
 };
 
 const salutation = "To whom it may concern,";
 
-export default function Prompts({ emailState, formRef, setEmailState, setEmailBody }: Props) {
+export default function Prompts({ formRef, firstName, emailState, setEmailState, setEmailBody }: Props) {
     const [emailPrompts, setEmailPrompts] = useState({
         policyAsk: "",
         whyItMatters: "",
@@ -22,8 +23,10 @@ export default function Prompts({ emailState, formRef, setEmailState, setEmailBo
     const [addedPrompts, setAddedPrompts] = useState(false);
 
     const addPromptsToEmail = () => {
-        if (formRef.current!.reportValidity()) {
-            setEmailBody([salutation, ...Object.values(emailPrompts).filter((o) => !!o)].join("\n\n"));
+        if (emailState === "reviewing" || formRef.current!.reportValidity()) {
+            setEmailBody(
+                [salutation, ...Object.values(emailPrompts).filter((o) => !!o), `Sincerely,\n${firstName}`].join("\n\n")
+            );
             setAddedPrompts(true);
             setEmailState("reviewing");
         }

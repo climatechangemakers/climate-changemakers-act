@@ -260,8 +260,9 @@ export default function SendAnEmail({
                 </Row>
                 {emailState !== "titleing" && (
                     <Prompts
-                        emailState={emailState}
                         formRef={formRef}
+                        firstName={emailInfo.firstName}
+                        emailState={emailState}
                         setEmailState={setEmailState}
                         setEmailBody={(body: string) => setEmailInfo((info) => ({ ...info, body }))}
                     />
