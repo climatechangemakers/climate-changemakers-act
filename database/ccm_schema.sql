@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 12.7
--- Dumped by pg_dump version 13.4
+-- Dumped by pg_dump version 14.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -642,6 +642,16 @@ CREATE TABLE public.action_email_legislator (
 CREATE TABLE public.action_initiate (
     email public.citext NOT NULL,
     initiated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+--
+-- Name: action_sign_up; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.action_sign_up (
+    email public.citext NOT NULL,
+    signed_up_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 
@@ -2078,7 +2088,7 @@ COPY public.example_issue_why_statement (issue_id, statement) FROM stdin;
 --
 
 COPY public.focus_issue (issue_id, focused_at) FROM stdin;
-1	2021-10-29 16:21:20.285411
+5	2021-11-17 02:48:32.678903
 \.
 
 
@@ -2087,10 +2097,7 @@ COPY public.focus_issue (issue_id, focused_at) FROM stdin;
 --
 
 COPY public.issue (id, title, precomposed_tweet_template, image_url, description) FROM stdin;
-1	This is the focus issue	this is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg	This is an issue description
-2	This is not the focus issue	this is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg	This is an issue description
-3	This is also not the focus issue	this is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg	This is an issue description
-4	This is some random issue which might one day be focused	this is a tweet to %s	https://www.conservationpa.org/sites/default/files/images/pipeline-1024x768_0.jpg	This is an issue description
+5	Build Back Better Act Climate Provisions	The BBB will deliver huge emissions reductions and consumer savings by 2030. %s do everything in your power to retain the bill’s climate provisions.\n\nClimate impact data: https://twitter.com/JesseJenkins/status/1459245283666137088?s=20\nConsumer savings: https://rmi.org/rmi-reality-check-proposed-clean-energy-incentives-would-save-electricity-customers-billions/	https://images.fastcompany.net/image/upload/w_1280,f_auto,q_auto,fl_lossy/wp-cms/uploads/2021/11/p-1-90692231-the-build-back-better-ev-tax-credit-still-favors-car-purchases-over-bikes.jpg	The Build Back Better Act is the cornerstone of the Biden administration’s plan to meet U.S. commitments under the Paris agreement.
 \.
 
 
@@ -3591,8 +3598,10 @@ E000071	Jake Ellzey	rep	TX	6	Republican	202-225-2002	RepEllzey	HTX06
 --
 
 COPY public.talking_point (id, title, issue_id, content) FROM stdin;
-1	Bold talking point	1	<b>This is bold</b>
-2	Italics talking point	1	<em>This is italics</em>
+3	Introduction	5	<p>The <a href="https://www.congress.gov/bill/117th-congress/house-bill/5376">Build Back Better Act</a>  (BBB) is the cornerstone of the Biden administration’s plan to meet U.S. commitments under the Paris agreement. Coupled with robust executive action, the BBB would put the U.S. on track to achieve 50% emissions reduction by 2030 (below 2005 levels). The legislation couples emissions reductions with significant investments in environmental justice communities and would create thousands of new jobs over the next eight years.</p>
+4	Timeline	5	<p>The House of Representatives is expected to vote on the legislation this week. A group of House Democratic moderates have refused to commit to voting “yes” until they see the estimated budget impact from the Congressional Budget Office. After the BBB passes the House, it will then be considered by the Senate, which can propose amendments and modifications in its own version (which the House will then have to agree to). Senator Joe Manchin has also insisted that he must see the projected budget impact before committing his support.</p>
+5	Clear Policy Ask	5	<h2>The Build Back Better Act must pass with its existing climate provisions at minimum, which total <b>$555 billion.</b></h2>
+6	Major climate funding in Build Back Better	5	<ul><li><p><strong>Clean energy tax credits, </strong>which will deliver the bulk of emissions reductions in the bill. Tax incentives include electric vehicles, clean electricity, clean buildings, and decarbonized industry. ($304 billion)</p></li><li><p><strong>Clean electricity modernization and transmission </strong>($45 billion) </p></li><li><p><strong>A Green Bank</strong>, called the Greenhouse Gas Reduction Fund. It provides low-cost financing for clean energy projects and commits at least 40% of investments to environmental justice communities. ($29 billion)</p></li><li><p><strong>Clean transportation</strong>, including EV charging infrastructure, public transit, passenger rail, and e-bikes. ($25 billion)</p></li><li><p><strong>Agriculture decarbonization. </strong>($21 billion)</p></li><li><p><strong>A Civilian Climate Corps</strong>, which will provide 300,000 Americans with dignified work in facilitating the energy transition. ($19 billion)</p></li><li><p><strong>Direct environmental justice remediation,</strong> which will reduce and monitor air pollution and lead, invest directly in communities, and identify environmental inequities. ($15 billion)</p></li><li><p><strong>Clean buildings</strong>, including rebates for efficiency upgrades, retrofits, and clean appliances. ($14 billion)</p></li></ul>
 \.
 
 
@@ -3600,14 +3609,14 @@ COPY public.talking_point (id, title, issue_id, content) FROM stdin;
 -- Name: issue_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.issue_id_seq', 4, true);
+SELECT pg_catalog.setval('public.issue_id_seq', 5, true);
 
 
 --
 -- Name: talking_point_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.talking_point_id_seq', 2, true);
+SELECT pg_catalog.setval('public.talking_point_id_seq', 6, true);
 
 
 --
