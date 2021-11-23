@@ -1,5 +1,8 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Deploy a service on AWS Fargate, hosted in a private subnet, but accessible via a public load balancer.
+Description: Deploy a service on AWS Fargate, hosted in a private subnet, but accessible via a
+             public load balancer.
+             Sourced with slight modifications from
+             https://github.com/nathanpeck/aws-cloudformation-fargate
 Parameters:
   StackName:
     Type: String
@@ -78,9 +81,6 @@ Resources:
           Cpu: !Ref 'ContainerCpu'
           Memory: !Ref 'ContainerMemory'
           Image: !Ref 'ImageUrl'
-          Environment:
-            - Name: SOMETHING
-              Value: something
           Secrets:
             - Name: GEOCODIO_API_KEY
               ValueFrom: 'arn:aws:secretsmanager:us-west-2:207054523690:secret:GEOCODIO_API_KEY-9Q9NTK'

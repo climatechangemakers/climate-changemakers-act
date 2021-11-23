@@ -6,6 +6,9 @@ Description: This stack deploys a Fargate cluster that is in a VPC with both
              send traffic to the containers in the private subnet, and one in
              the private subnet, which can be used for private internal traffic
              between internal services.
+
+             Sourced with slight modifications from
+             https://github.com/nathanpeck/aws-cloudformation-fargate
 Mappings:
   # Hard values for the subnet masks. These masks define
   # the range of internal IP addresses that can be assigned.
@@ -302,12 +305,6 @@ Resources:
       Protocol: HTTP
       UnhealthyThresholdCount: 2
       VpcId: !Ref 'VPC'
-  # PublicCert:
-  #   Type: AWS::ElasticLoadBalancingV2::ListenerCertificate
-  #   Properties:
-  #     Certificates:
-  #       - CertificateArn: arn:aws:acm:us-west-2:207054523690:certificate/4f32bc76-9916-4fa8-815a-bda8b062c710
-  #     ListenerArn: !Ref 'PublicLoadBalancerListener'
   PublicLoadBalancerListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
@@ -319,16 +316,16 @@ Resources:
       Protocol: HTTPS
       Certificates:
         - CertificateArn: arn:aws:acm:us-west-2:207054523690:certificate/4f32bc76-9916-4fa8-815a-bda8b062c710
-  
+
   PublicHttpLoadBalancerListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
       LoadBalancerArn: !Ref 'PublicLoadBalancer'
-      Port: 80 
+      Port: 80
       Protocol: HTTP
       DefaultActions:
         - Order: 1
-          RedirectConfig: 
+          RedirectConfig:
             Protocol: "HTTPS"
             Port: "443"
             Host: "#{host}"
