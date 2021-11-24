@@ -33,17 +33,19 @@ export default function PostOnSocial({
         e.preventDefault();
         e.stopPropagation();
 
-        if (!hasOpenedTwitter) {
+        if (hasOpenedTwitter) {
+            setIsSocialPosted(true);
+        } else {
             const openedWindow = window.open(getPostTweetUrl(tweet!.trim()));
             if (openedWindow) {
                 setHasOpenedTwitter(true);
+                const response = await logTweetAPI(
+                    actionInfo.initiatorEmail,
+                    selectedIssue.id,
+                    actionInfo.legislators.map((l) => l.bioguideId)
+                );
+                if (!response.successful) console.warn(response.error ?? "Failed to log tweet");
             }
-        } else {
-            setIsSocialPosted(true);
-            const bioguideIds = actionInfo.legislators.map((l) => l.bioguideId);
-
-            const response = await logTweetAPI(actionInfo.initiatorEmail, selectedIssue.id, bioguideIds);
-            if (!response.successful) console.warn(response.error ?? "Failed to log tweet");
         }
     };
 
