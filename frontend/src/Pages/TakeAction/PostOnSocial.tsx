@@ -35,16 +35,19 @@ export default function PostOnSocial({
 
         if (hasOpenedTwitter) {
             setIsSocialPosted(true);
-        }
-        else {
+        } else {
             const openedWindow = window.open(getPostTweetUrl(tweet!.trim()));
             if (openedWindow) {
                 setHasOpenedTwitter(true);
-                const response = await logTweetAPI(actionInfo.initiatorEmail, selectedIssue.id, actionInfo.legislators.map((l) => l.bioguideId));
+                const response = await logTweetAPI(
+                    actionInfo.initiatorEmail,
+                    selectedIssue.id,
+                    actionInfo.legislators.map((l) => l.bioguideId)
+                );
                 if (!response.successful) console.warn(response.error ?? "Failed to log tweet");
             }
-        };
-    }
+        }
+    };
 
     return (
         <div className="pt-2 pb-3">
@@ -69,7 +72,7 @@ export default function PostOnSocial({
                                 placeholder="Compose your tweet"
                                 className="mt-2"
                                 isInvalid={!isTweetValid(tweet)}
-                                disabled={isSocialPosted}
+                                disabled={isSocialPosted || hasOpenedTwitter}
                                 value={tweet}
                                 onChange={(e) => setTweet(e.target.value)}
                             />
