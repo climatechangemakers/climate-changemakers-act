@@ -27,24 +27,24 @@ export default function PostOnSocial({
     selectedIssue,
 }: Props) {
     const [tweet, setTweet] = useState(preComposedTweet);
+    const [hasOpenedTwitter, setHasOpenedTwitter] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         e.stopPropagation();
 
-        if (window.open(getPostTweetUrl(tweet!.trim()))) {
-            const response = await logTweetAPI(
-                actionInfo.initiatorEmail,
-                selectedIssue.id,
-                actionInfo.legislators.map((l) => l.bioguideId)
-            );
-            if (!response.successful) {
-                console.warn(response.error ?? "Failed to log tweet");
-                return;
-            }
+        if (hasOpenedTwitter) {
             setIsSocialPosted(true);
         }
-    };
+        else {
+            const openedWindow = window.open(getPostTweetUrl(tweet!.trim()));
+            if (openedWindow) {
+                setHasOpenedTwitter(true);
+                const response = await logTweetAPI(actionInfo.initiatorEmail, selectedIssue.id, actionInfo.legislators.map((l) => l.bioguideId));
+                if (!response.successful) console.warn(response.error ?? "Failed to log tweet");
+            }
+        };
+    }
 
     return (
         <div className="pt-2 pb-3">
@@ -90,14 +90,25 @@ export default function PostOnSocial({
                             </Button>
                         </div>
                         <div className="col d-flex">
-                            <Button
-                                type="submit"
-                                className="flex-grow-1 ml-2 text-dark"
-                                variant="primary"
-                                disabled={isSocialPosted || !isTweetValid(tweet)}
-                            >
-                                Send Tweet
-                            </Button>
+                            {!hasOpenedTwitter ? (
+                                <Button
+                                    type="submit"
+                                    className="flex-grow-1 ml-2 text-dark"
+                                    variant="primary"
+                                    disabled={isSocialPosted || !isTweetValid(tweet)}
+                                >
+                                    Send Tweet
+                                </Button>
+                            ) : (
+                                <Button
+                                    type="submit"
+                                    className="flex-grow-1 ml-2 text-dark"
+                                    variant="primary"
+                                    disabled={isSocialPosted}
+                                >
+                                    Done Tweeting
+                                </Button>
+                            )}
                         </div>
                     </div>
                 </Form>
