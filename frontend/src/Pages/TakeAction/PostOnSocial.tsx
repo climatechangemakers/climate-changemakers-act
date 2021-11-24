@@ -57,10 +57,9 @@ export default function PostOnSocial({
                 <Form onSubmit={handleSubmit}>
                     <Form.Group>
                         <Form.Label htmlFor="draft-tweet-input">
-                            Plan your personalized script (the field below is editable and just a working space for
-                            you!), and then click below to make your calls. You're the expert on your own experiences
-                            and your own climate concern, and your advocacy is most effective when you speak from your
-                            unique perspective, so bring in personal details and anecdotes.
+                            Social media can be very effective at grabbing the attention of policymakers and amplifying
+                            your message to a wider audience. Use the sample Tweet below as a starting point and don’t
+                            forget to tag your members of Congress!
                         </Form.Label>
                         <InputGroup hasValidation>
                             <Form.Control

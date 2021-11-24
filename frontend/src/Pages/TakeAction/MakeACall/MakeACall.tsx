@@ -42,9 +42,9 @@ export default function MakeACall({
                 <h2 className="text-pink fw-bold mb-3 ms-3">Make a Call</h2>
             </div>
             <p>
-                Fill out the form below to open up an email to your elected representatives. The email template includes
-                plenty of ‘fill-in-the-blank’ spaces, so you should weave in your freshly-drafted ‘why’ to make your
-                message stand out.
+                Plan your personalized script (the field below is a working space for you!), and then click below to
+                make your calls. You're the expert on your own experience and your own climate concern. Your advocacy is
+                most effective when you speak from your unique perspective, so bring in personal details and anecdotes.
             </p>
             {emailBody && (
                 <>
