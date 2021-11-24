@@ -98,9 +98,8 @@ export default function SendAnEmail({
                 <h2 className="text-pink fw-bold mb-3 ms-3">Send an Email</h2>
             </div>
             <p>
-                Fill out the form below to open up an email to your elected representatives. The email template includes
-                plenty of ‘fill-in-the-blank’ spaces, so you should weave in your freshly-drafted ‘why’ to make your
-                message stand out.
+                Fill out the form below to open up an email to your elected representatives. You can use our prompts to
+                guide your through the process, or draft your own from scratch.
             </p>
             {selectedIssue.talkingPoints.length > 0 && (
                 <div className="mb-3">
