@@ -4,18 +4,20 @@ import org.climatechangemakers.act.feature.findlegislator.service.GeocodioServic
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
-import kotlinx.serialization.json.Json
 import nl.adaptivity.xmlutil.serialization.XML
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import org.climatechangemakers.act.feature.communicatewithcongress.service.HouseCommunicateWithCongressService
 import org.climatechangemakers.act.feature.communicatewithcongress.service.SenateCommunicateWithCongressService
+import org.climatechangemakers.act.feature.membership.service.AirtableService
+import org.climatechangemakers.act.feature.membership.service.FakeAirtableService
 import org.slf4j.Logger
+import retrofit2.Converter
 import retrofit2.Retrofit
 
 @Module object ServiceModule {
 
-  private fun createOkHttpClient(
+  private fun createUrlApiKeyOkHttpClient(
     apiKeyName: String,
     apiKey: String,
     logger: Logger,
@@ -25,26 +27,38 @@ import retrofit2.Retrofit
     val newUrl = originalUrl.newBuilder().addQueryParameter(apiKeyName, apiKey).build()
 
     logger.info("${originalRequest.method()} ${originalUrl.redact()}")
-
     chain.proceed(originalRequest.newBuilder().url(newUrl).build())
   }.build()
 
-  @Provides @Geocodio fun providesGeocodioClient(logger: Logger): OkHttpClient = createOkHttpClient(
+  private fun createBearerTokenOkHttpClient(
+    apiKey: String,
+    logger: Logger,
+  ): OkHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
+    val newRequest = chain.request().newBuilder()
+      .addHeader("Authorization", "Bearer $apiKey")
+      .build()
+
+    logger.info("${newRequest.method()} ${newRequest.url().redact()}")
+    chain.proceed(newRequest)
+  }.build()
+
+  @Provides @Geocodio fun providesGeocodioClient(logger: Logger): OkHttpClient = createUrlApiKeyOkHttpClient(
     apiKeyName = "api_key",
     apiKey = getEnvironmentVariable(EnvironmentVariable.GeocodioApiKey),
     logger = logger,
   )
 
-  @Provides fun providesGeocodioService(@Geocodio client: OkHttpClient): GeocodioService = Retrofit.Builder()
+  @Provides fun providesGeocodioService(
+    @Geocodio client: OkHttpClient,
+    jsonConverterFactory: Converter.Factory,
+  ): GeocodioService = Retrofit.Builder()
     .baseUrl("https://api.geocod.io/v1.6/")
-    .addConverterFactory(
-      Json { ignoreUnknownKeys = true }.asConverterFactory(MediaType.get("application/json"))
-    )
+    .addConverterFactory(jsonConverterFactory)
     .client(client)
     .build()
     .create(GeocodioService::class.java)
 
-  @Provides @Senate fun providesSenateCWCClient(logger: Logger): OkHttpClient = createOkHttpClient(
+  @Provides @Senate fun providesSenateCWCClient(logger: Logger): OkHttpClient = createUrlApiKeyOkHttpClient(
     apiKeyName = "apikey",
     apiKey = getEnvironmentVariable(EnvironmentVariable.SCWCApiKey),
     logger = logger,
@@ -60,7 +74,7 @@ import retrofit2.Retrofit
     .build()
     .create(SenateCommunicateWithCongressService::class.java)
 
-  @Provides @House fun providesHouseCWCClient(logger: Logger): OkHttpClient = createOkHttpClient(
+  @Provides @House fun providesHouseCWCClient(logger: Logger): OkHttpClient = createUrlApiKeyOkHttpClient(
     apiKeyName = "apikey",
     apiKey = getEnvironmentVariable(EnvironmentVariable.HCWCApiKey),
     logger = logger,
@@ -75,4 +89,24 @@ import retrofit2.Retrofit
     .client(client)
     .build()
     .create(HouseCommunicateWithCongressService::class.java)
+
+  @Provides @AirTable fun providesAirtableClient(logger: Logger): OkHttpClient = createBearerTokenOkHttpClient(
+    logger = logger,
+    apiKey = getEnvironmentVariable(EnvironmentVariable.AirtableApiKey),
+  )
+
+  @Provides fun providesAirtableService(
+    @AirTable client: OkHttpClient,
+    @IsProduction isProduction: Boolean,
+    jsonConverterFactory: Converter.Factory,
+  ): AirtableService = if (isProduction) {
+    Retrofit.Builder()
+      .baseUrl("https://api.airtable.com/v0/${getEnvironmentVariable(EnvironmentVariable.AirtableBaseId)}/CRM/")
+      .addConverterFactory(jsonConverterFactory)
+      .client(client)
+      .build()
+      .create(AirtableService::class.java)
+  } else {
+    FakeAirtableService()
+  }
 }

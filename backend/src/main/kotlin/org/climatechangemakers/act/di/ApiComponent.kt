@@ -6,7 +6,9 @@ import dagger.Component
 import kotlinx.serialization.json.Json
 import org.climatechangemakers.act.feature.membership.controller.MembershipController
 import org.climatechangemakers.act.feature.values.controller.ValuesController
+import javax.inject.Singleton
 
+@Singleton
 @Component(modules = [
   BindingModule::class,
   CoroutineModule::class,
@@ -14,6 +16,7 @@ import org.climatechangemakers.act.feature.values.controller.ValuesController
   LoggerModule::class,
   ServiceModule::class,
   SerializationModule::class,
+  EnvironmentModule::class,
 ])
 interface ApiComponent {
 

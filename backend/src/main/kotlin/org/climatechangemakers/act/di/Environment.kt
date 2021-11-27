@@ -15,4 +15,7 @@ enum class EnvironmentVariable(val key: String) {
   DatabaseName("POSTGRES_DB"),
   DatabaseHostname("POSTGRES_HOSTNAME"),
   DatabasePort("POSTGRES_PORT"),
+  AirtableApiKey("AIRTABLE_API_KEY"),
+  AirtableBaseId("AIRTABLE_BASE_ID"),
+  IsProduction("IS_PRODUCTION"),
 }
