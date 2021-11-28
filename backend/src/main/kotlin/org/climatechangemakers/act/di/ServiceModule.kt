@@ -90,13 +90,13 @@ import retrofit2.Retrofit
     .build()
     .create(HouseCommunicateWithCongressService::class.java)
 
-  @Provides @AirTable fun providesAirtableClient(logger: Logger): OkHttpClient = createBearerTokenOkHttpClient(
+  @Provides @Airtable fun providesAirtableClient(logger: Logger): OkHttpClient = createBearerTokenOkHttpClient(
     logger = logger,
     apiKey = getEnvironmentVariable(EnvironmentVariable.AirtableApiKey),
   )
 
   @Provides fun providesAirtableService(
-    @AirTable client: OkHttpClient,
+    @Airtable client: OkHttpClient,
     @IsProduction isProduction: Boolean,
     jsonConverterFactory: Converter.Factory,
   ): AirtableService = if (isProduction) {
