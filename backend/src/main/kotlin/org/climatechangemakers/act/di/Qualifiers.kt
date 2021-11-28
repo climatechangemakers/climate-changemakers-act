@@ -26,9 +26,3 @@ annotation class Airtable
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER)
 annotation class Io
-
-
-@Qualifier
-@Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.FUNCTION, AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER)
-annotation class IsProduction

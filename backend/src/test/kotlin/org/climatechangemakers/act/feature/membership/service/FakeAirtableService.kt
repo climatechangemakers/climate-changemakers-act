@@ -11,9 +11,9 @@ class FakeAirtableService : AirtableService {
   /**
    * Map of record email to record ID.
    */
-  private val registeredMembers = mutableMapOf("foo@bar.com" to "someid")
+  val registeredMembers = mutableSetOf<String>()
 
   override suspend fun checkMembership(formula: AirtableFormula.FilterByEmailFormula) = AirtableResponse(
-    records = registeredMembers[formula.email]?.let { id -> listOf(AirtableRecord(id)) } ?: emptyList()
+    records = if (formula.email in registeredMembers) listOf(AirtableRecord(formula.email)) else emptyList()
   )
 }

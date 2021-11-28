@@ -10,7 +10,6 @@ import okhttp3.OkHttpClient
 import org.climatechangemakers.act.feature.communicatewithcongress.service.HouseCommunicateWithCongressService
 import org.climatechangemakers.act.feature.communicatewithcongress.service.SenateCommunicateWithCongressService
 import org.climatechangemakers.act.feature.membership.service.AirtableService
-import org.climatechangemakers.act.feature.membership.service.FakeAirtableService
 import org.slf4j.Logger
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -97,16 +96,11 @@ import retrofit2.Retrofit
 
   @Provides fun providesAirtableService(
     @Airtable client: OkHttpClient,
-    @IsProduction isProduction: Boolean,
     jsonConverterFactory: Converter.Factory,
-  ): AirtableService = if (isProduction) {
-    Retrofit.Builder()
-      .baseUrl("https://api.airtable.com/v0/${getEnvironmentVariable(EnvironmentVariable.AirtableBaseId)}/CRM/")
-      .addConverterFactory(jsonConverterFactory)
-      .client(client)
-      .build()
-      .create(AirtableService::class.java)
-  } else {
-    FakeAirtableService()
-  }
+  ): AirtableService = Retrofit.Builder()
+    .baseUrl("https://api.airtable.com/v0/${getEnvironmentVariable(EnvironmentVariable.AirtableBaseId)}/CRM/")
+    .addConverterFactory(jsonConverterFactory)
+    .client(client)
+    .build()
+    .create(AirtableService::class.java)
 }

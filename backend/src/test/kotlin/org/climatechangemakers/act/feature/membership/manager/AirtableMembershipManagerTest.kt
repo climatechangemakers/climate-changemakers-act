@@ -13,6 +13,7 @@ class AirtableMembershipManagerTest {
   private val manager = AirtableMembershipManager(FakeActionTrackerManager(), airtableService)
 
   @Test fun `checkMembership returns true when user record present`() = suspendTest {
+    airtableService.registeredMembers.add("foo@bar.com")
     assertTrue(manager.checkMembership("foo@bar.com"))
   }
 
