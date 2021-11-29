@@ -20,6 +20,8 @@ services:
         - SCWC_URL=${SCWC_URL}
         - HCWC_API_KEY=${HCWC_API_KEY}
         - HCWC_URL=${HCWC_URL}
+        - AIRTABLE_API_KEY=${AIRTABLE_API_KEY}
+        - AIRTABLE_BASE_ID=${AIRTABLE_BASE_ID}
       ports:
         - ${KOTLIN_PORT}:8080
     database:

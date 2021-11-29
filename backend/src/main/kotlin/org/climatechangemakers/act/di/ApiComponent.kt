@@ -6,7 +6,9 @@ import dagger.Component
 import kotlinx.serialization.json.Json
 import org.climatechangemakers.act.feature.membership.controller.MembershipController
 import org.climatechangemakers.act.feature.values.controller.ValuesController
+import javax.inject.Singleton
 
+@Singleton
 @Component(modules = [
   BindingModule::class,
   CoroutineModule::class,
