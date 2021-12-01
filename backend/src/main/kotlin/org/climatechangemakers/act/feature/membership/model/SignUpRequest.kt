@@ -1,4 +1,4 @@
-package org.climatechangemakers.act.feature.action.model
+package org.climatechangemakers.act.feature.membership.model
 
 import kotlinx.serialization.Serializable
 import org.climatechangemakers.act.common.model.RepresentedArea
@@ -7,7 +7,8 @@ import org.climatechangemakers.act.common.model.RepresentedArea
   val email: String,
   val firstName: String,
   val lastName: String,
+  val city: String,
   val state: RepresentedArea,
-  val postalCode: String,
   val priorExperience: Boolean,
+  val referral: String,
 )

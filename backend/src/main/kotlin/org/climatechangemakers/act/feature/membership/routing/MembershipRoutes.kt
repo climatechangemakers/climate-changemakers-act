@@ -8,4 +8,5 @@ import org.climatechangemakers.act.feature.membership.controller.MembershipContr
 fun Route.membershipRoutes(controller: MembershipController) {
 
   post("/check-membership") { controller.checkMembership(call) }
+  post("/sign-up") { controller.signUp(call) }
 }

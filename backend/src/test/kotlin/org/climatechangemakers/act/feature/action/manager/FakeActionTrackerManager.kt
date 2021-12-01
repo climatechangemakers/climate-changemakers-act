@@ -1,6 +1,7 @@
 package org.climatechangemakers.act.feature.action.manager
 
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.ChannelResult
 
 class FakeActionTrackerManager : ActionTrackerManager {
 
@@ -27,6 +28,6 @@ class FakeActionTrackerManager : ActionTrackerManager {
   }
 
   override suspend fun trackActionSignUp(email: String) {
-    TODO("Not yet implemented")
+    capturedEmail.trySend(email)
   }
 }
