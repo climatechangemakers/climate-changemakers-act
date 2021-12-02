@@ -75,6 +75,8 @@ class AirtableMembershipManagerTest {
         RepresentedArea.Virginia,
         true,
         "Nah",
+        "This is an action reason",
+        "social media ew",
       )
     }
     assertEquals("Failed 3", throwable.response()?.errorBody()?.string())

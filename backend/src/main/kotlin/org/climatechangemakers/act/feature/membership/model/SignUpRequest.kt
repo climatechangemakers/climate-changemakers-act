@@ -11,4 +11,6 @@ import org.climatechangemakers.act.common.model.RepresentedArea
   val state: RepresentedArea,
   val priorExperience: Boolean,
   val referral: String,
+  val actionReason: String,
+  val socialVerification: String,
 )

@@ -16,6 +16,8 @@ import org.climatechangemakers.act.common.serializers.YesNoBooleanSerializer
     state: RepresentedArea,
     experience: Boolean,
     referral: String,
+    actionReason: String,
+    socialVerification: String,
   ) : this(
     listOf(
       AirtableCreateRecord(
@@ -27,6 +29,8 @@ import org.climatechangemakers.act.common.serializers.YesNoBooleanSerializer
           state,
           referral,
           experience,
+          actionReason,
+          socialVerification,
         )
       )
     )
@@ -48,6 +52,12 @@ import org.climatechangemakers.act.common.serializers.YesNoBooleanSerializer
   @SerialName("Experience?")
   @Serializable(with = YesNoBooleanSerializer::class)
   val experience: Boolean,
+
+  @SerialName("Why do you take climate action?")
+  val actionReason: String,
+
+  @SerialName("LinkedIn")
+  val socialVerification: String,
 ) {
   @SerialName("Country") val country = "USA"
 }

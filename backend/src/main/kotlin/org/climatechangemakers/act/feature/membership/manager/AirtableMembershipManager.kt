@@ -25,8 +25,20 @@ class AirtableMembershipManager @Inject constructor(
     state: RepresentedArea,
     experience: Boolean,
     referral: String,
+    actionReason: String,
+    socialVerification: String,
   ) {
-    val airtableRequest = AirtableCreateRecordRequest(email, firstName, lastName, city, state, experience, referral)
+    val airtableRequest = AirtableCreateRecordRequest(
+      email,
+      firstName,
+      lastName,
+      city,
+      state,
+      experience,
+      referral,
+      actionReason,
+      socialVerification,
+    )
 
     withRetry(3) {
       airtableService.signUp(airtableRequest)

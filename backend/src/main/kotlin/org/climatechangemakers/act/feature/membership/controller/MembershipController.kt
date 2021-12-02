@@ -32,6 +32,8 @@ class MembershipController @Inject constructor(
       request.state,
       request.priorExperience,
       request.referral,
+      request.actionReason,
+      request.socialVerification,
     )
     call.respond(HttpStatusCode.Created)
   }

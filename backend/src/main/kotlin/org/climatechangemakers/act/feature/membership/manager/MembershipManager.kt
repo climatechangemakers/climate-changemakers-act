@@ -22,5 +22,7 @@ interface MembershipManager {
     state: RepresentedArea,
     experience: Boolean,
     referral: String,
+    actionReason: String,
+    socialVerification: String,
   )
 }
