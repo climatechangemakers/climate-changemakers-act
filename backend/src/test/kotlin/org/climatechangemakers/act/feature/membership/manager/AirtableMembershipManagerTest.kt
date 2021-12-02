@@ -71,7 +71,7 @@ class AirtableMembershipManagerTest {
         "foo@bar.com",
         "foo",
         "bar",
-        "Richmond",
+        "23231",
         RepresentedArea.Virginia,
         true,
         "Nah",

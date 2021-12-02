@@ -28,7 +28,7 @@ class MembershipController @Inject constructor(
       request.email,
       request.firstName,
       request.lastName,
-      request.city,
+      request.postalCode,
       request.state,
       request.priorExperience,
       request.referral,

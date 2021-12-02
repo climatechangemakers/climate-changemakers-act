@@ -18,7 +18,7 @@ interface MembershipManager {
     email: String,
     firstName: String,
     lastName: String,
-    city: String,
+    postalCode: String,
     state: RepresentedArea,
     experience: Boolean,
     referral: String,

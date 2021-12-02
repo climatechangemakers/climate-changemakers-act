@@ -7,7 +7,7 @@ import org.climatechangemakers.act.common.model.RepresentedArea
   val email: String,
   val firstName: String,
   val lastName: String,
-  val city: String,
+  val postalCode: String,
   val state: RepresentedArea,
   val priorExperience: Boolean,
   val referral: String,
