@@ -1,5 +1,6 @@
 package org.climatechangemakers.act.feature.membership.service
 
+import org.climatechangemakers.act.feature.membership.model.AirtableCreateRecordRequest
 import org.climatechangemakers.act.feature.membership.model.AirtableRecord
 import org.climatechangemakers.act.feature.membership.model.AirtableResponse
 import retrofit2.Response
@@ -21,4 +22,9 @@ class FakeAirtableService : AirtableService {
       records = if (formula.email in registeredMembers) listOf(AirtableRecord(formula.email)) else emptyList()
     )
   )
+
+  override suspend fun signUp(body: AirtableCreateRecordRequest): Response<Unit> {
+    registeredMembers.addAll(body.records.map { it.fields.email })
+    return Response.success(Unit)
+  }
 }

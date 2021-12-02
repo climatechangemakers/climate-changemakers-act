@@ -11,5 +11,4 @@ fun Route.actionRoutes(controller: ActionController) {
   post("/send-email") { controller.sendEmailToLegislators(call) }
   post("/log-call") { controller.logLegislatorCallAction(call) }
   post("/log-tweet") { controller.logLegislatorTweetAction(call) }
-  post("/sign-up") { controller.signUp(call) }
 }

@@ -1,5 +1,7 @@
 package org.climatechangemakers.act.feature.membership.manager
 
+import org.climatechangemakers.act.common.model.RepresentedArea
+
 interface MembershipManager {
 
   /**
@@ -8,5 +10,19 @@ interface MembershipManager {
    */
   suspend fun checkMembership(email: String): Boolean
 
-  suspend fun signUp(email: String)
+  /**
+   * Sign a new member up for the Climate Changemakers community. This records their membership in some
+   * datasource, and sends them a welcome email.
+   */
+  suspend fun signUp(
+    email: String,
+    firstName: String,
+    lastName: String,
+    city: String,
+    state: RepresentedArea,
+    experience: Boolean,
+    referral: String,
+    actionReason: String,
+    socialVerification: String,
+  )
 }

@@ -17,6 +17,7 @@ import retrofit2.Converter
 
   @Provides fun providesJsonConverterFactory(): Converter.Factory = Json {
     ignoreUnknownKeys = true
+    encodeDefaults = true
   }.asConverterFactory(MediaType.get("application/json"))
 
   @Provides fun providesXml(): XML = XML {
