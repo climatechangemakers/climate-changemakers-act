@@ -45,7 +45,7 @@ import org.climatechangemakers.act.common.serializers.YesNoBooleanSerializer
   @SerialName("Email") val email: String,
   @SerialName("First Name") val firstName: String,
   @SerialName("Last Name") val lastName: String,
-  @SerialName("City") val city: String,
+  @SerialName("Zipcode") val postalCode: String,
   @SerialName("State") val state: RepresentedArea,
   @SerialName("Referral?") val referral: String,
 
