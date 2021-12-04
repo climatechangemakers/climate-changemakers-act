@@ -65,7 +65,7 @@ export default function LegislatorCard({ legislator, call }: Props) {
                             );
                         })}
                         <Button
-                            className="text-dark mt-1"
+                            className="text-dark mt-1 w-100"
                             onClick={() => call.logCall()}
                             disabled={call.isPhoneCallMade}
                         >
