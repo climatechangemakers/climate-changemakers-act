@@ -1,14 +1,15 @@
+import cx from "classnames";
 import { Legislator } from "common/models/ActionInfo";
-import { Badge, Card, Form } from "react-bootstrap";
+import { Badge, Button, Card, Form } from "react-bootstrap";
 import lcvlogo from "./lcv.png";
 import styles from "./LegislatorCard.module.css";
 
 type Props = {
     legislator: Legislator;
     call?: {
-        phoneNumbersCalled: string[];
+        bioguideIdsCalled: string[];
         isPhoneCallMade: boolean;
-        logCall: (phoneNumber: string) => void;
+        logCall: () => void;
     };
 };
 
@@ -24,7 +25,7 @@ export default function LegislatorCard({ legislator, call }: Props) {
             <div className={`${styles.imageContainer} m-auto`}>
                 <img alt="" className={styles.image} src={legislator.imageUrl} />
             </div>
-            <Card.Body className="pt-2 pb-2 ps-2 pe-2 d-flex flex-column justify-content-between">
+            <Card.Body className="pt-2 pb-1 ps-2 pe-2 d-flex flex-column justify-content-between">
                 <Card.Title className="text-dark fs-6 mb-2">
                     {surname} {legislator.name}
                 </Card.Title>
@@ -50,30 +51,26 @@ export default function LegislatorCard({ legislator, call }: Props) {
                         )}
                     </div>
                 ) : (
-                    <div className="d-flex flex-column align-items-center">
+                    <div className={cx(styles.callContainer, "ms-auto me-auto")}>
                         {legislator.phoneNumbers.map((n) => {
-                            const callMade = call.phoneNumbersCalled.includes(n);
+                            const callMade = call.bioguideIdsCalled.includes(n);
                             return (
-                                <Form.Group
-                                    key={n}
-                                    className={`${styles.checkboxContainer} mb-2 d-flex justify-content-between`}
-                                    controlId={`call${n}`}
-                                >
-                                    <Form.Check
-                                        checked={callMade}
-                                        disabled={callMade || call.isPhoneCallMade}
-                                        onChange={() => call.logCall(n)}
-                                        className={styles.formCheckInput}
-                                        type="checkbox"
-                                    />
+                                <div key={n} className="mb-2 d-flex justify-content-center text-center">
                                     {callMade || call.isPhoneCallMade ? (
                                         <div className="text-dark">{n}</div>
                                     ) : (
                                         <a href={`tel:${n.replace("-", "")}`}>{n}</a>
                                     )}
-                                </Form.Group>
+                                </div>
                             );
                         })}
+                        <Button
+                            className="text-dark mt-1"
+                            onClick={() => call.logCall()}
+                            disabled={call.isPhoneCallMade}
+                        >
+                            I Called!
+                        </Button>
                     </div>
                 )}
             </Card.Body>

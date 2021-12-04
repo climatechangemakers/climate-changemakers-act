@@ -23,16 +23,16 @@ export default function MakeACall({
     setIsPhoneCallMade,
     emailBody,
 }: Props) {
-    const [phoneNumbersCalled, setPhoneNumbersCalled] = useState<string[]>([]);
+    const [bioguideIdsCalled, setBuiguideIdsCalled] = useState<string[]>([]);
     const [error, setError] = useState("");
 
-    const logCall = async (phoneNumber: string, contactedBioguideId: string) => {
-        const response = await logCallAPI(emailAddress, relatedIssueId, phoneNumber, contactedBioguideId);
+    const logCall = async (contactedBioguideId: string) => {
+        const response = await logCallAPI(emailAddress, relatedIssueId, contactedBioguideId);
         if (!response.successful) {
             setError(response?.error ?? "Failed to log phone number");
             return;
         }
-        setPhoneNumbersCalled((n) => [...n, phoneNumber]);
+        setBuiguideIdsCalled((n) => [...n, contactedBioguideId]);
     };
 
     return (
@@ -60,9 +60,9 @@ export default function MakeACall({
                         <LegislatorCard
                             legislator={legislator}
                             call={{
-                                phoneNumbersCalled,
+                                bioguideIdsCalled,
                                 isPhoneCallMade,
-                                logCall: (phoneNumber: string) => logCall(phoneNumber, legislator.bioguideId),
+                                logCall: () => logCall(legislator.bioguideId),
                             }}
                         />
                     </Col>
@@ -84,7 +84,7 @@ export default function MakeACall({
                         type="submit"
                         className="flex-grow-1 ml-2 text-dark"
                         variant="primary"
-                        disabled={!phoneNumbersCalled.length || isPhoneCallMade}
+                        disabled={!bioguideIdsCalled.length || isPhoneCallMade}
                         onClick={() => setIsPhoneCallMade(true)}
                     >
                         Done Calling
