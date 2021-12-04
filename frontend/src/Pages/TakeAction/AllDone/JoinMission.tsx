@@ -3,61 +3,58 @@ import ErrorMessage from "common/Components/ErrorMessage";
 import { EmailInfo } from "common/models/EmailInfo";
 import { FormInfo } from "common/models/FormInfo";
 import { useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 
 type Props = {
     formInfo: FormInfo;
     emailInfo: EmailInfo;
     areas: { shortName: string; fullName: string }[] | undefined;
     areasError: ErrorResponse | undefined;
-    isJoinedMission: boolean;
-    setIsJoinedMission: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function JoinMission({
-    formInfo,
-    emailInfo,
-    areas,
-    areasError,
-    isJoinedMission,
-    setIsJoinedMission,
-}: Props) {
+export default function JoinMission({ formInfo, emailInfo, areas, areasError }: Props) {
     const [joinInfo, setJoinInfo] = useState({
         email: formInfo.email,
         firstName: emailInfo.firstName,
         lastName: emailInfo.lastName,
         postalCode: formInfo.postalCode,
         state: formInfo.state,
+        referral: "",
+        actionReason: "",
+        socialVerification: "",
         priorExperience: false,
     });
-    const [isSending, setIsSending] = useState(false);
+    const [signUpSuccess, setSignUpSuccess] = useState(false);
     const [signUpError, setSignUpError] = useState("");
 
     const signUp = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         setSignUpError("");
-        setIsSending(true);
         const response = await signUpAPI(
             joinInfo.email,
             joinInfo.firstName,
             joinInfo.lastName,
             joinInfo.state,
             joinInfo.postalCode,
+            joinInfo.referral,
+            joinInfo.actionReason,
+            joinInfo.socialVerification,
             joinInfo.priorExperience
         );
-        setIsSending(false);
         if (!response.successful) {
             setSignUpError(response?.error ?? "Failed to sign up");
             return;
         }
-        setIsJoinedMission(true);
+        setSignUpSuccess(true);
     };
 
     return (
         <div className="pb-2">
-            <h2 className="text-pink fw-bold mb-3">Join Our Mission</h2>
-            <p>Sign up to be a changemaker to make productive, political action a habit!</p>
+            <h2 className="text-uppercase text-center">Join Our Community!</h2>
+            <p className="fs-5 mb-4 text-center">
+                Sign up to be a changemaker to make productive, political action a habit!
+            </p>
             {areas && (
                 <Form onSubmit={signUp}>
                     <Row>
@@ -67,7 +64,7 @@ export default function JoinMission({
                                 <Form.Control
                                     value={joinInfo.firstName}
                                     onChange={(e) => setJoinInfo({ ...joinInfo, firstName: e.currentTarget.value })}
-                                    disabled={isJoinedMission}
+                                    disabled={signUpSuccess}
                                     required
                                 />
                             </Form.Group>
@@ -78,7 +75,7 @@ export default function JoinMission({
                                 <Form.Control
                                     value={joinInfo.lastName}
                                     onChange={(e) => setJoinInfo({ ...joinInfo, lastName: e.currentTarget.value })}
-                                    disabled={isJoinedMission}
+                                    disabled={signUpSuccess}
                                     required
                                 />
                             </Form.Group>
@@ -91,7 +88,7 @@ export default function JoinMission({
                                 <Form.Control
                                     value={joinInfo.email}
                                     onChange={(e) => setJoinInfo({ ...joinInfo, email: e.currentTarget.value })}
-                                    disabled={isJoinedMission}
+                                    disabled={signUpSuccess}
                                     required
                                 />
                             </Form.Group>
@@ -102,7 +99,7 @@ export default function JoinMission({
                                 <Form.Control
                                     value={joinInfo.postalCode}
                                     onChange={(e) => setJoinInfo({ ...joinInfo, postalCode: e.currentTarget.value })}
-                                    disabled={isJoinedMission}
+                                    disabled={signUpSuccess}
                                     required
                                 />
                             </Form.Group>
@@ -113,7 +110,7 @@ export default function JoinMission({
                                 <Form.Select
                                     value={formInfo.state}
                                     onChange={(e) => setJoinInfo({ ...joinInfo, state: e.currentTarget.value })}
-                                    disabled={isJoinedMission}
+                                    disabled={signUpSuccess}
                                     required
                                 >
                                     <option value="">Select</option>
@@ -127,6 +124,59 @@ export default function JoinMission({
                         </Col>
                     </Row>
                     <Row>
+                        <Col>
+                            <Form.Group className="mb-3 h-100" controlId="signUp.referral">
+                                <Form.Label>How did you hear about us?</Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={4}
+                                    value={joinInfo.referral}
+                                    onChange={(e) => setJoinInfo({ ...joinInfo, referral: e.currentTarget.value })}
+                                    disabled={signUpSuccess}
+                                    placeholder="Social media, a friend..."
+                                    required
+                                />
+                                <Form.Text className="text-white">
+                                    If a current changemaker referred you, please tell us who. We like to give
+                                    high-fives!
+                                </Form.Text>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form.Group className="mb-3 h-100" controlId="signUp.actionReason">
+                                <Form.Label>Why did you choose to take action?</Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={4}
+                                    value={joinInfo.actionReason}
+                                    onChange={(e) => setJoinInfo({ ...joinInfo, actionReason: e.currentTarget.value })}
+                                    disabled={signUpSuccess}
+                                    placeholder="I choose to take action for my kids"
+                                    required
+                                />
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form.Group className="mb-3 h-100" controlId="signUp.socialVerification">
+                                <Form.Label>LinkedIn, Twitter, Instagram, or other social profile?</Form.Label>
+                                <Form.Control
+                                    value={joinInfo.socialVerification}
+                                    onChange={(e) =>
+                                        setJoinInfo({ ...joinInfo, socialVerification: e.currentTarget.value })
+                                    }
+                                    disabled={signUpSuccess}
+                                    placeholder="@"
+                                    required
+                                />
+                                <Form.Text className="text-white">So we can verify you’re human!</Form.Text>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
                         <Form.Group className="mb-3 mt-1" controlId="signUp.priorExperience">
                             <Form.Check
                                 className="text-start"
@@ -136,7 +186,7 @@ export default function JoinMission({
                                 }
                                 type="checkbox"
                                 label="Do you have any prior political action or organizing experience?"
-                                disabled={isJoinedMission}
+                                disabled={signUpSuccess}
                             />
                             <Form.Text className="text-white">
                                 No experience, no problem! Over half of our community members are doing this for the
@@ -146,17 +196,7 @@ export default function JoinMission({
                     </Row>
                     <Row className="mt-2">
                         <Col>
-                            <Button
-                                variant="secondary"
-                                className="w-100"
-                                disabled={isJoinedMission}
-                                onClick={() => setIsJoinedMission(true)}
-                            >
-                                No Thanks
-                            </Button>
-                        </Col>
-                        <Col>
-                            <Button type="submit" className="w-100 text-dark" disabled={isJoinedMission}>
+                            <Button type="submit" className="w-100 text-dark" disabled={signUpSuccess}>
                                 {!signUpError ? "Become a Changemaker" : "Try again"}
                             </Button>
                         </Col>
@@ -164,6 +204,15 @@ export default function JoinMission({
                 </Form>
             )}
             <ErrorMessage message={signUpError || areasError?.message} />
+            {signUpSuccess && (
+                <Row className="mt-2">
+                    <Col>
+                        <Alert variant="success" className="p-1 mt-2 text-center">
+                            Sign Up Successful!
+                        </Alert>
+                    </Col>
+                </Row>
+            )}
         </div>
     );
 }

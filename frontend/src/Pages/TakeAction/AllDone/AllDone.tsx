@@ -12,7 +12,7 @@ export default function AllDone() {
         confetti({
             particleCount: 200,
             spread: 60,
-            origin: { x: 0, y: 1 },
+            origin: { x: 0, y: 0.75 },
             angle: 60,
             startVelocity: velocity,
             disableForReducedMotion: true,
@@ -21,7 +21,7 @@ export default function AllDone() {
         confetti({
             particleCount: 200,
             spread: 60,
-            origin: { x: 1, y: 1 },
+            origin: { x: 1, y: 0.75 },
             angle: 120,
             startVelocity: velocity,
             disableForReducedMotion: true,
@@ -29,8 +29,8 @@ export default function AllDone() {
     }, []);
 
     return (
-        <div className={`${styles.doneContainer} d-flex mt-5 pt-4 m-auto`}>
-            <div className="mb-5 pb-5 text-center">
+        <div className={`${styles.doneContainer} d-flex mt-3 pt-4 m-auto`}>
+            <div className="mb-5 pb-3 text-center">
                 <h2 className="text-uppercase">Nice Work!</h2>
                 <p className="fs-5 mb-0">
                     Thank you for taking action to support our planet. Every action in our community is a step towards

@@ -35,7 +35,7 @@ const parseFetch = async <Data, Error = string>(response: Response): Promise<Fet
     try {
         if (!response.ok) return { successful: false, error: (await response.json()) as Error };
 
-        if (response.status === 204) return { successful: true };
+        if (response.status === 204 || response.status === 201) return { successful: true };
 
         return {
             successful: true,
@@ -131,5 +131,19 @@ export const signUpAPI = (
     lastName: string,
     state: string,
     postalCode: string,
+    referral: string,
+    actionReason: string,
+    socialVerification: string,
     priorExperience: boolean
-) => post<void>("/sign-up", { email, firstName, lastName, state, postalCode, priorExperience });
+) =>
+    post<void>("/sign-up", {
+        email,
+        firstName,
+        lastName,
+        state,
+        postalCode,
+        referral,
+        actionReason,
+        socialVerification,
+        priorExperience,
+    });
