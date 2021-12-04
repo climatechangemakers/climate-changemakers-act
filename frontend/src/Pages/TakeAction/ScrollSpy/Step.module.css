@@ -23,3 +23,11 @@
     font-weight: 700;
     color: var(--text-pink);
 }
+
+.stepLabelMobileContainer {
+    height: 24px;
+}
+
+.stepLabelMobile {
+    transform: translateX(-50%);
+}

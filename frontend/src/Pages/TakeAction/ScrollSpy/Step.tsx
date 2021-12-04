@@ -81,11 +81,16 @@ export default function Step({ children, step, id, state, desktop, last = false 
             </div>
             <a
                 href={id}
-                className={cx("text-decoration-none m-auto text-purple", styles.disableHover, {
-                    [styles.disableAnchor]: state === "disabled",
-                })}
+                className={cx(
+                    styles.stepLabelMobileContainer,
+                    "text-decoration-none m-auto text-purple position-relative",
+                    styles.disableHover,
+                    {
+                        [styles.disableAnchor]: state === "disabled",
+                    }
+                )}
             >
-                {children}
+                <div className={cx(styles.stepLabelMobile, "position-absolute")}>{children}</div>
             </a>
         </div>
     );
