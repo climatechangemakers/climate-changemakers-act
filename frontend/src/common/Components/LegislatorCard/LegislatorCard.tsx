@@ -15,6 +15,8 @@ type Props = {
 
 export default function LegislatorCard({ legislator, call }: Props) {
     const surname = legislator.area.districtNumber ? "Rep." : "Sen.";
+    const legislatorCalled = call?.bioguideIdsCalled.includes(legislator.bioguideId);
+
     return (
         <Card
             key={legislator.name}
@@ -52,22 +54,18 @@ export default function LegislatorCard({ legislator, call }: Props) {
                     </div>
                 ) : (
                     <div className={cx(styles.callContainer, "ms-auto me-auto")}>
-                        {legislator.phoneNumbers.map((n) => {
-                            const callMade = call.bioguideIdsCalled.includes(n);
-                            return (
-                                <div key={n} className="mb-2 d-flex justify-content-center text-center">
-                                    {callMade || call.isPhoneCallMade ? (
-                                        <div className="text-dark">{n}</div>
-                                    ) : (
-                                        <a href={`tel:${n.replace("-", "")}`}>{n}</a>
-                                    )}
-                                </div>
-                            );
-                        })}
+                        {legislator.phoneNumbers.map((n) =>
+                            <div key={n} className="mb-2 d-flex justify-content-center text-center">
+                                {call.isPhoneCallMade || legislatorCalled ? (
+                                    <div className="text-dark">{n}</div>
+                                ) : (
+                                    <a href={`tel:${n.replace("-", "")}`}>{n}</a>
+                                )}
+                            </div>)}
                         <Button
                             className="text-dark mt-1 w-100"
                             onClick={() => call.logCall()}
-                            disabled={call.isPhoneCallMade}
+                            disabled={call.isPhoneCallMade || legislatorCalled}
                         >
                             I Called!
                         </Button>
