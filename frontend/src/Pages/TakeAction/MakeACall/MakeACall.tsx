@@ -42,9 +42,10 @@ export default function MakeACall({
                 <h2 className="text-pink fw-bold mb-3 ms-3">Make a Call</h2>
             </div>
             <p>
-                Plan your personalized script (the field below is a working space for you!), and then click below to
-                make your calls. You're the expert on your own experience and your own climate concern. Your advocacy is
-                most effective when you speak from your unique perspective, so bring in personal details and anecdotes.
+                Plan your personalized script (the field below is editable and just a working space for you!), and then
+                click below to make your calls. Click “Done” when you’re finished calling a Senator. You're the expert
+                on your own experiences and your own climate concern, and your advocacy is most effective when you speak
+                from your unique perspective, so bring in personal details and anecdotes.
             </p>
             {emailBody && (
                 <>
