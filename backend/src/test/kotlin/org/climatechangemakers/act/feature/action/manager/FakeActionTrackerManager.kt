@@ -1,7 +1,6 @@
 package org.climatechangemakers.act.feature.action.manager
 
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.ChannelResult
 
 class FakeActionTrackerManager : ActionTrackerManager {
 
@@ -20,7 +19,6 @@ class FakeActionTrackerManager : ActionTrackerManager {
     email: String,
     contactedBioguideId: String,
     relatedIssueId: Long,
-    contactedPhoneNumber: String
   ) = TODO("Not yet implemented")
 
   override suspend fun trackTweet(email: String, contactedBioguideIds: List<String>, relatedIssueId: Long) {

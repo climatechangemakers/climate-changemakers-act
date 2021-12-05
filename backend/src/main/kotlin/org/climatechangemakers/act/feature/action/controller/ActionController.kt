@@ -57,7 +57,6 @@ class ActionController @Inject constructor(
       request.originatingEmailAddress,
       request.contactedBioguideId,
       request.relatedIssueId,
-      request.contactedPhoneNumber,
     )
 
     call.respondNothing()
