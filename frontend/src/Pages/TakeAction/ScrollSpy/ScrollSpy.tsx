@@ -89,7 +89,7 @@ export default function ScrollSpy({
                 </Step>
                 <Step
                     step={5}
-                    id="#join_our_mission"
+                    id="#amplify"
                     state={linkState(isAmplified, isSocialPosted)}
                     desktop={desktop}
                     last
