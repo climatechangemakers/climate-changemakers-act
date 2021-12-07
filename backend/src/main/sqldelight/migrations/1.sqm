@@ -1,0 +1,2 @@
+ALTER TABLE action_call_legislator
+DROP COLUMN phone_number_called;

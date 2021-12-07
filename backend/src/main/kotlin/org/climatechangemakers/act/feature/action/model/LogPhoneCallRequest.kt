@@ -5,6 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable class LogPhoneCallRequest(
   val originatingEmailAddress: String,
   val relatedIssueId: Long,
-  val contactedPhoneNumber: String,
   val contactedBioguideId: String,
 )

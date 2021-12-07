@@ -34,9 +34,8 @@ class DatabaseActionTrackerManager @Inject constructor(
     email: String,
     contactedBioguideId: String,
     relatedIssueId: Long,
-    contactedPhoneNumber: String,
   ) = withContext(ioDispatcher) {
-    actionCallLegislatorQueries.insert(email, relatedIssueId, contactedBioguideId, contactedPhoneNumber)
+    actionCallLegislatorQueries.insert(email, relatedIssueId, contactedBioguideId)
   }
 
   override suspend fun trackTweet(
