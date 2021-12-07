@@ -45,8 +45,8 @@ export default function TakeActionPage() {
         selectedIssueId === undefined || !actionInfo?.legislators?.length
             ? null
             : `/issues/${selectedIssueId}/precomposed-tweet?${new URLSearchParams(
-                  actionInfo.legislators.map((l) => ["bioguideIds", l.bioguideId])
-              ).toString()}`,
+                actionInfo.legislators.map((l) => ["bioguideIds", l.bioguideId])
+            ).toString()}`,
         fetcher
     );
     const { data: areas, error: areasError } = useSWR<{ shortName: string; fullName: string }[], ErrorResponse>(
@@ -142,7 +142,6 @@ export default function TakeActionPage() {
                         isPhoneCallMade={isPhoneCallMade}
                         isSocialPosted={isSocialPosted}
                         isAmplified={isAmplified}
-                        isMember={membershipInfo?.isMember}
                         desktop
                     />
                 </Col>
@@ -152,7 +151,6 @@ export default function TakeActionPage() {
                         isPhoneCallMade={isPhoneCallMade}
                         isSocialPosted={isSocialPosted}
                         isAmplified={isAmplified}
-                        isMember={membershipInfo?.isMember}
                     />
                 </div>
             </Row>

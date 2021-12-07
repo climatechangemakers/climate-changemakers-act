@@ -19,7 +19,6 @@ export default function ScrollSpy({
     isPhoneCallMade,
     isSocialPosted,
     isAmplified,
-    isMember,
     desktop = false,
 }: Props) {
     const [introSectionDistanceFromTop, setIntroSectionDistanceFromTop] = useState(Math.min);
@@ -88,17 +87,15 @@ export default function ScrollSpy({
                 >
                     {desktop ? "Post on Social" : "Post"}
                 </Step>
-                {!isMember && (
-                    <Step
-                        step={5}
-                        id="#join_our_mission"
-                        state={linkState(isAmplified, isSocialPosted)}
-                        desktop={desktop}
-                        last
-                    >
-                        Amplify
-                    </Step>
-                )}
+                <Step
+                    step={5}
+                    id="#join_our_mission"
+                    state={linkState(isAmplified, isSocialPosted)}
+                    desktop={desktop}
+                    last
+                >
+                    Amplify
+                </Step>
             </Card.Body>
         </Card>
     );
