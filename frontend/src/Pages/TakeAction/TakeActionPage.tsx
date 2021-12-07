@@ -12,10 +12,11 @@ import { Redirect } from "react-router-dom";
 import { MultiValue } from "react-select";
 import useSWR from "swr";
 import AllDone from "./AllDone/AllDone";
-import JoinMission from "./JoinMission/JoinMission";
+import JoinMission from "./AllDone/JoinMission";
+import Amplify from "./Amplify/Amplify";
 import MakeAPhoneCall from "./MakeACall/MakeACall";
 import MeetYourReps from "./MeetYourReps/MeetYourReps";
-import PostOnSocial from "./PostOnSocial";
+import PostOnSocial from "./PostOnSocial/PostOnSocial";
 import ScrollSpy from "./ScrollSpy/ScrollSpy";
 import SendAnEmail from "./SendAnEmail/SendAnEmail";
 
@@ -23,7 +24,7 @@ export default function TakeActionPage() {
     const [isEmailSent, setIsEmailSent] = useState(false);
     const [isPhoneCallMade, setIsPhoneCallMade] = useState(false);
     const [isSocialPosted, setIsSocialPosted] = useState(false);
-    const [isJoinedMission, setIsJoinedMission] = useState(false);
+    const [isAmplified, setIsAmplified] = useState(false);
     const [selectedIssue] = useSessionStorage<Issue | undefined>("selectedIssue");
     const [actionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
     const [formInfo] = useSessionStorage<FormInfo | undefined>("formInfo");
@@ -60,18 +61,11 @@ export default function TakeActionPage() {
         isPhoneCallMade && scrollToId("post_on_social");
     }, [isPhoneCallMade]);
     useEffect(() => {
-        if (isSocialPosted) {
-            if (membershipInfo?.isMember) {
-                setIsJoinedMission(true);
-                scrollToId("all_done");
-            } else {
-                scrollToId("join_our_mission");
-            }
-        }
-    }, [isSocialPosted, membershipInfo]);
+        isSocialPosted && scrollToId("amplify");
+    }, [isSocialPosted]);
     useEffect(() => {
-        isJoinedMission && scrollToId("all_done");
-    }, [isJoinedMission]);
+        isAmplified && scrollToId("all_done");
+    }, [isAmplified]);
 
     if (!actionInfo || !formInfo) return <Redirect to="/" />;
 
@@ -121,23 +115,24 @@ export default function TakeActionPage() {
                             />
                         </>
                     )}
-                    {isSocialPosted && !membershipInfo?.isMember && (
+                    {isSocialPosted && (
                         <>
-                            <hr id="join_our_mission" />
-                            <JoinMission
-                                formInfo={formInfo}
-                                emailInfo={emailInfo}
-                                areas={areas}
-                                areasError={areasError}
-                                isJoinedMission={isJoinedMission}
-                                setIsJoinedMission={setIsJoinedMission}
-                            />
+                            <hr id="amplify" />
+                            <Amplify isAmplified={isAmplified} setIsAmplified={setIsAmplified} />
                         </>
                     )}
-                    {isJoinedMission && (
+                    {isAmplified && (
                         <>
                             <hr id="all_done" />
                             <AllDone />
+                            {!membershipInfo?.isMember && (
+                                <JoinMission
+                                    formInfo={formInfo}
+                                    emailInfo={emailInfo}
+                                    areas={areas}
+                                    areasError={areasError}
+                                />
+                            )}
                         </>
                     )}
                 </Col>
@@ -146,8 +141,7 @@ export default function TakeActionPage() {
                         isEmailSent={isEmailSent}
                         isPhoneCallMade={isPhoneCallMade}
                         isSocialPosted={isSocialPosted}
-                        isJoinedMission={isJoinedMission}
-                        isMember={membershipInfo?.isMember}
+                        isAmplified={isAmplified}
                         desktop
                     />
                 </Col>
@@ -156,8 +150,7 @@ export default function TakeActionPage() {
                         isEmailSent={isEmailSent}
                         isPhoneCallMade={isPhoneCallMade}
                         isSocialPosted={isSocialPosted}
-                        isJoinedMission={isJoinedMission}
-                        isMember={membershipInfo?.isMember}
+                        isAmplified={isAmplified}
                     />
                 </div>
             </Row>

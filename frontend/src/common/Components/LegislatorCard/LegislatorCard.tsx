@@ -54,14 +54,15 @@ export default function LegislatorCard({ legislator, call }: Props) {
                     </div>
                 ) : (
                     <div className={cx(styles.callContainer, "ms-auto me-auto")}>
-                        {legislator.phoneNumbers.map((n) =>
+                        {legislator.phoneNumbers.map((n) => (
                             <div key={n} className="mb-2 d-flex justify-content-center text-center">
                                 {call.isPhoneCallMade || legislatorCalled ? (
                                     <div className="text-dark">{n}</div>
                                 ) : (
                                     <a href={`tel:${n.replace("-", "")}`}>{n}</a>
                                 )}
-                            </div>)}
+                            </div>
+                        ))}
                         <Button
                             className="text-dark mt-1 w-100"
                             onClick={() => call.logCall()}
