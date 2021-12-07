@@ -23,16 +23,16 @@ export default function MakeACall({
     setIsPhoneCallMade,
     emailBody,
 }: Props) {
-    const [phoneNumbersCalled, setPhoneNumbersCalled] = useState<string[]>([]);
+    const [bioguideIdsCalled, setBuiguideIdsCalled] = useState<string[]>([]);
     const [error, setError] = useState("");
 
-    const logCall = async (phoneNumber: string, contactedBioguideId: string) => {
-        const response = await logCallAPI(emailAddress, relatedIssueId, phoneNumber, contactedBioguideId);
+    const logCall = async (contactedBioguideId: string) => {
+        const response = await logCallAPI(emailAddress, relatedIssueId, contactedBioguideId);
         if (!response.successful) {
             setError(response?.error ?? "Failed to log phone number");
             return;
         }
-        setPhoneNumbersCalled((n) => [...n, phoneNumber]);
+        setBuiguideIdsCalled((n) => [...n, contactedBioguideId]);
     };
 
     return (
@@ -42,9 +42,10 @@ export default function MakeACall({
                 <h2 className="text-pink fw-bold mb-3 ms-3">Make a Call</h2>
             </div>
             <p>
-                Plan your personalized script (the field below is a working space for you!), and then click below to
-                make your calls. You're the expert on your own experience and your own climate concern. Your advocacy is
-                most effective when you speak from your unique perspective, so bring in personal details and anecdotes.
+                Plan your personalized script (the field below is editable and just a working space for you!), and then
+                click below to make your calls. Click “Done” when you’re finished calling a Senator. You're the expert
+                on your own experiences and your own climate concern, and your advocacy is most effective when you speak
+                from your unique perspective, so bring in personal details and anecdotes.
             </p>
             {emailBody && (
                 <>
@@ -60,9 +61,9 @@ export default function MakeACall({
                         <LegislatorCard
                             legislator={legislator}
                             call={{
-                                phoneNumbersCalled,
+                                bioguideIdsCalled,
                                 isPhoneCallMade,
-                                logCall: (phoneNumber: string) => logCall(phoneNumber, legislator.bioguideId),
+                                logCall: () => logCall(legislator.bioguideId),
                             }}
                         />
                     </Col>
@@ -84,7 +85,7 @@ export default function MakeACall({
                         type="submit"
                         className="flex-grow-1 ml-2 text-dark"
                         variant="primary"
-                        disabled={!phoneNumbersCalled.length || isPhoneCallMade}
+                        disabled={!bioguideIdsCalled.length || isPhoneCallMade}
                         onClick={() => setIsPhoneCallMade(true)}
                     >
                         Done Calling

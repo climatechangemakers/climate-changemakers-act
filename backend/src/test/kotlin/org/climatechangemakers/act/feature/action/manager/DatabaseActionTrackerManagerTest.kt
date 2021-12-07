@@ -38,7 +38,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
   @Test fun `recording a legislator call insert into both tables`() = suspendTest {
     val id = driver.insertIssue("issue", "tweet", "url.com")
     driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "bioguide"))
-    manager.trackActionPhoneCall("foo@foo.com", "bioguide", id, "8675309")
+    manager.trackActionPhoneCall("foo@foo.com", "bioguide", id)
 
     assertEquals(
       1,

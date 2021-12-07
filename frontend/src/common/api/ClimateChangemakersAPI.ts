@@ -118,12 +118,8 @@ export const logTweetAPI = (
     contactedBioguideIds: ReadonlyArray<string>
 ) => post<void>("/log-tweet", { originatingEmailAddress, relatedIssueId, contactedBioguideIds });
 
-export const logCallAPI = (
-    originatingEmailAddress: string,
-    relatedIssueId: number,
-    contactedPhoneNumber: string,
-    contactedBioguideId: string
-) => post<void>("/log-call", { originatingEmailAddress, relatedIssueId, contactedPhoneNumber, contactedBioguideId });
+export const logCallAPI = (originatingEmailAddress: string, relatedIssueId: number, contactedBioguideId: string) =>
+    post<void>("/log-call", { originatingEmailAddress, relatedIssueId, contactedBioguideId });
 
 export const signUpAPI = (
     email: string,

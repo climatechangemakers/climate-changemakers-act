@@ -99,7 +99,8 @@ export default function SendAnEmail({
             </div>
             <p>
                 Fill out the form below to open up an email to your elected representatives. You can use our prompts to
-                guide your through the process, or draft your own from scratch.
+                guide you through the process, or draft your own from scratch. Anything you write is completely private
+                and will not be stored.
             </p>
             {selectedIssue.talkingPoints.length > 0 && (
                 <div className="mb-3">
