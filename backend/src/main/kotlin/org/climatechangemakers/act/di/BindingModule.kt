@@ -12,6 +12,8 @@ import dagger.Binds
 import dagger.Module
 import org.climatechangemakers.act.feature.communicatewithcongress.manager.CommunicateWithCongressManager
 import org.climatechangemakers.act.feature.communicatewithcongress.manager.NetworkCommunicateWithCongressManager
+import org.climatechangemakers.act.feature.email.manager.EmailEnrollmentManager
+import org.climatechangemakers.act.feature.email.manager.MailchimpEmailEnrollmentManager
 import org.climatechangemakers.act.feature.findlegislator.manager.DatabaseMemberOfCongressManager
 import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongressManager
 import org.climatechangemakers.act.feature.membership.manager.AirtableMembershipManager
@@ -26,4 +28,5 @@ import org.climatechangemakers.act.feature.membership.manager.MembershipManager
   @Binds fun bindsMemberOfCongressManager(manager: DatabaseMemberOfCongressManager): MemberOfCongressManager
   @Binds fun bindsMembershipManager(manager: AirtableMembershipManager): MembershipManager
   @Binds fun bindsNetworkCommunicateWithCongressManager(manager: NetworkCommunicateWithCongressManager): CommunicateWithCongressManager
+  @Binds fun bindsEmailEnrollmentManager(manager: MailchimpEmailEnrollmentManager): EmailEnrollmentManager
 }
