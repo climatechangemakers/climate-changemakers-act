@@ -3,6 +3,7 @@ package org.climatechangemakers.act.feature.membership.manager
 import org.climatechangemakers.act.common.model.RepresentedArea
 import org.climatechangemakers.act.common.util.withRetry
 import org.climatechangemakers.act.feature.action.manager.ActionTrackerManager
+import org.climatechangemakers.act.feature.email.manager.EmailEnrollmentManager
 import org.climatechangemakers.act.feature.membership.model.AirtableCreateRecordRequest
 import org.climatechangemakers.act.feature.membership.service.AirtableFormula
 import org.climatechangemakers.act.feature.membership.service.AirtableService
@@ -11,6 +12,7 @@ import javax.inject.Inject
 class AirtableMembershipManager @Inject constructor(
   private val actionTrackerManager: ActionTrackerManager,
   private val airtableService: AirtableService,
+  private val emailEnrollmentManager: EmailEnrollmentManager,
 ) : MembershipManager {
 
   override suspend fun checkMembership(email: String): Boolean = withRetry(3) {
@@ -40,12 +42,8 @@ class AirtableMembershipManager @Inject constructor(
       socialVerification,
     )
 
-    withRetry(3) {
-      airtableService.signUp(airtableRequest)
-    }
-
-    // TODO(kcianfarini) send mailchimp welcome email
-
+    withRetry(3) { airtableService.signUp(airtableRequest) }
+    emailEnrollmentManager.subscribeChangemaker(email, firstName, lastName, state)
     actionTrackerManager.trackActionSignUp(email)
   }
 }

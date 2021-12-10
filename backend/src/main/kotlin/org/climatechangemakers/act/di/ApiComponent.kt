@@ -13,6 +13,7 @@ import javax.inject.Singleton
   BindingModule::class,
   CoroutineModule::class,
   DatabaseModule::class,
+  EnvironmentModule::class,
   LoggerModule::class,
   ServiceModule::class,
   SerializationModule::class,

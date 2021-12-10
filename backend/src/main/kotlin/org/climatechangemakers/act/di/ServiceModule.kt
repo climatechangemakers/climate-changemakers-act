@@ -5,10 +5,12 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import dagger.Module
 import dagger.Provides
 import nl.adaptivity.xmlutil.serialization.XML
+import okhttp3.Credentials
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import org.climatechangemakers.act.feature.communicatewithcongress.service.HouseCommunicateWithCongressService
 import org.climatechangemakers.act.feature.communicatewithcongress.service.SenateCommunicateWithCongressService
+import org.climatechangemakers.act.feature.email.service.MailchimpService
 import org.climatechangemakers.act.feature.membership.service.AirtableService
 import org.slf4j.Logger
 import retrofit2.Converter
@@ -35,6 +37,19 @@ import retrofit2.Retrofit
   ): OkHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
     val newRequest = chain.request().newBuilder()
       .addHeader("Authorization", "Bearer $apiKey")
+      .build()
+
+    logger.info("${newRequest.method()} ${newRequest.url().redact()}")
+    chain.proceed(newRequest)
+  }.build()
+
+  private fun createBasicAuthOkHttpClient(
+    user: String,
+    apiKey: String,
+    logger: Logger,
+  ): OkHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
+    val newRequest = chain.request().newBuilder()
+      .addHeader("Authorization", Credentials.basic(user, apiKey))
       .build()
 
     logger.info("${newRequest.method()} ${newRequest.url().redact()}")
@@ -103,4 +118,20 @@ import retrofit2.Retrofit
     .client(client)
     .build()
     .create(AirtableService::class.java)
+
+  @Provides @Mailchimp fun providesMailchimpOkhttpService(logger: Logger) = createBasicAuthOkHttpClient(
+    user = "api",
+    apiKey = getEnvironmentVariable(EnvironmentVariable.MailchimpApiKey),
+    logger = logger,
+  )
+
+  @Provides fun providesMailchimpService(
+    @Mailchimp client: OkHttpClient,
+    jsonConverterFactory: Converter.Factory,
+  ): MailchimpService = Retrofit.Builder()
+    .baseUrl(getEnvironmentVariable(EnvironmentVariable.MailchimpUrl))
+    .addConverterFactory(jsonConverterFactory)
+    .client(client)
+    .build()
+    .create(MailchimpService::class.java)
 }
