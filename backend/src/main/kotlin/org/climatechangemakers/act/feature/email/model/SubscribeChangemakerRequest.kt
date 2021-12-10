@@ -22,7 +22,7 @@ import org.climatechangemakers.act.common.model.RepresentedArea
   @SerialName("FNAME") val firstName: String,
   @SerialName("LNAME") val lastName: String,
 
-  // TODO(kcianfarini) this is garbage and mailchimp needs to be clearned up from the product people.
+  // TODO(kcianfarini) this is garbage and mailchimp needs to be cleaned up by the product people.
   @SerialName("STATE") val state: RepresentedArea,
   @SerialName("SELECT1FD") val state2: RepresentedArea = state,
   @SerialName("SELECTYUI") val state3: RepresentedArea = state,

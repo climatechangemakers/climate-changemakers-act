@@ -15,7 +15,7 @@ class MailchimpEmailEnrollmentManager @Inject constructor(
     email: String,
     firstName: String,
     lastName: String,
-    state: RepresentedArea
+    state: RepresentedArea,
   ) {
     val request = SubscribeChangemakerRequest(email, firstName, lastName, state)
     mailchimpService.subscribeChangemaker(
