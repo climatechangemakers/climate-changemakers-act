@@ -24,7 +24,7 @@ export default function LegislatorCard({ legislator, call }: Props) {
             className={`${styles.cardContainer} pt-4 mb-2 pb-3`}
             style={{ width: "12rem" }}
         >
-            <div className={`${styles.imageContainer} m-auto`}>
+            <div className={`${styles.imageContainer} position-relative m-auto`}>
                 <img alt="" className={styles.image} src={legislator.imageUrl} />
             </div>
             <Card.Body className="pt-2 pb-1 ps-2 pe-2 d-flex flex-column justify-content-between">
