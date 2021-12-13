@@ -21,7 +21,7 @@ export default function IssueCard({ onClick, issue, selectedIssue, focusIssue }:
             })}
         >
             <div
-                className={cx({
+                className={cx("d-flex", {
                     [styles.focusImageContainer]: focusIssue,
                 })}
             >
