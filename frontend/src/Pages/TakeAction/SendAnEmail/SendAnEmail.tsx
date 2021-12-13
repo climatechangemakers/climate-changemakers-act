@@ -142,7 +142,7 @@ export default function SendAnEmail({
                         <Row>
                             <Col lg="3">
                                 <Form.Group className="mb-3 h-100" controlId="emailForm.prefix">
-                                    <Form.Label>Prefix</Form.Label>
+                                    <Form.Label>Your Prefix</Form.Label>
                                     <Form.Select
                                         value={emailInfo.prefix}
                                         onChange={(e) => setEmailInfo({ ...emailInfo, prefix: e.currentTarget.value })}
@@ -160,7 +160,7 @@ export default function SendAnEmail({
                             </Col>
                             <Col lg="4">
                                 <Form.Group className="mb-3 h-100" controlId="emailForm.firstName">
-                                    <Form.Label>First Name</Form.Label>
+                                    <Form.Label>Your First Name</Form.Label>
                                     <Form.Control
                                         value={emailInfo.firstName}
                                         onChange={(e) =>
@@ -173,7 +173,7 @@ export default function SendAnEmail({
                             </Col>
                             <Col lg="5">
                                 <Form.Group className="mb-3 h-100" controlId="emailForm.lastName">
-                                    <Form.Label>Last Name</Form.Label>
+                                    <Form.Label>Your Last Name</Form.Label>
                                     <Form.Control
                                         value={emailInfo.lastName}
                                         onChange={(e) =>
