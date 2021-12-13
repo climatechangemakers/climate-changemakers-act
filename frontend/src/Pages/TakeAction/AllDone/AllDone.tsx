@@ -33,8 +33,9 @@ export default function AllDone() {
             <div className="mb-5 pb-3 text-center">
                 <h2 className="text-uppercase">Nice Work!</h2>
                 <p className="fs-5 mb-0">
-                    Thank you for taking action to support our planet. Every action in our community is a step towards
-                    climate justice.
+                    Thank you for taking meaningful climate action. Research shows that using our own voices and our own
+                    words is the most impactful and effective way to influence our policymakers. Every action counts as
+                    we press our leaders to prioritize immediate and ambitious climate action!
                 </p>
                 <div className="d-flex m-auto justify-content-center w-100 mt-3">
                     <div className={styles.buttonWidth}>
