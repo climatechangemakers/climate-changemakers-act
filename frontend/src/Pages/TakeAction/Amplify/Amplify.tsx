@@ -32,7 +32,7 @@ export default function Amplify({ isAmplified, setIsAmplified }: Props) {
                 <h2 className="text-pink fw-bold mb-3 ms-3">Amplify Your Voice</h2>
             </div>
             <TwitterForm
-                preComposedTweet="Just used the @climatevote outreach tool to contact Congress, check it out at https://act.climatechangemakers.org!"
+                preComposedTweet="Just used the personalized outreach tool developed by Climate Changemakers @theclimatevote to contact Congress; check it out and dig in at https://act.climatechangemakers.org!"
                 description="Share this tool with your network to amplify your impact."
                 skipTweetLabel="Skip Tweeting"
                 id="amplify-input"
