@@ -36,8 +36,8 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   @Test fun `getting focus issue returns most recently focused item`() = suspendTest {
     val id1 = driver.insertIssue("foo", "tweet", "url.com")
     val id2 = driver.insertIssue("bar", "tweet", "url.com")
-    insertTalkingPoint(id1, "foo talking point", "foo is cool")
-    insertTalkingPoint(id2, "bar talking point", "bar is cool")
+    insertTalkingPoint(id1, "foo talking point", "foo is cool", 2)
+    insertTalkingPoint(id2, "bar talking point", "bar is cool", 1)
 
     focusIssue(id1)
     assertEquals(
@@ -67,8 +67,8 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   @Test fun `getting unfocused issues returns correct values`() = suspendTest {
     val id1 = driver.insertIssue("foo", "tweet", "url.com")
     val id2 = driver.insertIssue("bar", "tweet", "url.com")
-    insertTalkingPoint(id1, "foo talking point", "foo is cool")
-    insertTalkingPoint(id2, "bar talking point", "bar is cool")
+    insertTalkingPoint(id1, "foo talking point", "foo is cool", 2)
+    insertTalkingPoint(id2, "bar talking point", "bar is cool", 1)
     focusIssue(id1)
 
     assertEquals(
@@ -126,6 +126,19 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
     assertEquals("bar", issueTitle)
   }
 
+  @Test fun `talking points for an issue are in order`() = suspendTest {
+    val id1 = driver.insertIssue("foo", "tweet", "url.com")
+    insertTalkingPoint(id1, "foo talking point 2", "foo is cool", 2)
+    insertTalkingPoint(id1, "foo talking point 3", "foo is cool", 3)
+    insertTalkingPoint(id1, "foo talking point 1", "foo is cool", 1)
+
+    val result = issueManager.getUnfocusedIssues()
+    assertEquals(
+      (1..3).map { "foo talking point $it" },
+      result.first().talkingPoints.map { it.title },
+    )
+  }
+
   private fun insertExampleWhyStatement(issueId: Long, statement: String) {
     driver.execute(0, "INSERT INTO example_issue_why_statement(issue_id, statement) VALUES(?,?)", 2) {
       bindLong(1, issueId)
@@ -133,15 +146,16 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
     }
   }
 
-  private fun insertTalkingPoint(issueId: Long, title: String, content: String) {
+  private fun insertTalkingPoint(issueId: Long, title: String, content: String, relativeOrdering: Int) {
     driver.execute(
       0,
-      "INSERT INTO talking_point(issue_id, title, content) VALUES (?,?,?)",
+      "INSERT INTO talking_point(issue_id, title, content, relative_order_position) VALUES (?,?,?,?)",
       3,
     ) {
       bindLong(1, issueId)
       bindString(2, title)
       bindString(3, content)
+      bindLong(4, relativeOrdering.toLong())
     }
   }
 
