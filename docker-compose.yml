@@ -22,6 +22,9 @@ services:
         - HCWC_URL=${HCWC_URL}
         - AIRTABLE_API_KEY=${AIRTABLE_API_KEY}
         - AIRTABLE_BASE_ID=${AIRTABLE_BASE_ID}
+        - MAILCHIMP_API_KEY=${MAILCHIMP_API_KEY}
+        - MAILCHIMP_URL=${MAILCHIMP_URL}
+        - MAILCHIMP_AUDIENCE_ID=${MAILCHIMP_AUDIENCE_ID}
       ports:
         - ${KOTLIN_PORT}:8080
     database:
