@@ -27,7 +27,7 @@ import org.climatechangemakers.act.common.serializers.YesNoBooleanSerializer
           lastName,
           city,
           state,
-          referral,
+          "Action Tool: $referral",
           experience,
           actionReason,
           socialVerification,
@@ -52,12 +52,8 @@ import org.climatechangemakers.act.common.serializers.YesNoBooleanSerializer
   @SerialName("Experience?")
   @Serializable(with = YesNoBooleanSerializer::class)
   val experience: Boolean,
-
-  @SerialName("Why do you take climate action?")
-  val actionReason: String,
-
-  @SerialName("LinkedIn")
-  val socialVerification: String,
+  @SerialName("Why do you take climate action?") val actionReason: String,
+  @SerialName("LinkedIn") val socialVerification: String,
 ) {
   @SerialName("Country") val country = "USA"
 }
