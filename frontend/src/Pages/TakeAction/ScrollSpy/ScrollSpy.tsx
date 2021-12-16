@@ -4,7 +4,7 @@ import { Card } from "react-bootstrap";
 import Step from "./Step";
 
 type Props = {
-    isEmailSent: boolean;
+    isEmailDone: boolean;
     isPhoneCallMade: boolean;
     isSocialPosted: boolean;
     isAmplified: boolean;
@@ -15,7 +15,7 @@ type Props = {
 const INTRO_SCROLL_BUFFER = 200;
 
 export default function ScrollSpy({
-    isEmailSent,
+    isEmailDone,
     isPhoneCallMade,
     isSocialPosted,
     isAmplified,
@@ -68,13 +68,13 @@ export default function ScrollSpy({
                 <Step step={1} id="#introduction" state={linkState(scrolledPastIntro, true)} desktop={desktop}>
                     {desktop ? "Introduction" : "Intro"}
                 </Step>
-                <Step step={2} id="#send_an_email" state={linkState(isEmailSent, true)} desktop={desktop}>
+                <Step step={2} id="#send_an_email" state={linkState(isEmailDone, true)} desktop={desktop}>
                     {desktop ? "Send an Email" : "Email"}
                 </Step>
                 <Step
                     step={3}
                     id="#make_a_phone_call"
-                    state={linkState(isPhoneCallMade, isEmailSent)}
+                    state={linkState(isPhoneCallMade, isEmailDone)}
                     desktop={desktop}
                 >
                     {desktop ? "Make a Call" : "Call"}
