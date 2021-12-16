@@ -21,7 +21,7 @@ import ScrollSpy from "./ScrollSpy/ScrollSpy";
 import SendAnEmail from "./SendAnEmail/SendAnEmail";
 
 export default function TakeActionPage() {
-    const [isEmailSent, setIsEmailSent] = useState(false);
+    const [isEmailDone, setIsEmailDone] = useState(false);
     const [isPhoneCallMade, setIsPhoneCallMade] = useState(false);
     const [isSocialPosted, setIsSocialPosted] = useState(false);
     const [isAmplified, setIsAmplified] = useState(false);
@@ -55,8 +55,8 @@ export default function TakeActionPage() {
     );
 
     useEffect(() => {
-        isEmailSent && scrollToId("make_a_phone_call");
-    }, [isEmailSent]);
+        isEmailDone && scrollToId("make_a_phone_call");
+    }, [isEmailDone]);
     useEffect(() => {
         isPhoneCallMade && scrollToId("post_on_social");
     }, [isPhoneCallMade]);
@@ -84,12 +84,12 @@ export default function TakeActionPage() {
                         actionInfo={actionInfo}
                         formInfo={formInfo}
                         selectedIssue={selectedIssue}
-                        isEmailSent={isEmailSent}
-                        setIsEmailSent={setIsEmailSent}
+                        isEmailDone={isEmailDone}
+                        setIsEmailDone={setIsEmailDone}
                         emailInfo={emailInfo}
                         setEmailInfo={setEmailInfo}
                     />
-                    {isEmailSent && (
+                    {isEmailDone && (
                         <>
                             <hr id="make_a_phone_call" />
                             <MakeAPhoneCall
@@ -138,7 +138,7 @@ export default function TakeActionPage() {
                 </Col>
                 <Col xs="12" md="2" className="d-none d-lg-block">
                     <ScrollSpy
-                        isEmailSent={isEmailSent}
+                        isEmailDone={isEmailDone}
                         isPhoneCallMade={isPhoneCallMade}
                         isSocialPosted={isSocialPosted}
                         isAmplified={isAmplified}
@@ -147,7 +147,7 @@ export default function TakeActionPage() {
                 </Col>
                 <div className="d-block d-lg-none w-100 position-fixed mobileScrollSpy">
                     <ScrollSpy
-                        isEmailSent={isEmailSent}
+                        isEmailDone={isEmailDone}
                         isPhoneCallMade={isPhoneCallMade}
                         isSocialPosted={isSocialPosted}
                         isAmplified={isAmplified}

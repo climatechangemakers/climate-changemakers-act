@@ -43,9 +43,9 @@ export default function MakeACall({
             </div>
             <p>
                 Plan your personalized script (the field below is editable and just a working space for you!), and then
-                click below to make your calls. Click “I Called!” when you’re finished calling a Senator. You're the expert
-                on your own experiences and your own climate concern, and your advocacy is most effective when you speak
-                from your unique perspective, so bring in personal details and anecdotes.
+                click below to make your calls. Click “I Called!” when you’re finished calling a Senator. You're the
+                expert on your own experiences and your own climate concern, and your advocacy is most effective when
+                you speak from your unique perspective, so bring in personal details and anecdotes.
             </p>
             {emailBody && (
                 <>

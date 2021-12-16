@@ -17,8 +17,8 @@ import Prompts from "./Prompts";
 type Props = {
     actionInfo: ActionInfo;
     formInfo: FormInfo;
-    isEmailSent: boolean;
-    setIsEmailSent: (bool: boolean) => void;
+    isEmailDone: boolean;
+    setIsEmailDone: (bool: boolean) => void;
     selectedIssue: Issue;
     emailInfo: EmailInfo;
     setEmailInfo: React.Dispatch<React.SetStateAction<EmailInfo>>;
@@ -27,8 +27,8 @@ type Props = {
 export default function SendAnEmail({
     actionInfo,
     formInfo,
-    isEmailSent,
-    setIsEmailSent,
+    isEmailDone,
+    setIsEmailDone,
     selectedIssue,
     emailInfo,
     setEmailInfo,
@@ -43,12 +43,13 @@ export default function SendAnEmail({
     const [emailState, setEmailState] = useState<EmailState>("titleing");
     const [isSending, setIsSending] = useState(false);
     const [bioguideIdsToSend, setBioguideIdsToSend] = useState(actionInfo.legislators.map((l) => l.bioguideId));
+    const [isEmailSent, setIsEmailSent] = useState(false);
 
     useEffect(() => {
         emailState === "prompting" && scrollToId("email_prompts");
         emailState === "reviewing" && scrollToId("review_email");
-        emailState === "done" && setIsEmailSent(true);
-    }, [emailState, setIsEmailSent]);
+        emailState === "done" && setIsEmailDone(true);
+    }, [emailState, setIsEmailDone]);
 
     const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -86,6 +87,7 @@ export default function SendAnEmail({
             return;
         }
         setIsEmailSent(true);
+        setIsEmailDone(true);
     };
 
     const topicOptions = locTopics?.map((t) => ({ value: t, label: t })) || [];
@@ -146,7 +148,7 @@ export default function SendAnEmail({
                                     <Form.Select
                                         value={emailInfo.prefix}
                                         onChange={(e) => setEmailInfo({ ...emailInfo, prefix: e.currentTarget.value })}
-                                        disabled={isEmailSent}
+                                        disabled={isEmailDone}
                                         required
                                     >
                                         <option value="">--</option>
@@ -166,7 +168,7 @@ export default function SendAnEmail({
                                         onChange={(e) =>
                                             setEmailInfo({ ...emailInfo, firstName: e.currentTarget.value })
                                         }
-                                        disabled={isEmailSent}
+                                        disabled={isEmailDone}
                                         required
                                     />
                                 </Form.Group>
@@ -179,7 +181,7 @@ export default function SendAnEmail({
                                         onChange={(e) =>
                                             setEmailInfo({ ...emailInfo, lastName: e.currentTarget.value })
                                         }
-                                        disabled={isEmailSent}
+                                        disabled={isEmailDone}
                                         required
                                     />
                                 </Form.Group>
@@ -192,7 +194,7 @@ export default function SendAnEmail({
                                     <Form.Control
                                         value={emailInfo.subject}
                                         onChange={(e) => setEmailInfo({ ...emailInfo, subject: e.currentTarget.value })}
-                                        disabled={isEmailSent}
+                                        disabled={isEmailDone}
                                         required
                                     />
                                 </Form.Group>
@@ -206,7 +208,7 @@ export default function SendAnEmail({
                                         defaultValue={emailInfo.selectedLocTopics}
                                         onChange={(e) => setEmailInfo({ ...emailInfo, selectedLocTopics: e })}
                                         options={topicOptions}
-                                        isDisabled={isEmailSent}
+                                        isDisabled={isEmailDone}
                                         styles={{
                                             option: (provided) => ({
                                                 ...provided,
@@ -281,7 +283,7 @@ export default function SendAnEmail({
                                     placeholder="Draft your email"
                                     value={emailInfo.body}
                                     onChange={(e) => setEmailInfo({ ...emailInfo, body: e.currentTarget.value })}
-                                    disabled={isEmailSent}
+                                    disabled={isEmailDone}
                                     required={emailState === "reviewing"}
                                 />
                             </Form.Group>
@@ -291,15 +293,21 @@ export default function SendAnEmail({
                                 <Button
                                     variant="secondary"
                                     className="w-100"
-                                    disabled={isEmailSent}
-                                    onClick={() => setIsEmailSent(true)}
+                                    disabled={isEmailDone}
+                                    onClick={() => setIsEmailDone(true)}
                                 >
                                     Skip to Call
                                 </Button>
                             </Col>
                             <Col>
-                                <Button type="submit" className="w-100 text-dark" disabled={isEmailSent}>
-                                    {isSending ? "Sending..." : !sendEmailError ? "Send Email" : "Try again"}
+                                <Button type="submit" className="w-100 text-dark" disabled={isEmailDone}>
+                                    {isEmailSent
+                                        ? "Email Sent!"
+                                        : isSending
+                                        ? "Sending..."
+                                        : sendEmailError
+                                        ? "Try again"
+                                        : "Send Email"}
                                 </Button>
                             </Col>
                         </Row>
