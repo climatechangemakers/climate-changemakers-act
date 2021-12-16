@@ -305,9 +305,9 @@ export default function SendAnEmail({
                                         ? "Email Sent!"
                                         : isSending
                                         ? "Sending..."
-                                        : !sendEmailError
-                                        ? "Send Email"
-                                        : "Try again"}
+                                        : sendEmailError
+                                        ? "Try again"
+                                        : "Send Email"}
                                 </Button>
                             </Col>
                         </Row>
