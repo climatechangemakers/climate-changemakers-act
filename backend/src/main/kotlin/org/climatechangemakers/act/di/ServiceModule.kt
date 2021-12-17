@@ -5,9 +5,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import dagger.Module
 import dagger.Provides
 import nl.adaptivity.xmlutil.serialization.XML
-import okhttp3.Credentials
-import okhttp3.MediaType
-import okhttp3.OkHttpClient
+import okhttp3.*
 import org.climatechangemakers.act.feature.communicatewithcongress.service.HouseCommunicateWithCongressService
 import org.climatechangemakers.act.feature.communicatewithcongress.service.SenateCommunicateWithCongressService
 import org.climatechangemakers.act.feature.email.service.MailchimpService
@@ -27,7 +25,7 @@ import retrofit2.Retrofit
     val originalUrl = originalRequest.url()
     val newUrl = originalUrl.newBuilder().addQueryParameter(apiKeyName, apiKey).build()
 
-    logger.info("${originalRequest.method()} ${originalUrl.redact()}")
+    logger.info("${originalRequest.method()} ${originalUrl.redactAndRetainPath()}")
     chain.proceed(originalRequest.newBuilder().url(newUrl).build())
   }.build()
 
@@ -39,7 +37,7 @@ import retrofit2.Retrofit
       .addHeader("Authorization", "Bearer $apiKey")
       .build()
 
-    logger.info("${newRequest.method()} ${newRequest.url().redact()}")
+    logger.info("${newRequest.method()} ${newRequest.url().redactAndRetainPath()}")
     chain.proceed(newRequest)
   }.build()
 
@@ -52,7 +50,7 @@ import retrofit2.Retrofit
       .addHeader("Authorization", Credentials.basic(user, apiKey))
       .build()
 
-    logger.info("${newRequest.method()} ${newRequest.url().redact()}")
+    logger.info("${newRequest.method()} ${newRequest.url().redactAndRetainPath()}")
     chain.proceed(newRequest)
   }.build()
 
@@ -135,3 +133,11 @@ import retrofit2.Retrofit
     .build()
     .create(MailchimpService::class.java)
 }
+
+private fun HttpUrl.redactAndRetainPath(): String = newBuilder()
+  .username("")
+  .password("")
+  .fragment(null)
+  .query(null)
+  .build()
+  .toString()
