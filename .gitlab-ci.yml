@@ -32,7 +32,7 @@ build-production-container:
   image: docker:stable
   stage: build
   script: 
-    - docker build -t $IMAGE_TAG:$(git rev-parse --short HEAD) .
+    - docker build -t "$IMAGE_TAG:$CI_COMMIT_SHORT_SHA" .
   only: 
     - external_pull_requests
 
@@ -41,7 +41,7 @@ publish-production-container:
   stage: build
   script: 
     - docker login -u $GITLAB_USER_LOGIN -p $GITLAB_API_KEY registry.gitlab.com 
-    - docker build -t $IMAGE_TAG:$(git rev-parse --short HEAD) .
+    - docker build -t "$IMAGE_TAG:$CI_COMMIT_SHORT_SHA" .
     - docker push $IMAGE_TAG
   only: 
     - trunk
