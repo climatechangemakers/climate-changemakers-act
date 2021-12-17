@@ -39,9 +39,13 @@ build-production-container:
 publish-production-container:
   image: docker:stable
   stage: build
+  variables:
+    TAGGED_IMAGE: "$IMAGE_TAG:$CI_COMMIT_SHORT_SHA"
+    LATEST_IMAGE: "$IMAGE_TAG:latest"
   script: 
     - docker login -u $GITLAB_USER_LOGIN -p $GITLAB_API_KEY registry.gitlab.com 
-    - docker build -t "$IMAGE_TAG:$CI_COMMIT_SHORT_SHA" .
+    - docker build -t $TAGGED_IMAGE .
+    - docker tag $TAGGED_IMAGE $LATEST_IMAGE
     - docker push $IMAGE_TAG
   only: 
     - trunk
