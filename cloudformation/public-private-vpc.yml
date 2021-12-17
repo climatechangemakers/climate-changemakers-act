@@ -16,9 +16,7 @@ Mappings:
   # There are four subnets which cover the ranges:
   #
   # 10.0.0.0 - 10.0.0.255
-  # 10.0.1.0 - 10.0.1.255
   # 10.0.2.0 - 10.0.2.255
-  # 10.0.3.0 - 10.0.3.255
   #
   # If you need more IP addresses (perhaps you have so many
   # instances that you run out) then you can customize these
@@ -28,17 +26,11 @@ Mappings:
       CIDR: '10.0.0.0/16'
     PublicOne:
       CIDR: '10.0.0.0/24'
-    PublicTwo:
-      CIDR: '10.0.1.0/24'
     PrivateOne:
       CIDR: '10.0.2.0/24'
-    PrivateTwo:
-      CIDR: '10.0.3.0/24'
 Resources:
   # VPC in which containers will be networked.
-  # It has two public subnets, and two private subnets.
-  # We distribute the subnets across the first two available subnets
-  # for the region, for high availability.
+  # It has one public subnet, and one private subnet.
   VPC:
     Type: AWS::EC2::VPC
     Properties:
@@ -46,7 +38,7 @@ Resources:
       EnableDnsHostnames: true
       CidrBlock: !FindInMap ['SubnetConfig', 'VPC', 'CIDR']
 
-  # Two public subnets, where containers can have public IP addresses
+  # One public subnet, where containers can have public IP addresses
   PublicSubnetOne:
     Type: AWS::EC2::Subnet
     Properties:
@@ -57,18 +49,8 @@ Resources:
       VpcId: !Ref 'VPC'
       CidrBlock: !FindInMap ['SubnetConfig', 'PublicOne', 'CIDR']
       MapPublicIpOnLaunch: true
-  PublicSubnetTwo:
-    Type: AWS::EC2::Subnet
-    Properties:
-      AvailabilityZone:
-         Fn::Select:
-         - 1
-         - Fn::GetAZs: {Ref: 'AWS::Region'}
-      VpcId: !Ref 'VPC'
-      CidrBlock: !FindInMap ['SubnetConfig', 'PublicTwo', 'CIDR']
-      MapPublicIpOnLaunch: true
 
-  # Two private subnets where containers will only have private
+  # One private subnets where containers will only have private
   # IP addresses, and will only be reachable by other members of the
   # VPC
   PrivateSubnetOne:
@@ -80,15 +62,6 @@ Resources:
          - Fn::GetAZs: {Ref: 'AWS::Region'}
       VpcId: !Ref 'VPC'
       CidrBlock: !FindInMap ['SubnetConfig', 'PrivateOne', 'CIDR']
-  PrivateSubnetTwo:
-    Type: AWS::EC2::Subnet
-    Properties:
-      AvailabilityZone:
-         Fn::Select:
-         - 1
-         - Fn::GetAZs: {Ref: 'AWS::Region'}
-      VpcId: !Ref 'VPC'
-      CidrBlock: !FindInMap ['SubnetConfig', 'PrivateTwo', 'CIDR']
 
   # Setup networking resources for the public subnets. Containers
   # in the public subnets have public IP addresses and the routing table
@@ -116,22 +89,12 @@ Resources:
     Properties:
       SubnetId: !Ref PublicSubnetOne
       RouteTableId: !Ref PublicRouteTable
-  PublicSubnetTwoRouteTableAssociation:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      SubnetId: !Ref PublicSubnetTwo
-      RouteTableId: !Ref PublicRouteTable
 
   # Setup networking resources for the private subnets. Containers
   # in these subnets have only private IP addresses, and must use a NAT
-  # gateway to talk to the internet. We launch two NAT gateways, one for
-  # each private subnet.
+  # gateway to talk to the internet. We launch one NAT gateways for the
+  # private subnet.
   NatGatewayOneAttachment:
-    Type: AWS::EC2::EIP
-    DependsOn: GatewayAttachement
-    Properties:
-        Domain: vpc
-  NatGatewayTwoAttachment:
     Type: AWS::EC2::EIP
     DependsOn: GatewayAttachement
     Properties:
@@ -141,11 +104,6 @@ Resources:
     Properties:
       AllocationId: !GetAtt NatGatewayOneAttachment.AllocationId
       SubnetId: !Ref PublicSubnetOne
-  NatGatewayTwo:
-    Type: AWS::EC2::NatGateway
-    Properties:
-      AllocationId: !GetAtt NatGatewayTwoAttachment.AllocationId
-      SubnetId: !Ref PublicSubnetTwo
   PrivateRouteTableOne:
     Type: AWS::EC2::RouteTable
     Properties:
@@ -161,42 +119,6 @@ Resources:
     Properties:
       RouteTableId: !Ref PrivateRouteTableOne
       SubnetId: !Ref PrivateSubnetOne
-  PrivateRouteTableTwo:
-    Type: AWS::EC2::RouteTable
-    Properties:
-      VpcId: !Ref 'VPC'
-  PrivateRouteTwo:
-    Type: AWS::EC2::Route
-    Properties:
-      RouteTableId: !Ref PrivateRouteTableTwo
-      DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGatewayTwo
-  PrivateRouteTableTwoAssociation:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      RouteTableId: !Ref PrivateRouteTableTwo
-      SubnetId: !Ref PrivateSubnetTwo
-
-  # OPTIONAL: VPC Endpoint for DynamoDB
-  # If a container needs to access DynamoDB this allows a container in the private subnet
-  # to talk to DynamoDB directly without needing to go via the NAT gateway. This reduces
-  # the amount of bandwidth through the gateway, meaning that the gateway is free to serve
-  # your other traffic.
-  DynamoDBEndpoint:
-    Type: AWS::EC2::VPCEndpoint
-    Properties:
-      PolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Action: "*"
-            Principal: "*"
-            Resource: "*"
-      RouteTableIds:
-        - !Ref 'PrivateRouteTableOne'
-        - !Ref 'PrivateRouteTableTwo'
-      ServiceName: !Join [ "", [ "com.amazonaws.", { "Ref": "AWS::Region" }, ".dynamodb" ] ]
-      VpcId: !Ref 'VPC'
 
   SecretsManagerEndpoint:
     Type: AWS::EC2::VPCEndpoint
@@ -210,7 +132,6 @@ Resources:
             Resource: "*"
       SubnetIds:
         - !Ref PrivateSubnetOne
-        - !Ref PrivateSubnetTwo
       PrivateDnsEnabled: true
       ServiceName: !Join [ "", [ "com.amazonaws.", { "Ref": "AWS::Region" }, ".secretsmanager" ] ]
       VpcId: !Ref 'VPC'
@@ -288,7 +209,6 @@ Resources:
         # The load balancer is placed into the public subnets, so that traffic
         # from the internet can reach the load balancer directly via the internet gateway
         - !Ref PublicSubnetOne
-        - !Ref PublicSubnetTwo
       SecurityGroups: [!Ref 'PublicLoadBalancerSG']
   # A dummy target group is used to setup the ALB to just drop traffic
   # initially, before any real service target groups have been added.
@@ -360,7 +280,6 @@ Resources:
         # This load balancer is put into the private subnet, so that there is no
         # route for the public to even be able to access the private load balancer.
         - !Ref PrivateSubnetOne
-        - !Ref PrivateSubnetTwo
       SecurityGroups: [!Ref 'PrivateLoadBalancerSG']
   # This dummy target group is used to setup the ALB to just drop traffic
   # initially, before any real service target groups have been added.
@@ -511,21 +430,11 @@ Outputs:
     Value: !Ref 'PublicSubnetOne'
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicSubnetOne' ] ]
-  PublicSubnetTwo:
-    Description: Public subnet two
-    Value: !Ref 'PublicSubnetTwo'
-    Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicSubnetTwo' ] ]
   PrivateSubnetOne:
     Description: Private subnet one
     Value: !Ref 'PrivateSubnetOne'
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PrivateSubnetOne' ] ]
-  PrivateSubnetTwo:
-    Description: Private subnet two
-    Value: !Ref 'PrivateSubnetTwo'
-    Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PrivateSubnetTwo' ] ]
   FargateContainerSecurityGroup:
     Description: A security group used to allow Fargate containers to receive traffic
     Value: !Ref 'FargateContainerSecurityGroup'
