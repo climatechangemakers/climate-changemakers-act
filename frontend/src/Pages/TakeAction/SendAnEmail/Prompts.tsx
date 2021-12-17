@@ -9,11 +9,12 @@ type Props = {
     emailState: EmailState;
     setEmailState: React.Dispatch<React.SetStateAction<EmailState>>;
     setEmailBody: (body: string) => void;
+    isEmailDone: boolean;
 };
 
 const salutation = "To whom it may concern,";
 
-export default function Prompts({ formRef, firstName, emailState, setEmailState, setEmailBody }: Props) {
+export default function Prompts({ formRef, firstName, emailState, setEmailState, setEmailBody, isEmailDone }: Props) {
     const [emailPrompts, setEmailPrompts] = useState({
         policyAsk: "",
         whyItMatters: "",
@@ -45,7 +46,7 @@ export default function Prompts({ formRef, firstName, emailState, setEmailState,
                             rows={4}
                             value={emailPrompts.policyAsk}
                             onChange={(e) => setEmailPrompts({ ...emailPrompts, policyAsk: e.currentTarget.value })}
-                            disabled={addedPrompts}
+                            disabled={addedPrompts || isEmailDone}
                             placeholder="I am writing to urge you to..."
                         />
                     </Form.Group>
@@ -60,7 +61,7 @@ export default function Prompts({ formRef, firstName, emailState, setEmailState,
                             rows={4}
                             value={emailPrompts.whyItMatters}
                             onChange={(e) => setEmailPrompts({ ...emailPrompts, whyItMatters: e.currentTarget.value })}
-                            disabled={addedPrompts}
+                            disabled={addedPrompts || isEmailDone}
                             placeholder="This policy would..."
                         />
                     </Form.Group>
@@ -75,7 +76,7 @@ export default function Prompts({ formRef, firstName, emailState, setEmailState,
                             rows={4}
                             value={emailPrompts.whyYouCare}
                             onChange={(e) => setEmailPrompts({ ...emailPrompts, whyYouCare: e.currentTarget.value })}
-                            disabled={addedPrompts}
+                            disabled={addedPrompts || isEmailDone}
                             placeholder="As a constituent I am concerned because..."
                         />
                     </Form.Group>
@@ -95,7 +96,7 @@ export default function Prompts({ formRef, firstName, emailState, setEmailState,
                                     reiteratePolicyAsk: e.currentTarget.value,
                                 })
                             }
-                            disabled={addedPrompts}
+                            disabled={addedPrompts || isEmailDone}
                             placeholder="As my elected representative, I urge you to take action by..."
                         />
                     </Form.Group>
@@ -106,14 +107,18 @@ export default function Prompts({ formRef, firstName, emailState, setEmailState,
                     <Button
                         variant="secondary"
                         className="w-100"
-                        disabled={addedPrompts}
+                        disabled={addedPrompts || isEmailDone}
                         onClick={() => setEmailState("reviewing")}
                     >
                         Draft from Scratch
                     </Button>
                 </Col>
                 <Col className="position-relative">
-                    <Button className="w-100 text-dark" disabled={addedPrompts} onClick={addPromptsToEmail}>
+                    <Button
+                        className="w-100 text-dark"
+                        disabled={addedPrompts || isEmailDone}
+                        onClick={addPromptsToEmail}
+                    >
                         Review Email
                     </Button>
                     <HiddenValidationInput

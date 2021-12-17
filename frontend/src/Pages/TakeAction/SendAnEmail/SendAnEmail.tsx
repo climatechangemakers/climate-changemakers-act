@@ -267,6 +267,7 @@ export default function SendAnEmail({
                         emailState={emailState}
                         setEmailState={setEmailState}
                         setEmailBody={(body: string) => setEmailInfo((info) => ({ ...info, body }))}
+                        isEmailDone={isEmailDone}
                     />
                 )}
                 {(emailState === "reviewing" || emailState === "done") && (

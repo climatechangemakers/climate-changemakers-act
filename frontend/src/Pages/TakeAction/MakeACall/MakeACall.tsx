@@ -3,7 +3,7 @@ import ErrorMessage from "common/Components/ErrorMessage";
 import LegislatorCard from "common/Components/LegislatorCard/LegislatorCard";
 import { ActionInfo } from "common/models/ActionInfo";
 import { useState } from "react";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import callIcon from "./call-icon.svg";
 
 type Props = {
@@ -25,6 +25,7 @@ export default function MakeACall({
 }: Props) {
     const [bioguideIdsCalled, setBuiguideIdsCalled] = useState<string[]>([]);
     const [error, setError] = useState("");
+    const [script, setScript] = useState(emailBody);
 
     const logCall = async (contactedBioguideId: string) => {
         const response = await logCallAPI(emailAddress, relatedIssueId, contactedBioguideId);
@@ -43,16 +44,24 @@ export default function MakeACall({
             </div>
             <p>
                 Plan your personalized script (the field below is editable and just a working space for you!), and then
-                click below to make your calls. Click “I Called!” when you’re finished calling a Senator. You're the
+                click below to make your calls. Click “I Called!” when you’re finished calling each member of congress. You're the
                 expert on your own experiences and your own climate concern, and your advocacy is most effective when
                 you speak from your unique perspective, so bring in personal details and anecdotes.
             </p>
             {emailBody && (
                 <>
                     <h4>Script</h4>
-                    <Card className="mb-4">
-                        <Card.Body className="text-dark">{emailBody}</Card.Body>
-                    </Card>
+                    <Form.Group className="mb-3">
+                        <Form.Label htmlFor="callForm" className="visually-hidden" />
+                        <Form.Control
+                            as="textarea"
+                            rows={9}
+                            id="callForm"
+                            disabled={isPhoneCallMade}
+                            value={script}
+                            onChange={(e) => setScript(e.target.value)}
+                        />
+                    </Form.Group>
                 </>
             )}
             <Row className="legislator-max-width m-auto mb-2 d-flex flex-md-row flex-column justify-content-center text-center">
