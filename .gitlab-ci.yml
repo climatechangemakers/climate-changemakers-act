@@ -41,7 +41,7 @@ publish-production-container:
   stage: build
   script: 
     - docker login -u $GITLAB_USER_LOGIN -p $GITLAB_API_KEY registry.gitlab.com 
-    - docker build -t $IMAGE_TAG .
+    - docker build -t $IMAGE_TAG:$(git rev-parse --short HEAD) .
     - docker push $IMAGE_TAG
   only: 
     - trunk
