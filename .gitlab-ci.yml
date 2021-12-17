@@ -32,7 +32,7 @@ build-production-container:
   image: docker:stable
   stage: build
   script: 
-    - docker build -t $IMAGE_TAG .
+    - docker build -t $IMAGE_TAG:$(git rev-parse --short HEAD) .
   only: 
     - external_pull_requests
 
