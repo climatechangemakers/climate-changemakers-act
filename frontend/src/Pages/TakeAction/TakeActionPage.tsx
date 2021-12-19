@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import { MultiValue } from "react-select";
-import useSWR from "swr";
+import useSWRImmutable from "swr";
 import AllDone from "./AllDone/AllDone";
 import JoinMission from "./AllDone/JoinMission";
 import Amplify from "./Amplify/Amplify";
@@ -36,12 +36,15 @@ export default function TakeActionPage() {
         body: "",
         selectedLocTopics: [] as MultiValue<{ value: string; label: string }>,
     });
-    const { data: membershipInfo } = useSWR<{ isMember: boolean }, ErrorResponse>(
+    const { data: membershipInfo } = useSWRImmutable<{ isMember: boolean }, ErrorResponse>(
         [!formInfo?.email ? null : "/check-membership", JSON.stringify({ email: formInfo?.email ?? "" })],
         fetcher
     );
     const selectedIssueId = selectedIssue?.id;
-    const { data: preComposedTweetData, error: preComposedTweetError } = useSWR<{ tweet: string }, ErrorResponse>(
+    const { data: preComposedTweetData, error: preComposedTweetError } = useSWRImmutable<
+        { tweet: string },
+        ErrorResponse
+    >(
         selectedIssueId === undefined || !actionInfo?.legislators?.length
             ? null
             : `/issues/${selectedIssueId}/precomposed-tweet?${new URLSearchParams(
@@ -49,10 +52,10 @@ export default function TakeActionPage() {
               ).toString()}`,
         fetcher
     );
-    const { data: areas, error: areasError } = useSWR<{ shortName: string; fullName: string }[], ErrorResponse>(
-        "/values/areas",
-        fetcher
-    );
+    const { data: areas, error: areasError } = useSWRImmutable<
+        { shortName: string; fullName: string }[],
+        ErrorResponse
+    >("/values/areas", fetcher);
 
     useEffect(() => {
         isEmailDone && scrollToId("make_a_phone_call");

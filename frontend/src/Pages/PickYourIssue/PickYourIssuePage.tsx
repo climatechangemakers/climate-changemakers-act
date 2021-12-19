@@ -7,14 +7,14 @@ import { Issue } from "common/models/Issue";
 import { useEffect } from "react";
 import { Col, Row, Spinner } from "react-bootstrap";
 import { Redirect, useHistory } from "react-router-dom";
-import useSWR from "swr";
+import useSWRImmutable from "swr";
 import IssueCard from "./Issue";
 
 export default function PickYourIssuePage() {
-    const { data: issues, error: issuesError } = useSWR<{ focusIssue: Issue; otherIssues: Issue[] }, ErrorResponse>(
-        "/issues",
-        fetcher
-    );
+    const { data: issues, error: issuesError } = useSWRImmutable<
+        { focusIssue: Issue; otherIssues: Issue[] },
+        ErrorResponse
+    >("/issues", fetcher);
     const [selectedIssue, setSelectedIssue] = useSessionStorage<Issue | undefined>("selectedIssue");
     const [actionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
     const history = useHistory();
