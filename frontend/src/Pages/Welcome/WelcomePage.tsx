@@ -8,7 +8,7 @@ import { Issue } from "common/models/Issue";
 import { useState } from "react";
 import { Badge, Button, Col, Form, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import useSWR from "swr";
+import useSWRImmutable from "swr";
 import styles from "./WelcomePage.module.css";
 
 export default function WelcomePage() {
@@ -24,11 +24,11 @@ export default function WelcomePage() {
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [, setActionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
-    const { data: areas, error: areasError } = useSWR<{ shortName: string; fullName: string }[], ErrorResponse>(
-        "/values/areas",
-        fetcher
-    );
-    useSWR<{ focusIssue: Issue; otherIssues: Issue[] }, string>("/issues", fetcher);
+    const { data: areas, error: areasError } = useSWRImmutable<
+        { shortName: string; fullName: string }[],
+        ErrorResponse
+    >("/values/areas", fetcher);
+    useSWRImmutable<{ focusIssue: Issue; otherIssues: Issue[] }, string>("/issues", fetcher);
     const history = useHistory();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

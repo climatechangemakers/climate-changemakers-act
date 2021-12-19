@@ -10,7 +10,7 @@ import { Issue } from "common/models/Issue";
 import { useEffect, useRef, useState } from "react";
 import { Accordion, Button, Col, Form, Row } from "react-bootstrap";
 import Select from "react-select";
-import useSWR from "swr";
+import useSWRImmutable from "swr";
 import emailIcon from "./email-icon.svg";
 import Prompts from "./Prompts";
 
@@ -33,8 +33,11 @@ export default function SendAnEmail({
     emailInfo,
     setEmailInfo,
 }: Props) {
-    const { data: prefixes, error: prefixError } = useSWR<string[], ErrorResponse>("/values/prefixes", fetcher);
-    const { data: locTopics, error: locTopicsError } = useSWR<string[], ErrorResponse>(
+    const { data: prefixes, error: prefixError } = useSWRImmutable<string[], ErrorResponse>(
+        "/values/prefixes",
+        fetcher
+    );
+    const { data: locTopics, error: locTopicsError } = useSWRImmutable<string[], ErrorResponse>(
         "/values/library-of-congress-topics",
         fetcher
     );
