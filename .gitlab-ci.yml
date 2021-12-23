@@ -57,7 +57,7 @@ migrate-production-database:
     name: flyway/flyway:8.2.2-alpine
     entrypoint: [""]
   script:
-    # below is a hack to work around https://github.com/cashapp/sqldelight/issues/2744
+    # below is a hack to work around https://github.com/cashapp/sqldelight/issues/2744. Can remove manual file renaming when it's resolved. 
     - mkdir -p backend/build/resources/main/migrations/
     - cp backend/src/main/sqldelight/migrations/*.sqm backend/build/resources/main/migrations/
     - find backend/build/resources/main/migrations/ -name "*.sqm" -exec sh -c 'mv "$1" "${1%.sqm}.sql"' _ {} \;
