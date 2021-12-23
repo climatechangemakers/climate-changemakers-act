@@ -34,6 +34,8 @@ sqldelight {
         dialect = "postgresql"
         deriveSchemaFromMigrations = false
         verifyMigrations = false
+        migrationOutputDirectory = file("$buildDir/resources/main/migrations")
+        migrationOutputFileFormat = ".sql"
     }
 }
 

@@ -9,13 +9,14 @@ variables:
 stages: 
   - test
   - build
+  - deploy
 
 before_script: 
   - export GRADLE_USER_HOME=`pwd`/backend/.gradle
 
 cache:
   paths:
-    - ./bakcned/.gradle/wrapper
+    - ./backend/.gradle/wrapper
     - ./backend/.gradle/caches
 
 test-backend:
@@ -49,3 +50,19 @@ publish-production-container:
     - docker push $IMAGE_TAG
   only: 
     - trunk
+
+migrate-production-database:
+  stage: deploy
+  image: 
+    name: flyway/flyway:8.2.2-alpine
+    entrypoint: [""]
+  script:
+    # below is a hack to work around https://github.com/cashapp/sqldelight/issues/2744
+    - cp ./backend/src/sqldelight/migrations/*.sqm ./backend/build/resources/main/migrations/
+    - find ./backend/build/resources/main/migrations/ -name "*.sqm" -exec sh -c "mv \"$1\" \"${1%.sqm}.sql\"" _ {} \;
+    - flyway -user=${POSTGRES_USER} -password=${POSTGRES_PASSWORD} -table=schema_history -locations=./backend/build/resources/main/migrations/ -url=${POSTGRES_URL} migrate
+  only: 
+    refs:
+      - trunk
+    changes:
+      - backend/src/main/sqldelight/migrations/*.sqm

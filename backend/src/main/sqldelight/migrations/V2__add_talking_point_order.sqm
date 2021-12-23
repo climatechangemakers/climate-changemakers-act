@@ -1,0 +1,16 @@
+ALTER TABLE talking_point
+ADD COLUMN IF NOT EXISTS relative_order_position INTEGER DEFAULT NULL;
+
+ALTER TABLE talking_point DROP CONSTRAINT IF EXISTS relative_ordering_unique;
+ALTER TABLE talking_point
+ADD CONSTRAINT relative_ordering_unique UNIQUE (issue_id, relative_order_position);
+
+UPDATE talking_point
+SET relative_order_position = altered.row_number
+FROM (
+  SELECT id, ROW_NUMBER() OVER(PARTITION BY issue_id)
+  FROM talking_point
+) altered
+WHERE talking_point.id = altered.id AND talking_point.relative_order_position IS NULL;
+
+ALTER TABLE talking_point ALTER COLUMN relative_order_position SET NOT NULL;
