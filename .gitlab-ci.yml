@@ -59,7 +59,7 @@ migrate-production-database:
   script:
     # below is a hack to work around https://github.com/cashapp/sqldelight/issues/2744
     - ls -la
-    - echo $pwd
+    - ls -la backend/sqldelight/migrations
     - cp `pwd`/backend/src/sqldelight/migrations/*.sqm `pwd`/backend/build/resources/main/migrations/
     - find `pwd`/backend/build/resources/main/migrations/ -name "*.sqm" -exec sh -c "mv \"$1\" \"${1%.sqm}.sql\"" _ {} \;
     - ls -la `pwd`/backend/build/resources/main/migrations/
