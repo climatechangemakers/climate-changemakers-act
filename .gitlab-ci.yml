@@ -60,9 +60,9 @@ migrate-production-database:
     # below is a hack to work around https://github.com/cashapp/sqldelight/issues/2744
     - ls -la
     - ls -la backend/src/main/sqldelight/migrations
-    - cp `backend/src/main/sqldelight/migrations/*.sqm `pwd`/backend/build/resources/main/migrations/
-    - find `pwd`/backend/build/resources/main/migrations/ -name "*.sqm" -exec sh -c "mv \"$1\" \"${1%.sqm}.sql\"" _ {} \;
-    - ls -la `pwd`/backend/build/resources/main/migrations/
+    - cp backend/src/main/sqldelight/migrations/*.sqm backend/build/resources/main/migrations/
+    - find backend/build/resources/main/migrations/ -name "*.sqm" -exec sh -c "mv \"$1\" \"${1%.sqm}.sql\"" _ {} \;
+    - ls -la backend/build/resources/main/migrations/
     - flyway -user=${POSTGRES_USER} -password=${POSTGRES_PASSWORD} -table=schema_history -locations=./backend/build/resources/main/migrations/ -url=${POSTGRES_URL} migrate
       #only: 
       #  refs:
