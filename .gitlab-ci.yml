@@ -19,23 +19,23 @@ cache:
     - ./backend/.gradle/wrapper
     - ./backend/.gradle/caches
 
-      #test-backend:
-      #  image: openjdk:11.0.12
-      #  stage: test
-      #  script: 
-      #    - cd backend
-      #    - ./gradlew test
-      #  only: 
-      #    - trunk 
-      #    - external_pull_requests
+test-backend:
+  image: openjdk:11.0.12
+  stage: test
+  script: 
+    - cd backend
+    - ./gradlew test
+  only: 
+    - trunk 
+    - external_pull_requests
 
-      # build-production-container:
-      #   image: docker:stable
-      #   stage: build
-      #   script: 
-      #     - docker build -t "$IMAGE_TAG:$CI_COMMIT_SHORT_SHA" .
-      #   only: 
-      #     - external_pull_requests
+ build-production-container:
+   image: docker:stable
+   stage: build
+   script: 
+     - docker build -t "$IMAGE_TAG:$CI_COMMIT_SHORT_SHA" .
+   only: 
+     - external_pull_requests
 
 publish-production-container:
   image: docker:stable
@@ -61,10 +61,9 @@ migrate-production-database:
     - mkdir -p backend/build/resources/main/migrations/
     - cp backend/src/main/sqldelight/migrations/*.sqm backend/build/resources/main/migrations/
     - find backend/build/resources/main/migrations/ -name "*.sqm" -exec sh -c 'mv "$1" "${1%.sqm}.sql"' _ {} \;
-    - ls -la backend/build/resources/main/migrations/
     - flyway -user=${POSTGRES_USER} -password=${POSTGRES_PASSWORD} -table=schema_history -locations=./backend/build/resources/main/migrations/ -url=${POSTGRES_URL} migrate
-      #only: 
-      #  refs:
-      #    - trunk
-      #  changes:
-      #    - backend/src/main/sqldelight/migrations/*.sqm
+  only: 
+    refs:
+      - trunk
+    changes:
+      - backend/src/main/sqldelight/migrations/*.sqm
