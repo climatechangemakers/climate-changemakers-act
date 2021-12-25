@@ -61,7 +61,7 @@ migrate-production-database:
     - mkdir -p backend/build/resources/main/migrations/
     - cp backend/src/main/sqldelight/migrations/*.sqm backend/build/resources/main/migrations/
     - find backend/build/resources/main/migrations/ -name "*.sqm" -exec sh -c 'mv "$1" "${1%.sqm}.sql"' _ {} \;
-    - flyway -user=${POSTGRES_USER} -password=${POSTGRES_PASSWORD} -table=schema_history -locations=./backend/build/resources/main/migrations/ -url=${POSTGRES_URL} migrate
+    - flyway -user=${POSTGRES_USER} -password=${POSTGRES_PASSWORD} -table=schema_history -locations=backend/build/resources/main/migrations/ -url=${POSTGRES_URL} migrate
   only: 
     refs:
       - trunk
