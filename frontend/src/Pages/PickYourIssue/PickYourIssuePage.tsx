@@ -1,20 +1,16 @@
-import { ErrorResponse, fetcher } from "common/api/ClimateChangemakersAPI";
 import ErrorMessage from "common/Components/ErrorMessage";
 import Layout from "common/Components/Layout";
+import useIssues from "common/hooks/useIssues";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import { ActionInfo } from "common/models/ActionInfo";
 import { Issue } from "common/models/Issue";
 import { useEffect } from "react";
 import { Col, Row, Spinner } from "react-bootstrap";
 import { Redirect, useHistory } from "react-router-dom";
-import useSWRImmutable from "swr";
 import IssueCard from "./Issue";
 
 export default function PickYourIssuePage() {
-    const { data: issues, error: issuesError } = useSWRImmutable<
-        { focusIssue: Issue; otherIssues: Issue[] },
-        ErrorResponse
-    >("/issues", fetcher);
+    const { data: issues, error: issuesError } = useIssues();
     const [selectedIssue, setSelectedIssue] = useSessionStorage<Issue | undefined>("selectedIssue");
     const [actionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
     const history = useHistory();

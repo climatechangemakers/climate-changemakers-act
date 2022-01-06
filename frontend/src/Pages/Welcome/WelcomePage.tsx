@@ -1,14 +1,14 @@
-import { ErrorResponse, fetcher, initiateActionAPI } from "common/api/ClimateChangemakersAPI";
+import { initiateActionAPI } from "common/api/ClimateChangemakersAPI";
 import ErrorMessage from "common/Components/ErrorMessage";
+import useAreas from "common/hooks/useAreas";
+import useIssues from "common/hooks/useIssues";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import logo from "common/logo.png";
 import { ActionInfo } from "common/models/ActionInfo";
 import { FormInfo } from "common/models/FormInfo";
-import { Issue } from "common/models/Issue";
 import { useState } from "react";
 import { Badge, Button, Col, Form, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import useSWRImmutable from "swr";
 import styles from "./WelcomePage.module.css";
 
 export default function WelcomePage() {
@@ -24,11 +24,8 @@ export default function WelcomePage() {
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [, setActionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
-    const { data: areas, error: areasError } = useSWRImmutable<
-        { shortName: string; fullName: string }[],
-        ErrorResponse
-    >("/values/areas", fetcher);
-    useSWRImmutable<{ focusIssue: Issue; otherIssues: Issue[] }, string>("/issues", fetcher);
+    const { data: areas, error: areasError } = useAreas();
+    useIssues();
     const history = useHistory();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

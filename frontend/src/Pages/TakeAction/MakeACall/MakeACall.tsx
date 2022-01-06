@@ -3,7 +3,7 @@ import ErrorMessage from "common/Components/ErrorMessage";
 import LegislatorCard from "common/Components/LegislatorCard/LegislatorCard";
 import { ActionInfo } from "common/models/ActionInfo";
 import { useState } from "react";
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import callIcon from "./call-icon.svg";
 
 type Props = {
