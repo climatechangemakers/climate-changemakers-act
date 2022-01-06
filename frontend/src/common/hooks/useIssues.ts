@@ -3,9 +3,7 @@ import { Issue } from "common/models/Issue";
 import useSWRImmutable from "swr/immutable";
 
 export default function useIssues() {
-    const { data, error } = useSWRImmutable<{ focusIssue: Issue; otherIssues: Issue[] }, ErrorResponse>(
-        "/issues",
-        fetcher
-    );
-    return { data, error };
+    return {
+        ...useSWRImmutable<{ focusIssue: Issue; otherIssues: Issue[] }, ErrorResponse>("/issues", fetcher),
+    };
 }

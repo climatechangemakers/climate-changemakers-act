@@ -3,9 +3,10 @@ import { FormInfo } from "common/models/FormInfo";
 import useSWRImmutable from "swr/immutable";
 
 export default function useMembershipInfo(formInfo: FormInfo | undefined) {
-    const { data, error } = useSWRImmutable<{ isMember: boolean }, ErrorResponse>(
-        [!formInfo?.email ? null : "/check-membership", JSON.stringify({ email: formInfo?.email ?? "" })],
-        fetcher
-    );
-    return { data, error };
+    return {
+        ...useSWRImmutable<{ isMember: boolean }, ErrorResponse>(
+            [!formInfo?.email ? null : "/check-membership", JSON.stringify({ email: formInfo?.email ?? "" })],
+            fetcher
+        ),
+    };
 }
