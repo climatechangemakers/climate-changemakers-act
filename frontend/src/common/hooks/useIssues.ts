@@ -1,12 +1,11 @@
 import { ErrorResponse, fetcher } from "common/api/ClimateChangemakersAPI";
 import { Issue } from "common/models/Issue";
-import useSWR from "swr";
+import useSWRImmutable from "swr/immutable";
 
 export default function useIssues() {
-    const { data, error } = useSWR<{ focusIssue: Issue; otherIssues: Issue[] }, ErrorResponse>("/issues", fetcher, {
-        revalidateIfStale: false,
-        revalidateOnFocus: false,
-        revalidateOnReconnect: false,
-    });
+    const { data, error } = useSWRImmutable<{ focusIssue: Issue; otherIssues: Issue[] }, ErrorResponse>(
+        "/issues",
+        fetcher
+    );
     return { data, error };
 }
