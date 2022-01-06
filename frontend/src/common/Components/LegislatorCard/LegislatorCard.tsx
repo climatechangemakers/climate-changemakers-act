@@ -1,6 +1,6 @@
 import cx from "classnames";
 import { Legislator } from "common/models/ActionInfo";
-import { Badge, Button, Card, Form } from "react-bootstrap";
+import { Badge, Button, Card } from "react-bootstrap";
 import lcvlogo from "./lcv.png";
 import styles from "./LegislatorCard.module.css";
 

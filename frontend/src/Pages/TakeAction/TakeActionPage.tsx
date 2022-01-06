@@ -1,5 +1,6 @@
-import { ErrorResponse, fetcher } from "common/api/ClimateChangemakersAPI";
 import Layout from "common/Components/Layout";
+import useAreas from "common/hooks/useAreas";
+import useMembershipInfo from "common/hooks/useMembershipInfo";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import { scrollToId } from "common/lib/scrollToId";
 import { ActionInfo } from "common/models/ActionInfo";
@@ -10,7 +11,7 @@ import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import { MultiValue } from "react-select";
-import useSWRImmutable from "swr";
+import usePrecomposedTweetData from "../../common/hooks/usePrecomposedTweetData";
 import AllDone from "./AllDone/AllDone";
 import JoinMission from "./AllDone/JoinMission";
 import Amplify from "./Amplify/Amplify";
@@ -36,26 +37,13 @@ export default function TakeActionPage() {
         body: "",
         selectedLocTopics: [] as MultiValue<{ value: string; label: string }>,
     });
-    const { data: membershipInfo } = useSWRImmutable<{ isMember: boolean }, ErrorResponse>(
-        [!formInfo?.email ? null : "/check-membership", JSON.stringify({ email: formInfo?.email ?? "" })],
-        fetcher
-    );
+    const { data: membershipInfo } = useMembershipInfo(formInfo);
     const selectedIssueId = selectedIssue?.id;
-    const { data: preComposedTweetData, error: preComposedTweetError } = useSWRImmutable<
-        { tweet: string },
-        ErrorResponse
-    >(
-        selectedIssueId === undefined || !actionInfo?.legislators?.length
-            ? null
-            : `/issues/${selectedIssueId}/precomposed-tweet?${new URLSearchParams(
-                  actionInfo.legislators.map((l) => ["bioguideIds", l.bioguideId])
-              ).toString()}`,
-        fetcher
+    const { data: preComposedTweetData, error: preComposedTweetError } = usePrecomposedTweetData(
+        selectedIssueId,
+        actionInfo
     );
-    const { data: areas, error: areasError } = useSWRImmutable<
-        { shortName: string; fullName: string }[],
-        ErrorResponse
-    >("/values/areas", fetcher);
+    const { data: areas, error: areasError } = useAreas();
 
     useEffect(() => {
         isEmailDone && scrollToId("make_a_phone_call");
