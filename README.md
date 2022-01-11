@@ -19,7 +19,7 @@ The `issue` table entries are currently entered manually into the database and a
 
 ### Focus Issue 
 
-The `focus_issue` table simply tracks issues that are focus, and when they were focused. Therefore, it serves both to track the currently focused issue as well as the history of all focused issues. 
+The `focus_issue` table simply tracks issues that currently in focus, and when they were focused. Therefore, it serves both to track the currently focused issue as well as the history of all focused issues. 
 
 | issue_id | focused_at |
 | --       | --         |
@@ -41,7 +41,7 @@ The `member_of_congress` table represents canonical information about Congressio
 
 | bioguide_id | full_name | legislative_role | state | congressional_district | party | dc_phone_number | twitter_handle | cwc_office_code |
 | --          | --        | --               | --    |  --                    | --    |  --             |  --            | --              |
-| VARCHAR NOT NULL PRIMARY KEY | VARCHAR NOT NULL | VARCHAR NOT NULL (valid entires sen, rep) | VARCHAR NOT NULL | SMALLINT (null only for senators) | VARCHAR NOT NULL | VARCHAR NOT NULL | VARCHAR NOT NULL | VARCHAR (null only for those unenrolled in CWC) | 
+| VARCHAR NOT NULL PRIMARY KEY | VARCHAR NOT NULL | VARCHAR NOT NULL (valid entires `sen`, `rep`) | VARCHAR NOT NULL | SMALLINT (null only for senators) | VARCHAR NOT NULL | VARCHAR NOT NULL | VARCHAR NOT NULL | VARCHAR (null only for those unenrolled in CWC) | 
 
 Unlike other entities in our database, we do not generate unique identifiers for members of congress. Congress already has several ways of uniquely identifying members, the most popular of which is `bioguide_id`. For example, the bioguide for Donald McEachin is `M001200`. Bioguides are used regularly as foreign keys within our database schema. 
 
@@ -52,7 +52,7 @@ Tangential to members of congress are their `district_office`.
 | VARCHAR NOT NULL (foreign key on `member_of_congress`) | VARCHAR | DOUBLE PRECISION | DOUBLE PRECISION | 
 
 
-The district office, as of now, is primarily used for identifying district offices which are closest to the Changemaker contacting their memeber of congress. This is done by calculating the distance between the Chanegmaker's address and the district office's `lat`/`lng`. 
+The district office table, as of now, is primarily used to identify district offices which are closest to the Changemaker contacting their memeber of congress. This is done by calculating the distance between the Chanegmaker's address and the district office's `lat`/`lng`. 
 
 ### LCV Scores
 
