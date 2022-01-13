@@ -43,27 +43,31 @@ export default function MakeACall({
                 <h2 className="text-pink fw-bold mb-3 ms-3">Make a Call</h2>
             </div>
             <p>
-                Plan your personalized script (the field below is editable and just a working space for you!), and then
-                click below to make your calls. Click “I Called!” when you’re finished calling each member of congress.
-                You're the expert on your own experiences and your own climate concern, and your advocacy is most
-                effective when you speak from your unique perspective, so bring in personal details and anecdotes.
+                Plan your personalized script, then dial away! Click “I Called!” when you’re finished calling each
+                member of Congress.
             </p>
-            {emailBody && (
-                <>
-                    <h4>Script</h4>
-                    <Form.Group className="mb-3">
-                        <Form.Label htmlFor="callForm" className="visually-hidden" />
-                        <Form.Control
-                            as="textarea"
-                            rows={9}
-                            id="callForm"
-                            disabled={isPhoneCallMade}
-                            value={script}
-                            onChange={(e) => setScript(e.target.value)}
-                        />
-                    </Form.Group>
-                </>
-            )}
+            <h3 className="h4">Tips</h3>
+            <ul>
+                {[
+                    "Call both the DC and district offices",
+                    "Repurpose your email for your call script",
+                    "Make edits in the working space below",
+                ].map((m) => (
+                    <li key={m}>{m}</li>
+                ))}
+            </ul>
+            <h4>Script</h4>
+            <Form.Group className="mb-3">
+                <Form.Label htmlFor="callForm" className="visually-hidden" />
+                <Form.Control
+                    as="textarea"
+                    rows={emailBody ? 9 : 5}
+                    id="callForm"
+                    disabled={isPhoneCallMade}
+                    value={script}
+                    onChange={(e) => setScript(e.target.value)}
+                />
+            </Form.Group>
             <Row className="legislator-max-width m-auto mb-2 d-flex flex-md-row flex-column justify-content-center text-center">
                 {actionInfo.legislators.map((legislator, i) => (
                     <Col className="d-flex justify-content-center" xs="12" md="4" key={i}>

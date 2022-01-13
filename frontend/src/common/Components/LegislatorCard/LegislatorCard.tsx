@@ -64,11 +64,13 @@ export default function LegislatorCard({ legislator, call }: Props) {
                             </div>
                         ))}
                         <Button
-                            className="text-dark mt-1 w-100"
+                            className={cx("text-dark mt-1 w-100", {
+                                "fw-bold": !call.isPhoneCallMade && !legislatorCalled,
+                            })}
                             onClick={() => call.logCall()}
                             disabled={call.isPhoneCallMade || legislatorCalled}
                         >
-                            I Called!
+                            I called!
                         </Button>
                     </div>
                 )}
