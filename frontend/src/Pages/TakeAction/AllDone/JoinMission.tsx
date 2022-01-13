@@ -51,9 +51,9 @@ export default function JoinMission({ formInfo, emailInfo, areas, areasError }: 
 
     return (
         <div className="pb-2">
-            <h2 className="text-uppercase text-center">Join Our Community!</h2>
+            <h2 className="text-center">Join our community!</h2>
             <p className="fs-5 mb-4 text-center">
-                Sign up to be a changemaker to make productive, political action a habit!
+                Sign up to be a changemaker to make productive, political action a habit.
             </p>
             {areas && (
                 <Form onSubmit={signUp}>
