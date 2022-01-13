@@ -57,7 +57,7 @@ export default function PostOnSocial({
             {preComposedTweet && (
                 <TwitterForm
                     preComposedTweet={preComposedTweet}
-                    description="Social media can be very effective at grabbing the attention of policymakers and amplifying your message to a wider audience. Use the sample Tweet below as a starting point and don’t forget to tag your members of Congress!"
+                    description="Social media can be very effective for grabbing the attention of policymakers and amplifying your message to a wider audience. Use the (editable) sample Tweet below as a starting point, revise it to make your message unique, and don’t forget to tag your members of Congress!"
                     skipTweetLabel="Skip This Tweet"
                     id="post-on-social-input"
                     hasOpenedTwitter={hasOpenedTwitter}
