@@ -1,6 +1,7 @@
 import cx from "classnames";
 import { Legislator } from "common/models/ActionInfo";
-import { Badge, Button, Card } from "react-bootstrap";
+import { useRef } from "react";
+import { Badge, Button, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import lcvlogo from "./lcv.png";
 import styles from "./LegislatorCard.module.css";
 
@@ -16,6 +17,7 @@ type Props = {
 export default function LegislatorCard({ legislator, call }: Props) {
     const surname = legislator.area.districtNumber ? "Rep." : "Sen.";
     const legislatorCalled = call?.bioguideIdsCalled.includes(legislator.bioguideId);
+    const legislatorContainerRef = useRef(null);
 
     return (
         <Card
@@ -42,14 +44,32 @@ export default function LegislatorCard({ legislator, call }: Props) {
                                 {legislator.area.districtNumber ? `-${legislator.area.districtNumber}` : ""}
                             </Badge>
                         </div>
-                        <div className="text-purple mb-2 fs-7 fw-bold">@{legislator.twitter}</div>
+                        <div className="text-purple mb-2 fs-7 fw-bold" ref={legislatorContainerRef}>
+                            @{legislator.twitter}
+                        </div>
                         {legislator.lcvScores.length > 0 && (
-                            <div
-                                className={`${styles.lcvScoreContainer} d-flex justify-content-center align-items-center flex-row`}
+                            <OverlayTrigger
+                                placement="bottom"
+                                overlay={
+                                    <Tooltip className="position-absolute" id={`lcv-${legislator.bioguideId}`}>
+                                        The League of Conservation Voters (LCV) calculates a score of 0-100 for
+                                        favorable environmental votes in Congress. Shown above is the{" "}
+                                        <b>
+                                            {legislator.lcvScores[0].scoreType.type === "lifetime"
+                                                ? "lifetime"
+                                                : legislator.lcvScores[0].scoreType.year}
+                                        </b>{" "}
+                                        score.
+                                    </Tooltip>
+                                }
                             >
-                                <img className="h-100 align-baseline me-1" alt="LCV score" src={lcvlogo} />
-                                <div className="text-dark fw-bold me-1">{legislator.lcvScores[0].score}</div>
-                            </div>
+                                <Button
+                                    className={`${styles.lcvScoreContainer} d-flex justify-content-center align-items-center flex-row bg-transparent border-0 w-100 d-block`}
+                                >
+                                    <img className="h-100 align-baseline me-1" alt="LCV score" src={lcvlogo} />
+                                    <div className="text-dark fw-bold me-1">{legislator.lcvScores[0].score}</div>
+                                </Button>
+                            </OverlayTrigger>
                         )}
                     </div>
                 ) : (
