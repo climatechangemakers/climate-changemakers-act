@@ -6,7 +6,7 @@ val kotlin_version: String by project
 val logback_version: String by project
 
 buildscript {
-    repositories { gradlePluginPortal() }
+    repositories { mavenCentral() }
     dependencies {
         classpath("gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0")
         classpath("com.squareup.sqldelight:gradle-plugin:1.5.2")
