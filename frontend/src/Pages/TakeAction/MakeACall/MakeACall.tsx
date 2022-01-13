@@ -43,7 +43,7 @@ export default function MakeACall({
                 <h2 className="text-pink fw-bold mb-3 ms-3">Make a Call</h2>
             </div>
             <p>
-                Plan your personalized script, then dial away! Click “I Called!” when you’re finished calling each
+                Plan your personalized script, then dial away! Click “I called!” when you’re finished calling each
                 member of Congress.
             </p>
             <h3 className="h4">Tips</h3>
