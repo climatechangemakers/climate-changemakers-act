@@ -52,10 +52,14 @@ export default function LegislatorCard({ legislator, call }: Props) {
                                 placement="bottom"
                                 overlay={
                                     <Tooltip className="position-absolute" id={`lcv-${legislator.bioguideId}`}>
-                                        The “LCV” number is from the League of Conservation Voters’ National
-                                        Environmental Scorecard, which evaluates whether lawmakers take favorable votes
-                                        on environmental issues. The closer to 100, the better. Shown above are your
-                                        reps’ <b>{legislator.lcvScores[0].scoreType.type}</b> scores.
+                                        The League of Conservation Voters (LCV) calculates a score of 0-100 for
+                                        favorable environmental votes in Congress. Shown above is the{" "}
+                                        <b>
+                                            {legislator.lcvScores[0].scoreType.type === "lifetime"
+                                                ? "lifetime"
+                                                : legislator.lcvScores[0].scoreType.year}
+                                        </b>{" "}
+                                        score.
                                     </Tooltip>
                                 }
                             >
