@@ -16,6 +16,10 @@ export default function PickYourIssuePage() {
     const history = useHistory();
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    useEffect(() => {
         setSelectedIssue(undefined);
     }, [setSelectedIssue]);
 
