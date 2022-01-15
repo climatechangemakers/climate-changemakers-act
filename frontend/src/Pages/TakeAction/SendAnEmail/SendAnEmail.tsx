@@ -238,7 +238,7 @@ export default function SendAnEmail({
                             disabled={emailState !== "titleing"}
                             onClick={() => setEmailState("done")}
                         >
-                            Skip to Call
+                            Skip to call
                         </Button>
                     </Col>
                     <Col>
@@ -250,7 +250,7 @@ export default function SendAnEmail({
                                 if (formRef.current!.reportValidity()) setEmailState("reviewing");
                             }}
                         >
-                            Draft from Scratch
+                            Draft from scratch
                         </Button>
                     </Col>
                     <Col>
@@ -261,7 +261,7 @@ export default function SendAnEmail({
                                 if (formRef.current!.reportValidity()) setEmailState("prompting");
                             }}
                         >
-                            Draft with Prompts
+                            Draft with prompts
                         </Button>
                     </Col>
                 </Row>
@@ -302,18 +302,18 @@ export default function SendAnEmail({
                                     disabled={isEmailDone}
                                     onClick={() => setIsEmailDone(true)}
                                 >
-                                    Skip to Call
+                                    Skip to call
                                 </Button>
                             </Col>
                             <Col>
                                 <Button type="submit" className="w-100 text-dark" disabled={isEmailDone}>
                                     {isEmailSent
-                                        ? "Email Sent!"
+                                        ? "Email sent!"
                                         : isSending
                                         ? "Sending..."
                                         : sendEmailError
                                         ? "Try again"
-                                        : "Send Email"}
+                                        : "Send email"}
                                 </Button>
                             </Col>
                         </Row>

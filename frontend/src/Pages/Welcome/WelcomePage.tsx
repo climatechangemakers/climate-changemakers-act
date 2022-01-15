@@ -171,7 +171,7 @@ export default function WelcomePage() {
                         />
                     </Form.Group>
                     <Button className="w-100 text-dark fs-5" variant="primary" type="submit">
-                        {errorMessage ? "Try again" : isLoading ? "Loading..." : "Start Advocating"}
+                        {errorMessage ? "Try again" : isLoading ? "Loading..." : "Start advocating"}
                     </Button>
                     <p className="mt-2 text-start fs-7">
                         *Street address is needed to identify your elected representatives; Climate Changemakers will
