@@ -49,7 +49,10 @@ export default function WelcomePage() {
         <div className={`${styles.welcomePageContainer} text-center m-auto`}>
             <img src={logo} className="App-logo" alt="logo" />
             <h1 id="find_your_reps">Climate Action in 3 Steps</h1>
-            <p>Advocate to your elected reprepresentatives on issues that matter to you.</p>
+            <p>
+                Advocate to your elected representatives on issues that matter to you. You’re the expert on your own
+                experiences and your own climate concern.
+            </p>
             <Row className="d-flex mb-3 mb-md-4">
                 <Col md="4" className="fs-5 mb-2 mb-md-0 d-flex align-items-center justify-content-md-center">
                     <Badge className="me-2 text-dark" pill>
@@ -90,7 +93,9 @@ export default function WelcomePage() {
                         className="mb-2 d-flex align-items-start align-items-md-center flex-column flex-md-row"
                         controlId="formGridAddress"
                     >
-                        <Form.Label className={`${styles.formLabel} text-start mb-md-0 mb-1`}>Street</Form.Label>
+                        <Form.Label className={`${styles.formLabel} text-start mb-md-0 mb-1`}>
+                            Street Address*
+                        </Form.Label>
                         <Form.Control
                             className={styles.formControl}
                             value={formInfo.streetAddress}
@@ -150,7 +155,7 @@ export default function WelcomePage() {
                                 setFormInfo({ ...formInfo, hasTrackingConsent: !formInfo.hasTrackingConsent })
                             }
                             type="checkbox"
-                            label="I consent to allow Climate Changemakers to store my email address and the policymakers I contact to track our collective impact. (required)"
+                            label="I consent to allow Climate Changemakers to store my email address and names of the policymakers I contact to track our collective impact. (required)"
                             required
                         />
                     </Form.Group>
@@ -169,8 +174,8 @@ export default function WelcomePage() {
                         {errorMessage ? "Try again" : isLoading ? "Loading..." : "Start Advocating"}
                     </Button>
                     <p className="mt-2 text-start fs-7">
-                        Complete street address needed to identify your elected representatives. Climate Changemakers
-                        will not save your address or use it for any other purpose.
+                        *Street address is needed to identify your elected representatives; Climate Changemakers will
+                        not save this address or use it for any other purpose.
                     </p>
                 </Form>
             </div>
