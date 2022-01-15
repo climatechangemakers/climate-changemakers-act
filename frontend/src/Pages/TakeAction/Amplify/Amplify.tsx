@@ -1,7 +1,7 @@
 import TwitterForm from "common/Components/TwitterForm";
 import { getPostTweetUrl } from "common/lib/twitter";
 import { useState } from "react";
-import socialIcon from "../social-icon.svg";
+import amplifyIcon from "./amplify-icon.svg";
 
 type Props = {
     isAmplified: boolean;
@@ -28,13 +28,13 @@ export default function Amplify({ isAmplified, setIsAmplified }: Props) {
     return (
         <div className="pt-2 pb-3">
             <div className="d-flex">
-                <img src={socialIcon} alt="" height="40" width="40" />
+                <img src={amplifyIcon} alt="" height="40" width="40" />
                 <h2 className="text-pink fw-bold mb-3 ms-3">Amplify Your Voice</h2>
             </div>
             <TwitterForm
                 preComposedTweet="Just used the personalized outreach tool developed by Climate Changemakers @theclimatevote to contact Congress. Check it out for yourself at https://act.climatechangemakers.org!"
                 description=" Encourage friends and family in your network to take action too. Share this tool to amplify your impact."
-                skipTweetLabel="Skip this tweet"
+                skipTweetLabel="Skip this Tweet"
                 id="amplify-input"
                 hasOpenedTwitter={hasOpenedTwitter}
                 isComplete={isAmplified}

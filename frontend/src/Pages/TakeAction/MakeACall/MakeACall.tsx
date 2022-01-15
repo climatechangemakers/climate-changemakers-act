@@ -39,7 +39,7 @@ export default function MakeACall({
     return (
         <div className="pt-2 pb-3">
             <div className="d-flex">
-                <img src={callIcon} alt="" height="40" width="40" />
+                <img src={callIcon} alt="" height="40" width="38" />
                 <h2 className="text-pink fw-bold mb-3 ms-3">Make a Call</h2>
             </div>
             <p>
@@ -101,7 +101,7 @@ export default function MakeACall({
                         disabled={!bioguideIdsCalled.length || isPhoneCallMade}
                         onClick={() => setIsPhoneCallMade(true)}
                     >
-                        Done Calling
+                        Done calling
                     </Button>
                 </div>
             </div>
