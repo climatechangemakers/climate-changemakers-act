@@ -7,11 +7,11 @@
 }
 
 .formLabel {
-    width: 25%;
+    width: 30%;
 }
 
 .formControl {
-    width: 75%;
+    width: 70%;
 }
 
 @media only screen and (max-width: 767px) {
