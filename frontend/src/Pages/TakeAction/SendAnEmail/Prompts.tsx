@@ -110,7 +110,7 @@ export default function Prompts({ formRef, firstName, emailState, setEmailState,
                         disabled={addedPrompts || isEmailDone}
                         onClick={() => setEmailState("reviewing")}
                     >
-                        Draft from Scratch
+                        Draft from scratch
                     </Button>
                 </Col>
                 <Col className="position-relative">
@@ -119,7 +119,7 @@ export default function Prompts({ formRef, firstName, emailState, setEmailState,
                         disabled={addedPrompts || isEmailDone}
                         onClick={addPromptsToEmail}
                     >
-                        Review Email
+                        Review email
                     </Button>
                     <HiddenValidationInput
                         when={emailState === "prompting" && Object.values(emailPrompts).every((p) => !p)}

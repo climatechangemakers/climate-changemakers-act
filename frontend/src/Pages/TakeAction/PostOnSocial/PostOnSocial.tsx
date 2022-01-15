@@ -5,7 +5,7 @@ import { getPostTweetUrl } from "common/lib/twitter";
 import { ActionInfo } from "common/models/ActionInfo";
 import { Issue } from "common/models/Issue";
 import { useState } from "react";
-import socialIcon from "../social-icon.svg";
+import twitterIcon from "./twitter-icon.svg";
 
 type Props = {
     isSocialPosted: boolean;
@@ -51,14 +51,14 @@ export default function PostOnSocial({
     return (
         <div className="pt-2 pb-3">
             <div className="d-flex">
-                <img src={socialIcon} alt="" height="40" width="40" />
+                <img src={twitterIcon} alt="" height="40" width="40" />
                 <h2 className="text-pink fw-bold mb-3 ms-3">Post on Social Media</h2>
             </div>
             {preComposedTweet && (
                 <TwitterForm
                     preComposedTweet={preComposedTweet}
                     description="Social media can be very effective for grabbing the attention of policymakers and amplifying your message to a wider audience. Use the (editable) sample Tweet below as a starting point, revise it to make your message unique, and don’t forget to tag your members of Congress!"
-                    skipTweetLabel="Skip This Tweet"
+                    skipTweetLabel="Skip this Tweet"
                     id="post-on-social-input"
                     hasOpenedTwitter={hasOpenedTwitter}
                     isComplete={isSocialPosted}

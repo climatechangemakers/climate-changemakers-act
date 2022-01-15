@@ -10,7 +10,7 @@ export default function AllDone() {
     useEffect(() => {
         const velocity = Math.max(50, window.innerWidth / 24);
         confetti({
-            particleCount: 200,
+            particleCount: 150,
             spread: 60,
             origin: { x: 0, y: 0.75 },
             angle: 60,
@@ -19,7 +19,7 @@ export default function AllDone() {
         });
 
         confetti({
-            particleCount: 200,
+            particleCount: 150,
             spread: 60,
             origin: { x: 1, y: 0.75 },
             angle: 120,
@@ -44,7 +44,7 @@ export default function AllDone() {
                             variant="primary"
                             onClick={() => history.push("/pick-your-issue")}
                         >
-                            Choose Another Issue
+                            Choose another issue
                         </Button>
                     </div>
                 </div>
