@@ -103,20 +103,21 @@ export default function SendAnEmail({
                 <h2 className="text-pink fw-bold mb-3 ms-3">Send an Email</h2>
             </div>
             <p>
-                Fill out the form below to open up an email to your elected representatives. You can use our prompts to
-                guide you through the process, or draft your own from scratch. Anything you write is completely private
-                and will not be stored.
+                Email your reps directly using our form (you can opt to use our prompts for guidance or draft from a
+                blank slate). You can always scroll up to pull talking points from the Issue Guide; feel free to
+                copy/paste/revise to make your message personalized and unique. Your email is private and will not be
+                stored.
             </p>
             {selectedIssue.talkingPoints.length > 0 && (
                 <div className="mb-3">
                     <h3 className="h-4">Issue Guide</h3>
-                    <Accordion defaultActiveKey="0">
+                    <Accordion>
                         {selectedIssue.talkingPoints.map((point, i) => (
                             <Accordion.Item key={i} eventKey={i.toString()}>
                                 <Accordion.Header>{point.title}</Accordion.Header>
                                 <Accordion.Body className="p-0 h-100 text-dark fs-6">
                                     <div
-                                        className="py-2 px-3 bg-purple-secondary"
+                                        className="pt-4 py-2 px-3 bg-purple-secondary"
                                         dangerouslySetInnerHTML={{ __html: point.content }}
                                     />
                                 </Accordion.Body>
@@ -137,6 +138,7 @@ export default function SendAnEmail({
                                 "Stick to one issue",
                                 "Be respectful and brief",
                                 "Make a direct ask",
+                                "Include personal details and anecdotes",
                             ].map((m) => (
                                 <li key={m}>{m}</li>
                             ))}

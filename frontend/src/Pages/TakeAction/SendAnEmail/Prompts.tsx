@@ -77,7 +77,7 @@ export default function Prompts({ formRef, firstName, emailState, setEmailState,
                             value={emailPrompts.whyYouCare}
                             onChange={(e) => setEmailPrompts({ ...emailPrompts, whyYouCare: e.currentTarget.value })}
                             disabled={addedPrompts || isEmailDone}
-                            placeholder="As a constituent I am concerned because..."
+                            placeholder="As your constituent I am concerned because..."
                         />
                     </Form.Group>
                 </Col>
