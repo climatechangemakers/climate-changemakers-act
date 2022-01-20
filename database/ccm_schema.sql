@@ -204,6 +204,22 @@ CREATE TABLE public.contacts (
 
 
 --
+-- Name: hoa_attendance_zoom_with_action; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.hoa_attendance_zoom_with_action (
+    date date NOT NULL,
+    email public.citext NOT NULL,
+    first_name character varying NOT NULL,
+    last_name character varying NOT NULL,
+    city character varying NOT NULL,
+    zip_code character varying NOT NULL,
+    state character varying NOT NULL,
+    action character varying NOT NULL
+);
+
+
+--
 -- Name: luma_attendance; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -238,7 +254,8 @@ CREATE VIEW analysis.hoa_attendance AS
             NULL::integer AS event_id,
             pre_luma_actions.full_name,
             lower((pre_luma_actions.email)::text) AS email,
-            COALESCE(c1.airtable_id, c2.airtable_id) AS airtable_id
+            COALESCE(c1.airtable_id, c2.airtable_id) AS airtable_id,
+            NULL::text AS action
            FROM ((pre_luma_actions
              LEFT JOIN public.contacts c1 ON ((lower((pre_luma_actions.email)::text) = lower((c1.email)::text))))
              LEFT JOIN public.contacts c2 ON ((lower((pre_luma_actions.full_name)::text) = ((lower((c2.first_name)::text) || ' '::text) || lower((c2.last_name)::text)))))
@@ -247,31 +264,53 @@ CREATE VIEW analysis.hoa_attendance AS
             hoa_events.id AS event_id,
             NULL::text AS full_name,
             lower((luma_attendance.email)::text) AS email,
-            contacts.airtable_id
+            contacts.airtable_id,
+            NULL::text AS action
            FROM ((public.luma_attendance
              JOIN public.hoa_events ON ((luma_attendance.event_id = hoa_events.id)))
              LEFT JOIN public.contacts ON ((lower((luma_attendance.email)::text) = lower((contacts.email)::text))))
-          WHERE luma_attendance.did_join_event
+          WHERE (luma_attendance.did_join_event AND (hoa_events.date < '2021-09-15'::date))
+        ), attendance_from_zoom_with_actions AS (
+         SELECT haz.date,
+            NULL::integer AS event_id,
+            (((haz.first_name)::text || ' '::text) || (haz.last_name)::text) AS full_name,
+            lower((haz.email)::text) AS email,
+            contacts.airtable_id,
+            haz.action
+           FROM (public.hoa_attendance_zoom_with_action haz
+             LEFT JOIN public.contacts ON ((lower((haz.email)::text) = lower((contacts.email)::text))))
+          WHERE (haz.date >= '2021-09-15'::date)
         ), attendance_by_date AS (
          SELECT attendance_from_actions.date,
             attendance_from_actions.event_id,
             attendance_from_actions.full_name,
             attendance_from_actions.email,
-            attendance_from_actions.airtable_id
+            attendance_from_actions.airtable_id,
+            attendance_from_actions.action
            FROM attendance_from_actions
         UNION
          SELECT attendance_from_luma.date,
             attendance_from_luma.event_id,
             attendance_from_luma.full_name,
             attendance_from_luma.email,
-            attendance_from_luma.airtable_id
+            attendance_from_luma.airtable_id,
+            attendance_from_luma.action
            FROM attendance_from_luma
+        UNION
+         SELECT attendance_from_zoom_with_actions.date,
+            attendance_from_zoom_with_actions.event_id,
+            attendance_from_zoom_with_actions.full_name,
+            attendance_from_zoom_with_actions.email,
+            attendance_from_zoom_with_actions.airtable_id,
+            attendance_from_zoom_with_actions.action
+           FROM attendance_from_zoom_with_actions
         )
  SELECT DISTINCT attendance_by_date.date,
     attendance_by_date.event_id,
     attendance_by_date.full_name,
     lower(attendance_by_date.email) AS email,
-    attendance_by_date.airtable_id
+    attendance_by_date.airtable_id,
+    attendance_by_date.action
    FROM attendance_by_date;
 
 
@@ -435,7 +474,8 @@ CREATE VIEW dbt_mchang.hoa_attendance AS
             NULL::integer AS event_id,
             pre_luma_actions.full_name,
             lower((pre_luma_actions.email)::text) AS email,
-            COALESCE(c1.airtable_id, c2.airtable_id) AS airtable_id
+            COALESCE(c1.airtable_id, c2.airtable_id) AS airtable_id,
+            NULL::text AS action
            FROM ((pre_luma_actions
              LEFT JOIN public.contacts c1 ON ((lower((pre_luma_actions.email)::text) = lower((c1.email)::text))))
              LEFT JOIN public.contacts c2 ON ((lower((pre_luma_actions.full_name)::text) = ((lower((c2.first_name)::text) || ' '::text) || lower((c2.last_name)::text)))))
@@ -444,31 +484,53 @@ CREATE VIEW dbt_mchang.hoa_attendance AS
             hoa_events.id AS event_id,
             NULL::text AS full_name,
             lower((luma_attendance.email)::text) AS email,
-            contacts.airtable_id
+            contacts.airtable_id,
+            NULL::text AS action
            FROM ((public.luma_attendance
              JOIN public.hoa_events ON ((luma_attendance.event_id = hoa_events.id)))
              LEFT JOIN public.contacts ON ((lower((luma_attendance.email)::text) = lower((contacts.email)::text))))
-          WHERE luma_attendance.did_join_event
+          WHERE (luma_attendance.did_join_event AND (hoa_events.date < '2021-09-15'::date))
+        ), attendance_from_zoom_with_actions AS (
+         SELECT haz.date,
+            NULL::integer AS event_id,
+            (((haz.first_name)::text || ' '::text) || (haz.last_name)::text) AS full_name,
+            lower((haz.email)::text) AS email,
+            contacts.airtable_id,
+            haz.action
+           FROM (public.hoa_attendance_zoom_with_action haz
+             LEFT JOIN public.contacts ON ((lower((haz.email)::text) = lower((contacts.email)::text))))
+          WHERE (haz.date >= '2021-09-15'::date)
         ), attendance_by_date AS (
          SELECT attendance_from_actions.date,
             attendance_from_actions.event_id,
             attendance_from_actions.full_name,
             attendance_from_actions.email,
-            attendance_from_actions.airtable_id
+            attendance_from_actions.airtable_id,
+            attendance_from_actions.action
            FROM attendance_from_actions
         UNION
          SELECT attendance_from_luma.date,
             attendance_from_luma.event_id,
             attendance_from_luma.full_name,
             attendance_from_luma.email,
-            attendance_from_luma.airtable_id
+            attendance_from_luma.airtable_id,
+            attendance_from_luma.action
            FROM attendance_from_luma
+        UNION
+         SELECT attendance_from_zoom_with_actions.date,
+            attendance_from_zoom_with_actions.event_id,
+            attendance_from_zoom_with_actions.full_name,
+            attendance_from_zoom_with_actions.email,
+            attendance_from_zoom_with_actions.airtable_id,
+            attendance_from_zoom_with_actions.action
+           FROM attendance_from_zoom_with_actions
         )
  SELECT DISTINCT attendance_by_date.date,
     attendance_by_date.event_id,
     attendance_by_date.full_name,
     lower(attendance_by_date.email) AS email,
-    attendance_by_date.airtable_id
+    attendance_by_date.airtable_id,
+    attendance_by_date.action
    FROM attendance_by_date;
 
 
@@ -594,8 +656,7 @@ CREATE VIEW dbt_mchang.yellow_brick_road AS
 --
 
 CREATE TABLE public.action_call_legislator (
-    action_contact_legislator_id bigint NOT NULL,
-    phone_number_called character varying NOT NULL
+    action_contact_legislator_id bigint NOT NULL
 );
 
 
@@ -652,6 +713,16 @@ CREATE TABLE public.action_initiate (
 CREATE TABLE public.action_sign_up (
     email public.citext NOT NULL,
     signed_up_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+--
+-- Name: action_tool_database_version; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.action_tool_database_version (
+    version integer NOT NULL,
+    updated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -815,6 +886,24 @@ CREATE TABLE public.member_of_congress (
 
 
 --
+-- Name: schema_history; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.schema_history (
+    installed_rank integer NOT NULL,
+    version character varying(50),
+    description character varying(200) NOT NULL,
+    type character varying(20) NOT NULL,
+    script character varying(1000) NOT NULL,
+    checksum integer,
+    installed_by character varying(100) NOT NULL,
+    installed_on timestamp without time zone DEFAULT now() NOT NULL,
+    execution_time integer NOT NULL,
+    success boolean NOT NULL
+);
+
+
+--
 -- Name: segments; Type: VIEW; Schema: public; Owner: -
 --
 
@@ -861,7 +950,8 @@ CREATE TABLE public.talking_point (
     id bigint NOT NULL,
     title character varying NOT NULL,
     issue_id bigint NOT NULL,
-    content character varying NOT NULL
+    content character varying NOT NULL,
+    relative_order_position integer NOT NULL
 );
 
 
@@ -2089,6 +2179,9 @@ COPY public.example_issue_why_statement (issue_id, statement) FROM stdin;
 
 COPY public.focus_issue (issue_id, focused_at) FROM stdin;
 5	2021-11-17 02:48:32.678903
+6	2021-12-08 04:18:24.338615
+7	2022-01-05 13:16:45.77685
+8	2022-01-19 01:54:20.83749
 \.
 
 
@@ -2098,6 +2191,9 @@ COPY public.focus_issue (issue_id, focused_at) FROM stdin;
 
 COPY public.issue (id, title, precomposed_tweet_template, image_url, description) FROM stdin;
 5	Build Back Better Act Climate Provisions	The BBB will deliver huge emissions reductions and consumer savings by 2030. %s do everything in your power to retain the bill’s climate provisions.\n\nClimate impact data: https://twitter.com/JesseJenkins/status/1459245283666137088?s=20\nConsumer savings: https://rmi.org/rmi-reality-check-proposed-clean-energy-incentives-would-save-electricity-customers-billions/	https://images.fastcompany.net/image/upload/w_1280,f_auto,q_auto,fl_lossy/wp-cms/uploads/2021/11/p-1-90692231-the-build-back-better-ev-tax-credit-still-favors-car-purchases-over-bikes.jpg	The Build Back Better Act is the cornerstone of the Biden administration’s plan to meet U.S. commitments under the Paris agreement.
+6	End Fossil Fuel Subsidies	It’s time for the U.S. government to #StopFundingFossils. Taxpayers should not be forced to prop up polluters and prolong the displacement of fossil fuels by renewable energy. %s, end govt support for coal, oil & gas.	https://images.squarespace-cdn.com/content/v1/5f4d66c32e63212b309348ad/1632954706742-4Q1Y88SNBEDEWR3V45FI/zbynek-burival-GrmwVnVSSdU-unsplash.jpg	The U.S. government uses public money to prop up the fossil fuel industry, and it needs to stop.
+7	Democracy Reform	When Americans face barriers to voting or their votes are diluted by gerrymandering, that isn't democracy. Voting reform is climate action & the Senate must pass the Freedom to Vote Act without delay. We can't afford to silence the pro-climate majority. %s	https://images.squarespace-cdn.com/content/v1/5f4d66c32e63212b309348ad/f703d0be-22fa-48e3-9b55-b069abfce197/element5-digital-ls8Kc0P9hAA-unsplash.jpg	There’s no climate justice without strengthening our democracy.
+8	Clean Electricity Tax Incentives	The clean power incentives in #BuildBackBetter could lower electricity emissions by 73%. They're also a huge job creator and could net 600k new jobs per year. It's time for the Senate to step up and get this bill across the finish line. %s	https://images.squarespace-cdn.com/content/v1/5f4d66c32e63212b309348ad/78bd591d-35ea-463f-bd67-1905742c95a9/rawfilm-4y2TkE8NYXY-unsplash.jpg?format=500w	The clean electricity tax incentives in the Build Back Better Act would put the U.S. on track to reach net-zero power by 2035.
 \.
 
 
@@ -3594,14 +3690,46 @@ E000071	Jake Ellzey	rep	TX	6	Republican	202-225-2002	RepEllzey	HTX06
 
 
 --
+-- Data for Name: schema_history; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.schema_history (installed_rank, version, description, type, script, checksum, installed_by, installed_on, execution_time, success) FROM stdin;
+1	2	<< Flyway Baseline >>	BASELINE	<< Flyway Baseline >>	\N	null	2021-12-22 17:23:28.340378	0	t
+\.
+
+
+--
 -- Data for Name: talking_point; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.talking_point (id, title, issue_id, content) FROM stdin;
-3	Introduction	5	<p>The <a href="https://www.congress.gov/bill/117th-congress/house-bill/5376">Build Back Better Act</a>  (BBB) is the cornerstone of the Biden administration’s plan to meet U.S. commitments under the Paris agreement. Coupled with robust executive action, the BBB would put the U.S. on track to achieve 50% emissions reduction by 2030 (below 2005 levels). The legislation couples emissions reductions with significant investments in environmental justice communities and would create thousands of new jobs over the next eight years.</p>
-4	Timeline	5	<p>The House of Representatives is expected to vote on the legislation this week. A group of House Democratic moderates have refused to commit to voting “yes” until they see the estimated budget impact from the Congressional Budget Office. After the BBB passes the House, it will then be considered by the Senate, which can propose amendments and modifications in its own version (which the House will then have to agree to). Senator Joe Manchin has also insisted that he must see the projected budget impact before committing his support.</p>
-5	Clear Policy Ask	5	<h2>The Build Back Better Act must pass with its existing climate provisions at minimum, which total <b>$555 billion.</b></h2>
-6	Major climate funding in Build Back Better	5	<ul><li><p><strong>Clean energy tax credits, </strong>which will deliver the bulk of emissions reductions in the bill. Tax incentives include electric vehicles, clean electricity, clean buildings, and decarbonized industry. ($304 billion)</p></li><li><p><strong>Clean electricity modernization and transmission </strong>($45 billion) </p></li><li><p><strong>A Green Bank</strong>, called the Greenhouse Gas Reduction Fund. It provides low-cost financing for clean energy projects and commits at least 40% of investments to environmental justice communities. ($29 billion)</p></li><li><p><strong>Clean transportation</strong>, including EV charging infrastructure, public transit, passenger rail, and e-bikes. ($25 billion)</p></li><li><p><strong>Agriculture decarbonization. </strong>($21 billion)</p></li><li><p><strong>A Civilian Climate Corps</strong>, which will provide 300,000 Americans with dignified work in facilitating the energy transition. ($19 billion)</p></li><li><p><strong>Direct environmental justice remediation,</strong> which will reduce and monitor air pollution and lead, invest directly in communities, and identify environmental inequities. ($15 billion)</p></li><li><p><strong>Clean buildings</strong>, including rebates for efficiency upgrades, retrofits, and clean appliances. ($14 billion)</p></li></ul>
+COPY public.talking_point (id, title, issue_id, content, relative_order_position) FROM stdin;
+3	Introduction	5	<p>The <a href="https://www.congress.gov/bill/117th-congress/house-bill/5376">Build Back Better Act</a>  (BBB) is the cornerstone of the Biden administration’s plan to meet U.S. commitments under the Paris agreement. Coupled with robust executive action, the BBB would put the U.S. on track to achieve 50% emissions reduction by 2030 (below 2005 levels). The legislation couples emissions reductions with significant investments in environmental justice communities and would create thousands of new jobs over the next eight years.</p>	1
+4	Timeline	5	<p>The House of Representatives is expected to vote on the legislation this week. A group of House Democratic moderates have refused to commit to voting “yes” until they see the estimated budget impact from the Congressional Budget Office. After the BBB passes the House, it will then be considered by the Senate, which can propose amendments and modifications in its own version (which the House will then have to agree to). Senator Joe Manchin has also insisted that he must see the projected budget impact before committing his support.</p>	2
+5	Clear Policy Ask	5	<h2>The Build Back Better Act must pass with its existing climate provisions at minimum, which total <b>$555 billion.</b></h2>	3
+12	Fossil fuel subsidies are economically inefficient policies	6	<p>They price carbon at far below its social cost to society, and on a global scale, they are economically regressive policies that benefit the wealthiest 20%. Externalities from supporting the fossil fuel industry cost the U.S. $649 billion every year.</p>	5
+25	The clean electricity tax incentives in BBB will significantly reduce emissions	8	<p>The bill’s tax credits alone would reduce power-sector emissions by <a href="https://rhg.com/research/build-back-better-clean-energy-tax-credits/">64–73%</a> below the 2005 baseline. When combined with the Infrastructure Investment and Jobs Act signed into law in 2021, the Build Back Better Act would put the U.S. <a href="https://www.dropbox.com/s/gckss8qyzflelhn/REPEAT_Prelim_Report_Addendum_111221.pdf?dl=0">within striking distance</a> of its target under the Paris Agreement (50% economy-wide emissions reduction by 2030). The gap can be filled with a combination of executive actions, state legislation, and corporate accountability.</p>	3
+6	Major climate funding in Build Back Better	5	<ul><li><p><strong>Clean energy tax credits, </strong>which will deliver the bulk of emissions reductions in the bill. Tax incentives include electric vehicles, clean electricity, clean buildings, and decarbonized industry. ($304 billion)</p></li><li><p><strong>Clean electricity modernization and transmission </strong>($45 billion) </p></li><li><p><strong>A Green Bank</strong>, called the Greenhouse Gas Reduction Fund. It provides low-cost financing for clean energy projects and commits at least 40% of investments to environmental justice communities. ($29 billion)</p></li><li><p><strong>Clean transportation</strong>, including EV charging infrastructure, public transit, passenger rail, and e-bikes. ($25 billion)</p></li><li><p><strong>Agriculture decarbonization. </strong>($21 billion)</p></li><li><p><strong>A Civilian Climate Corps</strong>, which will provide 300,000 Americans with dignified work in facilitating the energy transition. ($19 billion)</p></li><li><p><strong>Direct environmental justice remediation,</strong> which will reduce and monitor air pollution and lead, invest directly in communities, and identify environmental inequities. ($15 billion)</p></li><li><p><strong>Clean buildings</strong>, including rebates for efficiency upgrades, retrofits, and clean appliances. ($14 billion)</p></li></ul>	4
+11	Fossil fuel companies spend public money on private lobbying	6	<p>Fossil energy companies earn a greater than 13,000% return on investment while slashing thousands of jobs. In 2020, the oil, gas, and coal industries spent more than $115 million lobbying Congress in defense of their <a href="https://www.sanders.senate.gov/wp-content/uploads/EPWA-Summary-One-Pager-vfinal.pdf" target="">$15 billion</a> in giveaways. Eliminating subsidies to the industry is a step toward fighting corruption and preventing the abuse of taxpayers’ hard-earned money.</p>	4
+13	Ending fossil fuel subsidies is politically popular	6	<p>According to polling from <a href="https://www.dataforprogress.org/blog/8/6/voters-support-ending-fossil-fuel-subsidies" target="">Data for Progress</a>, 47% of voters are in favor of rolling back all tax incentives for fossil fuel companies, compared to only 30% opposed.</p><img data-src="https://images.squarespace-cdn.com/content/v1/5f4d66c32e63212b309348ad/1632954160476-UPORIMF33IAOYEYXW2Z1/Screen+Shot+2021-09-29+at+6.22.26+PM.png" data-image="https://images.squarespace-cdn.com/content/v1/5f4d66c32e63212b309348ad/1632954160476-UPORIMF33IAOYEYXW2Z1/Screen+Shot+2021-09-29+at+6.22.26+PM.png" data-image-dimensions="1274x782" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="6154e730dc901a7e7235edd2" data-type="image" data-image-resolution="500w" src="https://images.squarespace-cdn.com/content/v1/5f4d66c32e63212b309348ad/1632954160476-UPORIMF33IAOYEYXW2Z1/Screen+Shot+2021-09-29+at+6.22.26+PM.png?format=500w">	6
+26	Americans strongly support clean electricity incentives in Build Back Better	8	<p>A <a href="https://www.filesforprogress.org/datasets/2022/1/dfp_direct_pay_toplines.pdf">Data for Progress poll</a> from December 2021 shows 67% support for the tax credits, compared with 15% opposed. Similarly, Data for Progress polling shows 63% support for clean electricity performance standards and 67% support for increased research and development of clean energy technologies. And comprehensively, the Build Back Better Act remains popular with the American public, enjoying <a href="https://www.filesforprogress.org/datasets/2022/1/dfp-iia-jan13-toplines.pdf">65% support </a>as of January 2022.</p>	7
+27	Clean electricity incentives are an enormous job creator	8	<p>The BBB clean electricity tax credits alone can generate 600,000 jobs per year on net (as in, this accounts for job loss in the fossil fuel industry).</p>	4
+28	Clean electricity incentives will reduce pollution other than carbon dioxide	8	<p>Over the first five years, the tax credits are <a href="https://rhg.com/research/build-back-better-clean-electricity/">projected</a> to reduce nitrous oxides by up to 62% and sulfur dioxides by up to 84%. Despite the innocuous name “laughing gas,” nitrous oxide is a potent greenhouse gas. Sulfur dioxide <a href="https://ww2.arb.ca.gov/resources/sulfur-dioxide-and-health">exacerbates asthma</a> and suppresses forest growth, further reducing Earth’s capacity to absorb carbon dioxide.</p>	6
+29	Introduction	8	<p>Clean power is the bedrock of a zero-emissions economy. If we successfully electrify everything, we’ll see a major uptick in electricity use, making it all the more imperative that we eliminate electricity-sector emissions. </p><p>Until the United States substantially phases out fossil fuels from its energy mix, clean energy technologies will require significant investment from the federal government. The Build Back Better (BBB) Act allocates <em>roughly</em> <a href="https://www.jct.gov/CMSPages/GetFile.aspx?guid=3fbf5966-deea-41eb-a159-eda2c599e56b">$162 billion</a> in a few different types of clean electricity tax credits, most of them technology-neutral, to be spent over 5–10 years. The potential benefits of these tax credits are massive and would put the U.S. on track to meet its emissions targets under the Paris Agreement, which require cutting greenhouse gas emissions in half by 2030. By 2031, the BBB clean electricity tax credits could reduce power-sector emissions by <a href="https://rhg.com/research/build-back-better-clean-energy-tax-credits/">up to 73%</a>, even after the bill’s heaviest-hitting emissions reduction policy, the Clean Electricity Performance Program, was cut. </p><p>The good news is that this bill has already passed the House of Representatives. But as the 2022 midterm election cycle picks up, the window to pass this legislation through the Senate appears to be narrowing. If it closes, the potential for progress on climate policy this year will vastly diminish. </p>	1
+7	Introduction	6	<p>Direct U.S. taxpayer support to fossil fuel companies totals <a href="https://www.eesi.org/papers/view/fact-sheet-fossil-fuel-subsidies-a-closer-look-at-tax-breaks-and-societal-costs" target="">$20.5 billion</a> per year, while indirect subsidies may reach <a href="https://www.eesi.org/papers/view/fact-sheet-proposals-to-reduce-fossil-fuel-subsidies-2021" target=""><strong>$649 <em>billion</em> </strong></a>annually. “Direct” subsidies include direct cash payments, while “indirect” subsidies refer to tax incentives plus externalities that result from benefits to the fossil fuel industry.</p><p>Broadly, U.S. fossil fuel subsidies generally take the form of 1) tax incentives, 2) passively allowing fossil fuel companies to exploit tax loopholes and use creative accounting methods, 3) federally funded investment in fossil energy development projects, and 4) pricing fossil fuels below their social cost in the absence of emissions pricing. The first three can be repealed by an act of Congress, while the fourth can be tackled by introducing a carbon pricing scheme in tandem with repealing subsidies.</p><p>Earlier this year, President Biden included the repeal of fossil fuel subsidies in his budget proposal to Congress, which was projected to save the U.S. government <a href="https://www.evergreenaction.com/blog/democrats-must-end-taxpayer-handouts-to-big-oil-in-the-reconciliation-bill" target="">$121 billion</a> over 10 years. And in November, the House passed the Build Back Better Act, which begins to chip away at fossil fuel subsidies by closing tax loopholes that allowed oil and gas companies to benefit from income earned overseas. The bill also reinstates an EPA <a href="https://www.epa.gov/superfund/what-superfund">Superfund</a> clean-up tax levied on heavy polluters, which effectively eliminates a “subsidy” under which these companies had not been required to pay for their pollution.</p>	1
+10	Pricing fossil fuels efficiently would cause a dramatic decline in global emissions	6	<p>The International Monetary Fund found that efficient oil, gas, and coal pricing by 2025 would lead to a <a href="https://www.imf.org/en/Publications/WP/Issues/2021/09/23/Still-Not-Getting-Energy-Prices-Right-A-Global-and-Country-Update-of-Fossil-Fuel-Subsidies-466004" target="">36% decline</a> in global emissions. This puts us well on track to keep warming below 2 degrees Celsius. Current global fossil fuel subsidies reached <a href="https://www.theguardian.com/environment/2021/oct/06/fossil-fuel-industry-subsidies-of-11m-dollars-a-minute-imf-finds" target="">$5.9 trillion</a> in 2020, or $11 million every minute.</p>	3
+14	Removing subsidies at home will strengthen U.S. credibility abroad	6	Fossil fuel subsidies are pervasive in all of the world’s top oil and gas economies, not just the United States. Previous initiatives by the G-20 have been unsuccessful in achieving global fossil fuel subsidy reform, but the U.S. has an opportunity to lead by example and reinvigorate G-20 efforts.	7
+15	Fossil fuel companies currently benefit from handouts unique to their industry, even as they deliver diminishing returns	6	To name a few unique perks: they cash in using the intangible drilling deduction, deductions and credit for royalty payments paid to foreign governments (!), incentives for enhanced oil recovery (a method of drilling using injected CO2), and financial support for the exploration and production of new oil and gas wells. This money would be better spent diversified across industries that will grow and flourish in the 21st century.	8
+8	Clear Policy Ask	6	<h4>Congress must end all taxpayer-funded support for the fossil fuel industry. Both chambers must pass the End Polluter Welfare Act (S.1167/HR.2102). The Senate must also retain existing fossil fuel subsidy repeal in the Build Back Better Act.</h4><p><br>The End Polluter Welfare Act would eliminate publicly funded fossil fuel subsidies and save American taxpayers up to $150 billion over the next 10 years by:</p><ul><li><p>Abolishing dozens of tax loopholes and subsidies throughout the federal tax code that benefit oil, gas, and coal special interests.</p></li><li><p>Updating below-market royalty rates for oil and gas production on federal lands, recouping royalties from offshore drilling in public waters, and ensuring competitive bidding and leasing practices for coal development on federal lands.</p></li><li><p>Prohibiting taxpayer-funded fossil fuel research and development.</p></li><li><p>Ending federal support for international oil, gas, and coal projects and supporting the global community’s fight to move away from dirty fossil fuels.</p></li></ul><p>Other proposed bills to eliminate taxpayer subsidies to fossil fuels include the Clean Energy for America Act (S.2118) and the End Oil &amp; Gas Tax Subsidies Act (H.R.2184).</p><p><strong><em>Check whether your members of Congress already cosponsor fossil fuel subsidy legislation: </em></strong></p><ul><li><p>End Polluter Welfare Act (<a href="https://www.congress.gov/bill/117th-congress/house-bill/2102/cosponsors?q=%7B%22search%22%3A%5B%22End%20polluter%20welfare%20act%22%2C%22End%22%2C%22polluter%22%2C%22welfare%22%2C%22act%22%5D%7D&amp;r=1&amp;s=1" target="">House</a>) (<a href="https://www.congress.gov/bill/117th-congress/senate-bill/1167/cosponsors?q=%7B%22search%22%3A%5B%22End%20polluter%20welfare%20act%22%2C%22End%22%2C%22polluter%22%2C%22welfare%22%2C%22act%22%5D%7D&amp;r=2&amp;s=1" target="">Senate</a>)</p></li><li><p>Clean Energy for America Act (<a href="https://www.congress.gov/bill/117th-congress/senate-bill/1298/cosponsors?q=%7B%22search%22%3A%5B%22clean%20energy%20for%20america%20act%22%2C%22clean%22%2C%22energy%22%2C%22for%22%2C%22america%22%2C%22act%22%5D%7D&amp;r=1&amp;s=3" target="">Senate</a>)</p></li><li><p>End Oil &amp; Gas Tax Subsidies Act (<a href="https://www.congress.gov/bill/117th-congress/house-bill/2184/cosponsors?q=%7B%22search%22%3A%5B%22end%20oil%20%26%20gas%20tax%20subsidies%20act%22%2C%22end%22%2C%22oil%22%2C%22gas%22%2C%22tax%22%2C%22subsidies%22%2C%22act%22%5D%7D&amp;r=1&amp;s=2" target="">House</a>)</p></li></ul>	2
+9	Eliminating fossil fuel subsidies would save billions in revenue for the federal government	6	<p>For climate advocates and budget hawks, eliminating these subsidies is a win-win. The Biden administration projected savings of $121 billion over a decade, which could be used to fund critical public health, education, infrastructure, and social initiatives instead of raising taxes. If included in the Build Back Better Act, it could help offset the cost of other provisions in the bill.</p>	9
+16	States are enacting voting restrictions at record pace	7	<p>At least 30 laws have been passed in 2021 alone that limit voting access and eligibility. Texas is about to adopt the most restrictive voting measures in the country with the passage of <a href="https://apnews.com/article/health-texas-voting-coronavirus-pandemic-election-2020-770f916d1d3743fbdc791ae7da502d58?utm_campaign=SocialFlow&amp;utm_medium=AP&amp;utm_source=Twitter">SB.1</a>. States are also entering a period of congressional redistricting after the 2020 Census, and only <a href="https://ballotpedia.org/Redistricting_commissions">six</a> states have independent, nonpolitical redistricting commissions.</p>	3
+17	Introduction	7	<p>In 2021, <a href="https://www.brennancenter.org/our-work/research-reports/voting-laws-roundup-july-2021">18 states</a> passed a combined 30 laws that make it more difficult to vote. A landmark piece of legislation, the Voting Rights Act of 1965, used to help neutralize restrictive state voting laws by requiring states with a history of discrimination to obtain preclearance from the federal government before implementing a new law. But in 2013 and again in 2021, the Supreme Court struck down two critical sections of the VRA, effectively killing the preclearance system and limiting the federal government’s ability to challenge state voting laws in court.</p><p>The continued disenfranchisement of marginalized Americans has major consequences for climate action. The fossil fuel industry has a stronghold on the political system and is well-resourced and well-organized enough to exert lobbying influence and fill the coffers of Super PACs that fund campaigns. This means that many elected officials are biased in favor of fossil energy companies before they are even sworn into office, and the climate movement is playing offense.</p><p>Fortunately, climate advocates have public opinion on our side. Polling shows that <a href="https://climatecommunication.yale.edu/visualizations-data/ycom-us/">a strong majority </a>of Americans believe in, and are concerned about, a warming planet. Non-white Americans <a href="https://climatecommunication.yale.edu/publications/race-ethnicity-and-public-responses-to-climate-change/">report</a> higher rates of concern about the climate crisis, but they’re also the population targeted by new voting restrictions across the country. Expanding voting rights for all citizens will lead to greater climate accountability and electing more climate champions into office at every level of government.</p>	1
+18	Climate change will disproportionately impact communities of color, whose votes are often the ones being suppressed	7	<p>These are the same communities often targeted by restrictive voting measures. If communities of color aren’t able to advocate for themselves at the ballot box, they will be neglected in future policy decisions. A history of institutionalized discrimination confirms this. Further, eliminating partisan gerrymandering will help prevent marginalized communities from being clustered in districts that do not represent the natural geographic distribution. </p>	5
+19	Democracy reform is critical for passing bold climate policy	7	<p>Surveys show that the majority of Americans believe that transitioning to a clean energy economy should be a priority, but the will of the majority is often ignored due to a combination of corporate influence in politics and deliberate attempts to suppress access to the ballot box. To meaningfully address climate change is to break free of minority rule. </p>	4
+20	Clear Policy Ask	7	<h3>The Senate must pass the Freedom to Vote Act (<a href="https://www.congress.gov/bill/117th-congress/senate-bill/2747">S. 2747</a>) to prevent the spread of anti-democratic voting restrictions.</h3><p>To pass this bill, the Senate must either amend filibuster rules to exempt voting rights legislation from the required 60-vote threshold, or else 9 Republicans must join the Democrats in support of the bill. Senate Majority Leader Chuck Schumer is pushing to amend Senate filibuster rules, which Democrats can accomplish with a simple majority.</p><p>The Freedom to Vote Act is a pared-down version of the For the People Act, which passed the House in March of 2021. It would neutralize restrictive voting laws at the state level and curb the influence of dark money by:</p><ul data-rte-list="default"><li><p>Banning partisan gerrymandering</p></li><li><p>Enabling all voters to request mail-in ballots, with a minimum number of drop boxes provided</p></li><li><p>Requiring 15 days of early voting</p></li><li><p>Providing automatic voter registration with a driver’s license, plus Election Day registration</p></li><li><p>Imposing mandatory voter ID that is more flexible than many states’ voter ID laws</p></li><li><p>Making Election Day a holiday</p></li><li><p>Setting higher standards for purging old voter rolls</p></li><li><p>Blocks Georgia’s law against allowing food and beverage in polling lines</p></li><li><p>Increasing election security, including a requirement that candidates report attempts by foreign governments to influence their campaigns</p></li><li><p>Requiring donors of $10,000+ to report contributions to PACs<br></p></li></ul><p><strong><em>Note: All 50 Democratic senators cosponsor the Freedom to Vote Act, while none of the 50 Republican senators has cosponsored.</em></strong></p>	2
+21	The political influence of the fossil fuel industry runs deep, keeping politicians beholden to special interests	7	<p>The fossil fuel industry supports candidates who will keep them in business, and greater enfranchisement will serve to hold politicians more accountable to their electorates. Requiring large contributions to PACs, rather than just candidates, will help counter the influence of fossil fuel dark money in our elections.</p>	7
+22	An overwhelming majority of Americans (69%) support democracy reform	7	<p><a href="https://www.filesforprogress.org/datasets/2021/4/dfp-vox-hr-1.pdf">Polling</a> on a more sweeping democracy reform bill that failed in the Senate, the For the People Act, showed overwhelming support among the public. The issue of voting rights isn't a matter of left vs. right—it's about common-sense reforms to make sure the voices of the American people are heard.</p>	6
+23	The BBB tax incentives invest in environmental justice communities	8	<p>The clean electricity incentives include specific tax credits for generating clean power in low-income communities. These communities, which are often majority-BIPOC, suffer disproportionately from fossil fuel power generation and from the adverse effects of climate change.</p>	5
+24	Clear Policy Ask	8	<h3>The Senate must pass legislation with over $160 billion in clean electricity tax incentives to put the U.S. on track to cut emissions in half by 2030.</h3><p>Clean electricity tax incentives of this magnitude have already passed the House via the <a href="https://www.congress.gov/bill/117th-congress/house-bill/5376">Build Back Better Act</a>, which includes over $500 billion in total climate spending. The Senate can pass the Build Back Better Act with a simple majority. </p><p>The clean electricity incentives included in the Build Back Better Act are: </p><ul data-rte-list="default"><li><p>New production and investment tax credits for renewable power (technology-neutral), plus extensions of existing credits</p></li><li><p>Tax credit for clean electricity production in low-income communities</p></li><li><p>Electric transmission investment credit</p></li><li><p>Cost recovery for grid improvement</p></li><li><p>Nuclear power production credit</p></li><li><p>Carbon sequestration tax credit</p></li></ul>	2
 \.
 
 
@@ -3609,14 +3737,14 @@ COPY public.talking_point (id, title, issue_id, content) FROM stdin;
 -- Name: issue_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.issue_id_seq', 5, true);
+SELECT pg_catalog.setval('public.issue_id_seq', 8, true);
 
 
 --
 -- Name: talking_point_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.talking_point_id_seq', 6, true);
+SELECT pg_catalog.setval('public.talking_point_id_seq', 29, true);
 
 
 --
@@ -3625,6 +3753,14 @@ SELECT pg_catalog.setval('public.talking_point_id_seq', 6, true);
 
 ALTER TABLE ONLY public.action_contact_legislator
     ADD CONSTRAINT action_contact_legislator_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hoa_attendance_zoom_with_action hoa_attendance_zoom_with_action_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.hoa_attendance_zoom_with_action
+    ADD CONSTRAINT hoa_attendance_zoom_with_action_pkey PRIMARY KEY (date, email);
 
 
 --
@@ -3676,6 +3812,22 @@ ALTER TABLE ONLY public.member_of_congress
 
 
 --
+-- Name: talking_point relative_ordering_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.talking_point
+    ADD CONSTRAINT relative_ordering_unique UNIQUE (issue_id, relative_order_position);
+
+
+--
+-- Name: schema_history schema_history_pk; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.schema_history
+    ADD CONSTRAINT schema_history_pk PRIMARY KEY (installed_rank);
+
+
+--
 -- Name: talking_point talking_point_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3689,6 +3841,34 @@ ALTER TABLE ONLY public.talking_point
 
 ALTER TABLE ONLY public.contacts
     ADD CONSTRAINT unique_airtable_id UNIQUE (airtable_id);
+
+
+--
+-- Name: ix_hoa_attendance_zoom_with_action_action; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX ix_hoa_attendance_zoom_with_action_action ON public.hoa_attendance_zoom_with_action USING btree (action);
+
+
+--
+-- Name: ix_hoa_attendance_zoom_with_action_date; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX ix_hoa_attendance_zoom_with_action_date ON public.hoa_attendance_zoom_with_action USING btree (date);
+
+
+--
+-- Name: ix_hoa_attendance_zoom_with_action_email; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX ix_hoa_attendance_zoom_with_action_email ON public.hoa_attendance_zoom_with_action USING btree (email text_ops);
+
+
+--
+-- Name: schema_history_s_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX schema_history_s_idx ON public.schema_history USING btree (success);
 
 
 --
