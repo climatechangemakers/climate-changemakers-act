@@ -33,7 +33,7 @@ build-production-container:
   image: docker:stable
   stage: build
   script: 
-    - docker build --build-arg nginx_proxy_host=${NGINX_PROXY_HOST} -t "$IMAGE_TAG:$CI_COMMIT_SHORT_SHA" .
+    - docker build --build-arg cwc_proxy_host=${CWC_PROXY_HOST} -t "$IMAGE_TAG:$CI_COMMIT_SHORT_SHA" .
   only: 
     - external_pull_requests
 
