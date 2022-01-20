@@ -50,6 +50,7 @@ WORKDIR /app
 ARG nginx_proxy_host
 
 RUN echo "echo ${nginx_proxy_host} cwc.house.gov >> /etc/hosts" >> /tmp/update_hosts.sh
+RUN echo "echo ${nginx_proxy_host} soapbox.senate.gov >> /etc/hosts" >> /tmp/update_hosts.sh
 RUN chmod 777 /tmp/update_hosts.sh
 
 USER root
