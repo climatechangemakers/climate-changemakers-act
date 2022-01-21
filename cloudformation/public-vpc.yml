@@ -165,14 +165,10 @@ Resources:
       Protocol: HTTP
       UnhealthyThresholdCount: 2
       VpcId: !Ref 'VPC'
+
   PublicLoadBalancerListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
-    DependsOn:
-      - PublicLoadBalancer
     Properties:
-      DefaultActions:
-        - TargetGroupArn: !Ref 'DummyTargetGroupPublic'
-          Type: 'forward'
       LoadBalancerArn: !Ref 'PublicLoadBalancer'
       Port: 80
       Protocol: HTTP
@@ -186,6 +182,7 @@ Resources:
             Query: "#{query}"
             StatusCode: "HTTP_301"
           Type: "redirect"
+
   PublicHTTPSLoadBalancerListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
