@@ -185,5 +185,5 @@ Resources:
           Values: [!Ref 'Path']
       ListenerArn:
         Fn::ImportValue:
-          !Join [':', [!Ref 'StackName', 'PublicListener']]
+          !Join [':', [!Ref 'StackName', 'PublicHTTPSListener']]
       Priority: !Ref 'Priority'

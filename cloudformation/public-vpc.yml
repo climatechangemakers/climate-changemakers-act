@@ -295,6 +295,11 @@ Outputs:
     Value: !Ref PublicLoadBalancerListener
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicListener' ] ]
+  PublicHTTPSListener:
+    Description: The ARN of the public load balancer's Listener
+    Value: !Ref PublicHTTPSLoadBalancerListener
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'PublicHTTPSListener' ] ]
   VPCId:
     Description: The ID of the VPC that this stack is deployed in
     Value: !Ref 'VPC'
