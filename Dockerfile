@@ -47,4 +47,11 @@ COPY --from=build_backend /appbuild/build/libs/climatechangemakers-backend*all.j
 COPY --from=build_backend /appbuild/build/resources/ /app/resources/
 WORKDIR /app
 
-CMD ["sh", "-c", "java -server -XX:+UnlockExperimentalVMOptions -XX:+UseContainerSupport -XX:InitialRAMFraction=2 -XX:MinRAMFraction=2 -XX:MaxRAMFraction=2 -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:+UseStringDeduplication -jar climatechangemakers-backend.jar"]
+ARG cwc_proxy_host
+
+RUN echo "echo ${cwc_proxy_host} cwc.house.gov >> /etc/hosts" >> /tmp/update_hosts.sh
+RUN echo "echo ${cwc_proxy_host} soapbox.senate.gov >> /etc/hosts" >> /tmp/update_hosts.sh
+RUN chmod 777 /tmp/update_hosts.sh
+
+USER root
+ENTRYPOINT ["/bin/sh", "-c", "cat /tmp/update_hosts.sh && /tmp/update_hosts.sh && exec java -server -XX:+UnlockExperimentalVMOptions -XX:+UseContainerSupport -XX:InitialRAMFraction=2 -XX:MinRAMFraction=2 -XX:MaxRAMFraction=2 -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:+UseStringDeduplication -jar climatechangemakers-backend.jar"]
