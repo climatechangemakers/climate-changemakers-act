@@ -45,7 +45,7 @@ publish-production-container:
     LATEST_IMAGE: "$IMAGE_TAG:latest"
   script: 
     - docker login -u $GITLAB_USER_LOGIN -p $GITLAB_API_KEY registry.gitlab.com 
-    - docker build --build-arg nginx_proxy_host=${NGINX_PROXY_HOST} -t $TAGGED_IMAGE .
+    - docker build --build-arg cwc_proxy_host=${CWC_PROXY_HOST} -t $TAGGED_IMAGE .
     - docker tag $TAGGED_IMAGE $LATEST_IMAGE
     - docker push $IMAGE_TAG
   only: 
