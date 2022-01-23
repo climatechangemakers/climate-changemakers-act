@@ -1,8 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Deploy a service on AWS Fargate, hosted in a private subnet, but accessible via a
-             public load balancer.
-             Sourced with slight modifications from
-             https://github.com/nathanpeck/aws-cloudformation-fargate
+Description: Deploy a service on AWS Fargate, hosted in a public subnet, and accessible via a public load balancer.
 Parameters:
   StackName:
     Type: String
@@ -139,14 +136,15 @@ Resources:
       DesiredCount: !Ref 'DesiredCount'
       NetworkConfiguration:
         AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
           SecurityGroups:
             - Fn::ImportValue:
                 !Join [':', [!Ref 'StackName', 'FargateContainerSecurityGroup']]
           Subnets:
             - Fn::ImportValue:
-                !Join [':', [!Ref 'StackName', 'PrivateSubnetOne']]
+                !Join [':', [!Ref 'StackName', 'PublicSubnetOne']]
             - Fn::ImportValue:
-                !Join [':', [!Ref 'StackName', 'PrivateSubnetTwo']]
+                !Join [':', [!Ref 'StackName', 'PublicSubnetTwo']]
       TaskDefinition: !Ref 'TaskDefinition'
       LoadBalancers:
         - ContainerName: !Ref 'ServiceName'
@@ -187,5 +185,5 @@ Resources:
           Values: [!Ref 'Path']
       ListenerArn:
         Fn::ImportValue:
-          !Join [':', [!Ref 'StackName', 'PublicListener']]
+          !Join [':', [!Ref 'StackName', 'PublicHTTPSListener']]
       Priority: !Ref 'Priority'
