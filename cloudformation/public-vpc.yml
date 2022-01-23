@@ -2,6 +2,9 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: A stack for deploying containerized applications in AWS Fargate.
              This stack runs containers in a public VPC subnet, and includes a
              public facing load balancer to register the services in.
+
+             Sourced with slight modifications from
+             https://github.com/nathanpeck/aws-cloudformation-fargate
 Mappings:
   # Hard values for the subnet masks. These masks define
   # the range of internal IP addresses that can be assigned.
