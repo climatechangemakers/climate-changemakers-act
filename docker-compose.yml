@@ -1,38 +1,55 @@
 version: '3'
 
 services:
-    frontend:
-      build: ./frontend
-      image: frontend:latest
-      ports:
-        - ${REACT_APP_PORT}:3000
-    backend:
-      build: ./backend
-      image: backend:latest
-      environment:
-        - GEOCODIO_API_KEY=${GEOCODIO_API_KEY}
-        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-        - POSTGRES_USER=${POSTGRES_USER}
-        - POSTGRES_DB=${POSTGRES_DB} 
-        - POSTGRES_HOSTNAME=${POSTGRES_HOSTNAME}
-        - POSTGRES_PORT=${POSTGRES_PORT}
-        - SCWC_API_KEY=${SCWC_API_KEY}
-        - SCWC_URL=${SCWC_URL}
-        - HCWC_API_KEY=${HCWC_API_KEY}
-        - HCWC_URL=${HCWC_URL}
-        - AIRTABLE_API_KEY=${AIRTABLE_API_KEY}
-        - AIRTABLE_BASE_ID=${AIRTABLE_BASE_ID}
-        - MAILCHIMP_API_KEY=${MAILCHIMP_API_KEY}
-        - MAILCHIMP_URL=${MAILCHIMP_URL}
-        - MAILCHIMP_AUDIENCE_ID=${MAILCHIMP_AUDIENCE_ID}
-      ports:
-        - ${KOTLIN_PORT}:8080
-    database:
-      build: ./database
-      image: database:latest
-      environment: 
-        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-        - POSTGRES_USER=${POSTGRES_USER}
-        - POSTGRES_DB=${POSTGRES_DB} 
-      ports:
-        - ${POSTGRES_PORT}:5432
+  frontend:
+    build: ./frontend
+    image: frontend:latest
+    ports:
+      - ${REACT_APP_PORT}:3000
+
+  backend:
+    build: ./backend
+    image: backend:latest
+    environment:
+      - GEOCODIO_API_KEY=${GEOCODIO_API_KEY}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB} 
+      - POSTGRES_HOSTNAME=${POSTGRES_HOSTNAME}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - SCWC_API_KEY=${SCWC_API_KEY}
+      - SCWC_URL=${SCWC_URL}
+      - HCWC_API_KEY=${HCWC_API_KEY}
+      - HCWC_URL=${HCWC_URL}
+      - AIRTABLE_API_KEY=${AIRTABLE_API_KEY}
+      - AIRTABLE_BASE_ID=${AIRTABLE_BASE_ID}
+      - MAILCHIMP_API_KEY=${MAILCHIMP_API_KEY}
+      - MAILCHIMP_URL=${MAILCHIMP_URL}
+      - MAILCHIMP_AUDIENCE_ID=${MAILCHIMP_AUDIENCE_ID}
+    ports:
+      - ${KOTLIN_PORT}:8080
+
+  database:
+    build: ./database
+    image: database:latest
+    environment: 
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB} 
+    ports:
+      - ${POSTGRES_PORT}:5432
+
+  migration:
+    build: ./flyway
+    image: flyway-migration:latest
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB} 
+      - POSTGRES_HOSTNAME=${POSTGRES_HOSTNAME}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+    restart: on-failure:5
+    volumes: 
+      - ./backend:/flyway/backend:ro
+    depends_on: 
+      - database
