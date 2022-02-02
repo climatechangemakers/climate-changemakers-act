@@ -149,7 +149,7 @@ export default function SendAnEmail({
                         <Row>
                             <Col lg="3">
                                 <Form.Group className="mb-3 h-100" controlId="emailForm.prefix">
-                                    <Form.Label>Your Prefix</Form.Label>
+                                    <Form.Label>Your Prefix*</Form.Label>
                                     <Form.Select
                                         value={emailInfo.prefix}
                                         onChange={(e) => setEmailInfo({ ...emailInfo, prefix: e.currentTarget.value })}
@@ -163,6 +163,9 @@ export default function SendAnEmail({
                                             </option>
                                         ))}
                                     </Form.Select>
+                                    <Form.Text className="text-light">
+                                        *Congress does not support gender-neutral names
+                                    </Form.Text>
                                 </Form.Group>
                             </Col>
                             <Col lg="4">
