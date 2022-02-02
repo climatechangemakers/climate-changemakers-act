@@ -24,6 +24,14 @@ type Props = {
     setEmailInfo: React.Dispatch<React.SetStateAction<EmailInfo>>;
 };
 
+const fromScratchEmail = (firstName: string) => `Hello, I’m ${firstName}, a constituent calling from [LOCATION].
+
+As a [INTRODUCE YOURSELF: WHERE DO YOU LIVE? WHAT DO YOU DO? WHAT’S IMPORTANT TO YOU?], I am concerned about the climate crisis because [WHY YOU CARE ABOUT CLIMATE].
+I’m calling to urge [Senator/Representative NAME] to take action by [CLEAR ASK].
+This policy would [WHY IS THE POLICY IMPORTANT].
+Now is the time for [Senator/Representative NAME] to address these pressing issues by [REPEAT CLEAR ASK].
+Please pass along my concerns to the [Senator/Representative]. Thanks so much for taking my call, and please thank the [Senator/Representative] for their service and leadership.`;
+
 export default function SendAnEmail({
     actionInfo,
     formInfo,
@@ -248,6 +256,7 @@ export default function SendAnEmail({
                             disabled={emailState !== "titleing"}
                             onClick={() => {
                                 if (formRef.current!.reportValidity()) setEmailState("reviewing");
+                                setEmailInfo((info) => ({ ...info, body: fromScratchEmail(info.firstName) }));
                             }}
                         >
                             Draft from scratch
@@ -273,6 +282,7 @@ export default function SendAnEmail({
                         setEmailState={setEmailState}
                         setEmailBody={(body: string) => setEmailInfo((info) => ({ ...info, body }))}
                         isEmailDone={isEmailDone}
+                        fromScratchEmail={fromScratchEmail(emailInfo.firstName)}
                     />
                 )}
                 {(emailState === "reviewing" || emailState === "done") && (
@@ -285,7 +295,7 @@ export default function SendAnEmail({
                                 </Form.Label>
                                 <Form.Control
                                     as="textarea"
-                                    rows={9}
+                                    rows={12}
                                     placeholder="Draft your email"
                                     value={emailInfo.body}
                                     onChange={(e) => setEmailInfo({ ...emailInfo, body: e.currentTarget.value })}

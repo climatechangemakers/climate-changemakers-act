@@ -10,11 +10,20 @@ type Props = {
     setEmailState: React.Dispatch<React.SetStateAction<EmailState>>;
     setEmailBody: (body: string) => void;
     isEmailDone: boolean;
+    fromScratchEmail: string;
 };
 
 const salutation = "To whom it may concern,";
 
-export default function Prompts({ formRef, firstName, emailState, setEmailState, setEmailBody, isEmailDone }: Props) {
+export default function Prompts({
+    formRef,
+    firstName,
+    emailState,
+    setEmailState,
+    setEmailBody,
+    isEmailDone,
+    fromScratchEmail,
+}: Props) {
     const [emailPrompts, setEmailPrompts] = useState({
         policyAsk: "",
         whyItMatters: "",
@@ -108,7 +117,10 @@ export default function Prompts({ formRef, firstName, emailState, setEmailState,
                         variant="secondary"
                         className="w-100"
                         disabled={addedPrompts || isEmailDone}
-                        onClick={() => setEmailState("reviewing")}
+                        onClick={() => {
+                            setEmailState("reviewing");
+                            setEmailBody(fromScratchEmail);
+                        }}
                     >
                         Draft from scratch
                     </Button>
