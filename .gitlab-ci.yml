@@ -19,51 +19,87 @@ cache:
     - ./backend/.gradle/wrapper
     - ./backend/.gradle/caches
 
-test-backend:
-  image: openjdk:11.0.12
-  stage: test
-  script: 
-    - cd backend
-    - ./gradlew test
-  only: 
-    - trunk 
-    - external_pull_requests
+# test-backend:
+#   image: openjdk:11.0.12
+#   stage: test
+#   script: 
+#     - cd backend
+#     - ./gradlew test
+#   only: 
+#     - trunk 
+#     - external_pull_requests
 
-build-production-container:
-  image: docker:stable
-  stage: build
-  script: 
-    - docker build --build-arg cwc_proxy_host=${CWC_PROXY_HOST} -t "$IMAGE_TAG:$CI_COMMIT_SHORT_SHA" .
-  only: 
-    - external_pull_requests
+# build-production-container:
+#   image: docker:stable
+#   stage: build
+#   script: 
+#     - docker build --build-arg cwc_proxy_host=${CWC_PROXY_HOST} -t "$IMAGE_TAG:$CI_COMMIT_SHORT_SHA" .
+#   only: 
+#     - external_pull_requests
 
-publish-production-container:
-  image: docker:stable
-  stage: build
-  variables:
-    TAGGED_IMAGE: "$IMAGE_TAG:$CI_COMMIT_SHORT_SHA"
-    LATEST_IMAGE: "$IMAGE_TAG:latest"
-  script: 
-    - docker login -u $GITLAB_USER_LOGIN -p $GITLAB_API_KEY registry.gitlab.com 
-    - docker build --build-arg cwc_proxy_host=${CWC_PROXY_HOST} -t $TAGGED_IMAGE .
-    - docker tag $TAGGED_IMAGE $LATEST_IMAGE
-    - docker push $IMAGE_TAG
-  only: 
-    - trunk
+# publish-production-container:
+#   image: docker:stable
+#   stage: build
+#   variables:
+#     TAGGED_IMAGE: "$IMAGE_TAG:$CI_COMMIT_SHORT_SHA"
+#     LATEST_IMAGE: "$IMAGE_TAG:latest"
+#   script: 
+#     - docker login -u $GITLAB_USER_LOGIN -p $GITLAB_API_KEY registry.gitlab.com 
+#     - docker build --build-arg cwc_proxy_host=${CWC_PROXY_HOST} -t $TAGGED_IMAGE .
+#     - docker tag $TAGGED_IMAGE $LATEST_IMAGE
+#     - docker push $IMAGE_TAG
+#   only: 
+#     - trunk
 
-migrate-production-database:
+# migrate-production-database:
+#   stage: deploy
+#   image: 
+#     name: flyway/flyway:8.2.2-alpine
+#     entrypoint: [""]
+#   script:
+#     # below is a hack to work around https://github.com/cashapp/sqldelight/issues/2744. Can remove manual file renaming when it's resolved. 
+#     - mkdir -p backend/build/resources/main/migrations/
+#     - cp backend/src/main/sqldelight/migrations/*.sqm backend/build/resources/main/migrations/
+#     - find backend/build/resources/main/migrations/ -name "*.sqm" -exec sh -c 'mv "$1" "${1%.sqm}.sql"' _ {} \;
+#     - flyway -user=${POSTGRES_USER} -password=${POSTGRES_PASSWORD} -table=schema_history -locations=backend/build/resources/main/migrations/ -url=${POSTGRES_URL} migrate
+#   only: 
+#     refs:
+#       - trunk
+#     changes:
+#       - backend/src/main/sqldelight/migrations/*.sqm
+
+# deploy-cloudformation-network:
+#   stage: deploy
+#   image: 
+#     name: amazon/aws-cli:2.4.14
+#     entrypoint: [""]
+#   script: 
+#     - aws cloudformation deploy --template-file cloudformation/public-vpc.yml --stack-name networking-public-vpc
+#   only: 
+#     refs:
+#       - trunk
+#     changes:
+#       - cloudformation/public-vpc.yml
+
+# deploy-cloudformation-service:
+#   stage: deploy
+#   image: 
+#     name: amazon/aws-cli:2.4.14
+#     entrypoint: [""]
+#   variables:
+#     IMAGE_URL: "registry.gitlab.com/kevincianfarini/climate-changemakers-act:$CI_COMMIT_SHORT_SHA"
+#   script: 
+#     - aws cloudformation deploy --template-file cloudformation/public-subnet-public-loadbalancer.yml --stack-name climate-changemakers-act --parameter-overrides ImageUrl=$IMAGE_URL
+#   needs: ["deploy-cloudformation-network", "migrate-production-database"]
+#   only: 
+#     - trunk
+
+test-foo:
   stage: deploy
   image: 
-    name: flyway/flyway:8.2.2-alpine
+    name: amazon/aws-cli:2.4.14
     entrypoint: [""]
   script:
-    # below is a hack to work around https://github.com/cashapp/sqldelight/issues/2744. Can remove manual file renaming when it's resolved. 
-    - mkdir -p backend/build/resources/main/migrations/
-    - cp backend/src/main/sqldelight/migrations/*.sqm backend/build/resources/main/migrations/
-    - find backend/build/resources/main/migrations/ -name "*.sqm" -exec sh -c 'mv "$1" "${1%.sqm}.sql"' _ {} \;
-    - flyway -user=${POSTGRES_USER} -password=${POSTGRES_PASSWORD} -table=schema_history -locations=backend/build/resources/main/migrations/ -url=${POSTGRES_URL} migrate
+    - echo $CI_REGISTRY_IMAGE
   only: 
-    refs:
-      - trunk
-    changes:
-      - backend/src/main/sqldelight/migrations/*.sqm
+    - external_pull_requests
