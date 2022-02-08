@@ -1,5 +1,6 @@
 package org.climatechangemakers.act.feature.email.manager
 
+import okio.ByteString
 import org.climatechangemakers.act.common.model.RepresentedArea
 import org.climatechangemakers.act.di.Mailchimp
 import org.climatechangemakers.act.feature.email.model.SubscribeChangemakerRequest
@@ -20,6 +21,7 @@ class MailchimpEmailEnrollmentManager @Inject constructor(
     val request = SubscribeChangemakerRequest(email, firstName, lastName, state)
     mailchimpService.subscribeChangemaker(
       audienceId = changemakersMailchimpAudienceId,
+      emailMd5Hash = ByteString.of(*email.lowercase().encodeToByteArray()).md5().hex(),
       request = request,
     )
   }

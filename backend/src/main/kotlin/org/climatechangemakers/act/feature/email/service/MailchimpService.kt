@@ -1,15 +1,16 @@
 package org.climatechangemakers.act.feature.email.service
 
 import org.climatechangemakers.act.feature.email.model.SubscribeChangemakerRequest
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Body
 
 interface MailchimpService {
 
-  @POST("lists/{audience_id}/members/")
+  @PUT("lists/{audience_id}/members/{email_md5_hash_string}")
   suspend fun subscribeChangemaker(
     @Path("audience_id") audienceId: String,
-    @Body request: SubscribeChangemakerRequest
+    @Path("email_md5_hash_string") emailMd5Hash: String,
+    @Body request: SubscribeChangemakerRequest,
   )
 }
