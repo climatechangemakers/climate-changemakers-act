@@ -11,6 +11,7 @@ import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpStatusCode
 import io.ktor.request.receive
 import io.ktor.response.respond
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -21,18 +22,26 @@ import org.climatechangemakers.act.feature.action.model.LogTweetRequest
 import org.climatechangemakers.act.feature.action.model.SendEmailErrorResponse
 import org.climatechangemakers.act.feature.action.model.SendEmailResponse
 import org.climatechangemakers.act.feature.communicatewithcongress.manager.CommunicateWithCongressManager
+import org.climatechangemakers.act.feature.email.manager.EmailEnrollmentManager
 import javax.inject.Inject
 
 class ActionController @Inject constructor(
   private val legislatorsManager: LegislatorsManager,
   private val actionTrackerManager: ActionTrackerManager,
   private val communicateWithCongressManager: CommunicateWithCongressManager,
+  private val emailManager: EmailEnrollmentManager,
 ) {
 
   suspend fun initiateAction(call: ApplicationCall) {
     val request = call.receive<InitiateActionRequest>()
 
-    val response = coroutineScope {
+    val response: Deferred<InitiateActionResponse> = coroutineScope {
+      launch {
+        if (request.desiresInformationalEmails) {
+          emailManager.subscribeChangemaker(request.email)
+        }
+      }
+
       launch { actionTrackerManager.trackActionInitiated(request.email) }
       async {
         InitiateActionResponse(request.email, legislatorsManager.getLegislators(request.toGetLegislatorsRequest()))
