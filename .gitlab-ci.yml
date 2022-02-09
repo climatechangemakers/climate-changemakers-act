@@ -71,6 +71,7 @@ migrate-production-database:
 
 deploy-cloudformation-network:
   stage: deploy-infrastructure
+  resource_group: deploy-infrastructure
   image: 
     name: amazon/aws-cli:2.4.14
     entrypoint: [""]
@@ -84,6 +85,7 @@ deploy-cloudformation-network:
 
 deploy-cloudformation-service:
   stage: deploy-service
+  resource_group: deploy-service
   image: 
     name: amazon/aws-cli:2.4.14
     entrypoint: [""]
