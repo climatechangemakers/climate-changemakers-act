@@ -36,10 +36,8 @@ class ActionController @Inject constructor(
     val request = call.receive<InitiateActionRequest>()
 
     val response: Deferred<InitiateActionResponse> = coroutineScope {
-      launch {
-        if (request.desiresInformationalEmails) {
-          emailManager.subscribeChangemaker(request.email)
-        }
+      if (request.desiresInformationalEmails) {
+        launch { emailManager.subscribeChangemaker(request.email) }
       }
 
       launch { actionTrackerManager.trackActionInitiated(request.email) }
