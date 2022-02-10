@@ -1,0 +1,2 @@
+ALTER TABLE action_email_legislator
+ADD COLUMN email_delivery_id VARCHAR;

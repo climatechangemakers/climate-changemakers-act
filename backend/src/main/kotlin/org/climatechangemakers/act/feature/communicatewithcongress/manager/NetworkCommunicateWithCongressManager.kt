@@ -8,6 +8,7 @@ import okio.ByteString
 import org.climatechangemakers.act.common.model.Result
 import org.climatechangemakers.act.common.model.Success
 import org.climatechangemakers.act.common.model.Failure
+import org.climatechangemakers.act.common.serializers.toAlphaNumericString
 import org.climatechangemakers.act.feature.action.manager.ActionTrackerManager
 import org.climatechangemakers.act.feature.action.model.SendEmailRequest
 import org.climatechangemakers.act.feature.communicatewithcongress.model.CommunicateWithCogressRequest
@@ -50,8 +51,13 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
     val memberOfCongress = memberOfCongressManager.getMemberOfCongressForBioguide(bioguideId)
     return if (memberOfCongress.cwcOfficeCode != null) {
       try {
-        sendEmailViaCWC(memberOfCongress, request)
-        actionTrackerManager.trackActionSendEmail(request.originatingEmailAddress, bioguideId, request.relatedIssueId)
+        val deliveryId = sendEmailViaCWC(memberOfCongress, request)
+        actionTrackerManager.trackActionSendEmail(
+          email = request.originatingEmailAddress,
+          contactedBioguideId = bioguideId,
+          relatedIssueId = request.relatedIssueId,
+          emailDeliveryId = deliveryId,
+        )
         true
       } catch (e: HttpException) {
         e.response()?.errorBody()?.string()?.let(logger::error)
@@ -68,7 +74,7 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
   private suspend fun sendEmailViaCWC(
     memberOfConress: MemberOfCongress,
     emailRequest: SendEmailRequest,
-  ) {
+  ): String {
     val cwcRequest = CommunicateWithCogressRequest(
       delivery = Delivery(campaignId = getCampaignIdForIssue(emailRequest.relatedIssueId)),
       recipient = Recipient(officeCode = memberOfConress.cwcOfficeCode!!),
@@ -94,6 +100,8 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
       LegislatorRole.Senator -> senateService.contact(cwcRequest)
       LegislatorRole.Representative -> houseService.contact(cwcRequest)
     }
+
+    return cwcRequest.delivery.deliveryId.toAlphaNumericString()
   }
 
   private suspend fun getCampaignIdForIssue(issueId: Long): String {

@@ -26,8 +26,9 @@ class DatabaseActionTrackerManager @Inject constructor(
     email: String,
     contactedBioguideId: String,
     relatedIssueId: Long,
+    emailDeliveryId: String,
   ) = withContext(ioDispatcher) {
-    actionEmailLegislatorQueries.insert(email, relatedIssueId, contactedBioguideId)
+    actionEmailLegislatorQueries.insert(email, relatedIssueId, contactedBioguideId, emailDeliveryId)
   }
 
   override suspend fun trackActionPhoneCall(
