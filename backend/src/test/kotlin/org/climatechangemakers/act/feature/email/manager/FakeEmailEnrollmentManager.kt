@@ -21,4 +21,8 @@ class FakeEmailEnrollmentManager : EmailEnrollmentManager {
     lastNames.trySend(lastName)
     states.trySend(state)
   }
+
+  override suspend fun subscribeChangemaker(email: String) {
+    emails.trySend(email)
+  }
 }
