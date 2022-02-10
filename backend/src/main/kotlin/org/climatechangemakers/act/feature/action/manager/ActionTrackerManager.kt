@@ -8,6 +8,7 @@ interface ActionTrackerManager {
     email: String,
     contactedBioguideId: String,
     relatedIssueId: Long,
+    emailDeliveryId: String,
   )
 
   suspend fun trackActionPhoneCall(
