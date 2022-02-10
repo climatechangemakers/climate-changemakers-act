@@ -8,9 +8,11 @@ import { EmailState } from "common/models/EmailState";
 import { FormInfo } from "common/models/FormInfo";
 import { Issue } from "common/models/Issue";
 import { useEffect, useRef, useState } from "react";
-import { Accordion, Button, Col, Form, Row } from "react-bootstrap";
+import { Accordion, Button, Col, Form, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import Select from "react-select";
 import useSWRImmutable from "swr";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import emailIcon from "./email-icon.svg";
 import Prompts from "./Prompts";
 
@@ -80,8 +82,7 @@ export default function SendAnEmail({
             if (typeof response.error === "object") {
                 setBioguideIdsToSend(response.error.failedBioguideIds);
                 setSendEmailError(
-                    `Failed to send ${response.error.failedBioguideIds.length} email${
-                        response.error.failedBioguideIds.length > 1 ? "s" : ""
+                    `Failed to send ${response.error.failedBioguideIds.length} email${response.error.failedBioguideIds.length > 1 ? "s" : ""
                     }. Click to retry.`
                 );
                 return;
@@ -147,9 +148,19 @@ export default function SendAnEmail({
                     <Col lg="8">
                         <h3 className="h-4">Draft Your Email</h3>
                         <Row>
-                            <Col lg="3">
+                            <Col lg="4" xl="3">
                                 <Form.Group className="mb-3 h-100" controlId="emailForm.prefix">
-                                    <Form.Label>Your Prefix*</Form.Label>
+                                    <Form.Label className="d-flex">
+                                        Your Prefix
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip>Congress does not support gender-neutral names</Tooltip>}
+                                        >
+                                            <Button className="bg-transparent border-0 p-0 ms-2">
+                                                <FontAwesomeIcon icon={faInfoCircle} />
+                                            </Button>
+                                        </OverlayTrigger>
+                                    </Form.Label>
                                     <Form.Select
                                         value={emailInfo.prefix}
                                         onChange={(e) => setEmailInfo({ ...emailInfo, prefix: e.currentTarget.value })}
@@ -163,9 +174,6 @@ export default function SendAnEmail({
                                             </option>
                                         ))}
                                     </Form.Select>
-                                    <Form.Text className="text-light">
-                                        *Congress does not support gender-neutral names
-                                    </Form.Text>
                                 </Form.Group>
                             </Col>
                             <Col lg="4">
@@ -181,7 +189,7 @@ export default function SendAnEmail({
                                     />
                                 </Form.Group>
                             </Col>
-                            <Col lg="5">
+                            <Col lg="4" xl="5">
                                 <Form.Group className="mb-3 h-100" controlId="emailForm.lastName">
                                     <Form.Label>Your Last Name</Form.Label>
                                     <Form.Control
@@ -313,10 +321,10 @@ export default function SendAnEmail({
                                     {isEmailSent
                                         ? "Email sent!"
                                         : isSending
-                                        ? "Sending..."
-                                        : sendEmailError
-                                        ? "Try again"
-                                        : "Send email"}
+                                            ? "Sending..."
+                                            : sendEmailError
+                                                ? "Try again"
+                                                : "Send email"}
                                 </Button>
                             </Col>
                         </Row>
