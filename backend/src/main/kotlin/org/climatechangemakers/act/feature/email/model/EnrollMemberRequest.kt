@@ -4,7 +4,15 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.climatechangemakers.act.common.model.RepresentedArea
 
-@Serializable data class SubscribeChangemakerRequest private constructor(
+// The Mailchimp API forces us to have a redundant class because
+// `merge_fields` cannot be null.
+@Serializable data class SubscribeNewsletterRequest(
+  @SerialName("email_address") val email: String,
+) {
+  @SerialName("status_if_new") val status = "subscribed"
+}
+
+@Serializable data class EnrollMemberRequest private constructor(
   @SerialName("email_address") val email: String,
   @SerialName("merge_fields") val mergeFields: MailchimpMergeFields,
 ) {

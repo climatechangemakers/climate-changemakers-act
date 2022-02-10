@@ -9,7 +9,8 @@ variables:
 stages: 
   - test
   - build
-  - deploy
+  - deploy-infrastructure
+  - deploy-service
 
 before_script: 
   - export GRADLE_USER_HOME=`pwd`/backend/.gradle
@@ -52,7 +53,7 @@ publish-production-container:
     - trunk
 
 migrate-production-database:
-  stage: deploy
+  stage: deploy-infrastructure
   image: 
     name: flyway/flyway:8.2.2-alpine
     entrypoint: [""]
@@ -67,3 +68,30 @@ migrate-production-database:
       - trunk
     changes:
       - backend/src/main/sqldelight/migrations/*.sqm
+
+deploy-cloudformation-network:
+  stage: deploy-infrastructure
+  resource_group: deploy-infrastructure
+  image: 
+    name: amazon/aws-cli:2.4.14
+    entrypoint: [""]
+  script: 
+    - aws cloudformation deploy --template-file cloudformation/public-vpc.yml --stack-name networking-public-vpc
+  only: 
+    refs:
+      - trunk
+    changes:
+      - cloudformation/public-vpc.yml
+
+deploy-cloudformation-service:
+  stage: deploy-service
+  resource_group: deploy-service
+  image: 
+    name: amazon/aws-cli:2.4.14
+    entrypoint: [""]
+  variables:
+    IMAGE_URL: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+  script: 
+    - aws cloudformation deploy --template-file cloudformation/public-subnet-public-loadbalancer.yml --stack-name climate-changemakers-act --parameter-overrides ImageUrl=$IMAGE_URL
+  only: 
+    - trunk
