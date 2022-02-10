@@ -82,7 +82,8 @@ export default function SendAnEmail({
             if (typeof response.error === "object") {
                 setBioguideIdsToSend(response.error.failedBioguideIds);
                 setSendEmailError(
-                    `Failed to send ${response.error.failedBioguideIds.length} email${response.error.failedBioguideIds.length > 1 ? "s" : ""
+                    `Failed to send ${response.error.failedBioguideIds.length} email${
+                        response.error.failedBioguideIds.length > 1 ? "s" : ""
                     }. Click to retry.`
                 );
                 return;
@@ -321,10 +322,10 @@ export default function SendAnEmail({
                                     {isEmailSent
                                         ? "Email sent!"
                                         : isSending
-                                            ? "Sending..."
-                                            : sendEmailError
-                                                ? "Try again"
-                                                : "Send email"}
+                                        ? "Sending..."
+                                        : sendEmailError
+                                        ? "Try again"
+                                        : "Send email"}
                                 </Button>
                             </Col>
                         </Row>
