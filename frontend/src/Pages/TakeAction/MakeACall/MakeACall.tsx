@@ -15,6 +15,13 @@ type Props = {
     emailBody: string;
 };
 
+const skipEmailText = `Hello, I’m [NAME], a constituent calling from [LOCATION].
+As a [INTRODUCE YOURSELF: WHERE DO YOU LIVE? WHAT DO YOU DO? WHAT’S IMPORTANT TO YOU?], I am concerned about the climate crisis because [WHY YOU CARE ABOUT CLIMATE].
+I’m calling to urge [Senator/Representative NAME] to take action by [CLEAR ASK].
+This policy would [WHY IS THE POLICY IMPORTANT].
+Now is the time for [Senator/Representative NAME] to address these pressing issues by [REPEAT CLEAR ASK].
+Please pass along my concerns to the [Senator/Representative]. Thanks so much for taking my call, and please thank the [Senator/Representative] for their service and leadership.`;
+
 export default function MakeACall({
     actionInfo,
     relatedIssueId,
@@ -25,7 +32,7 @@ export default function MakeACall({
 }: Props) {
     const [bioguideIdsCalled, setBuiguideIdsCalled] = useState<string[]>([]);
     const [error, setError] = useState("");
-    const [script, setScript] = useState(emailBody);
+    const [script, setScript] = useState(emailBody || skipEmailText);
 
     const logCall = async (contactedBioguideId: string) => {
         const response = await logCallAPI(emailAddress, relatedIssueId, contactedBioguideId);
@@ -61,7 +68,7 @@ export default function MakeACall({
                 <Form.Label htmlFor="callForm" className="visually-hidden" />
                 <Form.Control
                     as="textarea"
-                    rows={emailBody ? 9 : 5}
+                    rows={9}
                     id="callForm"
                     disabled={isPhoneCallMade}
                     value={script}
