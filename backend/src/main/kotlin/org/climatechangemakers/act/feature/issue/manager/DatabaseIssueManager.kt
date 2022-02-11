@@ -26,7 +26,7 @@ class DatabaseIssueManager @Inject constructor(
   private val talkingPointQueries = database.talkingPointQueries
 
   override suspend fun getFocusIssue(): Issue = withContext(ioDispatcher) {
-    val issue = issueQueries.selectFocused().executeAsOne()
+    val issue = issueQueries.selectActiveFocusIssue().executeAsOne()
     Issue(
       id = issue.id,
       title = issue.title,
@@ -37,7 +37,7 @@ class DatabaseIssueManager @Inject constructor(
   }
 
   override suspend fun getUnfocusedIssues(): List<Issue> = withContext(ioDispatcher) {
-    issueQueries.selectUnfocused().executeAsList().map { issue ->
+    issueQueries.selectActiveUnfocusedIssues().executeAsList().map { issue ->
       async {
         Issue(
           id = issue.id,

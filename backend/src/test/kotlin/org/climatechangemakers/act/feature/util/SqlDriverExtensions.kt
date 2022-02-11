@@ -11,12 +11,14 @@ fun SqlDriver.insertIssue(
   precomposedTweet: String,
   imageUrl: String,
   description: String = "description",
+  isActive: Boolean = true
 ): Long {
-  val cursor = executeQuery(0, "INSERT INTO issue(title, precomposed_tweet_template, image_url, description) VALUES(?,?,?,?) RETURNING id;", 4) {
+  val cursor = executeQuery(0, "INSERT INTO issue(title, precomposed_tweet_template, image_url, description, is_active) VALUES(?,?,?,?,?) RETURNING id;", 4) {
     bindString(1, title)
     bindString(2, precomposedTweet)
     bindString(3, imageUrl)
     bindString(4, description)
+    bindLong(5, if (isActive) 1 else 0)
   }
 
   return checkNotNull(cursor.also { it.next() }.getLong(0))

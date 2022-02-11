@@ -3,5 +3,8 @@ CREATE TABLE issue (
   title VARCHAR NOT NULL,
   precomposed_tweet_template VARCHAR NOT NULL,
   image_url VARCHAR NOT NULL,
-  description VARCHAR NOT NULL
+  description VARCHAR NOT NULL,
+  -- We cannot use the BOOLEAN type with SQLDelight currently. See https://github.com/AlecStrong/sql-psi/issues/156.
+  -- This is intended to be resolved in version 2.0.0 of SQLDelight.
+  is_active SMALLINT NOT NULL CONSTRAINT boolean_value CHECK (is_active = 0 OR is_active = 1)
 );
