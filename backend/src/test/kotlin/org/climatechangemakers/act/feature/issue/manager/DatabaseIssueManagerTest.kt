@@ -139,6 +139,20 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
     )
   }
 
+  @Test fun `inactive issues are hidden`() = suspendTest {
+    driver.insertIssue("foo", "tweet", "url.com", isActive = false)
+    val result = issueManager.getUnfocusedIssues()
+    assertEquals(emptyList(), result)
+  }
+
+  @Test fun `an inactive focus issue is hidden and will default to next most recently focused issue`() = suspendTest {
+    val id1 = driver.insertIssue("foo", "tweet", "url.com", isActive = true)
+    val id2 = driver.insertIssue("foo", "tweet", "url.com", isActive = false)
+    focusIssue(id1)
+    focusIssue(id2)
+    assertEquals(id1, issueManager.getFocusIssue().id)
+  }
+
   private fun insertExampleWhyStatement(issueId: Long, statement: String) {
     driver.execute(0, "INSERT INTO example_issue_why_statement(issue_id, statement) VALUES(?,?)", 2) {
       bindLong(1, issueId)
