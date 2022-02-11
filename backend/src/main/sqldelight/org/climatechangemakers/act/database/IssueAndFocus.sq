@@ -23,12 +23,12 @@ SELECT title
 FROM issue_and_focus
 WHERE id = :issueId AND is_active = 1;
 
-selectFocused:
+selectActiveFocusIssue:
 SELECT id, title, image_url, description
 FROM issue_and_focus
 WHERE is_focused = TRUE AND is_active = 1;
 
-selectUnfocused:
+selectActiveUnfocusedIssues:
 SELECT id, title, image_url, description
 FROM issue_and_focus
 WHERE is_focused = FALSE AND is_active = 1;
