@@ -9,7 +9,7 @@ import { FormInfo } from "common/models/FormInfo";
 import { Issue } from "common/models/Issue";
 import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { MultiValue } from "react-select";
 import usePrecomposedTweetData from "../../common/hooks/usePrecomposedTweetData";
 import AllDone from "./AllDone/AllDone";
@@ -58,9 +58,9 @@ export default function TakeActionPage() {
         isAmplified && scrollToId("all_done");
     }, [isAmplified]);
 
-    if (!actionInfo || !formInfo) return <Redirect to="/" />;
+    if (!actionInfo || !formInfo) return <Navigate to="/" />;
 
-    if (!selectedIssue) return <Redirect to="/pick-your-issue" />;
+    if (!selectedIssue) return <Navigate to="/pick-your-issue" />;
 
     return (
         <Layout>

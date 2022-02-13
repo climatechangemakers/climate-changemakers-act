@@ -1,7 +1,9 @@
 import HiddenValidationInput from "common/Components/HiddenValidationInput";
 import { EmailState } from "common/models/EmailState";
 import { useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type Props = {
     formRef: React.RefObject<HTMLFormElement>;
@@ -16,6 +18,8 @@ const salutation = "To whom it may concern,";
 
 export default function Prompts({ formRef, firstName, emailState, setEmailState, setEmailBody, isEmailDone }: Props) {
     const [emailPrompts, setEmailPrompts] = useState({
+        identifyYourself: "",
+        thankYourRepresentative: "",
         policyAsk: "",
         whyItMatters: "",
         whyYouCare: "",
@@ -37,6 +41,44 @@ export default function Prompts({ formRef, firstName, emailState, setEmailState,
         <>
             <hr id="email_prompts" />
             <h3 className="h-4 mb-3 mt-4">Email Prompts</h3>
+            <Row>
+                <Col xs="12">
+                    <Form.Group className="mb-3 h-100" controlId="emailForm.identifyYourself">
+                        <Form.Label>Identify Yourself</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            rows={4}
+                            value={emailPrompts.identifyYourself}
+                            onChange={(e) => setEmailPrompts({ ...emailPrompts, identifyYourself: e.currentTarget.value })}
+                            disabled={addedPrompts || isEmailDone}
+                            placeholder="My name is Jane Doe. I am a constituent of yours from New York City, New York."
+                        />
+                    </Form.Group>
+                </Col>
+            </Row>
+            <Row>
+                <Col xs="12">
+                    <Form.Group className="mb-3 h-100" controlId="emailForm.thankYourRepresentative">
+                        <Form.Label>Thank Your Representative
+                            <OverlayTrigger
+                                placement="top"
+                                overlay={<Tooltip>Being cordial and professional with your elected representatives, regardless of their stance on an issue, is the most effective way to communicate your concerns.</Tooltip>}
+                            >
+                                <Button className="bg-transparent border-0 p-0 ms-2">
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                </Button>
+                            </OverlayTrigger></Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            rows={4}
+                            value={emailPrompts.thankYourRepresentative}
+                            onChange={(e) => setEmailPrompts({ ...emailPrompts, thankYourRepresentative: e.currentTarget.value })}
+                            disabled={addedPrompts || isEmailDone}
+                            placeholder="Thank you for your service and leadership as my elected representative. I want to thank you for your leadership on climate..."
+                        />
+                    </Form.Group>
+                </Col>
+            </Row>
             <Row>
                 <Col xs="12">
                     <Form.Group className="mb-3 h-100" controlId="emailForm.policyAsk">
