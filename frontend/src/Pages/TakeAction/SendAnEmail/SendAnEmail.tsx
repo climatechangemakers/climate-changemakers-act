@@ -10,7 +10,7 @@ import { Issue } from "common/models/Issue";
 import { useEffect, useRef, useState } from "react";
 import { Accordion, Button, Col, Form, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import Select from "react-select";
-import useSWRImmutable from "swr";
+import useSWRImmutable from "swr/immutable";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import emailIcon from "./email-icon.svg";
@@ -79,17 +79,20 @@ export default function SendAnEmail({
         setIsSending(false);
 
         if (!response.successful) {
-            if (typeof response.error === "object") {
-                setBioguideIdsToSend(response.error.failedBioguideIds);
+            if (typeof response.error === "string") {
+                setSendEmailError(response?.error);
+                return;
+            }
+            if (Array.isArray(response.error)) {
+                setBioguideIdsToSend(response.error);
                 setSendEmailError(
-                    `Failed to send ${response.error.failedBioguideIds.length} email${
-                        response.error.failedBioguideIds.length > 1 ? "s" : ""
+                    `Failed to send ${response.error.length} email${
+                        response.error.length > 1 ? "s" : ""
                     }. Click to retry.`
                 );
                 return;
             }
-            setSendEmailError(response?.error ?? "Failed to send email");
-            return;
+            return setSendEmailError("Failed to send emails");
         }
         setIsEmailSent(true);
         setIsEmailDone(true);
@@ -155,7 +158,9 @@ export default function SendAnEmail({
                                         Your Prefix
                                         <OverlayTrigger
                                             placement="top"
-                                            overlay={<Tooltip>Congress does not allow for gender-neutral prefixes.</Tooltip>}
+                                            overlay={
+                                                <Tooltip>Congress does not allow for gender-neutral prefixes.</Tooltip>
+                                            }
                                         >
                                             <Button className="bg-transparent border-0 p-0 ms-2">
                                                 <FontAwesomeIcon icon={faInfoCircle} />
