@@ -66,7 +66,7 @@ export default function PostOnSocial({
                     onSendTweet={handleSubmit}
                 />
             )}
-            <ErrorMessage message={preComposedTweetError || "Failed to load precomposed tweet"} />
+            <ErrorMessage message={preComposedTweetError && "Failed to load precomposed tweet"} />
         </div>
     );
 }
