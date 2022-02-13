@@ -1,11 +1,11 @@
 import confetti from "canvas-confetti";
 import { useEffect } from "react";
 import { Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./AllDone.module.css";
 
 export default function AllDone() {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const velocity = Math.max(50, window.innerWidth / 24);
@@ -42,7 +42,7 @@ export default function AllDone() {
                             type="submit"
                             className="w-100 text-dark p-3"
                             variant="primary"
-                            onClick={() => history.push("/pick-your-issue")}
+                            onClick={() => navigate("/pick-your-issue")}
                         >
                             Choose another issue
                         </Button>

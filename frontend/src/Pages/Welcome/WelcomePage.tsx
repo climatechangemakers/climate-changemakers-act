@@ -8,7 +8,7 @@ import { ActionInfo } from "common/models/ActionInfo";
 import { FormInfo } from "common/models/FormInfo";
 import { useState } from "react";
 import { Badge, Button, Col, Form, Row } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./WelcomePage.module.css";
 
 export default function WelcomePage() {
@@ -26,7 +26,7 @@ export default function WelcomePage() {
     const [, setActionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
     const { data: areas, error: areasError } = useAreas();
     useIssues();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -42,7 +42,7 @@ export default function WelcomePage() {
         }
 
         setActionInfo(response.data!);
-        history.push("/pick-your-issue");
+        navigate("/pick-your-issue");
     };
 
     return (

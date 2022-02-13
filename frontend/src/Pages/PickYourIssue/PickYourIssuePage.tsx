@@ -6,14 +6,14 @@ import { ActionInfo } from "common/models/ActionInfo";
 import { Issue } from "common/models/Issue";
 import { useEffect } from "react";
 import { Col, Row, Spinner } from "react-bootstrap";
-import { Redirect, useHistory } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import IssueCard from "./Issue";
 
 export default function PickYourIssuePage() {
     const { data: issues, error: issuesError } = useIssues();
     const [selectedIssue, setSelectedIssue] = useSessionStorage<Issue | undefined>("selectedIssue");
     const [actionInfo] = useSessionStorage<ActionInfo | undefined>("actionInfo");
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -25,10 +25,10 @@ export default function PickYourIssuePage() {
 
     const handleIssueSelect = (issue: Issue) => {
         setSelectedIssue(issue);
-        history.push("/take-action");
+        navigate("/take-action");
     };
 
-    if (!actionInfo) return <Redirect to="/" />;
+    if (!actionInfo) return <Navigate to="/" />;
 
     return (
         <Layout>
