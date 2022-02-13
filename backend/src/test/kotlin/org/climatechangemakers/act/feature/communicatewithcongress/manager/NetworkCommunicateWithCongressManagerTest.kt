@@ -168,6 +168,39 @@ class NetworkCommunicateWithCongressManagerTest {
     assertTrue(failed is Failure)
   }
 
+  @Test fun `email failure returns only failed bioguide ids`() = suspendTest {
+    val fakeHouseService = FakeCommunicateWithCongressService { error("blah") }
+    val manager = NetworkCommunicateWithCongressManager(
+      senateService = fakeSenteService,
+      houseService = fakeHouseService,
+      memberOfCongressManager = fakeMemberOfCongressManager,
+      actionTrackerManager = fakeActionManager,
+      issueManager = fakeIssueManager,
+      logger = LoggerFactory.getLogger(this::class.java),
+    )
+    val request = SendEmailRequest(
+      originatingEmailAddress = "k@c.com",
+      title = Prefix.Dr,
+      firstName = "Foo",
+      lastName = "McBar",
+      streetAddress = "123 Main Street",
+      city = "Richmond",
+      state = RepresentedArea.Virginia,
+      postalCode = "23223",
+      relatedTopics = listOf(Topic.Energy),
+      emailBody = "Body",
+      emailSubject = "subject",
+      relatedIssueId = 1,
+      contactedBioguideIds = listOf("1", "2", "3"),
+    )
+
+    repeat(3) { fakeIssueManager.titles.send("issue title") }
+
+    val failed = manager.sendEmails(request)
+    assertTrue(failed is Failure)
+    assertEquals(listOf("3"), failed.errorData)
+  }
+
   private suspend fun assertActionEntryMatches(
     email: String,
     bioguide: String,

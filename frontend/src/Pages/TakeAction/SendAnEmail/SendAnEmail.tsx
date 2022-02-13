@@ -10,7 +10,7 @@ import { Issue } from "common/models/Issue";
 import { useEffect, useRef, useState } from "react";
 import { Accordion, Button, Col, Form, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import Select from "react-select";
-import useSWRImmutable from "swr";
+import useSWRImmutable from "swr/immutable";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import emailIcon from "./email-icon.svg";
