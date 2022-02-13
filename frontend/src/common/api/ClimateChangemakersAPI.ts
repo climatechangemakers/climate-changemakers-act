@@ -93,9 +93,10 @@ export const sendEmailAPI = async (
     emailBody: string,
     relatedIssueId: number,
     contactedBioguideIds: string[]
-) =>
-    retryThreeTimes(() =>
-        post<void, string | { failedBioguideIds: string[] }>("/send-email", {
+) => {
+    let bioguidesToSend = contactedBioguideIds;
+    for (let i = 0; i < 4; i++) {
+        const response = await post<void, string | { failedBioguideIds: string[] }>("/send-email", {
             originatingEmailAddress,
             title,
             firstName,
@@ -108,9 +109,21 @@ export const sendEmailAPI = async (
             emailSubject,
             emailBody,
             relatedIssueId,
-            contactedBioguideIds,
-        })
-    );
+            contactedBioguideIds: bioguidesToSend,
+        });
+        if (typeof response.error === "string")
+            return {
+                successful: false,
+                error: response.error,
+            };
+        else if (response.error?.failedBioguideIds) bioguidesToSend = response.error?.failedBioguideIds;
+        else
+            return {
+                successful: true,
+            };
+    }
+    return { succesful: false, error: bioguidesToSend };
+};
 
 export const logTweetAPI = (
     originatingEmailAddress: string,

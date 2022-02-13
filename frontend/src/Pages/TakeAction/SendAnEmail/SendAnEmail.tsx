@@ -77,17 +77,20 @@ export default function SendAnEmail({
         setIsSending(false);
 
         if (!response.successful) {
-            if (typeof response.error === "object") {
-                setBioguideIdsToSend(response.error.failedBioguideIds);
+            if (typeof response.error === "string") {
+                setSendEmailError(response?.error);
+                return;
+            }
+            if (Array.isArray(response.error)) {
+                setBioguideIdsToSend(response.error);
                 setSendEmailError(
-                    `Failed to send ${response.error.failedBioguideIds.length} email${
-                        response.error.failedBioguideIds.length > 1 ? "s" : ""
+                    `Failed to send ${response.error.length} email${
+                        response.error.length > 1 ? "s" : ""
                     }. Click to retry.`
                 );
                 return;
             }
-            setSendEmailError(response?.error ?? "Failed to send email");
-            return;
+            return setSendEmailError("Failed to send emails");
         }
         setIsEmailSent(true);
         setIsEmailDone(true);
