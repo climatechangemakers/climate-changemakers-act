@@ -57,17 +57,6 @@ const post = async <Data, Error = string>(path: string, content: Object): Promis
         })
     );
 
-const retryThreeTimes = async <Data, Error = string>(fetch: () => Promise<FetchResponse<Data, Error>>) => {
-    let response = await fetch();
-    if (!response.successful) {
-        for (var i = 0; i < 3; i++) {
-            response = await fetch();
-            if (response.successful) return response;
-        }
-    }
-    return response;
-};
-
 export const initiateActionAPI = (form: FormInfo) =>
     post<ActionInfo>("/initiate-action", {
         email: form.email,
