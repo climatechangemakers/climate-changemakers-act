@@ -158,7 +158,9 @@ export default function SendAnEmail({
                                         Your Prefix
                                         <OverlayTrigger
                                             placement="top"
-                                            overlay={<Tooltip>Congress does not allow for gender-neutral prefixes.</Tooltip>}
+                                            overlay={
+                                                <Tooltip>Congress does not allow for gender-neutral prefixes.</Tooltip>
+                                            }
                                         >
                                             <Button className="bg-transparent border-0 p-0 ms-2">
                                                 <FontAwesomeIcon icon={faInfoCircle} />
