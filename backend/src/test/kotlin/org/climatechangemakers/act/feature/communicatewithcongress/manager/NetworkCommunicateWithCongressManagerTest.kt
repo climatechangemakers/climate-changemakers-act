@@ -18,6 +18,7 @@ import org.junit.Test
 import org.slf4j.LoggerFactory
 import retrofit2.Response
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class NetworkCommunicateWithCongressManagerTest {
@@ -175,5 +176,6 @@ class NetworkCommunicateWithCongressManagerTest {
     assertEquals(email, capturedEmail.receive())
     assertEquals(bioguide, capturedBioguideId.receive())
     assertEquals(issueId, capturedIssueId.receive())
+    assertNotNull(capturedEmailDeliveryIds.tryReceive().getOrNull())
   }
 }

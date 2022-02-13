@@ -16,7 +16,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
   @Test fun `email action entries are recorded in both tables`() = suspendTest {
     val id = driver.insertIssue("this is an issue", "tweet", "url.com")
     driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "hello"))
-    manager.trackActionSendEmail("foo@foo.com", "hello", id)
+    manager.trackActionSendEmail("foo@foo.com", "hello", id, "someDeliveryId")
 
     assertEquals(
       "hello",
@@ -26,12 +26,23 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
       }
     )
 
+    val query = driver.executeQuery(
+      0,
+      "SELECT action_contact_legislator_id, email_delivery_id FROM action_email_legislator",
+      0
+    )
+
     assertEquals(
       id,
-      driver.executeQuery(0, "SELECT action_contact_legislator_id FROM action_email_legislator", 0).let {
+      query.let {
         it.next()
         it.getLong(0)
       }
+    )
+
+    assertEquals(
+      "someDeliveryId",
+      query.getString(1),
     )
   }
 

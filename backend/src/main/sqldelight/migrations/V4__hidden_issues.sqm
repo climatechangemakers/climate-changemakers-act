@@ -1,3 +1,16 @@
+-- Add default to backfill data.
+ALTER TABLE issue
+ADD COLUMN is_active SMALLINT NOT NULL DEFAULT 1;
+
+ALTER TABLE issue
+ADD CONSTRAINT boolean_value CHECK (is_active = 0 OR is_active = 1);
+
+-- Remove default because it's not desired outside of the migration.
+ALTER TABLE issue
+ALTER COLUMN is_active DROP DEFAULT;
+
+DROP VIEW IF EXISTS issue_and_focus;
+
 CREATE VIEW issue_and_focus AS
 SELECT
   issue.id,
@@ -17,26 +30,3 @@ SELECT
   END AS is_focused,
   issue.is_active
 FROM issue;
-
-selectTitleForId:
-SELECT title
-FROM issue_and_focus
-WHERE id = :issueId AND is_active = 1;
-
-selectActiveFocusIssue:
-SELECT id, title, image_url, description
-FROM issue_and_focus
-WHERE is_focused = TRUE AND is_active = 1;
-
-selectActiveUnfocusedIssues:
-SELECT id, title, image_url, description
-FROM issue_and_focus
-WHERE is_focused = FALSE AND is_active = 1;
-
-rowCount:
-SELECT COUNT(*) FROM issue_and_focus WHERE id = :issueId;
-
-selectTweetTemplate:
-SELECT precomposed_tweet_template
-FROM issue_and_focus
-WHERE id = :issueId;

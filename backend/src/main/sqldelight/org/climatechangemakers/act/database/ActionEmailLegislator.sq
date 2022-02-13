@@ -1,5 +1,6 @@
 CREATE TABLE action_email_legislator(
-  action_contact_legislator_id BIGINT NOT NULL REFERENCES action_contact_legislator(id) ON DELETE CASCADE
+  action_contact_legislator_id BIGINT NOT NULL REFERENCES action_contact_legislator(id) ON DELETE CASCADE,
+  email_delivery_id VARCHAR
 );
 
 insert:
@@ -9,4 +10,4 @@ WITH items AS (
   RETURNING id
 )
 INSERT INTO action_email_legislator
-SELECT id FROM items;
+SELECT id, :deliveryId FROM items;
