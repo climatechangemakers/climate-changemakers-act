@@ -49,7 +49,9 @@ export default function Prompts({ formRef, firstName, emailState, setEmailState,
                             as="textarea"
                             rows={4}
                             value={emailPrompts.identifyYourself}
-                            onChange={(e) => setEmailPrompts({ ...emailPrompts, identifyYourself: e.currentTarget.value })}
+                            onChange={(e) =>
+                                setEmailPrompts({ ...emailPrompts, identifyYourself: e.currentTarget.value })
+                            }
                             disabled={addedPrompts || isEmailDone}
                             placeholder="My name is Jane Doe. I am a constituent of yours from New York City, New York."
                         />
@@ -59,20 +61,30 @@ export default function Prompts({ formRef, firstName, emailState, setEmailState,
             <Row>
                 <Col xs="12">
                     <Form.Group className="mb-3 h-100" controlId="emailForm.thankYourRepresentative">
-                        <Form.Label>Thank Your Representative
+                        <Form.Label>
+                            Thank Your Representative
                             <OverlayTrigger
                                 placement="top"
-                                overlay={<Tooltip>Being cordial and professional with your elected representatives, regardless of their stance on an issue, is the most effective way to communicate your concerns.</Tooltip>}
+                                overlay={
+                                    <Tooltip>
+                                        Being cordial and professional with your elected representatives, regardless of
+                                        their stance on an issue, is the most effective way to communicate your
+                                        concerns.
+                                    </Tooltip>
+                                }
                             >
                                 <Button className="bg-transparent border-0 p-0 ms-2">
                                     <FontAwesomeIcon icon={faInfoCircle} />
                                 </Button>
-                            </OverlayTrigger></Form.Label>
+                            </OverlayTrigger>
+                        </Form.Label>
                         <Form.Control
                             as="textarea"
                             rows={4}
                             value={emailPrompts.thankYourRepresentative}
-                            onChange={(e) => setEmailPrompts({ ...emailPrompts, thankYourRepresentative: e.currentTarget.value })}
+                            onChange={(e) =>
+                                setEmailPrompts({ ...emailPrompts, thankYourRepresentative: e.currentTarget.value })
+                            }
                             disabled={addedPrompts || isEmailDone}
                             placeholder="Thank you for your service and leadership as my elected representative. I want to thank you for your leadership on climate..."
                         />
