@@ -30,9 +30,16 @@ export default function LegislatorCard({ legislator, call }: Props) {
             style={{ width: "12rem" }}
         >
             <div className={`${styles.imageContainer} position-relative m-auto`}>
-                {!imageError
-                    ? <img alt="" className={styles.image} src={legislator.imageUrl} onError={() => setImageError(true)} />
-                    : <FontAwesomeIcon size="5x" color="rgb(24, 49, 83)" icon={faCircleUser} />}
+                {!imageError ? (
+                    <img
+                        alt=""
+                        className={styles.image}
+                        src={legislator.imageUrl}
+                        onError={() => setImageError(true)}
+                    />
+                ) : (
+                    <FontAwesomeIcon size="5x" color="rgb(24, 49, 83)" icon={faCircleUser} />
+                )}
             </div>
             <Card.Body className="pt-2 pb-1 ps-2 pe-2 d-flex flex-column justify-content-between">
                 <Card.Title className="text-dark fs-6 mb-2">
