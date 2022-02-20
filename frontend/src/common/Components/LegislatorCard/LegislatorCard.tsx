@@ -1,7 +1,9 @@
 import cx from "classnames";
 import { Legislator } from "common/models/ActionInfo";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Badge, Button, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import lcvlogo from "./lcv.png";
 import styles from "./LegislatorCard.module.css";
 
@@ -18,6 +20,7 @@ export default function LegislatorCard({ legislator, call }: Props) {
     const surname = legislator.area.districtNumber ? "Rep." : "Sen.";
     const legislatorCalled = call?.bioguideIdsCalled.includes(legislator.bioguideId);
     const legislatorContainerRef = useRef(null);
+    const [imageError, setImageError] = useState(false);
 
     return (
         <Card
@@ -27,7 +30,9 @@ export default function LegislatorCard({ legislator, call }: Props) {
             style={{ width: "12rem" }}
         >
             <div className={`${styles.imageContainer} position-relative m-auto`}>
-                <img alt="" className={styles.image} src={legislator.imageUrl} />
+                {!imageError
+                    ? <img alt="" className={styles.image} src={legislator.imageUrl} onError={() => setImageError(true)} />
+                    : <FontAwesomeIcon size="5x" color="rgb(24, 49, 83)" icon={faCircleUser} />}
             </div>
             <Card.Body className="pt-2 pb-1 ps-2 pe-2 d-flex flex-column justify-content-between">
                 <Card.Title className="text-dark fs-6 mb-2">
