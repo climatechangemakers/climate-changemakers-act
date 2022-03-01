@@ -167,7 +167,7 @@ export default function WelcomePage() {
                                 setFormInfo({ ...formInfo, hasEmailingConsent: !formInfo.hasEmailingConsent })
                             }
                             type="checkbox"
-                            label="Yes, I would like to receive occasional information emails from Climate Changemakers! (optional)"
+                            label="Yes, I would like to receive occasional informational emails from Climate Changemakers! (optional)"
                         />
                     </Form.Group>
                     <Button className="w-100 text-dark fs-5" variant="primary" type="submit">
