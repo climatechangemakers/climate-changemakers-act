@@ -18,8 +18,11 @@ class DatabaseActionTrackerManager @Inject constructor(
   private val actionEmailLegislatorQueries = database.actionEmailLegislatorQueries
   private val actionSignUpQueries = database.actionSignUpQueries
 
-  override suspend fun trackActionInitiated(email: String) = withContext(ioDispatcher) {
-    initiateActionQueries.insert(email)
+  override suspend fun trackActionInitiated(
+    email: String,
+    optedIntoNewsletter: Boolean,
+  ) = withContext(ioDispatcher) {
+    initiateActionQueries.insert(email, if (optedIntoNewsletter) 1 else 0)
   }
 
   override suspend fun trackActionSendEmail(

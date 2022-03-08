@@ -2,7 +2,10 @@ package org.climatechangemakers.act.feature.action.manager
 
 interface ActionTrackerManager {
 
-  suspend fun trackActionInitiated(email: String)
+  suspend fun trackActionInitiated(
+    email: String,
+    optedIntoNewsletter: Boolean,
+  )
 
   suspend fun trackActionSendEmail(
     email: String,

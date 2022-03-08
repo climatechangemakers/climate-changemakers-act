@@ -9,7 +9,7 @@ class FakeActionTrackerManager : ActionTrackerManager {
   val capturedIssueId = Channel<Long>(capacity = Channel.BUFFERED)
   val capturedEmailDeliveryIds = Channel<String>(capacity = Channel.BUFFERED)
 
-  override suspend fun trackActionInitiated(email: String): Unit = TODO("Not yet implemented")
+  override suspend fun trackActionInitiated(email: String, optedIntoNewsletter: Boolean) = TODO("Not yet implemented")
   override suspend fun trackActionSendEmail(
     email: String,
     contactedBioguideId: String,
