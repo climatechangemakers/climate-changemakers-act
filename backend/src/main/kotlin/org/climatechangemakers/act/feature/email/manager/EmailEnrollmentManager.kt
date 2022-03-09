@@ -18,6 +18,8 @@ interface EmailEnrollmentManager {
   /**
    * Signs a Changemaker up for promotional emails with only their email. This is used when
    * someone desires just the newsletter, and not to be part of our community.
+   *
+   * @return if the changemaker was signed up
    */
-  suspend fun subscribeChangemaker(email: String)
+  suspend fun subscribeChangemaker(email: String): Boolean
 }

@@ -28,14 +28,16 @@ class MailchimpEmailEnrollmentManager @Inject constructor(
     )
   }
 
-  override suspend fun subscribeChangemaker(email: String) {
-    if (!checkSubscription(email)) {
+  override suspend fun subscribeChangemaker(email: String): Boolean {
+    val isAlreadySignedUp = checkSubscription(email)
+    if (!isAlreadySignedUp) {
       mailchimpService.subscribeChangemaker(
         audienceId = changemakersMailchimpAudienceId,
         emailMd5Hash = email.md5(),
         request = SubscribeNewsletterRequest(email)
       )
     }
+    return !isAlreadySignedUp
   }
 
   private suspend fun checkSubscription(email: String): Boolean {

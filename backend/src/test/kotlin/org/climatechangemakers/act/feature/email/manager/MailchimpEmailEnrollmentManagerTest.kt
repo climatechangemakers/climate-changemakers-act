@@ -79,4 +79,18 @@ class MailchimpEmailEnrollmentManagerTest {
       manager.subscribeChangemaker(email = "EMAIL@email.com")
     }
   }
+
+  @Test fun `manager newsletter subscribe returns subscription status true`() = suspendTest {
+    val service = FakeMailchimpService { Response.success(null) }
+    val manager = MailchimpEmailEnrollmentManager(service, "some_id")
+    assertFalse(manager.subscribeChangemaker(email = "EMAIL@email.com"))
+  }
+
+  @Test fun `manager newsletter subscribe returns subscription status false`() = suspendTest {
+    val service = FakeMailchimpService {
+      Response.error(404, ResponseBody.create(MediaType.get("application/json"), ""))
+    }
+    val manager = MailchimpEmailEnrollmentManager(service, "some_id")
+    assertTrue(manager.subscribeChangemaker(email = "EMAIL@email.com"))
+  }
 }

@@ -1,0 +1,5 @@
+ALTER TABLE action_initiate
+ADD COLUMN opted_into_newsletter SMALLINT NOT NULL DEFAULT 0;
+
+ALTER TABLE action_initiate
+ADD CONSTRAINT boolean_value CHECK (opted_into_newsletter = 0 OR opted_into_newsletter = 1);

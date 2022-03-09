@@ -1,10 +1,6 @@
 package org.climatechangemakers.act.feature.action.controller
 
 import org.climatechangemakers.act.feature.action.manager.ActionTrackerManager
-import org.climatechangemakers.act.feature.action.model.InitiateActionRequest
-import org.climatechangemakers.act.feature.action.model.InitiateActionResponse
-import org.climatechangemakers.act.feature.action.model.LogPhoneCallRequest
-import org.climatechangemakers.act.feature.action.model.SendEmailRequest
 import org.climatechangemakers.act.feature.findlegislator.manager.LegislatorsManager
 import org.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsByAddressRequest
 import io.ktor.application.ApplicationCall
@@ -18,9 +14,13 @@ import kotlinx.coroutines.launch
 import org.climatechangemakers.act.common.extension.respondNothing
 import org.climatechangemakers.act.common.model.Failure
 import org.climatechangemakers.act.common.model.Success
-import org.climatechangemakers.act.feature.action.model.LogTweetRequest
+import org.climatechangemakers.act.feature.action.model.InitiateActionRequest
+import org.climatechangemakers.act.feature.action.model.InitiateActionResponse
+import org.climatechangemakers.act.feature.action.model.SendEmailRequest
 import org.climatechangemakers.act.feature.action.model.SendEmailErrorResponse
-import org.climatechangemakers.act.feature.action.model.SendEmailResponse
+import org.climatechangemakers.act.feature.action.model.SendEmailSuccessResponse
+import org.climatechangemakers.act.feature.action.model.LogTweetRequest
+import org.climatechangemakers.act.feature.action.model.LogPhoneCallRequest
 import org.climatechangemakers.act.feature.communicatewithcongress.manager.CommunicateWithCongressManager
 import org.climatechangemakers.act.feature.email.manager.EmailEnrollmentManager
 import javax.inject.Inject
@@ -36,11 +36,15 @@ class ActionController @Inject constructor(
     val request = call.receive<InitiateActionRequest>()
 
     val response: Deferred<InitiateActionResponse> = coroutineScope {
-      if (request.desiresInformationalEmails) {
-        launch { emailManager.subscribeChangemaker(request.email) }
+      launch {
+        if (request.desiresInformationalEmails) {
+          val signedUp = emailManager.subscribeChangemaker(request.email)
+          actionTrackerManager.trackActionInitiated(request.email, optedIntoNewsletter = signedUp)
+        } else {
+          actionTrackerManager.trackActionInitiated(request.email, optedIntoNewsletter = false)
+        }
       }
 
-      launch { actionTrackerManager.trackActionInitiated(request.email) }
       async {
         InitiateActionResponse(request.email, legislatorsManager.getLegislators(request.toGetLegislatorsRequest()))
       }
@@ -52,7 +56,7 @@ class ActionController @Inject constructor(
   suspend fun sendEmailToLegislators(call: ApplicationCall) {
     val request = call.receive<SendEmailRequest>()
     when (val result = communicateWithCongressManager.sendEmails(request)) {
-      is Success -> call.respond(HttpStatusCode.OK, SendEmailResponse(result.data))
+      is Success -> call.respond(HttpStatusCode.OK, SendEmailSuccessResponse(result.data))
       is Failure -> call.respond(HttpStatusCode.InternalServerError, SendEmailErrorResponse(result.errorData))
     }
   }

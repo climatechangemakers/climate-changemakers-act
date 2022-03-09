@@ -1,12 +1,9 @@
 CREATE TABLE action_initiate(
-  -- TODO(kcianfarini) update this to CITEXT when SQLDelight supports that grammar.
-  -- TODO(kcianfarini) This doesn't cause a problem in the interim, but would be nice to have the proper type represented.
-  -- TODO(kcianfarini) related issue: https://github.com/AlecStrong/sql-psi/issues/288
-  email VARCHAR NOT NULL,
-  initiated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  email CITEXT NOT NULL,
+  initiated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  opted_into_newsletter SMALLINT NOT NULL DEFAULT 0 CONSTRAINT boolean_check CHECK (opted_into_newsletter = 0 OR opted_into_newsletter = 1)
 );
 
 insert:
-INSERT INTO action_initiate(email)
-VALUES(:email);
-
+INSERT INTO action_initiate(email, opted_into_newsletter)
+VALUES(:email, :optedIntoNewsletter);
