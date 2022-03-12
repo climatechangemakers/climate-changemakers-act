@@ -1,16 +1,16 @@
 [versions]
-dagger = "2.37"
-kotlin = "1.5.31"
+dagger = "2.41"
+kotlin = "1.6.10"
 kotlinx-serialization = "1.2.2"
-ktor = "1.6.1"
-logback = "1.2.3"
-postgresql = "42.2.16"
+ktor = "1.6.7"
+logback = "1.2.11"
+postgresql = "42.3.3"
 retrofit = "2.9.0"
 retrofit2-kotlinx-serialization-converter = "0.8.0"
-shadow = "7.0.0"
-sqldelight = "1.5.2"
-testcontainers = "1.15.3"
-xmlutil = "0.83.0"
+shadow = "7.1.2"
+sqldelight = "1.5.3"
+testcontainers = "1.16.3"
+xmlutil = "0.84.1"
 
 [libraries]
 kotlin-test = { module =  "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
