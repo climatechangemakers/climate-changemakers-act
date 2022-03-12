@@ -1,25 +1,17 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val ktor_version: String by project
-val kotlin_version: String by project
-val logback_version: String by project
-
 buildscript {
     repositories { mavenCentral() }
-    dependencies {
-        classpath("gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0")
-        classpath("com.squareup.sqldelight:gradle-plugin:1.5.2")
-    }
 }
 
 plugins {
     application
-    kotlin("jvm") version "1.5.21"
-    kotlin("plugin.serialization") version "1.5.21"
-    kotlin("kapt") version "1.5.21"
-    id("com.github.johnrengelman.shadow") version "7.0.0"
-    id("com.squareup.sqldelight") version "1.5.2"
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.shadow)
+    alias(libs.plugins.sqldelight)
 }
 
 group = "org.climatechangemakers.act"
@@ -56,24 +48,24 @@ repositories {
 }
 
 dependencies {
-    implementation("io.ktor:ktor-server-core:$ktor_version")
-    implementation("io.ktor:ktor-server-netty:$ktor_version")
-    implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation(libs.ktor.server.core)
+    implementation(libs.ktor.server.netty)
+    implementation(libs.ktor.serialization)
 
-    implementation("com.google.dagger:dagger:2.37")
-    kapt("com.google.dagger:dagger-compiler:2.37")
+    implementation(libs.logback.classic)
 
-    implementation("com.squareup.sqldelight:jdbc-driver:1.5.2")
-    implementation("org.postgresql:postgresql:42.2.16")
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
 
+    implementation(libs.sqldelight.jdbc.driver)
+    implementation(libs.postgresql)
 
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
-    implementation("io.github.pdvrieze.xmlutil:serialization-jvm:0.83.0")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
-    implementation("io.ktor:ktor-serialization:$ktor_version")
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.serialization.converter)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.xmlutil.serialization.jvm)
 
-    testImplementation("io.ktor:ktor-server-tests:$ktor_version")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlin_version")
-    testImplementation("org.testcontainers:postgresql:1.15.3")
+    testImplementation(libs.ktor.server.tests)
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.testcontainers.postgresql)
 }
