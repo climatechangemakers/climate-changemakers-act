@@ -1,0 +1,47 @@
+[versions]
+dagger = "2.37"
+kotlin = "1.5.31"
+kotlinx-serialization = "1.2.2"
+ktor = "1.6.1"
+logback = "1.2.3"
+postgresql = "42.2.16"
+retrofit = "2.9.0"
+retrofit2-kotlinx-serialization-converter = "0.8.0"
+shadow = "7.0.0"
+sqldelight = "1.5.2"
+testcontainers = "1.15.3"
+xmlutil = "0.83.0"
+
+[libraries]
+kotlin-test = { module =  "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+
+ktor-serialization = { module = "io.ktor:ktor-serialization", version.ref = "ktor" }
+ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+ktor-server-tests = { module = "io.ktor:ktor-server-tests", version.ref = "ktor" }
+
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+
+dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+
+sqldelight-jdbc-driver = { module = "com.squareup.sqldelight:jdbc-driver", version.ref = "sqldelight" }
+
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+
+testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
+
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit2-kotlinx-serialization-converter"}
+
+xmlutil-serialization-jvm = { module = "io.github.pdvrieze.xmlutil:serialization-jvm", version.ref = "xmlutil" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
+sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }
