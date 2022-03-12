@@ -86,7 +86,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
     assertEquals(
       listOf("foo", "bar"),
       driver.executeQuery(0, "SELECT contacted_bioguide_id FROM action_contact_legislator", 0).let { cursor ->
-        buildList {
+        buildList<String?> {
           cursor.next()
           add(cursor.getString(0))
           cursor.next()
