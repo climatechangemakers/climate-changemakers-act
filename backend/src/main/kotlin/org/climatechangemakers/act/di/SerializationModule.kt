@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import kotlinx.serialization.json.Json
 import nl.adaptivity.xmlutil.XmlDeclMode
+import nl.adaptivity.xmlutil.core.XmlVersion
 import nl.adaptivity.xmlutil.serialization.XML
 import okhttp3.MediaType
 import retrofit2.Converter
@@ -23,5 +24,6 @@ import retrofit2.Converter
   @Provides fun providesXml(): XML = XML {
     indentString = "  "
     xmlDeclMode = XmlDeclMode.Charset
+    xmlVersion = XmlVersion.XML10
   }
 }
