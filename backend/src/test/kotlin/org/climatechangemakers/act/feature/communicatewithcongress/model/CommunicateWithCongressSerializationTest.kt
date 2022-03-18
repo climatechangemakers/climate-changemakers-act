@@ -2,8 +2,10 @@ package org.climatechangemakers.act.feature.communicatewithcongress.model
 
 import kotlinx.serialization.encodeToString
 import nl.adaptivity.xmlutil.XmlDeclMode
+import nl.adaptivity.xmlutil.core.XmlVersion
 import nl.adaptivity.xmlutil.serialization.XML
 import org.climatechangemakers.act.common.model.RepresentedArea
+import org.climatechangemakers.act.di.SerializationModule
 import org.junit.Test
 import java.util.Calendar
 import java.util.Calendar.JANUARY
@@ -12,11 +14,7 @@ import kotlin.test.assertEquals
 
 class CommunicateWithCongressSerializationTest {
 
-  private val xml = XML {
-    xmlDeclMode = XmlDeclMode.Charset
-    indentString = " "
-    indent = 2
-  }
+  private val xml = SerializationModule.providesXml()
 
   @Test fun `sample object structure serializes correctly`() {
     val request = CommunicateWithCogressRequest(
@@ -55,7 +53,7 @@ class CommunicateWithCongressSerializationTest {
 
     assertEquals(
       """
-        |<?xml version="1.1" encoding="UTF-8"?>
+        |<?xml version="1.0" encoding="UTF-8"?>
         |<CWC>
         |  <CWCVersion>2.0</CWCVersion>
         |  <Delivery>
