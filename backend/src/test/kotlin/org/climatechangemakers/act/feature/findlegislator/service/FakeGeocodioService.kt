@@ -8,7 +8,7 @@ class FakeGeocodioService(
 
   var capturedQuery: String? = null
 
-  override suspend fun geocode(query: String, fields: List<String>): GeocodioApiResult{
+  override suspend fun geocode(query: String): GeocodioApiResult{
     capturedQuery = query
     return fakeResultProvider()
   }

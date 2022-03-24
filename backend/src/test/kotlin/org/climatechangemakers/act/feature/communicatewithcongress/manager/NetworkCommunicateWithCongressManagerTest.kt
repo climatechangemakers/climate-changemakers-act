@@ -8,6 +8,7 @@ import org.climatechangemakers.act.feature.action.model.SendEmailRequest
 import org.climatechangemakers.act.feature.communicatewithcongress.model.Prefix
 import org.climatechangemakers.act.feature.communicatewithcongress.model.Topic
 import org.climatechangemakers.act.feature.communicatewithcongress.service.FakeCommunicateWithCongressService
+import org.climatechangemakers.act.feature.findlegislator.manager.FakeMemberOfCongressManager
 import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongressManager
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorPoliticalParty
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
@@ -23,20 +24,7 @@ import kotlin.test.assertTrue
 
 class NetworkCommunicateWithCongressManagerTest {
 
-  private val fakeMemberOfCongressManager = MemberOfCongressManager { bioguideId ->
-    MemberOfCongress(
-      bioguideId = bioguideId,
-      fullName = "Frank McDoodle",
-      legislativeRole = if (bioguideId == "2") LegislatorRole.Senator else LegislatorRole.Representative,
-      representedArea = RepresentedArea.WestVirginia,
-      congressionalDistrict = null,
-      party = LegislatorPoliticalParty.Republican,
-      dcPhoneNumber = "867-5309",
-      twitterHandle = "@somedude",
-      cwcOfficeCode = if (bioguideId == "1") null else "this-office-$bioguideId",
-    )
-  }
-
+  private val fakeMemberOfCongressManager = FakeMemberOfCongressManager()
   private val fakeActionManager = FakeActionTrackerManager()
   private val fakeIssueManager = FakeIssueManager()
   private val fakeSenteService = FakeCommunicateWithCongressService { Response.success(Unit) }
@@ -68,11 +56,17 @@ class NetworkCommunicateWithCongressManagerTest {
       contactedBioguideIds = listOf("1", "2", "3"),
     )
 
+    request.contactedBioguideIds.forEach { id ->
+      fakeMemberOfCongressManager.memberQueue.send(
+        FakeMemberOfCongressManager.DEFAULT_MEMBER.copy(bioguideId = id)
+      )
+    }
+
     repeat(3) { fakeIssueManager.titles.send("issue title") }
 
     val result = manager.sendEmails(request)
     assertTrue(result is Success)
-    request.contactedBioguideIds.drop(1).forEach { id ->
+    request.contactedBioguideIds.forEach { id ->
       assertActionEntryMatches(request.originatingEmailAddress, id, request.relatedIssueId)
     }
   }
@@ -94,16 +88,58 @@ class NetworkCommunicateWithCongressManagerTest {
       contactedBioguideIds = listOf("1", "2", "3"),
     )
 
-    repeat(3) { fakeIssueManager.titles.send("issue title") }
+    repeat(3) { iteration ->
+      fakeIssueManager.titles.send("issue title")
+      fakeMemberOfCongressManager.memberQueue.send(
+        FakeMemberOfCongressManager.DEFAULT_MEMBER.copy(
+          legislativeRole = if (iteration == 1) LegislatorRole.Senator else LegislatorRole.Representative,
+          cwcOfficeCode = "this-office-${iteration + 1}"
+        )
+      )
+    }
 
     val result = manager.sendEmails(request)
     assertTrue(result is Success)
 
-    request.contactedBioguideIds.drop(1).forEach { id ->
+    request.contactedBioguideIds.forEach { id ->
       val service = if (id == "2") fakeSenteService else fakeHouseService
       val body = service.capturedBodies.tryReceive().getOrThrow()
       assertEquals("this-office-$id", body.recipient.officeCode)
     }
+  }
+
+  @Test fun `sendEmails does not make request to CWC for bioguides without an office code`() = suspendTest {
+    val request = SendEmailRequest(
+      originatingEmailAddress = "k@c.com",
+      title = Prefix.Dr,
+      firstName = "Foo",
+      lastName = "McBar",
+      streetAddress = "123 Main Street",
+      city = "Richmond",
+      state = RepresentedArea.Virginia,
+      postalCode = "23223",
+      relatedTopics = listOf(Topic.Energy),
+      emailBody = "Body",
+      emailSubject = "subject",
+      relatedIssueId = 1,
+      contactedBioguideIds = listOf("1", "2", "3"),
+    )
+
+    repeat(3) { iteration ->
+      fakeIssueManager.titles.send("issue title")
+      fakeMemberOfCongressManager.memberQueue.send(
+        FakeMemberOfCongressManager.DEFAULT_MEMBER.copy(
+          legislativeRole = if (iteration == 1) LegislatorRole.Senator else LegislatorRole.Representative,
+          cwcOfficeCode = null,
+        )
+      )
+    }
+
+    val result = manager.sendEmails(request)
+
+    assertTrue(result is Success)
+    assertTrue(fakeSenteService.capturedBodies.isEmpty)
+    assertTrue(fakeHouseService.capturedBodies.isEmpty)
   }
 
   @Test fun `sendEmails associates with the correct campaignId`() = suspendTest {
@@ -123,12 +159,19 @@ class NetworkCommunicateWithCongressManagerTest {
       contactedBioguideIds = listOf("1", "2", "3"),
     )
 
-    repeat(3) { fakeIssueManager.titles.send("issue title") }
+    repeat(3) { iteration ->
+      fakeIssueManager.titles.send("issue title")
+      fakeMemberOfCongressManager.memberQueue.send(
+        FakeMemberOfCongressManager.DEFAULT_MEMBER.copy(
+          legislativeRole = if (iteration == 1) LegislatorRole.Senator else LegislatorRole.Representative,
+        )
+      )
+    }
 
     val result = manager.sendEmails(request)
     assertTrue(result is Success)
 
-    request.contactedBioguideIds.drop(1).forEach { id ->
+    request.contactedBioguideIds.forEach { id ->
       val service = if (id == "2") fakeSenteService else fakeHouseService
       val body = service.capturedBodies.tryReceive().getOrThrow()
       assertEquals("cf9133df63e2b5eb9a567c3e7b4f1a0f4688719d33730833dee1ea591047c293", body.delivery.campaignId)
@@ -162,7 +205,12 @@ class NetworkCommunicateWithCongressManagerTest {
       contactedBioguideIds = listOf("1", "2", "3"),
     )
 
-    repeat(3) { fakeIssueManager.titles.send("issue title") }
+    repeat(3) {
+      fakeIssueManager.titles.send("issue title")
+      fakeMemberOfCongressManager.memberQueue.send(
+        FakeMemberOfCongressManager.DEFAULT_MEMBER,
+      )
+    }
 
     val failed = manager.sendEmails(request)
     assertTrue(failed is Failure)
@@ -194,7 +242,14 @@ class NetworkCommunicateWithCongressManagerTest {
       contactedBioguideIds = listOf("1", "2", "3"),
     )
 
-    repeat(3) { fakeIssueManager.titles.send("issue title") }
+    repeat(3) { iteration ->
+      fakeIssueManager.titles.send("issue title")
+      fakeMemberOfCongressManager.memberQueue.send(
+        FakeMemberOfCongressManager.DEFAULT_MEMBER.copy(
+          legislativeRole = if (iteration == 2) LegislatorRole.Representative else LegislatorRole.Senator,
+        )
+      )
+    }
 
     val failed = manager.sendEmails(request)
     assertTrue(failed is Failure)

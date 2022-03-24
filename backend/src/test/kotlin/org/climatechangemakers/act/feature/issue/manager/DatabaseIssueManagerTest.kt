@@ -1,6 +1,7 @@
 package org.climatechangemakers.act.feature.issue.manager
 
 import org.climatechangemakers.act.common.model.RepresentedArea
+import org.climatechangemakers.act.feature.findlegislator.manager.FakeMemberOfCongressManager
 import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongressManager
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorPoliticalParty
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
@@ -18,19 +19,7 @@ import kotlin.test.assertFailsWith
 
 class DatabaseIssueManagerTest : TestContainerProvider() {
 
-  private val fakeMemberOfCongressManager = MemberOfCongressManager { bioguideId ->
-    MemberOfCongress(
-      bioguideId = bioguideId,
-      fullName = "name",
-      legislativeRole = LegislatorRole.Representative,
-      representedArea = RepresentedArea.Virginia,
-      congressionalDistrict = null,
-      party = LegislatorPoliticalParty.Democrat,
-      dcPhoneNumber = "1",
-      twitterHandle = "handle",
-      cwcOfficeCode = null,
-    )
-  }
+  private val fakeMemberOfCongressManager = FakeMemberOfCongressManager()
   private val issueManager = DatabaseIssueManager(fakeMemberOfCongressManager, database, EmptyCoroutineContext)
 
   @Test fun `getting focus issue returns most recently focused item`() = suspendTest {
@@ -115,6 +104,9 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
 
   @Test fun `precomposed tweet is formatted correctly`() = suspendTest {
     val id1 = driver.insertIssue("issue", "This is a tweet to %s", "url.com")
+    fakeMemberOfCongressManager.memberQueue.send(
+      FakeMemberOfCongressManager.DEFAULT_MEMBER.copy(bioguideId = "id", twitterHandle = "handle")
+    )
     val tweet = issueManager.getPreComposedTweetForIssue(id1, listOf("id"))
     assertEquals(PreComposedTweetResponse("This is a tweet to @handle"), tweet)
   }

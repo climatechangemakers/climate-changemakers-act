@@ -9,9 +9,11 @@ import okhttp3.*
 import org.climatechangemakers.act.feature.communicatewithcongress.service.HouseCommunicateWithCongressService
 import org.climatechangemakers.act.feature.communicatewithcongress.service.SenateCommunicateWithCongressService
 import org.climatechangemakers.act.feature.email.service.MailchimpService
+import org.climatechangemakers.act.feature.findlegislator.service.GoogleCivicService
 import org.climatechangemakers.act.feature.membership.service.AirtableService
 import org.slf4j.Logger
 import retrofit2.Converter
+import retrofit2.Converter.Factory
 import retrofit2.Retrofit
 
 @Module object ServiceModule {
@@ -53,6 +55,22 @@ import retrofit2.Retrofit
     logger.info("${newRequest.method()} ${newRequest.url().redactAndRetainPath()}")
     chain.proceed(newRequest)
   }.build()
+
+  @Provides @GoogleCivic fun providesGoogleCividClient(logger: Logger): OkHttpClient = createUrlApiKeyOkHttpClient(
+    apiKeyName = "key",
+    apiKey = getEnvironmentVariable(EnvironmentVariable.GoogleCivicApiKey),
+    logger = logger,
+  )
+
+  @Provides fun providesGoogleCivicService(
+    @GoogleCivic client: OkHttpClient,
+    jsonConverterFactory: Factory,
+  ): GoogleCivicService = Retrofit.Builder()
+    .baseUrl("https://civicinfo.googleapis.com/civicinfo/v2/")
+    .addConverterFactory(jsonConverterFactory)
+    .client(client)
+    .build()
+    .create(GoogleCivicService::class.java)
 
   @Provides @Geocodio fun providesGeocodioClient(logger: Logger): OkHttpClient = createUrlApiKeyOkHttpClient(
     apiKeyName = "api_key",

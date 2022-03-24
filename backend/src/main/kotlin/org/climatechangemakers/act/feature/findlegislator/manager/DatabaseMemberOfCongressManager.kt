@@ -1,6 +1,7 @@
 package org.climatechangemakers.act.feature.findlegislator.manager
 
 import kotlinx.coroutines.withContext
+import org.climatechangemakers.act.common.model.RepresentedArea
 import org.climatechangemakers.act.database.Database
 import org.climatechangemakers.act.di.Io
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
@@ -17,5 +18,16 @@ class DatabaseMemberOfCongressManager @Inject constructor(
 
   override suspend fun getMemberOfCongressForBioguide(bioguideId: String) = withContext(ioDispatcher) {
     memberOfCongressQueries.selectForBioguide(bioguideId, ::MemberOfCongress).executeAsOne()
+  }
+
+  override suspend fun getMembersForCongressionalDistrict(
+    state: RepresentedArea,
+    district: Short,
+  ): List<MemberOfCongress> = withContext(ioDispatcher) {
+    memberOfCongressQueries.selectForCongressionalDistrict(
+      state = state,
+      congressionalDistrict = district,
+      mapper = ::MemberOfCongress,
+    ).executeAsList()
   }
 }

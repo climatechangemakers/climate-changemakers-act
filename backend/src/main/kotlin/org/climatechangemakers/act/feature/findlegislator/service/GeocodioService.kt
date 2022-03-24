@@ -9,6 +9,5 @@ interface GeocodioService {
   @GET("geocode")
   suspend fun geocode(
     @Query("q") query: String,
-    @Query("fields") fields: List<String> = listOf("cd"),
   ): GeocodioApiResult
 }
