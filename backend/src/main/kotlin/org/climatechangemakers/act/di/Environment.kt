@@ -9,6 +9,7 @@ fun getEnvironmentVariable(
 
 enum class EnvironmentVariable(val key: String) {
   GeocodioApiKey("GEOCODIO_API_KEY"),
+  GoogleCivicApiKey("GOOGLE_CIVIC_API_KEY"),
   SCWCApiKey("SCWC_API_KEY"),
   SCWCUrl("SCWC_URL"),
   HCWCApiKey("HCWC_API_KEY"),

@@ -1,20 +1,16 @@
 package org.climatechangemakers.act.feature.findlegislator.manager
 
 import org.climatechangemakers.act.common.model.RepresentedArea
-import org.climatechangemakers.act.feature.findlegislator.model.CongressionalDistrict
-import org.climatechangemakers.act.feature.findlegislator.model.Fields
 import org.climatechangemakers.act.feature.findlegislator.model.GeocodeResult
 import org.climatechangemakers.act.feature.findlegislator.model.GeocodioApiResult
-import org.climatechangemakers.act.feature.findlegislator.model.GeocodioLegislator
 import org.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsByAddressRequest
-import org.climatechangemakers.act.feature.findlegislator.model.Legislator
+import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongressDto
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorArea
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorPoliticalParty
-import org.climatechangemakers.act.feature.findlegislator.model.LegislatorReferences
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
 import org.climatechangemakers.act.feature.findlegislator.model.Location
-import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
 import org.climatechangemakers.act.feature.findlegislator.service.FakeGeocodioService
+import org.climatechangemakers.act.feature.findlegislator.service.FakeGoogleCivicService
 import org.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import org.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
 import org.climatechangemakers.act.feature.lcvscore.model.LcvScore
@@ -35,57 +31,20 @@ class LegislatorsManagerTest {
     )
   }
 
-  private val fakeMemberOfCongressManager = MemberOfCongressManager { bioguideId ->
-    when (bioguideId) {
-      "M00001" -> MemberOfCongress(
-        bioguideId = bioguideId,
-        fullName = "A. Donald McEachin",
-        legislativeRole = LegislatorRole.Representative,
-        representedArea = RepresentedArea.NewJersey,
-        congressionalDistrict = 4,
-        party = LegislatorPoliticalParty.Democrat,
-        dcPhoneNumber = "555-555-5555",
-        twitterHandle = "fancytwitter",
-        cwcOfficeCode = "foo",
-      )
-      "K00001" -> MemberOfCongress(
-        bioguideId = bioguideId,
-        fullName = "Tim Kaine",
-        legislativeRole = LegislatorRole.Senator,
-        representedArea = RepresentedArea.NewJersey,
-        congressionalDistrict = null,
-        party = LegislatorPoliticalParty.Republican,
-        dcPhoneNumber = "555-555-5555",
-        twitterHandle = "fancytwitter2",
-        cwcOfficeCode = "foo",
-      )
-      else -> error("")
-    }
-  }
-
+  private val fakeGoogleCivicService = FakeGoogleCivicService()
+  private val fakeMemberOfCongressManager = FakeMemberOfCongressManager()
   private val fakeDistrictOfficerManager = DistrictOfficerManager { _, _ -> "867-5309" }
   private val fakeGeocodioService = FakeGeocodioService {
     GeocodioApiResult(
-      results = listOf(
-        GeocodeResult(
-          location = Location(0.0, 0.0),
-          fields = Fields(
-            congressionalDistricts = listOf(
-              CongressionalDistrict(
-                currentLegislators = listOf(
-                  GeocodioLegislator(references = LegislatorReferences(bioguide = "M00001")),
-                  GeocodioLegislator(references = LegislatorReferences(bioguide = "K00001"))
-                )
-              )
-            )
-          )
-        )
+      listOf(
+        GeocodeResult(Location(0.0, 0.0))
       )
     )
   }
 
   private val manager = LegislatorsManager(
     fakeGeocodioService,
+    fakeGoogleCivicService,
     fakeLcvManager,
     fakeDistrictOfficerManager,
     fakeMemberOfCongressManager,
@@ -99,6 +58,8 @@ class LegislatorsManagerTest {
       postalCode = "08096",
     )
 
+    fakeGoogleCivicService.resultQueue.send(FakeGoogleCivicService.buildApiResponse(RepresentedArea.Virginia, 4))
+    fakeMemberOfCongressManager.memberListQueue.send(listOf(FakeMemberOfCongressManager.DEFAULT_MEMBER))
     manager.getLegislators(request)
 
     assertEquals(
@@ -115,38 +76,25 @@ class LegislatorsManagerTest {
       postalCode = "08096",
     )
 
+    fakeGoogleCivicService.resultQueue.send(FakeGoogleCivicService.buildApiResponse(RepresentedArea.Virginia, 4))
+    fakeMemberOfCongressManager.memberListQueue.send(listOf(FakeMemberOfCongressManager.DEFAULT_MEMBER))
     val response = manager.getLegislators(request)
 
     assertEquals(
       expected = listOf(
-        Legislator(
-          name = "A. Donald McEachin",
-          bioguideId = "M00001",
+        MemberOfCongressDto(
+          name = "Full name",
+          bioguideId = "bioguide",
           role = LegislatorRole.Representative,
-          phoneNumbers = listOf("555-555-5555", "867-5309"),
-          twitter = "fancytwitter",
-          imageUrl = "https://bioguide.congress.gov/bioguide/photo/M/M00001.jpg",
+          phoneNumbers = listOf("(555) 555-5555", "867-5309"),
+          twitter = "foo",
+          imageUrl = "https://bioguide.congress.gov/bioguide/photo/b/bioguide.jpg",
+          area = LegislatorArea(RepresentedArea.Virginia, 1),
           lcvScores = listOf(
             LcvScore(10, LcvScoreType.LifetimeScore),
             LcvScore(10, LcvScoreType.YearlyScore(2020)),
             LcvScore(10, LcvScoreType.YearlyScore(2019)),
           ),
-          area = LegislatorArea(RepresentedArea.NewJersey, 4),
-          partyAffiliation = LegislatorPoliticalParty.Democrat,
-        ),
-        Legislator(
-          name = "Tim Kaine",
-          bioguideId = "K00001",
-          role = LegislatorRole.Senator,
-          phoneNumbers = listOf("555-555-5555", "867-5309"),
-          twitter = "fancytwitter2",
-          imageUrl = "https://bioguide.congress.gov/bioguide/photo/K/K00001.jpg",
-          lcvScores = listOf(
-            LcvScore(10, LcvScoreType.LifetimeScore),
-            LcvScore(10, LcvScoreType.YearlyScore(2020)),
-            LcvScore(10, LcvScoreType.YearlyScore(2019)),
-          ),
-          area = LegislatorArea(RepresentedArea.NewJersey, null),
           partyAffiliation = LegislatorPoliticalParty.Republican,
         ),
       ),

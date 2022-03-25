@@ -14,19 +14,27 @@ class DatabaseMemberOfCongressManagerTest : TestContainerProvider() {
 
   private val manager = DatabaseMemberOfCongressManager(database, EmptyCoroutineContext)
 
-  @Test fun `select gets correct result`() = suspendTest {
-    insert(MemberOfCongress(
-      "a",
-      "a",
+  @Test fun `select for congressional district get house representative`() = suspendTest {
+    val expectedMember = MemberOfCongress(
+      "b",
+      "b",
       LegislatorRole.Representative,
-      RepresentedArea.NewJersey,
+      RepresentedArea.Virginia,
       1,
       LegislatorPoliticalParty.Republican,
       "555-555-5555",
-      "twitter1",
-      "foobar",
-    ))
+      "twitter2",
+      "barfoo",
+    )
 
+    insert(expectedMember)
+    assertEquals(
+      listOf(expectedMember),
+      manager.getMembersForCongressionalDistrict(RepresentedArea.Virginia, 1),
+    )
+  }
+
+  @Test fun `select for congressional district gets senators`() = suspendTest {
     val expectedMember = MemberOfCongress(
       "b",
       "b",
@@ -40,7 +48,14 @@ class DatabaseMemberOfCongressManagerTest : TestContainerProvider() {
     )
 
     insert(expectedMember)
-    assertEquals(expectedMember, manager.getMemberOfCongressForBioguide("b"))
+    assertEquals(
+      listOf(expectedMember),
+      manager.getMembersForCongressionalDistrict(RepresentedArea.Virginia, 1),
+    )
+  }
+
+  @Test fun `select for congressional district omits irrelevant content`() = suspendTest {
+
   }
 
   private fun insert(member: MemberOfCongress) = driver.execute(

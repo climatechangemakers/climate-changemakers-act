@@ -3,7 +3,7 @@ package org.climatechangemakers.act.feature.findlegislator.model
 import org.climatechangemakers.act.feature.lcvscore.model.LcvScore
 import kotlinx.serialization.Serializable
 
-@Serializable data class Legislator(
+@Serializable data class MemberOfCongressDto(
   val name: String,
   val bioguideId: String,
   val role: LegislatorRole,

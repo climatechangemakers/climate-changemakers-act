@@ -1,7 +1,7 @@
 package org.climatechangemakers.act.feature.findlegislator.manager
 
 import org.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsByAddressRequest
-import org.climatechangemakers.act.feature.findlegislator.model.Legislator
+import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongressDto
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorArea
 import org.climatechangemakers.act.feature.findlegislator.service.GeocodioService
 import org.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
@@ -10,29 +10,33 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
+import org.climatechangemakers.act.feature.findlegislator.service.GoogleCivicService
 import javax.inject.Inject
 
 class LegislatorsManager @Inject constructor(
   private val geocodioService: GeocodioService,
+  private val googleCivicService: GoogleCivicService,
   private val lcvScoreManager: LcvScoreManager,
   private val districtOfficerManager: DistrictOfficerManager,
   private val memberOfCongressManager: MemberOfCongressManager,
 ) {
 
-  suspend fun getLegislators(request: GetLegislatorsByAddressRequest): List<Legislator> = coroutineScope {
-    val geoCodioResponse = geocodioService.geocode(query = request.queryString).results.first()
-    geoCodioResponse.fields.congressionalDistricts.first().currentLegislators.map { geocodioLegislator ->
-      async {
-        val bioguideId = geocodioLegislator.references.bioguide
-        val lcvScores = async { getLcvScoresForBioguide(bioguideId) }
-        val memberOfCongress = async { memberOfCongressManager.getMemberOfCongressForBioguide(bioguideId) }
-        val districtPhoneNumber = async {
-          districtOfficerManager.getNearestDistrictOfficePhoneNumber(bioguideId, geoCodioResponse.location)
-        }
+  suspend fun getLegislators(request: GetLegislatorsByAddressRequest): List<MemberOfCongressDto> = coroutineScope {
+    val membersOfCongress = async {
+      val googleCivicResponse = googleCivicService.getCongressionalDistrict(request.queryString)
+      memberOfCongressManager.getMembersForCongressionalDistrict(
+        state = request.state,
+        district = googleCivicResponse.congressionalDistrict,
+      )
+    }
 
-        memberOfCongress.await().toLegislator(
-          districtPhoneNumber = districtPhoneNumber.await(),
-          lcvScores = lcvScores.await(),
+    val location = geocodioService.geocode(query = request.queryString).results.first().location
+
+    membersOfCongress.await().map { member ->
+      async {
+        member.toLegislator(
+          districtPhoneNumber = districtOfficerManager.getNearestDistrictOfficePhoneNumber(member.bioguideId, location),
+          lcvScores = getLcvScoresForBioguide(member.bioguideId),
         )
       }
     }.awaitAll()
@@ -55,7 +59,7 @@ private val GetLegislatorsByAddressRequest.queryString: String get() = "$streetA
 private fun MemberOfCongress.toLegislator(
   districtPhoneNumber: String?,
   lcvScores: List<LcvScore>,
-) = Legislator(
+) = MemberOfCongressDto(
   name = fullName,
   bioguideId = bioguideId,
   role = legislativeRole,
