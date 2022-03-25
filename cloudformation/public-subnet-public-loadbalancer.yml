@@ -81,6 +81,8 @@ Resources:
           Secrets:
             - Name: GEOCODIO_API_KEY
               ValueFrom: 'arn:aws:secretsmanager:us-west-2:207054523690:secret:GEOCODIO_API_KEY-9Q9NTK'
+            - Name: GOOGLE_CIVIC_API_KEY
+              ValueFrom: 'arn:aws:secretsmanager:us-west-2:207054523690:secret:GOOGLE_CIVIC_API_KEY-tDifo3'
             - Name: POSTGRES_PASSWORD
               ValueFrom: 'arn:aws:secretsmanager:us-west-2:207054523690:secret:POSTGRES_PASSWORD-GEMmif'
             - Name: POSTGRES_USER
