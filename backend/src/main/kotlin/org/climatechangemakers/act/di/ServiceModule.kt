@@ -56,7 +56,7 @@ import retrofit2.Retrofit
     chain.proceed(newRequest)
   }.build()
 
-  @Provides @GoogleCivic fun providesGoogleCividClient(logger: Logger): OkHttpClient = createUrlApiKeyOkHttpClient(
+  @Provides @GoogleCivic fun providesGoogleCivicClient(logger: Logger): OkHttpClient = createUrlApiKeyOkHttpClient(
     apiKeyName = "key",
     apiKey = getEnvironmentVariable(EnvironmentVariable.GoogleCivicApiKey),
     logger = logger,
