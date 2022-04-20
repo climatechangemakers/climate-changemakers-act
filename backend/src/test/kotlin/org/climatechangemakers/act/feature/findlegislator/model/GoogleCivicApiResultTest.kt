@@ -22,4 +22,10 @@ class GoogleCivicApiResultTest {
     val actual = GoogleCivicApiResult(mapOf(formatted to emptyMap())).congressionalDistrict
     assertEquals(10, actual)
   }
+
+  @Test fun `civic api result can parse ocd result without congressional district`() {
+    val formatted = "ocd-division/country:us/state:sd"
+    val actual = GoogleCivicApiResult(mapOf(formatted to emptyMap())).congressionalDistrict
+    assertEquals(0, actual)
+  }
 }

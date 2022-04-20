@@ -12,5 +12,6 @@ private val openCivicDataRegex = """ocd-division/country:us/state:[a-zA-Z]{2}/cd
     ?.groups
     ?.get(1)
     ?.value
-    ?.toShort()!!
+    ?.toShort()
+    ?: 0 // If no match is present, then this state has an "at large" congressional district.
 }
