@@ -10,7 +10,7 @@ CREATE TABLE member_of_congress (
   congressional_district SMALLINT,
   party VARCHAR AS LegislatorPoliticalParty NOT NULL,
   dc_phone_number VARCHAR NOT NULL,
-  twitter_handle VARCHAR NOT NULL,
+  twitter_handle VARCHAR,
   cwc_office_code VARCHAR
 );
 
@@ -21,3 +21,7 @@ WHERE bioguide_id = :bioguideId;
 selectForCongressionalDistrict:
 SELECT * FROM member_of_congress
 WHERE state = :state AND (congressional_district = :congressionalDistrict OR congressional_district IS NULL);
+
+selectTwitterHandlesForBioguides:
+SELECT twitter_handle FROM member_of_congress
+WHERE twitter_handle IS NOT NULL AND bioguide_id IN :bioguideIds;

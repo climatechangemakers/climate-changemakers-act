@@ -56,9 +56,11 @@ export default function LegislatorCard({ legislator, call }: Props) {
                                 {legislator.area.districtNumber ? `-${legislator.area.districtNumber}` : ""}
                             </Badge>
                         </div>
-                        <div className="text-purple mb-2 fs-7 fw-bold" ref={legislatorContainerRef}>
-                            @{legislator.twitter}
-                        </div>
+                        {legislator.twitter != null && (
+                            <div className="text-purple mb-2 fs-7 fw-bold" ref={legislatorContainerRef}>
+                                @{legislator.twitter}
+                            </div>
+                        )}
                         {legislator.lcvScores.length > 0 && (
                             <OverlayTrigger
                                 placement="bottom"

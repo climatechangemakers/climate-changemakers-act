@@ -30,4 +30,10 @@ class DatabaseMemberOfCongressManager @Inject constructor(
       mapper = ::MemberOfCongress,
     ).executeAsList()
   }
+
+  override suspend fun getTwitterHandlesForBioguides(
+    bioguides: List<String>,
+  ): List<String> = withContext(ioDispatcher) {
+    memberOfCongressQueries.selectTwitterHandlesForBioguides(bioguides).executeAsList()
+  }
 }

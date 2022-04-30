@@ -1,0 +1,3 @@
+ALTER TABLE member_of_congress
+ALTER COLUMN twitter_handle
+DROP NOT NULL;

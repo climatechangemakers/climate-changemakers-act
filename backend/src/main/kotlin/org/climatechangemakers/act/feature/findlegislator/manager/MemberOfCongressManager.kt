@@ -13,4 +13,8 @@ interface MemberOfCongressManager {
     state: RepresentedArea,
     district: Short,
   ): List<MemberOfCongress>
+
+  suspend fun getTwitterHandlesForBioguides(
+    bioguides: List<String>,
+  ): List<String>
 }
