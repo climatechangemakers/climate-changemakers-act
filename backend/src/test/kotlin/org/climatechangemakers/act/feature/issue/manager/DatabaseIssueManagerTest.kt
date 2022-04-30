@@ -104,9 +104,7 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
 
   @Test fun `precomposed tweet is formatted correctly`() = suspendTest {
     val id1 = driver.insertIssue("issue", "This is a tweet to %s", "url.com")
-    fakeMemberOfCongressManager.memberQueue.send(
-      FakeMemberOfCongressManager.DEFAULT_MEMBER.copy(bioguideId = "id", twitterHandle = "handle")
-    )
+    fakeMemberOfCongressManager.twitterHandlesQueue.send(listOf("handle"))
     val tweet = issueManager.getPreComposedTweetForIssue(id1, listOf("id"))
     assertEquals(PreComposedTweetResponse("This is a tweet to @handle"), tweet)
   }

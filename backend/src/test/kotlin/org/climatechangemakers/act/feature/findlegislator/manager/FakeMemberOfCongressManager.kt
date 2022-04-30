@@ -10,6 +10,7 @@ class FakeMemberOfCongressManager : MemberOfCongressManager {
 
   val memberQueue: Channel<MemberOfCongress> = Channel(Channel.BUFFERED)
   val memberListQueue: Channel<List<MemberOfCongress>> = Channel(Channel.BUFFERED)
+  val twitterHandlesQueue: Channel<List<String>> = Channel(Channel.BUFFERED)
 
   override suspend fun getMemberOfCongressForBioguide(bioguideId: String): MemberOfCongress {
     return memberQueue.tryReceive().getOrThrow()
@@ -20,6 +21,10 @@ class FakeMemberOfCongressManager : MemberOfCongressManager {
     district: Short
   ): List<MemberOfCongress> {
     return memberListQueue.tryReceive().getOrThrow()
+  }
+
+  override suspend fun getTwitterHandlesForBioguides(bioguides: List<String>): List<String> {
+    return twitterHandlesQueue.tryReceive().getOrThrow()
   }
 
   companion object {

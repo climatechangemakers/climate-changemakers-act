@@ -62,15 +62,13 @@ class DatabaseIssueManager @Inject constructor(
   override suspend fun getPreComposedTweetForIssue(
     issueId: Long,
     tweetedBioguideIds: List<String>,
-  ): PreComposedTweetResponse {
-    val memberHandles = coroutineScope {
-      tweetedBioguideIds.map { id ->
-        async { "@${memberOfCongressManager.getMemberOfCongressForBioguide(id).twitterHandle}" }
-      }.awaitAll().joinToPhrase()
-    }
-    return withContext(ioDispatcher) {
-      PreComposedTweetResponse(issueQueries.selectTweetTemplate(issueId).executeAsOne().format(memberHandles))
-    }
+  ): PreComposedTweetResponse = withContext(ioDispatcher) {
+    val memberHandlesPhrase = memberOfCongressManager
+      .getTwitterHandlesForBioguides(tweetedBioguideIds)
+      .map { handle -> "@$handle" }
+      .joinToPhrase()
+
+    PreComposedTweetResponse(issueQueries.selectTweetTemplate(issueId).executeAsOne().format(memberHandlesPhrase))
   }
 
   private suspend fun getIssueTalkingPoints(issueId: Long): List<TalkingPoint> = withContext(ioDispatcher) {

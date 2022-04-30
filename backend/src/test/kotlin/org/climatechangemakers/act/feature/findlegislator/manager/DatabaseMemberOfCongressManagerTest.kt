@@ -58,6 +58,27 @@ class DatabaseMemberOfCongressManagerTest : TestContainerProvider() {
 
   }
 
+  @Test fun `select twitter handles omits null values`() = suspendTest {
+    val expectedMember = MemberOfCongress(
+      "b",
+      "b",
+      LegislatorRole.Senator,
+      RepresentedArea.Virginia,
+      null,
+      LegislatorPoliticalParty.Republican,
+      "555-555-5555",
+      "twitter2",
+      "barfoo",
+    )
+
+    insert(expectedMember)
+    insert(expectedMember.copy(bioguideId = "a", twitterHandle = null))
+    assertEquals(
+      expected = listOf("twitter2"),
+      actual = manager.getTwitterHandlesForBioguides(listOf("a", "b"))
+    )
+  }
+
   private fun insert(member: MemberOfCongress) = driver.execute(
     0, "INSERT INTO member_of_congress VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)", 9
   ) {
