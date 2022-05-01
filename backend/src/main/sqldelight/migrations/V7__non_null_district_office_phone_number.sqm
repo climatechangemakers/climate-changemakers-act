@@ -1,0 +1,6 @@
+DELETE FROM district_office
+WHERE phone_number IS NULL;
+
+ALTER TABLE district_office
+ALTER COLUMN phone_number
+SET NOT NULL;

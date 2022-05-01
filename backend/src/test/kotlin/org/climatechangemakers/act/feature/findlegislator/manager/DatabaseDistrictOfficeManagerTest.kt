@@ -47,12 +47,6 @@ class DatabaseDistrictOfficeManagerTest : TestContainerProvider() {
     )
   }
 
-  @Test fun `returns null with no eligable phone numbers`() = suspendTest {
-    driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "hello"))
-    insert("hello", null, 10.0, 10.0)
-    assertNull(manager.getNearestDistrictOfficePhoneNumber("hello", Location(1.0, 1.0)))
-  }
-
   @Test fun `only return district office for related bioguides`() = suspendTest {
     driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "hello"))
     driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "goodbye"))
@@ -65,7 +59,7 @@ class DatabaseDistrictOfficeManagerTest : TestContainerProvider() {
     )
   }
 
-  private fun insert(bioguideId: String, phoneNumber: String?, lat: Double?, long: Double?) {
+  private fun insert(bioguideId: String, phoneNumber: String, lat: Double?, long: Double?) {
     driver.execute(0, "INSERT INTO district_office VALUES(?, ?, ?, ?);", 4) {
       bindString(1, bioguideId)
       bindString(2, phoneNumber)
