@@ -10,6 +10,7 @@ stages:
   - test
   - build
   - deploy-infrastructure
+  - deploy-static-data
   - deploy-service
 
 before_script: 
@@ -62,12 +63,45 @@ migrate-production-database:
     - mkdir -p backend/build/resources/main/migrations/
     - cp backend/src/main/sqldelight/migrations/*.sqm backend/build/resources/main/migrations/
     - find backend/build/resources/main/migrations/ -name "*.sqm" -exec sh -c 'mv "$1" "${1%.sqm}.sql"' _ {} \;
-    - flyway -user=${POSTGRES_USER} -password=${POSTGRES_PASSWORD} -table=schema_history -locations=backend/build/resources/main/migrations/ -url=${POSTGRES_URL} migrate
+    - flyway -user=${PGUSER} -password=${PGPASSWORD} -table=schema_history -locations=backend/build/resources/main/migrations/ -url=${POSTGRES_URL} migrate
   only: 
     refs:
       - trunk
     changes:
       - backend/src/main/sqldelight/migrations/*.sqm
+
+update-members-of-congress-dry-run:
+  image: registry.gitlab.com/climatechangemakers/parse-congress-info:e10d216e
+  stage: deploy-static-data
+  script:
+    - parse-congress-info.kexe -t current-legislators -l congress/legislators-current.json -c congress/active-offices.json -s congress/legislators-social-media.json members-of-congress.sql
+  artifacts: 
+    paths: 
+      - members-of-congress.sql
+  only: 
+    refs: 
+      - external_pull_requests
+    changes: 
+      - congress/legislators-current.json
+      - congress/legislators-social-media.json
+      - congress/active-offices.json
+
+update-members-of-congress:
+  image: registry.gitlab.com/climatechangemakers/parse-congress-info:e10d216e
+  stage: deploy-static-data
+  script:
+    - parse-congress-info.kexe -t current-legislators -l congress/legislators-current.json -c congress/active-offices.json -s congress/legislators-social-media.json members-of-congress.sql
+    - psql -f members-of-congress.sql 
+  artifacts: 
+    paths: 
+      - members-of-congress.sql
+  only: 
+    refs: 
+      - trunk
+    changes: 
+      - congress/legislators-current.json
+      - congress/legislators-social-media.json
+      - congress/active-offices.json
 
 deploy-cloudformation-network:
   stage: deploy-infrastructure
