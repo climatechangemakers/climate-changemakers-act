@@ -8,6 +8,7 @@ import nl.adaptivity.xmlutil.XmlDeclMode
 import nl.adaptivity.xmlutil.core.XmlVersion
 import nl.adaptivity.xmlutil.serialization.XML
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Converter
 
 @Module object SerializationModule {
@@ -19,7 +20,7 @@ import retrofit2.Converter
   @Provides fun providesJsonConverterFactory(): Converter.Factory = Json {
     ignoreUnknownKeys = true
     encodeDefaults = true
-  }.asConverterFactory(MediaType.get("application/json"))
+  }.asConverterFactory("application/json".toMediaType())
 
   @Provides fun providesXml(): XML = XML {
     indentString = "  "

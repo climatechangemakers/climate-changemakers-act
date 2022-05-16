@@ -5,6 +5,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import okio.ByteString
+import okio.ByteString.Companion.encodeUtf8
 import org.climatechangemakers.act.common.model.Result
 import org.climatechangemakers.act.common.model.Success
 import org.climatechangemakers.act.common.model.Failure
@@ -107,6 +108,6 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
   private suspend fun getCampaignIdForIssue(issueId: Long): String {
     // TODO(kcianfarini) This value should live in the DB, but currently SQLDelight doesn't support the type BYTEA
     val issueTitle = issueManager.getIssueTitleForId(issueId)
-    return ByteString.encodeUtf8(issueTitle).sha256().hex()
+    return issueTitle.encodeUtf8().sha256().hex()
   }
 }

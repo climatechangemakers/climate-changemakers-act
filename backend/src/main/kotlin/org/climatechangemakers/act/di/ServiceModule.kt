@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import nl.adaptivity.xmlutil.serialization.XML
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
 import org.climatechangemakers.act.feature.communicatewithcongress.service.HouseCommunicateWithCongressService
 import org.climatechangemakers.act.feature.communicatewithcongress.service.SenateCommunicateWithCongressService
 import org.climatechangemakers.act.feature.email.service.MailchimpService
@@ -24,10 +25,10 @@ import retrofit2.Retrofit
     logger: Logger,
   ): OkHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
     val originalRequest = chain.request()
-    val originalUrl = originalRequest.url()
+    val originalUrl = originalRequest.url
     val newUrl = originalUrl.newBuilder().addQueryParameter(apiKeyName, apiKey).build()
 
-    logger.info("${originalRequest.method()} ${originalUrl.redactAndRetainPath()}")
+    logger.info("${originalRequest.method} ${originalUrl.redactAndRetainPath()}")
     chain.proceed(originalRequest.newBuilder().url(newUrl).build())
   }.build()
 
@@ -39,7 +40,7 @@ import retrofit2.Retrofit
       .addHeader("Authorization", "Bearer $apiKey")
       .build()
 
-    logger.info("${newRequest.method()} ${newRequest.url().redactAndRetainPath()}")
+    logger.info("${newRequest.method} ${newRequest.url.redactAndRetainPath()}")
     chain.proceed(newRequest)
   }.build()
 
@@ -52,7 +53,7 @@ import retrofit2.Retrofit
       .addHeader("Authorization", Credentials.basic(user, apiKey))
       .build()
 
-    logger.info("${newRequest.method()} ${newRequest.url().redactAndRetainPath()}")
+    logger.info("${newRequest.method} ${newRequest.url.redactAndRetainPath()}")
     chain.proceed(newRequest)
   }.build()
 
@@ -99,7 +100,7 @@ import retrofit2.Retrofit
     xml: XML,
   ): SenateCommunicateWithCongressService = Retrofit.Builder()
     .baseUrl(getEnvironmentVariable(EnvironmentVariable.SCWCUrl))
-    .addConverterFactory(xml.asConverterFactory(MediaType.get("application/xml")))
+    .addConverterFactory(xml.asConverterFactory("application/xml".toMediaType()))
     .client(client)
     .build()
     .create(SenateCommunicateWithCongressService::class.java)
@@ -115,7 +116,7 @@ import retrofit2.Retrofit
     xml: XML,
   ): HouseCommunicateWithCongressService = Retrofit.Builder()
     .baseUrl(getEnvironmentVariable(EnvironmentVariable.HCWCUrl))
-    .addConverterFactory(xml.asConverterFactory(MediaType.get("application/xml")))
+    .addConverterFactory(xml.asConverterFactory("application/xml".toMediaType()))
     .client(client)
     .build()
     .create(HouseCommunicateWithCongressService::class.java)

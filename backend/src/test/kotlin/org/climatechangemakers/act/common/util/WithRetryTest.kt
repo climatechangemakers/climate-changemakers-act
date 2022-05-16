@@ -1,7 +1,7 @@
 package org.climatechangemakers.act.common.util
 
-import okhttp3.MediaType
-import okhttp3.ResponseBody
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import org.climatechangemakers.act.feature.membership.model.AirtableRecord
 import org.climatechangemakers.act.feature.membership.model.AirtableResponse
@@ -18,7 +18,7 @@ class WithRetryTest {
       withRetry(2) { attempt ->
         Response.error(
           429,
-          ResponseBody.create(MediaType.get("application/json"), "too much $attempt"),
+          "too much $attempt".toResponseBody("application/json".toMediaType()),
         )
       }
     }
@@ -32,7 +32,7 @@ class WithRetryTest {
       withRetry(2) {
         Response.error(
          400,
-          ResponseBody.create(MediaType.get("application/json"), "blah"),
+          "blah".toResponseBody("application/json".toMediaType())
         )
       }
     }
@@ -43,7 +43,8 @@ class WithRetryTest {
   @Test fun `withRetry returns first successful response`() = suspendTest {
     val response = withRetry(2) { attempt ->
       if (attempt == 0) {
-        Response.error(429, ResponseBody.create(MediaType.get("application/json"), "please retry"))
+        Response.error(429,
+          "please retry".toResponseBody("application/json".toMediaType()))
       } else {
         Response.success(AirtableResponse(records = listOf(AirtableRecord(id = "foo"))))
       }
