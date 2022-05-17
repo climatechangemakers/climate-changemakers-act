@@ -118,7 +118,7 @@ update-district-offices-dry-run:
     changes: 
       - congress/legislators-district-offices.json
 
-update-district-offices-dry-run:
+update-district-offices:
   image: registry.gitlab.com/climatechangemakers/parse-congress-info:e10d216e
   stage: deploy-district-offices
   script:
