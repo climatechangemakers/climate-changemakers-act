@@ -10,7 +10,8 @@ stages:
   - test
   - build
   - deploy-infrastructure
-  - deploy-static-data
+  - deploy-members-of-congress
+  - deploy-district-offices
   - deploy-service
 
 before_script: 
@@ -72,7 +73,7 @@ migrate-production-database:
 
 update-members-of-congress-dry-run:
   image: registry.gitlab.com/climatechangemakers/parse-congress-info:e10d216e
-  stage: deploy-static-data
+  stage: deploy-members-of-congress
   script:
     - parse-congress-info.kexe -t current-legislators -l congress/legislators-current.json -c congress/active-offices.json -s congress/legislators-social-media.json members-of-congress.sql
   artifacts: 
@@ -88,7 +89,7 @@ update-members-of-congress-dry-run:
 
 update-members-of-congress:
   image: registry.gitlab.com/climatechangemakers/parse-congress-info:e10d216e
-  stage: deploy-static-data
+  stage: deploy-members-of-congress
   script:
     - parse-congress-info.kexe -t current-legislators -l congress/legislators-current.json -c congress/active-offices.json -s congress/legislators-social-media.json members-of-congress.sql
     - psql -f members-of-congress.sql 
@@ -102,6 +103,35 @@ update-members-of-congress:
       - congress/legislators-current.json
       - congress/legislators-social-media.json
       - congress/active-offices.json
+
+update-district-offices-dry-run:
+  image: registry.gitlab.com/climatechangemakers/parse-congress-info:e10d216e
+  stage: deploy-district-offices
+  script:
+    - parse-congress-info.kexe -t district-offices -d congress/legislators-district-offices.json district-offices.sql
+  artifacts: 
+    paths: 
+      - district-offices.sql
+  only: 
+    refs: 
+      - external_pull_requests
+    changes: 
+      - congress/legislators-district-offices.json
+
+update-district-offices-dry-run:
+  image: registry.gitlab.com/climatechangemakers/parse-congress-info:e10d216e
+  stage: deploy-district-offices
+  script:
+    - parse-congress-info.kexe -t district-offices -d congress/legislators-district-offices.json district-offices.sql
+    - psql -f district-offices.sql 
+  artifacts: 
+    paths: 
+      - district-offices.sql
+  only: 
+    refs: 
+      - trunk
+    changes: 
+      - congress/legislators-district-offices.json
 
 deploy-cloudformation-network:
   stage: deploy-infrastructure
