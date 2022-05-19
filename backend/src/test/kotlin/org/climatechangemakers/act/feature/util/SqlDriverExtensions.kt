@@ -25,7 +25,22 @@ fun SqlDriver.insertIssue(
 }
 
 fun SqlDriver.insertMemberOfCongress(member: MemberOfCongress) = execute(
-  0, "INSERT INTO member_of_congress VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)", 9
+  identifier = 0,
+  sql = """
+    |INSERT INTO member_of_congress (
+    |  bioguide_id,
+    |  full_name,
+    |  legislative_role,
+    |  state,
+    |  congressional_district,
+    |  party,
+    |  dc_phone_number,
+    |  twitter_handle,
+    |  cwc_office_code
+    |)
+    |VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
+  """.trimMargin(),
+  parameters = 9,
 ) {
   bindString(1, member.bioguideId)
   bindString(2, member.fullName)
