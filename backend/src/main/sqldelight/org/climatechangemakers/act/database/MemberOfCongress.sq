@@ -5,6 +5,8 @@ import org.climatechangemakers.act.feature.findlegislator.model.LegislatorPoliti
 CREATE TABLE member_of_congress (
   bioguide_id VARCHAR NOT NULL PRIMARY KEY,
   full_name VARCHAR NOT NULL,
+  first_name VARCHAR,
+  last_name VARCHAR,
   legislative_role VARCHAR AS LegislatorRole NOT NULL,
   state VARCHAR AS RepresentedArea NOT NULL,
   congressional_district SMALLINT,
@@ -15,11 +17,31 @@ CREATE TABLE member_of_congress (
 );
 
 selectForBioguide:
-SELECT * FROM member_of_congress
+SELECT
+  bioguide_id,
+  full_name,
+  legislative_role,
+  state,
+  congressional_district,
+  party,
+  dc_phone_number,
+  twitter_handle,
+  cwc_office_code
+FROM member_of_congress
 WHERE bioguide_id = :bioguideId;
 
 selectForCongressionalDistrict:
-SELECT * FROM member_of_congress
+SELECT
+  bioguide_id,
+  full_name,
+  legislative_role,
+  state,
+  congressional_district,
+  party,
+  dc_phone_number,
+  twitter_handle,
+  cwc_office_code
+FROM member_of_congress
 WHERE state = :state AND (congressional_district = :congressionalDistrict OR congressional_district IS NULL);
 
 selectTwitterHandlesForBioguides:
