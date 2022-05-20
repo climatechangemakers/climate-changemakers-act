@@ -6,6 +6,7 @@ import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
 import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
 import org.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import org.climatechangemakers.act.feature.util.TestContainerProvider
+import org.climatechangemakers.act.feature.util.insertMemberOfCongress
 import org.junit.Test
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.assertEquals
@@ -27,7 +28,7 @@ class DatabaseMemberOfCongressManagerTest : TestContainerProvider() {
       "barfoo",
     )
 
-    insert(expectedMember)
+    driver.insertMemberOfCongress(expectedMember)
     assertEquals(
       listOf(expectedMember),
       manager.getMembersForCongressionalDistrict(RepresentedArea.Virginia, 1),
@@ -47,7 +48,7 @@ class DatabaseMemberOfCongressManagerTest : TestContainerProvider() {
       "barfoo",
     )
 
-    insert(expectedMember)
+    driver.insertMemberOfCongress(expectedMember)
     assertEquals(
       listOf(expectedMember),
       manager.getMembersForCongressionalDistrict(RepresentedArea.Virginia, 1),
@@ -71,25 +72,11 @@ class DatabaseMemberOfCongressManagerTest : TestContainerProvider() {
       "barfoo",
     )
 
-    insert(expectedMember)
-    insert(expectedMember.copy(bioguideId = "a", twitterHandle = null))
+    driver.insertMemberOfCongress(expectedMember)
+    driver.insertMemberOfCongress(expectedMember.copy(bioguideId = "a", twitterHandle = null))
     assertEquals(
       expected = listOf("twitter2"),
       actual = manager.getTwitterHandlesForBioguides(listOf("a", "b"))
     )
-  }
-
-  private fun insert(member: MemberOfCongress) = driver.execute(
-    0, "INSERT INTO member_of_congress VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)", 9
-  ) {
-    bindString(1, member.bioguideId)
-    bindString(2, member.fullName)
-    bindString(3, member.legislativeRole.value)
-    bindString(4, member.representedArea.value)
-    bindLong(5, member.congressionalDistrict?.toLong())
-    bindString(6, member.party.value)
-    bindString(7, member.dcPhoneNumber)
-    bindString(8, member.twitterHandle)
-    bindString(9, member.cwcOfficeCode)
   }
 }
