@@ -48,11 +48,13 @@ fun SqlDriver.insertMemberOfCongress(
     |  dc_phone_number,
     |  twitter_handle,
     |  cwc_office_code,
-    |  term_end
+    |  term_end,
+    |  first_name,
+    |  last_name
     |)
-    |VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    |VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   """.trimMargin(),
-  parameters = 10,
+  parameters = 12,
 ) {
   bindString(1, member.bioguideId)
   bindString(2, member.fullName)
@@ -64,6 +66,8 @@ fun SqlDriver.insertMemberOfCongress(
   bindString(8, member.twitterHandle)
   bindString(9, member.cwcOfficeCode)
   (this as JdbcPreparedStatement).bindObject(10, termEnd.toJavaLocalDate())
+  bindString(11, "")
+  bindString(12, "")
 }
 
 val DEFAULT_MEMBER_OF_CONGRESS = MemberOfCongress(

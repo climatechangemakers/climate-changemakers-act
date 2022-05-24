@@ -5,8 +5,8 @@ import org.climatechangemakers.act.feature.findlegislator.model.LegislatorPoliti
 CREATE TABLE member_of_congress (
   bioguide_id VARCHAR NOT NULL PRIMARY KEY,
   full_name VARCHAR NOT NULL,
-  first_name VARCHAR,
-  last_name VARCHAR,
+  first_name VARCHAR NOT NULL,
+  last_name VARCHAR NOT NULL,
   legislative_role VARCHAR AS LegislatorRole NOT NULL,
   state VARCHAR AS RepresentedArea NOT NULL,
   congressional_district SMALLINT,
@@ -14,7 +14,7 @@ CREATE TABLE member_of_congress (
   dc_phone_number VARCHAR NOT NULL,
   twitter_handle VARCHAR,
   cwc_office_code VARCHAR,
-  term_end DATE
+  term_end DATE NOT NULL
 );
 
 selectForBioguide:

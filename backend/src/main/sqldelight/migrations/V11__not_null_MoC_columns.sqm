@@ -1,0 +1,14 @@
+DELETE FROM member_of_congress
+WHERE term_end IS NULL OR first_name IS NULL OR last_name IS NULL;
+
+ALTER TABLE member_of_congress
+ALTER COLUMN term_end
+SET NOT NULL;
+
+ALTER TABLE member_of_congress
+ALTER COLUMN first_name
+SET NOT NULL;
+
+ALTER TABLE member_of_congress
+ALTER COLUMN last_name
+SET NOT NULL;
