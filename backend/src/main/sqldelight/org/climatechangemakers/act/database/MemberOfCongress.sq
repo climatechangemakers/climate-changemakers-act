@@ -13,7 +13,8 @@ CREATE TABLE member_of_congress (
   party VARCHAR AS LegislatorPoliticalParty NOT NULL,
   dc_phone_number VARCHAR NOT NULL,
   twitter_handle VARCHAR,
-  cwc_office_code VARCHAR
+  cwc_office_code VARCHAR,
+  term_end DATE
 );
 
 selectForBioguide:
