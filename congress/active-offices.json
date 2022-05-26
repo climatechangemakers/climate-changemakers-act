@@ -1,1 +1,162 @@
-[{"name":"Alex Padilla [bioguide_id: P000145]","office_code":"SCA03"},{"name":"Amy Klobuchar [bioguide_id: K000367]","office_code":"SMN01"},{"name":"Angus S. King, Jr. [bioguide_id: K000383]","office_code":"SME01"},{"name":"Benjamin L. Cardin [bioguide_id: C000141]","office_code":"SMD01"},{"name":"Ben Ray Lujan [bioguide_id: L000570]","office_code":"SNM02"},{"name":"Bernard Sanders [bioguide_id: S000033]","office_code":"SVT01"},{"name":"Bill Hagerty [bioguide_id: H000601]","office_code":"STN02"},{"name":"Charles E. Schumer [bioguide_id: S000148]","office_code":"SNY03"},{"name":"Cynthia Lummis [bioguide_id: L000571]","office_code":"SWY02"},{"name":"Debbie Stabenow [bioguide_id: S000770]","office_code":"SMI01"},{"name":"Deb Fischer [bioguide_id: F000463]","office_code":"SNE01"},{"name":"Elizabeth Warren [bioguide_id: W000817]","office_code":"SMA01"},{"name":"Gary C. Peters [bioguide_id: P000595]","office_code":"SMI02"},{"name":"Jacky Rosen [bioguide_id: R000608]","office_code":"SNV01"},{"name":"James Lankford [bioguide_id: L000575]","office_code":"SOK03"},{"name":"Jeanne Shaheen [bioguide_id: S001181]","office_code":"SNH02"},{"name":"Jeff Merkley [bioguide_id: M001176]","office_code":"SOR02"},{"name":"Joe Manchin, III [bioguide_id: M001183]","office_code":"SWV01"},{"name":"John Hickenlooper [bioguide_id: H000273]","office_code":"SCO02"},{"name":"Joni Ernst [bioguide_id: E000295]","office_code":"SIA02"},{"name":"Jon Ossoff [bioguide_id: O000174]","office_code":"SGA02"},{"name":"Kevin Cramer [bioguide_id: C001096]","office_code":"SND01"},{"name":"Marco Rubio [bioguide_id: R000595]","office_code":"SFL03"},{"name":"Mark Kelly [bioguide_id: K000377]","office_code":"SAZ03"},{"name":"Mark R. Warner [bioguide_id: W000805]","office_code":"SVA02"},{"name":"Martin Heinrich [bioguide_id: H001046]","office_code":"SNM01"},{"name":"Mazie K. Hirono [bioguide_id: H001042]","office_code":"SHI01"},{"name":"Michael F. Bennet [bioguide_id: B001267]","office_code":"SCO03"},{"name":"Patrick J. Leahy [bioguide_id: L000174]","office_code":"SVT03"},{"name":"Patty Murray [bioguide_id: M001111]","office_code":"SWA03"},{"name":"Raphael G. Warnock [bioguide_id: W000790]","office_code":"SGA03"},{"name":"Roger Marshall [bioguide_id: M001198]","office_code":"SKS02"},{"name":"Roy Blunt [bioguide_id: B000575]","office_code":"SMO03"},{"name":"Sherrod Brown [bioguide_id: B000944]","office_code":"SOH01"},{"name":"Steve Daines [bioguide_id: D000618]","office_code":"SMT02"},{"name":"Susan M. Collins [bioguide_id: C001035]","office_code":"SME02"},{"name":"Tammy Baldwin [bioguide_id: B001230]","office_code":"SWI01"},{"name":"Tim Kaine [bioguide_id: K000384]","office_code":"SVA01"},{"name":"Tina Smith [bioguide_id: S001203]","office_code":"SMN02"},{"name":"Tommy Tuberville [bioguide_id: T000278]","office_code":"SAL02"}]
+[
+    {
+      "name": "Alex Padilla [bioguide_id: P000145]",
+      "office_code": "SCA03"
+    },
+    {
+      "name": "Amy Klobuchar [bioguide_id: K000367]",
+      "office_code": "SMN01"
+    },
+    {
+      "name": "Angus S. King, Jr. [bioguide_id: K000383]",
+      "office_code": "SME01"
+    },
+    {
+      "name": "Benjamin L. Cardin [bioguide_id: C000141]",
+      "office_code": "SMD01"
+    },
+    {
+      "name": "Ben Ray Lujan [bioguide_id: L000570]",
+      "office_code": "SNM02"
+    },
+    {
+      "name": "Bernard Sanders [bioguide_id: S000033]",
+      "office_code": "SVT01"
+    },
+    {
+      "name": "Bill Hagerty [bioguide_id: H000601]",
+      "office_code": "STN02"
+    },
+    {
+      "name": "Charles E. Schumer [bioguide_id: S000148]",
+      "office_code": "SNY03"
+    },
+    {
+      "name": "Cynthia Lummis [bioguide_id: L000571]",
+      "office_code": "SWY02"
+    },
+    {
+      "name": "Debbie Stabenow [bioguide_id: S000770]",
+      "office_code": "SMI01"
+    },
+    {
+      "name": "Deb Fischer [bioguide_id: F000463]",
+      "office_code": "SNE01"
+    },
+    {
+      "name": "Elizabeth Warren [bioguide_id: W000817]",
+      "office_code": "SMA01"
+    },
+    {
+      "name": "Gary C. Peters [bioguide_id: P000595]",
+      "office_code": "SMI02"
+    },
+    {
+      "name": "Jacky Rosen [bioguide_id: R000608]",
+      "office_code": "SNV01"
+    },
+    {
+      "name": "James Lankford [bioguide_id: L000575]",
+      "office_code": "SOK03"
+    },
+    {
+      "name": "Jeanne Shaheen [bioguide_id: S001181]",
+      "office_code": "SNH02"
+    },
+    {
+      "name": "Jeff Merkley [bioguide_id: M001176]",
+      "office_code": "SOR02"
+    },
+    {
+      "name": "Joe Manchin, III [bioguide_id: M001183]",
+      "office_code": "SWV01"
+    },
+    {
+      "name": "John Hickenlooper [bioguide_id: H000273]",
+      "office_code": "SCO02"
+    },
+    {
+      "name": "Joni Ernst [bioguide_id: E000295]",
+      "office_code": "SIA02"
+    },
+    {
+      "name": "Jon Ossoff [bioguide_id: O000174]",
+      "office_code": "SGA02"
+    },
+    {
+      "name": "Kevin Cramer [bioguide_id: C001096]",
+      "office_code": "SND01"
+    },
+    {
+      "name": "Marco Rubio [bioguide_id: R000595]",
+      "office_code": "SFL03"
+    },
+    {
+      "name": "Mark Kelly [bioguide_id: K000377]",
+      "office_code": "SAZ03"
+    },
+    {
+      "name": "Mark R. Warner [bioguide_id: W000805]",
+      "office_code": "SVA02"
+    },
+    {
+      "name": "Martin Heinrich [bioguide_id: H001046]",
+      "office_code": "SNM01"
+    },
+    {
+      "name": "Mazie K. Hirono [bioguide_id: H001042]",
+      "office_code": "SHI01"
+    },
+    {
+      "name": "Michael F. Bennet [bioguide_id: B001267]",
+      "office_code": "SCO03"
+    },
+    {
+      "name": "Patrick J. Leahy [bioguide_id: L000174]",
+      "office_code": "SVT03"
+    },
+    {
+      "name": "Patty Murray [bioguide_id: M001111]",
+      "office_code": "SWA03"
+    },
+    {
+      "name": "Raphael G. Warnock [bioguide_id: W000790]",
+      "office_code": "SGA03"
+    },
+    {
+      "name": "Roger Marshall [bioguide_id: M001198]",
+      "office_code": "SKS02"
+    },
+    {
+      "name": "Roy Blunt [bioguide_id: B000575]",
+      "office_code": "SMO03"
+    },
+    {
+      "name": "Sherrod Brown [bioguide_id: B000944]",
+      "office_code": "SOH01"
+    },
+    {
+      "name": "Steve Daines [bioguide_id: D000618]",
+      "office_code": "SMT02"
+    },
+    {
+      "name": "Susan M. Collins [bioguide_id: C001035]",
+      "office_code": "SME02"
+    },
+    {
+      "name": "Tammy Baldwin [bioguide_id: B001230]",
+      "office_code": "SWI01"
+    },
+    {
+      "name": "Tim Kaine [bioguide_id: K000384]",
+      "office_code": "SVA01"
+    },
+    {
+      "name": "Tina Smith [bioguide_id: S001203]",
+      "office_code": "SMN02"
+    },
+    {
+      "name": "Tommy Tuberville [bioguide_id: T000278]",
+      "office_code": "SAL02"
+    }
+  ]
