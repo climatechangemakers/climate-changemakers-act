@@ -1,11 +1,6 @@
 package org.climatechangemakers.act.feature.issue.manager
 
-import org.climatechangemakers.act.common.model.RepresentedArea
 import org.climatechangemakers.act.feature.findlegislator.manager.FakeMemberOfCongressManager
-import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongressManager
-import org.climatechangemakers.act.feature.findlegislator.model.LegislatorPoliticalParty
-import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
-import org.climatechangemakers.act.feature.findlegislator.model.MemberOfCongress
 import org.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import org.climatechangemakers.act.feature.issue.model.Issue
 import org.climatechangemakers.act.feature.issue.model.PreComposedTweetResponse

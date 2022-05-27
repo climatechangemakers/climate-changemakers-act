@@ -1,6 +1,6 @@
 package org.climatechangemakers.act.common.columnadapter
 
-import com.squareup.sqldelight.ColumnAdapter
+import app.cash.sqldelight.ColumnAdapter
 import org.climatechangemakers.act.common.serializers.StringEnum
 
 class StringEnumColumnAdapter<EnumType>(
