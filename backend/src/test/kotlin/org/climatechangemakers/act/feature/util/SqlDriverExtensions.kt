@@ -1,6 +1,6 @@
 package org.climatechangemakers.act.feature.util
 
-import com.squareup.sqldelight.db.SqlDriver
+import app.cash.sqldelight.db.SqlDriver
 import org.climatechangemakers.act.common.model.RepresentedArea
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorPoliticalParty
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
@@ -12,16 +12,17 @@ fun SqlDriver.insertIssue(
   imageUrl: String,
   description: String = "description",
   isActive: Boolean = true
-): Long {
-  val cursor = executeQuery(0, "INSERT INTO issue(title, precomposed_tweet_template, image_url, description, is_active) VALUES(?,?,?,?,?) RETURNING id;", 4) {
-    bindString(1, title)
-    bindString(2, precomposedTweet)
-    bindString(3, imageUrl)
-    bindString(4, description)
-    bindLong(5, if (isActive) 1 else 0)
-  }
-
-  return checkNotNull(cursor.also { it.next() }.getLong(0))
+): Long = executeQuery(
+  identifier = 0,
+  sql = "INSERT INTO issue(title, precomposed_tweet_template, image_url, description, is_active) VALUES(?,?,?,?,?) RETURNING id;",
+  mapper = { cursor -> cursor.also { it.next() }.getLong(0)!! },
+  parameters = 4,
+) {
+  bindString(1, title)
+  bindString(2, precomposedTweet)
+  bindString(3, imageUrl)
+  bindString(4, description)
+  bindLong(5, if (isActive) 1 else 0)
 }
 
 fun SqlDriver.insertMemberOfCongress(member: MemberOfCongress) = execute(

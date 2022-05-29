@@ -1,8 +1,9 @@
 package org.climatechangemakers.act.di
 
+import app.cash.sqldelight.ColumnAdapter
 import org.climatechangemakers.act.database.Database
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.sqlite.driver.asJdbcDriver
+import app.cash.sqldelight.driver.jdbc.JdbcDriver
+import app.cash.sqldelight.driver.jdbc.asJdbcDriver
 import dagger.Module
 import dagger.Provides
 import org.climatechangemakers.act.common.columnadapter.StringEnumColumnAdapter
@@ -11,7 +12,7 @@ import org.postgresql.ds.PGSimpleDataSource
 
 @Module object DatabaseModule {
 
-  @Provides fun providesClimateChangeMakersSqlDriver(): SqlDriver = PGSimpleDataSource().apply {
+  @Provides fun providesClimateChangeMakersSqlDriver(): JdbcDriver = PGSimpleDataSource().apply {
     serverNames = arrayOf(getEnvironmentVariable(EnvironmentVariable.DatabaseHostname))
     portNumbers = intArrayOf(getEnvironmentVariable(EnvironmentVariable.DatabasePort).toInt())
     user = getEnvironmentVariable(EnvironmentVariable.DatabaseUser)
@@ -20,7 +21,7 @@ import org.postgresql.ds.PGSimpleDataSource
   }.asJdbcDriver()
 
   @Provides fun providesClimateChangeMakersDatabase(
-    driver: SqlDriver,
+    driver: JdbcDriver,
   ): Database = Database(
     driver = driver,
     member_of_congressAdapter = Member_of_congress.Adapter(

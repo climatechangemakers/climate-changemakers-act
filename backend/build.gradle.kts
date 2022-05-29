@@ -23,7 +23,7 @@ application {
 sqldelight {
     database("Database") {
         packageName = "org.climatechangemakers.act.database"
-        dialect = "postgresql"
+        dialect = libs.sqldelight.postgresql.dialect.get().toString()
         deriveSchemaFromMigrations = false
         verifyMigrations = false
         migrationOutputDirectory = file("$buildDir/resources/main/migrations")

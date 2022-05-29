@@ -1,3 +1,11 @@
+-- This is required because of a bug in SQLDelight 2.0 Alpha 02.
+-- We need to reorder the selection in the `WHEN` clause to avoid a
+-- compiler error. Simply aliasing with `AS i` was somehow interfering
+-- with the data produced in the view. We had failing tests proving it.
+-- I did not decide to investigate father after I found a workaround.
+
+DROP VIEW IF EXISTS issue_and_focus;
+
 CREATE VIEW issue_and_focus AS
 SELECT
   issue.id,
@@ -17,26 +25,3 @@ SELECT
   END AS is_focused,
   issue.is_active
 FROM issue;
-
-selectTitleForId:
-SELECT title
-FROM issue_and_focus
-WHERE id = :issueId AND is_active = 1;
-
-selectActiveFocusIssue:
-SELECT id, title, image_url, description
-FROM issue_and_focus
-WHERE is_focused = TRUE AND is_active = 1;
-
-selectActiveUnfocusedIssues:
-SELECT id, title, image_url, description
-FROM issue_and_focus
-WHERE is_focused = FALSE AND is_active = 1;
-
-rowCount:
-SELECT COUNT(*) FROM issue_and_focus WHERE id = :issueId;
-
-selectTweetTemplate:
-SELECT precomposed_tweet_template
-FROM issue_and_focus
-WHERE id = :issueId;

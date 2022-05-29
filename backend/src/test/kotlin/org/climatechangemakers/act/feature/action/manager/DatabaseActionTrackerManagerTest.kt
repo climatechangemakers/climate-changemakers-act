@@ -13,62 +13,83 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
 
   private val manager = DatabaseActionTrackerManager(database, EmptyCoroutineContext)
 
-  @Test fun `email action entries are recorded in both tables`() = suspendTest {
+  @Test fun `email action entries are recorded action_contact_legislator table`() = suspendTest {
     val id = driver.insertIssue("this is an issue", "tweet", "url.com")
     driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "hello"))
     manager.trackActionSendEmail("foo@foo.com", "hello", id, "someDeliveryId")
 
     assertEquals(
-      "hello",
-      driver.executeQuery(0, "SELECT contacted_bioguide_id FROM action_contact_legislator", 0).let {
-        it.next()
-        it.getString(0)
-      }
-    )
-
-    val query = driver.executeQuery(
-      0,
-      "SELECT action_contact_legislator_id, email_delivery_id FROM action_email_legislator",
-      0
-    )
-
-    assertEquals(
-      id,
-      query.let {
-        it.next()
-        it.getLong(0)
-      }
-    )
-
-    assertEquals(
-      "someDeliveryId",
-      query.getString(1),
+      expected = "hello",
+      actual = driver.executeQuery(
+        identifier = 0,
+        sql = "SELECT contacted_bioguide_id FROM action_contact_legislator",
+        mapper = { cursor -> cursor.also { it.next() }.getString(0) },
+        parameters = 0,
+      )
     )
   }
 
-  @Test fun `recording a legislator call insert into both tables`() = suspendTest {
+  @Test fun `email action entries are recorded in action_email_legislator table`() = suspendTest {
+    val id = driver.insertIssue("this is an issue", "tweet", "url.com")
+    driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "hello"))
+    manager.trackActionSendEmail("foo@foo.com", "hello", id, "someDeliveryId")
+
+    assertEquals(
+      expected = 1,
+      driver.executeQuery(
+        identifier = 0,
+        sql = "SELECT COUNT(*) FROM action_email_legislator",
+        mapper = { cursor -> cursor.also { it.next() }.getLong(0) },
+        parameters = 0,
+      )
+    )
+  }
+  @Test fun `email action entries record associated delivery id`() = suspendTest {
+    val id = driver.insertIssue("this is an issue", "tweet", "url.com")
+    driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "hello"))
+    manager.trackActionSendEmail("foo@foo.com", "hello", id, "someDeliveryId")
+
+    assertEquals(
+      expected = "someDeliveryId",
+      driver.executeQuery(
+        identifier = 0,
+        sql = "SELECT email_delivery_id FROM action_email_legislator",
+        mapper = { cursor -> cursor.also { it.next() }.getString(0) },
+        parameters = 0,
+      )
+    )
+  }
+
+  @Test fun `recording a legislator call inserts into action_contact_legislator`() = suspendTest {
     val id = driver.insertIssue("issue", "tweet", "url.com")
     driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "bioguide"))
     manager.trackActionPhoneCall("foo@foo.com", "bioguide", id)
 
     assertEquals(
-      1,
-      driver.executeQuery(0, "SELECT COUNT(*) FROM action_contact_legislator", 0).let {
-        it.next()
-        it.getLong(0)
-      }
+      expected = "bioguide",
+      actual = driver.executeQuery(
+        identifier = 0,
+        sql = "SELECT contacted_bioguide_id FROM action_contact_legislator",
+        mapper = { cursor -> cursor.also { it.next() }.getString(0) },
+        parameters = 0,
+      ),
     )
-
+  }
+  @Test fun `recording a legislator call inserts into action_call_legislator`() = suspendTest {
+    val id = driver.insertIssue("issue", "tweet", "url.com")
+    driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "bioguide"))
+    manager.trackActionPhoneCall("foo@foo.com", "bioguide", id)
     assertEquals(
-      1,
-      driver.executeQuery(0, "SELECT action_contact_legislator_id FROM action_call_legislator", 0).let {
-        it.next()
-        it.getLong(0)
-      }
+      expected = 1,
+      actual = driver.executeQuery(
+        identifier = 0,
+        sql = "SELECT COUNT(*) FROM action_call_legislator",
+        mapper = { cursor -> cursor.also { it.next() }.getLong(0) },
+        parameters =  0,
+      )
     )
   }
 
-  @OptIn(ExperimentalStdlibApi::class)
   @Test fun `recording a tweet inserts into both tables`() = suspendTest {
     val id = driver.insertIssue("issue", "tweet", "url.com")
     driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "foo"))
@@ -76,23 +97,36 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
     manager.trackTweet("foo@foo.com", listOf("foo", "bar"), id)
 
     assertEquals(
-      2,
-      driver.executeQuery(0, "SELECT COUNT(*) FROM action_tweet_legislator", 0).let {
-        it.next()
-        it.getLong(0)
-      },
+      expected = listOf("foo", "bar"),
+      actual = driver.executeQuery(
+        identifier = 0,
+        sql = "SELECT contacted_bioguide_id FROM action_contact_legislator",
+        mapper = { cursor ->
+          buildList<String?> {
+            cursor.next()
+            add(cursor.getString(0))
+            cursor.next()
+            add(cursor.getString(0))
+          }
+        },
+        parameters = 0,
+      )
     )
+  }
+  @Test fun `recording a tweet inserts action_tweet_legislator`() = suspendTest {
+    val id = driver.insertIssue("issue", "tweet", "url.com")
+    driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "foo"))
+    driver.insertMemberOfCongress(DEFAULT_MEMBER_OF_CONGRESS.copy(bioguideId = "bar"))
+    manager.trackTweet("foo@foo.com", listOf("foo", "bar"), id)
 
     assertEquals(
-      listOf("foo", "bar"),
-      driver.executeQuery(0, "SELECT contacted_bioguide_id FROM action_contact_legislator", 0).let { cursor ->
-        buildList<String?> {
-          cursor.next()
-          add(cursor.getString(0))
-          cursor.next()
-          add(cursor.getString(0))
-        }
-      }
+      expected = 2,
+      actual = driver.executeQuery(
+        identifier = 0,
+        sql = "SELECT COUNT(*) FROM action_tweet_legislator",
+        mapper = { cursor -> cursor.also { it.next() }.getLong(0) },
+        parameters =  0,
+      )
     )
   }
 
@@ -100,10 +134,12 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
     manager.trackActionSignUp("foo@foo.com")
     assertEquals(
       expected = 1,
-      actual = driver.executeQuery(0, "SELECT COUNT(*) FROM action_sign_up", 0).let {
-        it.next()
-        it.getLong(0)
-      },
+      actual = driver.executeQuery(
+        identifier = 0,
+        sql = "SELECT COUNT(*) FROM action_sign_up",
+        mapper = { cursor -> cursor.also { it.next() }.getLong(0) },
+        parameters =  0,
+      )
     )
   }
 }

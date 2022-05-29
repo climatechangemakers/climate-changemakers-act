@@ -1,7 +1,8 @@
 package org.climatechangemakers.act.feature.util
 
+import app.cash.sqldelight.Query
 import org.climatechangemakers.act.database.Database
-import com.squareup.sqldelight.sqlite.driver.JdbcDriver
+import app.cash.sqldelight.driver.jdbc.JdbcDriver
 import org.climatechangemakers.act.common.columnadapter.StringEnumColumnAdapter
 import org.climatechangemakers.act.database.Member_of_congress
 import java.sql.Connection
@@ -16,6 +17,9 @@ abstract class TestContainerProvider {
   protected val driver = object : JdbcDriver() {
     override fun closeConnection(connection: Connection) = Unit
     override fun getConnection(): Connection = connection
+    override fun notifyListeners(queryKeys: Array<String>) = Unit
+    override fun removeListener(listener: Query.Listener, queryKeys: Array<String>) = Unit
+    override fun addListener(listener: Query.Listener, queryKeys: Array<String>) = Unit
   }
 
   protected val database = Database(

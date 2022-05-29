@@ -7,7 +7,6 @@ import org.climatechangemakers.act.feature.issue.model.TalkingPoint
 import org.climatechangemakers.act.feature.issue.model.PreComposedTweetResponse
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import org.climatechangemakers.act.common.util.exists
 import org.climatechangemakers.act.common.util.joinToPhrase

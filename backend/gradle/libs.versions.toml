@@ -8,7 +8,7 @@ postgresql = "42.3.3"
 retrofit = "2.9.0"
 retrofit2-kotlinx-serialization-converter = "0.8.0"
 shadow = "7.1.2"
-sqldelight = "1.5.3"
+sqldelight = "2.0.0-alpha02"
 testcontainers = "1.16.3"
 xmlutil = "0.84.1"
 
@@ -27,7 +27,8 @@ logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "lo
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 
-sqldelight-jdbc-driver = { module = "com.squareup.sqldelight:jdbc-driver", version.ref = "sqldelight" }
+sqldelight-jdbc-driver = { module = "app.cash.sqldelight:jdbc-driver", version.ref = "sqldelight" }
+sqldelight-postgresql-dialect = { module = "app.cash.sqldelight:postgresql-dialect", version.ref = "sqldelight" }
 
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 
@@ -44,4 +45,4 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
-sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
