@@ -72,10 +72,10 @@ migrate-production-database:
       - backend/src/main/sqldelight/migrations/*.sqm
 
 update-members-of-congress-dry-run:
-  image: registry.gitlab.com/climatechangemakers/parse-congress-info:4f83b59c
+  image: registry.gitlab.com/climatechangemakers/parse-congress-info:26b6eae0
   stage: deploy-members-of-congress
   script:
-    - parse-congress-info.kexe -t current-legislators -l congress/legislators-current.json -c congress/active-offices.json -s congress/legislators-social-media.json members-of-congress.sql
+    - parse-congress-info.kexe -t current-legislators -l congress/legislators-current.json -h congress/legislators-historical.json -c congress/active-offices.json -s congress/legislators-social-media.json members-of-congress.sql
   artifacts: 
     paths: 
       - members-of-congress.sql
@@ -84,14 +84,15 @@ update-members-of-congress-dry-run:
       - external_pull_requests
     changes: 
       - congress/legislators-current.json
+      - congress/legislators-historical.json
       - congress/legislators-social-media.json
       - congress/active-offices.json
 
 update-members-of-congress:
-  image: registry.gitlab.com/climatechangemakers/parse-congress-info:4f83b59c
+  image: registry.gitlab.com/climatechangemakers/parse-congress-info:26b6eae0
   stage: deploy-members-of-congress
   script:
-    - parse-congress-info.kexe -t current-legislators -l congress/legislators-current.json -c congress/active-offices.json -s congress/legislators-social-media.json members-of-congress.sql
+    - parse-congress-info.kexe -t current-legislators -l congress/legislators-current.json -h congress/legislators-historical.json -c congress/active-offices.json -s congress/legislators-social-media.json members-of-congress.sql
     - psql -f members-of-congress.sql 
   artifacts: 
     paths: 
@@ -101,11 +102,12 @@ update-members-of-congress:
       - trunk
     changes: 
       - congress/legislators-current.json
+      - congress/legislators-historical.json
       - congress/legislators-social-media.json
       - congress/active-offices.json
 
 update-district-offices-dry-run:
-  image: registry.gitlab.com/climatechangemakers/parse-congress-info:4f83b59c
+  image: registry.gitlab.com/climatechangemakers/parse-congress-info:26b6eae0
   stage: deploy-district-offices
   script:
     - parse-congress-info.kexe -t district-offices -d congress/legislators-district-offices.json district-offices.sql
@@ -119,7 +121,7 @@ update-district-offices-dry-run:
       - congress/legislators-district-offices.json
 
 update-district-offices:
-  image: registry.gitlab.com/climatechangemakers/parse-congress-info:4f83b59c
+  image: registry.gitlab.com/climatechangemakers/parse-congress-info:26b6eae0
   stage: deploy-district-offices
   script:
     - parse-congress-info.kexe -t district-offices -d congress/legislators-district-offices.json district-offices.sql
