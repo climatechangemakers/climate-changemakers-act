@@ -54,6 +54,8 @@ dependencies {
 
     implementation(libs.logback.classic)
 
+    implementation(libs.kotlinx.datetime)
+
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
 

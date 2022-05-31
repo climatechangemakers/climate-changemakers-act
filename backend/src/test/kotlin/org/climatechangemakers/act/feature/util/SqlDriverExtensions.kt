@@ -1,6 +1,10 @@
 package org.climatechangemakers.act.feature.util
 
 import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.jdbc.JdbcDriver
+import app.cash.sqldelight.driver.jdbc.JdbcPreparedStatement
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.toJavaLocalDate
 import org.climatechangemakers.act.common.model.RepresentedArea
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorPoliticalParty
 import org.climatechangemakers.act.feature.findlegislator.model.LegislatorRole
@@ -25,7 +29,13 @@ fun SqlDriver.insertIssue(
   bindLong(5, if (isActive) 1 else 0)
 }
 
-fun SqlDriver.insertMemberOfCongress(member: MemberOfCongress) = execute(
+fun SqlDriver.insertMemberOfCongress(
+  member: MemberOfCongress,
+  // This is an optional default field because we don't actually use the term
+  // information anywhere in the codebase. It's simply a filtering condition.
+  // We default this field to the UNIX epoch, January 1, 1970.
+  termEnd: LocalDate = LocalDate(year = 1970, monthNumber = 1, dayOfMonth = 1),
+) = execute(
   identifier = 0,
   sql = """
     |INSERT INTO member_of_congress (
@@ -37,11 +47,12 @@ fun SqlDriver.insertMemberOfCongress(member: MemberOfCongress) = execute(
     |  party,
     |  dc_phone_number,
     |  twitter_handle,
-    |  cwc_office_code
+    |  cwc_office_code,
+    |  term_end
     |)
-    |VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
+    |VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   """.trimMargin(),
-  parameters = 9,
+  parameters = 10,
 ) {
   bindString(1, member.bioguideId)
   bindString(2, member.fullName)
@@ -52,6 +63,7 @@ fun SqlDriver.insertMemberOfCongress(member: MemberOfCongress) = execute(
   bindString(7, member.dcPhoneNumber)
   bindString(8, member.twitterHandle)
   bindString(9, member.cwcOfficeCode)
+  (this as JdbcPreparedStatement).bindObject(10, termEnd.toJavaLocalDate())
 }
 
 val DEFAULT_MEMBER_OF_CONGRESS = MemberOfCongress(

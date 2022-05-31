@@ -17,6 +17,7 @@ import javax.inject.Singleton
   LoggerModule::class,
   ServiceModule::class,
   SerializationModule::class,
+  ClockModule::class,
 ])
 interface ApiComponent {
 
