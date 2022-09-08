@@ -16187,39 +16187,6 @@
   },
   {
     "id": {
-      "bioguide": "W000813",
-      "govtrack": 412538,
-      "thomas": "02128"
-    },
-    "offices": [
-      {
-        "id": "W000813-mishawaka",
-        "address": "202 Lincolnway East",
-        "suite": "Suite #101",
-        "city": "Mishawaka",
-        "state": "IN",
-        "zip": "46544",
-        "latitude": 41.6614853,
-        "longitude": -86.1788818,
-        "fax": "574-217-8735",
-        "phone": "574-204-2645",
-        "hours": "Monday through Friday, 8 a.m. to 5 p.m. ET"
-      },
-      {
-        "id": "W000813-rochester",
-        "address": "709 Main St.",
-        "city": "Rochester",
-        "state": "IN",
-        "zip": "46975",
-        "latitude": 41.06708709999999,
-        "longitude": -86.21585259999999,
-        "fax": "574-217-8735",
-        "phone": "574-223-4373"
-      }
-    ]
-  },
-  {
-    "id": {
       "bioguide": "W000814",
       "govtrack": 412574,
       "thomas": "02161"
@@ -16854,48 +16821,6 @@
         "latitude": 40.8092343,
         "longitude": -73.9474317,
         "phone": "212-663-3900"
-      }
-    ]
-  },
-  {
-    "id": {
-      "bioguide": "C001111",
-      "govtrack": 412697
-    },
-    "offices": [
-      {
-        "id": "C001111-seminole",
-        "address": "9200 113th St",
-        "suite": "Suite 310",
-        "city": "Seminole",
-        "state": "FL",
-        "zip": "33772-2800",
-        "latitude": 27.85592,
-        "longitude": -82.7954,
-        "phone": "727-318-6770"
-      },
-      {
-        "id": "C001111-st__petersburg",
-        "address": "696 1st Ave N",
-        "suite": "Suite 203",
-        "city": "St. Petersburg",
-        "state": "FL",
-        "zip": "33701",
-        "latitude": 27.772067,
-        "longitude": -82.64355,
-        "phone": "727-318-6770",
-        "fax": "727-623-0619"
-      },
-      {
-        "id": "C001111-st__petersburg-1",
-        "address": "1300 22nd St S",
-        "suite": "Suite 316",
-        "city": "St. Petersburg",
-        "state": "FL",
-        "zip": "33712-2744",
-        "latitude": 27.7569,
-        "longitude": -82.66288,
-        "phone": "727-318-6770"
       }
     ]
   },
