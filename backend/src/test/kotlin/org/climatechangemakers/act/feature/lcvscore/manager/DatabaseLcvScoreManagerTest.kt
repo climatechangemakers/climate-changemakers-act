@@ -49,15 +49,15 @@ class DatabaseLcvScoreManagerTest : TestContainerProvider() {
   private fun insert(id: String, score: LcvScore) = when (val type = score.scoreType) {
     LcvScoreType.LifetimeScore -> {
       driver.execute(0, "INSERT INTO lcv_score_lifetime VALUES (?, ?)", 2) {
-        bindString(1, id)
-        bindLong(2, score.score.toLong())
+        bindString(0, id)
+        bindLong(1, score.score.toLong())
       }
     }
     is LcvScoreType.YearlyScore -> {
       driver.execute(0, "INSERT INTO lcv_score_year VALUES (?, ?, ?)", 3) {
-        bindString(1, id)
-        bindLong(2, type.year.toLong())
-        bindLong(3, score.score.toLong())
+        bindString(0, id)
+        bindLong(1, type.year.toLong())
+        bindLong(2, score.score.toLong())
       }
     }
   }

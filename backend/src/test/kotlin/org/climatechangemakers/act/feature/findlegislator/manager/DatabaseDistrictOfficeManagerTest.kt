@@ -61,10 +61,10 @@ class DatabaseDistrictOfficeManagerTest : TestContainerProvider() {
 
   private fun insert(bioguideId: String, phoneNumber: String, lat: Double?, long: Double?) {
     driver.execute(0, "INSERT INTO district_office VALUES(?, ?, ?, ?);", 4) {
-      bindString(1, bioguideId)
-      bindString(2, phoneNumber)
-      bindDouble(3, lat)
-      bindDouble(4, long)
+      bindString(0, bioguideId)
+      bindString(1, phoneNumber)
+      bindDouble(2, lat)
+      bindDouble(3, long)
     }
   }
 }

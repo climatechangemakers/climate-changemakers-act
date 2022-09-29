@@ -25,7 +25,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
         sql = "SELECT contacted_bioguide_id FROM action_contact_legislator",
         mapper = { cursor -> cursor.also { it.next() }.getString(0) },
         parameters = 0,
-      )
+      ).value
     )
   }
 
@@ -41,7 +41,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
         sql = "SELECT COUNT(*) FROM action_email_legislator",
         mapper = { cursor -> cursor.also { it.next() }.getLong(0) },
         parameters = 0,
-      )
+      ).value
     )
   }
   @Test fun `email action entries record associated delivery id`() = suspendTest {
@@ -56,7 +56,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
         sql = "SELECT email_delivery_id FROM action_email_legislator",
         mapper = { cursor -> cursor.also { it.next() }.getString(0) },
         parameters = 0,
-      )
+      ).value
     )
   }
 
@@ -72,7 +72,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
         sql = "SELECT contacted_bioguide_id FROM action_contact_legislator",
         mapper = { cursor -> cursor.also { it.next() }.getString(0) },
         parameters = 0,
-      ),
+      ).value,
     )
   }
   @Test fun `recording a legislator call inserts into action_call_legislator`() = suspendTest {
@@ -86,7 +86,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
         sql = "SELECT COUNT(*) FROM action_call_legislator",
         mapper = { cursor -> cursor.also { it.next() }.getLong(0) },
         parameters =  0,
-      )
+      ).value
     )
   }
 
@@ -110,7 +110,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
           }
         },
         parameters = 0,
-      )
+      ).value
     )
   }
   @Test fun `recording a tweet inserts action_tweet_legislator`() = suspendTest {
@@ -126,7 +126,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
         sql = "SELECT COUNT(*) FROM action_tweet_legislator",
         mapper = { cursor -> cursor.also { it.next() }.getLong(0) },
         parameters =  0,
-      )
+      ).value
     )
   }
 
@@ -139,7 +139,7 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
         sql = "SELECT COUNT(*) FROM action_sign_up",
         mapper = { cursor -> cursor.also { it.next() }.getLong(0) },
         parameters =  0,
-      )
+      ).value
     )
   }
 }
