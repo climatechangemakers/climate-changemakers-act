@@ -1,7 +1,6 @@
 package org.climatechangemakers.act.feature.util
 
 import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.driver.jdbc.JdbcDriver
 import app.cash.sqldelight.driver.jdbc.JdbcPreparedStatement
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.toJavaLocalDate
@@ -20,14 +19,14 @@ fun SqlDriver.insertIssue(
   identifier = 0,
   sql = "INSERT INTO issue(title, precomposed_tweet_template, image_url, description, is_active) VALUES(?,?,?,?,?) RETURNING id;",
   mapper = { cursor -> cursor.also { it.next() }.getLong(0)!! },
-  parameters = 4,
+  parameters = 5,
 ) {
-  bindString(1, title)
-  bindString(2, precomposedTweet)
-  bindString(3, imageUrl)
-  bindString(4, description)
-  bindLong(5, if (isActive) 1 else 0)
-}
+  bindString(0, title)
+  bindString(1, precomposedTweet)
+  bindString(2, imageUrl)
+  bindString(3, description)
+  bindLong(4, if (isActive) 1 else 0)
+}.value
 
 fun SqlDriver.insertMemberOfCongress(
   member: MemberOfCongress,
@@ -56,18 +55,18 @@ fun SqlDriver.insertMemberOfCongress(
   """.trimMargin(),
   parameters = 12,
 ) {
-  bindString(1, member.bioguideId)
-  bindString(2, member.fullName)
-  bindString(3, member.legislativeRole.value)
-  bindString(4, member.representedArea.value)
-  bindLong(5, member.congressionalDistrict?.toLong())
-  bindString(6, member.party.value)
-  bindString(7, member.dcPhoneNumber)
-  bindString(8, member.twitterHandle)
-  bindString(9, member.cwcOfficeCode)
-  (this as JdbcPreparedStatement).bindObject(10, termEnd.toJavaLocalDate())
+  bindString(0, member.bioguideId)
+  bindString(1, member.fullName)
+  bindString(2, member.legislativeRole.value)
+  bindString(3, member.representedArea.value)
+  bindLong(4, member.congressionalDistrict?.toLong())
+  bindString(5, member.party.value)
+  bindString(6, member.dcPhoneNumber)
+  bindString(7, member.twitterHandle)
+  bindString(8, member.cwcOfficeCode)
+  (this as JdbcPreparedStatement).bindObject(9, termEnd.toJavaLocalDate())
+  bindString(10, "")
   bindString(11, "")
-  bindString(12, "")
 }
 
 val DEFAULT_MEMBER_OF_CONGRESS = MemberOfCongress(

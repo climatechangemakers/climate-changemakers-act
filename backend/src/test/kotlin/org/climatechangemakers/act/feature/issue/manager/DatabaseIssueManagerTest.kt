@@ -140,8 +140,8 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
 
   private fun insertExampleWhyStatement(issueId: Long, statement: String) {
     driver.execute(0, "INSERT INTO example_issue_why_statement(issue_id, statement) VALUES(?,?)", 2) {
-      bindLong(1, issueId)
-      bindString(2, statement)
+      bindLong(0, issueId)
+      bindString(1, statement)
     }
   }
 
@@ -149,18 +149,18 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
     driver.execute(
       0,
       "INSERT INTO talking_point(issue_id, title, content, relative_order_position) VALUES (?,?,?,?)",
-      3,
+      4,
     ) {
-      bindLong(1, issueId)
-      bindString(2, title)
-      bindString(3, content)
-      bindLong(4, relativeOrdering.toLong())
+      bindLong(0, issueId)
+      bindString(1, title)
+      bindString(2, content)
+      bindLong(3, relativeOrdering.toLong())
     }
   }
 
   private fun focusIssue(issueId: Long) {
     driver.execute(0, "INSERT INTO focus_issue(issue_id) VALUES (?)", 1) {
-      bindLong(1, issueId)
+      bindLong(0, issueId)
     }
   }
 }
