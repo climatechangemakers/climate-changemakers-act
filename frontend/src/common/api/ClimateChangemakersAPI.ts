@@ -64,8 +64,7 @@ export const initiateActionAPI = (form: FormInfo) =>
         city: form.city,
         state: form.state,
         postalCode: form.postalCode,
-        consentToTrackImpact: form.hasTrackingConsent,
-        desiresInformationalEmails: form.hasEmailingConsent,
+        consentToTrackImpact: form.hasTrackingConsent
     });
 
 export const sendEmailAPI = async (

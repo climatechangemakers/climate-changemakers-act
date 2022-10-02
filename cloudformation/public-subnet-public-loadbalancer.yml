@@ -105,12 +105,6 @@ Resources:
               ValueFrom: 'arn:aws:secretsmanager:us-west-2:207054523690:secret:AIRTABLE_API_KEY-p4Oxhi'
             - Name: AIRTABLE_BASE_ID
               ValueFrom: 'arn:aws:secretsmanager:us-west-2:207054523690:secret:AIRTABLE_BASE_ID-wLWVxi'
-            - Name: MAILCHIMP_API_KEY
-              ValueFrom: 'arn:aws:secretsmanager:us-west-2:207054523690:secret:MAILCHIMP_API_KEY-3Arcib'
-            - Name: MAILCHIMP_URL
-              ValueFrom: 'arn:aws:secretsmanager:us-west-2:207054523690:secret:MAILCHIMP_URL-7CeymA'
-            - Name: MAILCHIMP_AUDIENCE_ID
-              ValueFrom: 'arn:aws:secretsmanager:us-west-2:207054523690:secret:MAILCHIMP_AUDIENCE_ID-9dCExf'
           PortMappings:
             - ContainerPort: !Ref 'ContainerPort'
           LogConfiguration:

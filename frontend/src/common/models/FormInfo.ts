@@ -5,5 +5,4 @@ export type FormInfo = {
     postalCode: string;
     email: string;
     hasTrackingConsent: boolean;
-    hasEmailingConsent: boolean;
 };

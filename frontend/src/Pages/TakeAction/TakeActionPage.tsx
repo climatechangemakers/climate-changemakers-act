@@ -1,6 +1,5 @@
 import Layout from "common/Components/Layout";
 import useAreas from "common/hooks/useAreas";
-import useMembershipInfo from "common/hooks/useMembershipInfo";
 import useSessionStorage from "common/hooks/useSessionStorage";
 import { scrollToId } from "common/lib/scrollToId";
 import { ActionInfo } from "common/models/ActionInfo";
@@ -13,7 +12,6 @@ import { Navigate } from "react-router-dom";
 import { MultiValue } from "react-select";
 import usePrecomposedTweetData from "../../common/hooks/usePrecomposedTweetData";
 import AllDone from "./AllDone/AllDone";
-import JoinMission from "./AllDone/JoinMission";
 import Amplify from "./Amplify/Amplify";
 import MakeAPhoneCall from "./MakeACall/MakeACall";
 import MeetYourReps from "./MeetYourReps/MeetYourReps";
@@ -37,7 +35,6 @@ export default function TakeActionPage() {
         body: "",
         selectedLocTopics: [] as MultiValue<{ value: string; label: string }>,
     });
-    const { data: membershipInfo } = useMembershipInfo(formInfo);
     const selectedIssueId = selectedIssue?.id;
     const { data: preComposedTweetData, error: preComposedTweetError } = usePrecomposedTweetData(
         selectedIssueId,
@@ -116,14 +113,6 @@ export default function TakeActionPage() {
                         <>
                             <hr id="all_done" />
                             <AllDone />
-                            {!membershipInfo?.isMember && (
-                                <JoinMission
-                                    formInfo={formInfo}
-                                    emailInfo={emailInfo}
-                                    areas={areas}
-                                    areasError={areasError}
-                                />
-                            )}
                         </>
                     )}
                 </Col>
