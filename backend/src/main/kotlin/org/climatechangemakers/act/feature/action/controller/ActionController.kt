@@ -22,28 +22,19 @@ import org.climatechangemakers.act.feature.action.model.SendEmailSuccessResponse
 import org.climatechangemakers.act.feature.action.model.LogTweetRequest
 import org.climatechangemakers.act.feature.action.model.LogPhoneCallRequest
 import org.climatechangemakers.act.feature.communicatewithcongress.manager.CommunicateWithCongressManager
-import org.climatechangemakers.act.feature.email.manager.EmailEnrollmentManager
 import javax.inject.Inject
 
 class ActionController @Inject constructor(
   private val legislatorsManager: LegislatorsManager,
   private val actionTrackerManager: ActionTrackerManager,
   private val communicateWithCongressManager: CommunicateWithCongressManager,
-  private val emailManager: EmailEnrollmentManager,
 ) {
 
   suspend fun initiateAction(call: ApplicationCall) {
     val request = call.receive<InitiateActionRequest>()
 
     val response: Deferred<InitiateActionResponse> = coroutineScope {
-      launch {
-        if (request.desiresInformationalEmails) {
-          val signedUp = emailManager.subscribeChangemaker(request.email)
-          actionTrackerManager.trackActionInitiated(request.email, optedIntoNewsletter = signedUp)
-        } else {
-          actionTrackerManager.trackActionInitiated(request.email, optedIntoNewsletter = false)
-        }
-      }
+      launch { actionTrackerManager.trackActionInitiated(request.email) }
 
       async {
         InitiateActionResponse(request.email, legislatorsManager.getLegislators(request.toGetLegislatorsRequest()))

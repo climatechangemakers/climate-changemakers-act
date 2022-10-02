@@ -8,7 +8,6 @@ import nl.adaptivity.xmlutil.serialization.XML
 import okhttp3.*
 import org.climatechangemakers.act.feature.communicatewithcongress.service.HouseCommunicateWithCongressService
 import org.climatechangemakers.act.feature.communicatewithcongress.service.SenateCommunicateWithCongressService
-import org.climatechangemakers.act.feature.email.service.MailchimpService
 import org.climatechangemakers.act.feature.findlegislator.service.GoogleCivicService
 import org.climatechangemakers.act.feature.membership.service.AirtableService
 import org.slf4j.Logger
@@ -134,22 +133,6 @@ import retrofit2.Retrofit
     .client(client)
     .build()
     .create(AirtableService::class.java)
-
-  @Provides @Mailchimp fun providesMailchimpOkhttpService(logger: Logger) = createBasicAuthOkHttpClient(
-    user = "api",
-    apiKey = getEnvironmentVariable(EnvironmentVariable.MailchimpApiKey),
-    logger = logger,
-  )
-
-  @Provides fun providesMailchimpService(
-    @Mailchimp client: OkHttpClient,
-    jsonConverterFactory: Converter.Factory,
-  ): MailchimpService = Retrofit.Builder()
-    .baseUrl(getEnvironmentVariable(EnvironmentVariable.MailchimpUrl))
-    .addConverterFactory(jsonConverterFactory)
-    .client(client)
-    .build()
-    .create(MailchimpService::class.java)
 }
 
 private fun HttpUrl.redactAndRetainPath(): String = newBuilder()
