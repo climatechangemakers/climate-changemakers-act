@@ -10,5 +10,4 @@ import org.climatechangemakers.act.common.model.RepresentedArea
   val state: RepresentedArea,
   val postalCode: String,
   val consentToTrackImpact: Boolean,
-  val desiresInformationalEmails: Boolean,
 )
