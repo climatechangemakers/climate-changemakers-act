@@ -9,7 +9,6 @@ import okhttp3.*
 import org.climatechangemakers.act.feature.communicatewithcongress.service.HouseCommunicateWithCongressService
 import org.climatechangemakers.act.feature.communicatewithcongress.service.SenateCommunicateWithCongressService
 import org.climatechangemakers.act.feature.findlegislator.service.GoogleCivicService
-import org.climatechangemakers.act.feature.membership.service.AirtableService
 import org.slf4j.Logger
 import retrofit2.Converter
 import retrofit2.Converter.Factory
@@ -118,21 +117,6 @@ import retrofit2.Retrofit
     .client(client)
     .build()
     .create(HouseCommunicateWithCongressService::class.java)
-
-  @Provides @Airtable fun providesAirtableClient(logger: Logger): OkHttpClient = createBearerTokenOkHttpClient(
-    logger = logger,
-    apiKey = getEnvironmentVariable(EnvironmentVariable.AirtableApiKey),
-  )
-
-  @Provides fun providesAirtableService(
-    @Airtable client: OkHttpClient,
-    jsonConverterFactory: Converter.Factory,
-  ): AirtableService = Retrofit.Builder()
-    .baseUrl("https://api.airtable.com/v0/${getEnvironmentVariable(EnvironmentVariable.AirtableBaseId)}/CRM/")
-    .addConverterFactory(jsonConverterFactory)
-    .client(client)
-    .build()
-    .create(AirtableService::class.java)
 }
 
 private fun HttpUrl.redactAndRetainPath(): String = newBuilder()
