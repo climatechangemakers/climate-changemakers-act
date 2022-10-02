@@ -4,7 +4,6 @@ import okhttp3.MediaType
 import okhttp3.ResponseBody
 import org.climatechangemakers.act.common.model.RepresentedArea
 import org.climatechangemakers.act.feature.action.manager.FakeActionTrackerManager
-import org.climatechangemakers.act.feature.email.manager.FakeEmailEnrollmentManager
 import org.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import org.climatechangemakers.act.feature.membership.model.AirtableCreateRecordRequest
 import org.climatechangemakers.act.feature.membership.model.AirtableRecord
@@ -23,9 +22,8 @@ import kotlin.test.assertTrue
 class AirtableMembershipManagerTest {
 
   private val airtableService = FakeAirtableService()
-  private val emailEnrollmentManager = FakeEmailEnrollmentManager()
   private val actionManager = FakeActionTrackerManager()
-  private val manager = AirtableMembershipManager(actionManager, airtableService, emailEnrollmentManager)
+  private val manager = AirtableMembershipManager(actionManager, airtableService)
 
   @Test fun `checkMembership returns true when user record present`() = suspendTest {
     airtableService.registeredMembers.add("foo@bar.com")
@@ -54,7 +52,7 @@ class AirtableMembershipManagerTest {
         return result
       }
     }
-    val manager = AirtableMembershipManager(FakeActionTrackerManager(), fakeService, emailEnrollmentManager)
+    val manager = AirtableMembershipManager(FakeActionTrackerManager(), fakeService)
     assertTrue(manager.checkMembership("foo@bar.com"))
   }
 
@@ -70,7 +68,7 @@ class AirtableMembershipManagerTest {
     }
 
     val throwable = assertFailsWith<HttpException> {
-      AirtableMembershipManager(FakeActionTrackerManager(), fakeService, emailEnrollmentManager).signUp(
+      AirtableMembershipManager(FakeActionTrackerManager(), fakeService).signUp(
         "foo@bar.com",
         "foo",
         "bar",
@@ -83,25 +81,6 @@ class AirtableMembershipManagerTest {
       )
     }
     assertEquals("Failed 3", throwable.response()?.errorBody()?.string())
-  }
-
-  @Test fun `signUp invokes mailchimp`() = suspendTest {
-    manager.signUp(
-      email = "email@email.com",
-      firstName = "foo",
-      lastName = "bar",
-      postalCode = "12345",
-      state = RepresentedArea.Alabama,
-      experience = false,
-      referral = "This test yo",
-      actionReason = "I'm a test!",
-      socialVerification = "JUnit verified",
-    )
-
-    assertEquals("email@email.com", emailEnrollmentManager.emails.receive())
-    assertEquals("foo", emailEnrollmentManager.firstNames.receive())
-    assertEquals("bar", emailEnrollmentManager.lastNames.receive())
-    assertEquals(RepresentedArea.Alabama, emailEnrollmentManager.states.receive())
   }
 
   @Test fun `signUp records action`() = suspendTest {

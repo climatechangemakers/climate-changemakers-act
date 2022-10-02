@@ -5,5 +5,5 @@ CREATE TABLE action_initiate(
 );
 
 insert:
-INSERT INTO action_initiate(email, opted_into_newsletter)
-VALUES(:email, :optedIntoNewsletter);
+INSERT INTO action_initiate(email)
+VALUES(:email);
