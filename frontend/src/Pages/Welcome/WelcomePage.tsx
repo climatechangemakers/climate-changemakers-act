@@ -19,7 +19,6 @@ export default function WelcomePage() {
         postalCode: "",
         email: "",
         hasTrackingConsent: false,
-        hasEmailingConsent: false,
     });
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -157,17 +156,6 @@ export default function WelcomePage() {
                             type="checkbox"
                             label="I consent to allow Climate Changemakers to store my email address and names of the policymakers I contact to track our collective impact. (required)"
                             required
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formInformationalCheckbox">
-                        <Form.Check
-                            className="text-start"
-                            checked={formInfo.hasEmailingConsent}
-                            onChange={() =>
-                                setFormInfo({ ...formInfo, hasEmailingConsent: !formInfo.hasEmailingConsent })
-                            }
-                            type="checkbox"
-                            label="Yes, I would like to receive occasional informational emails from Climate Changemakers! (optional)"
                         />
                     </Form.Group>
                     <Button className="w-100 text-dark fs-5" variant="primary" type="submit">

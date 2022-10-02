@@ -8,7 +8,6 @@ type Props = {
     isPhoneCallMade: boolean;
     isSocialPosted: boolean;
     isAmplified: boolean;
-    isMember?: boolean;
     desktop?: boolean;
 };
 
