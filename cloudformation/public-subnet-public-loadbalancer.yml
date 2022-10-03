@@ -101,10 +101,6 @@ Resources:
               ValueFrom: 'arn:aws:secretsmanager:us-west-2:207054523690:secret:HCWC_API_KEY-2rWG6J'
             - Name: HCWC_URL
               ValueFrom: 'arn:aws:secretsmanager:us-west-2:207054523690:secret:HCWC_URL-TiDiuI'
-            - Name: AIRTABLE_API_KEY
-              ValueFrom: 'arn:aws:secretsmanager:us-west-2:207054523690:secret:AIRTABLE_API_KEY-p4Oxhi'
-            - Name: AIRTABLE_BASE_ID
-              ValueFrom: 'arn:aws:secretsmanager:us-west-2:207054523690:secret:AIRTABLE_BASE_ID-wLWVxi'
           PortMappings:
             - ContainerPort: !Ref 'ContainerPort'
           LogConfiguration:

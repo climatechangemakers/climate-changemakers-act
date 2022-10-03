@@ -8,7 +8,6 @@ import io.ktor.http.content.defaultResource
 import io.ktor.http.content.resources
 import io.ktor.http.content.static
 import org.climatechangemakers.act.di.ApiComponent
-import org.climatechangemakers.act.feature.membership.routing.membershipRoutes
 import org.climatechangemakers.act.feature.values.routing.valuesRoutes
 
 fun Application.configureRouting(apiComponent: ApiComponent) {
@@ -17,7 +16,6 @@ fun Application.configureRouting(apiComponent: ApiComponent) {
     route("/api") {
       actionRoutes(apiComponent.actionController())
       issueRoutes(apiComponent.issueController())
-      membershipRoutes(apiComponent.membershipController())
       valuesRoutes(apiComponent.valuesController())
     }
 
