@@ -16,7 +16,6 @@ class DatabaseActionTrackerManager @Inject constructor(
   private val actionCallLegislatorQueries = database.actionCallLegislatorQueries
   private val actionTweetLegislatorQueries = database.actionTweetLegislatorQueries
   private val actionEmailLegislatorQueries = database.actionEmailLegislatorQueries
-  private val actionSignUpQueries = database.actionSignUpQueries
 
   override suspend fun trackActionInitiated(email: String) = withContext(ioDispatcher) {
     initiateActionQueries.insert(email)
@@ -47,9 +46,5 @@ class DatabaseActionTrackerManager @Inject constructor(
     contactedBioguideIds.forEach { bioguideId ->
       launch { actionTweetLegislatorQueries.insert(email, relatedIssueId, bioguideId) }
     }
-  }
-
-  override suspend fun trackActionSignUp(email: String) = withContext(ioDispatcher) {
-    actionSignUpQueries.insert(email)
   }
 }

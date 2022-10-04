@@ -1,0 +1,4 @@
+DROP TABLE action_sign_up;
+
+ALTER TABLE action_initiate
+DROP COLUMN opted_into_newsletter;

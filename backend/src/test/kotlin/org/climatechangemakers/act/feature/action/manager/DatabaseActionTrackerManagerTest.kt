@@ -129,17 +129,4 @@ class DatabaseActionTrackerManagerTest : TestContainerProvider() {
       ).value
     )
   }
-
-  @Test fun `recording a sign up inserts into the right table`() = suspendTest {
-    manager.trackActionSignUp("foo@foo.com")
-    assertEquals(
-      expected = 1,
-      actual = driver.executeQuery(
-        identifier = 0,
-        sql = "SELECT COUNT(*) FROM action_sign_up",
-        mapper = { cursor -> cursor.also { it.next() }.getLong(0) },
-        parameters =  0,
-      ).value
-    )
-  }
 }

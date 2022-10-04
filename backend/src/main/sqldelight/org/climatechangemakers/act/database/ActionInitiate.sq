@@ -1,7 +1,6 @@
 CREATE TABLE action_initiate(
   email CITEXT NOT NULL,
-  initiated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  opted_into_newsletter SMALLINT NOT NULL DEFAULT 0 CONSTRAINT boolean_check CHECK (opted_into_newsletter = 0 OR opted_into_newsletter = 1)
+  initiated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 insert:
