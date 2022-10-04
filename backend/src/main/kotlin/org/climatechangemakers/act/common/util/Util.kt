@@ -1,9 +1,5 @@
 package org.climatechangemakers.act.common.util
 
-import kotlinx.coroutines.delay
-import retrofit2.HttpException
-import retrofit2.Response
-
 inline fun exists(existenceCondition: Boolean, lazyMessage: () -> String) {
   if (!existenceCondition) throw NoSuchElementException(lazyMessage())
 }
