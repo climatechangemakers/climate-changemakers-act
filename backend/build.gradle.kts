@@ -48,9 +48,11 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.ktor.serialization)
+    implementation(libs.ktor.server.contentnegotiation)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
-    implementation(libs.ktor.serialization)
+    implementation(libs.ktor.server.statuspages)
 
     implementation(libs.logback.classic)
 

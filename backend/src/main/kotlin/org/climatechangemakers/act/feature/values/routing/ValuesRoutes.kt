@@ -1,9 +1,9 @@
 package org.climatechangemakers.act.feature.values.routing
 
-import io.ktor.application.call
-import io.ktor.routing.Route
-import io.ktor.routing.get
-import io.ktor.routing.route
+import io.ktor.server.application.call
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.get
+import io.ktor.server.routing.route
 import org.climatechangemakers.act.feature.values.controller.ValuesController
 
 fun Route.valuesRoutes(controller: ValuesController) = route("/values") {

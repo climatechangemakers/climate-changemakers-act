@@ -2,8 +2,8 @@ package org.climatechangemakers.act.feature.issue.controller
 
 import org.climatechangemakers.act.feature.issue.manager.IssueManager
 import org.climatechangemakers.act.feature.issue.model.GetIssuesResponse
-import io.ktor.application.ApplicationCall
-import io.ktor.response.respond
+import io.ktor.server.application.ApplicationCall
+import io.ktor.server.response.respond
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import org.climatechangemakers.act.feature.issue.model.Issue
