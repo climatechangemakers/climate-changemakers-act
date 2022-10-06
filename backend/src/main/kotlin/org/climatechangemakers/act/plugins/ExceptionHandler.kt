@@ -1,13 +1,12 @@
 package org.climatechangemakers.act.plugins
 
-import io.ktor.application.Application
-import io.ktor.application.call
-import io.ktor.application.install
-import io.ktor.application.log
-import io.ktor.features.StatusPages
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.application.log
 import io.ktor.http.HttpStatusCode
-import io.ktor.response.respond
-import io.ktor.util.error
+import io.ktor.server.plugins.statuspages.*
+import io.ktor.server.response.respond
+import io.ktor.util.logging.error
 import kotlinx.serialization.SerializationException
 import org.climatechangemakers.act.common.extension.state
 import org.postgresql.util.PSQLException
@@ -17,18 +16,20 @@ import retrofit2.HttpException
 fun Application.configureExceptionHandler() {
   install(StatusPages) {
 
-    exception<SerializationException> { cause ->
+    val log = this@configureExceptionHandler.log
+
+    exception<SerializationException> { call, cause ->
       cause.message?.let(log::error)
       call.respond(HttpStatusCode.BadRequest, cause.message ?: "")
     }
 
-    exception<HttpException> { cause ->
+    exception<HttpException> { call, cause ->
       log.error(cause)
       cause.response()?.errorBody()?.string()?.let(log::error)
       call.respond(HttpStatusCode.InternalServerError, cause.message())
     }
 
-    exception<PSQLException> { cause ->
+    exception<PSQLException> { call, cause ->
       cause.message?.let(log::error)
 
       val responseCode = when (cause.state) {
@@ -39,11 +40,11 @@ fun Application.configureExceptionHandler() {
       call.respond(responseCode, cause.message ?: "")
     }
 
-    exception<NoSuchElementException> { cause ->
+    exception<NoSuchElementException> { call, cause ->
       call.respond(HttpStatusCode.NotFound, cause.message ?: "")
     }
 
-    exception<Exception> { cause ->
+    exception<Exception> { call, cause ->
       cause.message?.let(log::error)
       call.respond(HttpStatusCode.InternalServerError, cause.message ?: "")
     }

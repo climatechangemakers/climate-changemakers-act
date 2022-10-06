@@ -1,6 +1,6 @@
 package org.climatechangemakers.act.feature.communicatewithcongress.manager
 
-import io.ktor.util.error
+import io.ktor.util.logging.error
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope

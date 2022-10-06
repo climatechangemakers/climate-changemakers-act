@@ -1,11 +1,11 @@
 package org.climatechangemakers.act.feature.issue.routing
 
 import org.climatechangemakers.act.feature.issue.controller.IssueListController
-import io.ktor.application.call
-import io.ktor.routing.Route
-import io.ktor.routing.get
-import io.ktor.routing.route
-import io.ktor.util.getOrFail
+import io.ktor.server.application.call
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.get
+import io.ktor.server.routing.route
+import io.ktor.server.util.getOrFail
 
 fun Route.issueRoutes(controller: IssueListController) = route("/issues") {
   get { controller.respondIssueList(call) }

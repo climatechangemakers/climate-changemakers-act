@@ -3,10 +3,10 @@ package org.climatechangemakers.act.feature.action.controller
 import org.climatechangemakers.act.feature.action.manager.ActionTrackerManager
 import org.climatechangemakers.act.feature.findlegislator.manager.LegislatorsManager
 import org.climatechangemakers.act.feature.findlegislator.model.GetLegislatorsByAddressRequest
-import io.ktor.application.ApplicationCall
+import io.ktor.server.application.ApplicationCall
 import io.ktor.http.HttpStatusCode
-import io.ktor.request.receive
-import io.ktor.response.respond
+import io.ktor.server.request.receive
+import io.ktor.server.response.respond
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope

@@ -1,8 +1,8 @@
 package org.climatechangemakers.act
 
-import io.ktor.application.log
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
+import io.ktor.server.application.log
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
 import org.climatechangemakers.act.di.DaggerApiComponent
 import org.climatechangemakers.act.di.LoggerModule
 import org.climatechangemakers.act.plugins.configureRouting
