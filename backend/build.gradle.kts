@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.server.statuspages)
+    implementation(libs.ktor.server.auth)
 
     implementation(libs.logback.classic)
 
