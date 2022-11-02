@@ -4,6 +4,7 @@ import org.climatechangemakers.act.feature.action.controller.ActionController
 import org.climatechangemakers.act.feature.issue.controller.IssueListController
 import dagger.Component
 import kotlinx.serialization.json.Json
+import org.climatechangemakers.act.feature.cms.manager.UserVerificationManager
 import org.climatechangemakers.act.feature.values.controller.ValuesController
 import javax.inject.Singleton
 
@@ -23,4 +24,5 @@ interface ApiComponent {
   fun issueController(): IssueListController
   fun valuesController(): ValuesController
   fun json(): Json
+  fun userVerificationManager(): UserVerificationManager
 }
