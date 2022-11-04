@@ -48,29 +48,24 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.bcrypt)
+    implementation(libs.dagger)
+    implementation(libs.kotlinx.datetime)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.ktor.serialization)
+    implementation(libs.ktor.server.auth)
     implementation(libs.ktor.server.contentnegotiation)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.server.statuspages)
-    implementation(libs.ktor.server.auth)
-
     implementation(libs.logback.classic)
-
-    implementation(libs.kotlinx.datetime)
-
-    implementation(libs.dagger)
-    kapt(libs.dagger.compiler)
-
-    implementation(libs.sqldelight.jdbc.driver)
     implementation(libs.postgresql)
-
     implementation(libs.retrofit)
     implementation(libs.retrofit.serialization.converter)
-    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.sqldelight.jdbc.driver)
     implementation(libs.xmlutil.serialization.jvm)
-
-    testImplementation(libs.ktor.server.tests)
+    kapt(libs.dagger.compiler)
     testImplementation(libs.kotlin.test)
+    testImplementation(libs.ktor.server.tests)
     testImplementation(libs.testcontainers.postgresql)
 }

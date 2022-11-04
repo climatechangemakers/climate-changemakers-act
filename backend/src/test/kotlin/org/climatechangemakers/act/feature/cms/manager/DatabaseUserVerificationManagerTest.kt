@@ -1,7 +1,8 @@
 package org.climatechangemakers.act.feature.cms.manager
 
+import app.cash.sqldelight.db.QueryResult
 import app.cash.sqldelight.db.SqlDriver
-import okio.ByteString
+import at.favre.lib.crypto.bcrypt.BCrypt
 import org.climatechangemakers.act.database.Database
 import org.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import org.climatechangemakers.act.feature.util.TestContainerProvider
@@ -37,11 +38,14 @@ class DatabaseUserVerificationManagerTest : TestContainerProvider() {
 private fun SqlDriver.insertHashedCredentials(
   username: String,
   password: String,
-) = execute(
-  identifier = 0,
-  sql = "INSERT INTO content_management_user(user_name, password_sha_512) VALUES (?, ?);",
-  parameters = 2,
-) {
-  bindString(0, username)
-  bindString(1, ByteString.encodeUtf8("$username$password").sha512().hex())
+): QueryResult<Long> {
+  val bcrypt = BCrypt.withDefaults()
+  return execute(
+    identifier = 0,
+    sql = "INSERT INTO content_management_user(user_name, password_bcrypt_hash) VALUES (?, ?);",
+    parameters = 2,
+  ) {
+    bindString(0, username)
+    bindString(1, bcrypt.hashToString(10, password.toCharArray()))
+  }
 }

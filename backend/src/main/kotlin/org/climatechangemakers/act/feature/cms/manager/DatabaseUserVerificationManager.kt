@@ -1,7 +1,7 @@
 package org.climatechangemakers.act.feature.cms.manager
 
+import at.favre.lib.crypto.bcrypt.BCrypt
 import kotlinx.coroutines.withContext
-import okio.ByteString
 import org.climatechangemakers.act.database.Database
 import org.climatechangemakers.act.di.Io
 import javax.inject.Inject
@@ -13,16 +13,14 @@ class DatabaseUserVerificationManager @Inject constructor(
 ) : UserVerificationManager {
 
   private val contentManagementUserQueries = database.contentManagementUserQueries
+  private val bcrypt = BCrypt.verifyer(BCrypt.Version.VERSION_2Y)
 
   override suspend fun verifyLogin(
     username: String,
     password: String,
   ): Boolean = withContext(ioContext) {
-    // Use the username as a salt below by concatenating the two values together.
-    val passwordHash = ByteString.encodeUtf8("$username$password").sha512().hex()
-    contentManagementUserQueries.userWithPasswordHashExists(
-      userName = username,
-      passwordSha512 = passwordHash,
-    ).executeAsOne()
+    contentManagementUserQueries.selectHashForUser(username).executeAsOneOrNull()?.let { hash ->
+      bcrypt.verify(password.toCharArray(), hash).verified
+    } ?: false
   }
 }
