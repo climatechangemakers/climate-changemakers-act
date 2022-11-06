@@ -5,7 +5,7 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import org.climatechangemakers.act.di.DaggerApiComponent
 import org.climatechangemakers.act.di.LoggerModule
-import org.climatechangemakers.act.feature.cms.authentication.configureContentManagementAuthentication
+import org.climatechangemakers.act.feature.cms.plugin.configureContentManagementAuthentication
 import org.climatechangemakers.act.plugins.configureRouting
 import org.climatechangemakers.act.plugins.configureSerialization
 import org.climatechangemakers.act.plugins.configureExceptionHandler
@@ -19,6 +19,6 @@ fun main() {
     configureExceptionHandler()
     configureSerialization(apiComponent.json())
     configureRouting(apiComponent)
-    configureContentManagementAuthentication()
+    configureContentManagementAuthentication(apiComponent.userVerificationManager())
   }.start(wait = true)
 }

@@ -1,0 +1,9 @@
+CREATE TABLE content_management_user (
+  user_name VARCHAR NOT NULL PRIMARY KEY,
+  password_bcrypt_hash VARCHAR NOT NULL
+);
+
+selectHashForUser:
+SELECT password_bcrypt_hash
+FROM content_management_user
+WHERE user_name = :userName;

@@ -1,0 +1,4 @@
+CREATE TABLE content_management_user (
+  user_name VARCHAR NOT NULL PRIMARY KEY,
+  password_bcrypt_hash VARCHAR NOT NULL
+);
