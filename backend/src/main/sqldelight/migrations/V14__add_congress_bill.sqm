@@ -1,0 +1,9 @@
+import org.climatechangemakers.act.feature.bill.model.BillType;
+
+CREATE TABLE IF NOT EXISTS congress_bill(
+  congressional_session SMALLINT NOT NULL,
+  bill_type VARCHAR AS BillType NOT NULL,
+  bill_number SMALLINT NOT NULL,
+  bill_name VARCHAR NOT NULL,
+  PRIMARY KEY(congressional_session, bill_type, bill_number)
+);
