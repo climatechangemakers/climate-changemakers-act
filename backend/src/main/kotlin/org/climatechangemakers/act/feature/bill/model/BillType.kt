@@ -5,16 +5,13 @@ import org.climatechangemakers.act.common.serializers.StringEnum
 import org.climatechangemakers.act.common.serializers.StringEnumSerializer
 
 @Serializable(with = BillTypeSerializer::class) enum class BillType(override val value: String) : StringEnum {
-  HouseAmendment("H.Amdt."),
+  HouseBill("H.R."),
   HouseConcurrentResolution("H.Con.Res."),
   HouseJointResolution("H.J.Res."),
-  HouseBill("H.R."),
   HouseResolution("H.Res."),
-
-  SenateAmendment("S.Amdt."),
+  SenateBill("S."),
   SenateConcurrentResolution("S.Con.Res."),
   SenateJointResolution("S.J.Res."),
-  SenateBill("S."),
   SenateResolution("S.Res."),
 }
 
