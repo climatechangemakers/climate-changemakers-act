@@ -2,6 +2,8 @@ package org.climatechangemakers.act.feature.communicatewithcongress.model
 
 import kotlinx.serialization.encodeToString
 import nl.adaptivity.xmlutil.serialization.XML
+import org.climatechangemakers.act.feature.bill.model.Bill
+import org.climatechangemakers.act.feature.bill.model.BillType
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -18,7 +20,7 @@ class MessageSerializationTest {
       topics = Topic.values().toList(),
       body = "Fucking do something about climate change, congress.",
       bills = listOf(
-        Bill(117, BillType.SenateBill, 1234)
+        Bill(117, BillType.SenateBill, 1234, "some name")
       ),
     )
 

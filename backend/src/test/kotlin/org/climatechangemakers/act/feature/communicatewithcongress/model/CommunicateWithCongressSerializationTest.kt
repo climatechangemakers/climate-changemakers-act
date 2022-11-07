@@ -6,6 +6,8 @@ import nl.adaptivity.xmlutil.core.XmlVersion
 import nl.adaptivity.xmlutil.serialization.XML
 import org.climatechangemakers.act.common.model.RepresentedArea
 import org.climatechangemakers.act.di.SerializationModule
+import org.climatechangemakers.act.feature.bill.model.Bill
+import org.climatechangemakers.act.feature.bill.model.BillType
 import org.junit.Test
 import java.util.Calendar
 import java.util.Calendar.JANUARY
@@ -45,7 +47,7 @@ class CommunicateWithCongressSerializationTest {
         subject = "This is a subject",
         topics = listOf(Topic.Energy, Topic.EnvironmentalProtection),
         bills = listOf(
-          Bill(117, BillType.HouseBill, 2519)
+          Bill(117, BillType.HouseBill, 2519, "some name")
         ),
         body = "foo",
       ),

@@ -1,16 +1,8 @@
-package org.climatechangemakers.act.feature.communicatewithcongress.model
+package org.climatechangemakers.act.feature.bill.model
 
 import kotlinx.serialization.Serializable
-import nl.adaptivity.xmlutil.serialization.XmlElement
-import nl.adaptivity.xmlutil.serialization.XmlSerialName
 import org.climatechangemakers.act.common.serializers.StringEnum
 import org.climatechangemakers.act.common.serializers.StringEnumSerializer
-
-@Serializable class Bill(
-  @XmlElement(true) @XmlSerialName("BillCongress", "", "") val congressNumber: Int,
-  @XmlElement(true) @XmlSerialName("BillTypeAbbreviation", "", "") val billType: BillType,
-  @XmlElement(true) @XmlSerialName("BillNumber", "", "") val billNumber: Int,
-)
 
 @Serializable(with = BillTypeSerializer::class) enum class BillType(override val value: String) : StringEnum {
   HouseAmendment("H.Amdt."),
