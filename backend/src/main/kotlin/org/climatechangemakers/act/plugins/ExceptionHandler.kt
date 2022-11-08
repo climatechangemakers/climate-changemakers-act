@@ -19,7 +19,7 @@ fun Application.configureExceptionHandler() {
     val log = this@configureExceptionHandler.log
 
     exception<SerializationException> { call, cause ->
-      cause.message?.let(log::error)
+      log.error(cause)
       call.respond(HttpStatusCode.BadRequest, cause.message ?: "")
     }
 
@@ -30,10 +30,11 @@ fun Application.configureExceptionHandler() {
     }
 
     exception<PSQLException> { call, cause ->
-      cause.message?.let(log::error)
+      log.error(cause)
 
       val responseCode = when (cause.state) {
         PSQLState.FOREIGN_KEY_VIOLATION -> HttpStatusCode.NotFound
+        PSQLState.UNIQUE_VIOLATION -> HttpStatusCode.BadRequest
         else -> HttpStatusCode.InternalServerError
       }
 
@@ -45,7 +46,7 @@ fun Application.configureExceptionHandler() {
     }
 
     exception<Exception> { call, cause ->
-      cause.message?.let(log::error)
+      log.error(cause)
       call.respond(HttpStatusCode.InternalServerError, cause.message ?: "")
     }
   }

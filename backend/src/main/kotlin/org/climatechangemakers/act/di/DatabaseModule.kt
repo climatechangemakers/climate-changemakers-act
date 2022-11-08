@@ -1,12 +1,12 @@
 package org.climatechangemakers.act.di
 
-import app.cash.sqldelight.ColumnAdapter
 import org.climatechangemakers.act.database.Database
 import app.cash.sqldelight.driver.jdbc.JdbcDriver
 import app.cash.sqldelight.driver.jdbc.asJdbcDriver
 import dagger.Module
 import dagger.Provides
 import org.climatechangemakers.act.common.columnadapter.StringEnumColumnAdapter
+import org.climatechangemakers.act.database.Congress_bill
 import org.climatechangemakers.act.database.Member_of_congress
 import org.postgresql.ds.PGSimpleDataSource
 
@@ -29,5 +29,8 @@ import org.postgresql.ds.PGSimpleDataSource
       legislative_roleAdapter = StringEnumColumnAdapter(),
       partyAdapter = StringEnumColumnAdapter(),
     ),
+    congress_billAdapter = Congress_bill.Adapter(
+      bill_typeAdapter = StringEnumColumnAdapter(),
+    )
   )
 }

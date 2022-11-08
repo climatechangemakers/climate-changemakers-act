@@ -1,0 +1,24 @@
+import org.climatechangemakers.act.feature.bill.model.BillType;
+
+CREATE TABLE congress_bill(
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  congressional_session SMALLINT NOT NULL,
+  bill_type VARCHAR AS BillType NOT NULL,
+  bill_number SMALLINT NOT NULL,
+  bill_name VARCHAR NOT NULL,
+  UNIQUE(congressional_session, bill_type, bill_number)
+);
+
+insert:
+INSERT INTO congress_bill(
+  congressional_session,
+  bill_type,
+  bill_number,
+  bill_name
+)
+VALUES(
+  :congressionalSession,
+  :billType,
+  :billNumber,
+  :billName
+);
