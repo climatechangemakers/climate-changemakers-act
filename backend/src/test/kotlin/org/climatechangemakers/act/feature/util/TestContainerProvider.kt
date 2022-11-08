@@ -4,6 +4,7 @@ import app.cash.sqldelight.Query
 import org.climatechangemakers.act.database.Database
 import app.cash.sqldelight.driver.jdbc.JdbcDriver
 import org.climatechangemakers.act.common.columnadapter.StringEnumColumnAdapter
+import org.climatechangemakers.act.database.Congress_bill
 import org.climatechangemakers.act.database.Member_of_congress
 import java.sql.Connection
 import java.sql.DriverManager
@@ -29,6 +30,9 @@ abstract class TestContainerProvider {
       legislative_roleAdapter = StringEnumColumnAdapter(),
       partyAdapter = StringEnumColumnAdapter(),
     ),
+    congress_billAdapter = Congress_bill.Adapter(
+      bill_typeAdapter = StringEnumColumnAdapter(),
+    )
   )
 
   @BeforeTest fun before() {

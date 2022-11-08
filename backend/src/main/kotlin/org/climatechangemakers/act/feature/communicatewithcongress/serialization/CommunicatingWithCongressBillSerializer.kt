@@ -52,10 +52,10 @@ object CommunicatingWithCongressBillSerializer : KSerializer<Bill> {
     encodeShortElement(index = 0, value = value.congressionalSession, descriptor = descriptor)
     encodeSerializableElement(
       index = 1,
-      value = value.billType,
+      value = value.type,
       descriptor = descriptor,
       serializer = BillType.serializer(),
     )
-    encodeShortElement(index = 2, value = value.billNumber, descriptor = descriptor)
+    encodeShortElement(index = 2, value = value.number, descriptor = descriptor)
   }
 }

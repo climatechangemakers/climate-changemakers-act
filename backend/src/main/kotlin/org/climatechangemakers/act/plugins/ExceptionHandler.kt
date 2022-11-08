@@ -34,6 +34,7 @@ fun Application.configureExceptionHandler() {
 
       val responseCode = when (cause.state) {
         PSQLState.FOREIGN_KEY_VIOLATION -> HttpStatusCode.NotFound
+        PSQLState.UNIQUE_VIOLATION -> HttpStatusCode.BadRequest
         else -> HttpStatusCode.InternalServerError
       }
 

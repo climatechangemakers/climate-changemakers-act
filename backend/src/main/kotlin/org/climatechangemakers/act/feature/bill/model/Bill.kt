@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable class Bill(
   val congressionalSession: Short,
-  val billType: BillType,
-  val billNumber: Short,
-  val billName: String,
+  val type: BillType,
+  val number: Short,
+  val name: String,
 )

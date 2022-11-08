@@ -17,9 +17,9 @@ class BillSerializationTest {
   @Test fun `bill serializes correctly`() {
     val bill = Bill(
       congressionalSession = 117,
-      billType = BillType.HouseResolution,
-      billNumber = 1234,
-      billName = "foo bar",
+      type = BillType.HouseResolution,
+      number = 1234,
+      name = "foo bar",
     )
     assertEquals(
       """
