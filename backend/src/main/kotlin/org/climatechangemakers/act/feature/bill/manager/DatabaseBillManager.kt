@@ -20,6 +20,7 @@ class DatabaseBillManager @Inject constructor(
       billType = bill.type,
       billNumber = bill.number,
       billName = bill.name,
+      url = bill.url,
     )
   }
 }

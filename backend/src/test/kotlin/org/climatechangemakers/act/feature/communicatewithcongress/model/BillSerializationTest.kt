@@ -20,6 +20,7 @@ class BillSerializationTest {
       type = BillType.HouseResolution,
       number = 1234,
       name = "foo bar",
+      url = "some.url"
     )
     assertEquals(
       """

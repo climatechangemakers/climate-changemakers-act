@@ -47,7 +47,7 @@ class CommunicateWithCongressSerializationTest {
         subject = "This is a subject",
         topics = listOf(Topic.Energy, Topic.EnvironmentalProtection),
         bills = listOf(
-          Bill(117, BillType.HouseBill, 2519, "some name")
+          Bill(117, BillType.HouseBill, 2519, "some name", "some.url")
         ),
         body = "foo",
       ),
