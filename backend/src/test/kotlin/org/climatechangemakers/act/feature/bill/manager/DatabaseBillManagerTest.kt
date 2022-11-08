@@ -22,6 +22,7 @@ class DatabaseBillManagerTest : TestContainerProvider() {
       type = BillType.HouseBill,
       number = 1,
       name = "first bill!",
+      url = "some.url",
     )
     manager().persistBill(bill)
     assertEquals(
@@ -36,6 +37,7 @@ class DatabaseBillManagerTest : TestContainerProvider() {
       type = BillType.HouseBill,
       number = 1,
       name = "first bill!",
+      url = "some.url",
     )
     val manager = manager()
     manager.persistBill(bill)

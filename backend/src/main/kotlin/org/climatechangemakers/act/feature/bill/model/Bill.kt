@@ -8,4 +8,5 @@ import kotlinx.serialization.Serializable
   val type: BillType,
   val number: Short,
   val name: String,
+  val url: String,
 )

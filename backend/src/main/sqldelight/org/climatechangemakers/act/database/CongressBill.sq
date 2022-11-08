@@ -6,6 +6,7 @@ CREATE TABLE congress_bill(
   bill_type VARCHAR AS BillType NOT NULL,
   bill_number SMALLINT NOT NULL,
   bill_name VARCHAR NOT NULL,
+  url VARCHAR NOT NULL,
   UNIQUE(congressional_session, bill_type, bill_number)
 );
 
@@ -14,11 +15,13 @@ INSERT INTO congress_bill(
   congressional_session,
   bill_type,
   bill_number,
-  bill_name
+  bill_name,
+  url
 )
 VALUES(
   :congressionalSession,
   :billType,
   :billNumber,
-  :billName
+  :billName,
+  :url
 );
