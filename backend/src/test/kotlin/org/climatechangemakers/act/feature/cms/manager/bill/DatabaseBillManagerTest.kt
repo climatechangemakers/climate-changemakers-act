@@ -1,4 +1,4 @@
-package org.climatechangemakers.act.feature.bill.manager
+package org.climatechangemakers.act.feature.cms.manager.bill
 
 import org.climatechangemakers.act.common.extension.state
 import org.climatechangemakers.act.database.Database
@@ -14,7 +14,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class DatabaseBillManagerTest : TestContainerProvider() {
+class DatabaseContentManagementBillManagerTest : TestContainerProvider() {
 
   @Test fun `manager saves a bill`() = suspendTest {
     val bill = Bill(
@@ -61,5 +61,5 @@ class DatabaseBillManagerTest : TestContainerProvider() {
   private fun manager(
     database: Database = this.database,
     coroutineContext: CoroutineContext = EmptyCoroutineContext,
-  ) = DatabaseBillManager(database, coroutineContext)
+  ) = DatabaseContentManagementBillManager(database, coroutineContext)
 }
