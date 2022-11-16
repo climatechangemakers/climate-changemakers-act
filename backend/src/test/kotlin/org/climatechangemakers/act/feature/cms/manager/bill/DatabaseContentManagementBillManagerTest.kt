@@ -2,8 +2,8 @@ package org.climatechangemakers.act.feature.cms.manager.bill
 
 import org.climatechangemakers.act.common.extension.state
 import org.climatechangemakers.act.database.Database
-import org.climatechangemakers.act.feature.bill.model.Bill
 import org.climatechangemakers.act.feature.bill.model.BillType
+import org.climatechangemakers.act.feature.cms.model.bill.CreateBill
 import org.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import org.climatechangemakers.act.feature.util.TestContainerProvider
 import org.postgresql.util.PSQLException
@@ -17,7 +17,7 @@ import kotlin.test.assertFailsWith
 class DatabaseContentManagementBillManagerTest : TestContainerProvider() {
 
   @Test fun `manager saves a bill`() = suspendTest {
-    val bill = Bill(
+    val bill = CreateBill(
       congressionalSession = 117,
       type = BillType.HouseBill,
       number = 1,
@@ -32,7 +32,7 @@ class DatabaseContentManagementBillManagerTest : TestContainerProvider() {
   }
 
   @Test fun `manager throws on unique constraint violation`() = suspendTest {
-    val bill = Bill(
+    val bill = CreateBill(
       congressionalSession = 117,
       type = BillType.HouseBill,
       number = 1,
@@ -48,6 +48,24 @@ class DatabaseContentManagementBillManagerTest : TestContainerProvider() {
     assertEquals(
       expected = PSQLState.UNIQUE_VIOLATION,
       actual = e.state,
+    )
+  }
+
+  @Test fun `manager returns list of bills`() = suspendTest {
+    val bill = CreateBill(
+      congressionalSession = 117,
+      type = BillType.HouseBill,
+      number = 1,
+      name = "first bill!",
+      url = "some.url",
+    )
+
+    val sut = manager()
+    sut.persistBill(bill)
+
+    assertEquals(
+      expected = 1,
+      actual = sut.getBills().size,
     )
   }
 

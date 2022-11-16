@@ -16,6 +16,7 @@ class BillSerializationTest {
 
   @Test fun `bill serializes correctly`() {
     val bill = Bill(
+      id = 1L,
       congressionalSession = 117,
       type = BillType.HouseResolution,
       number = 1234,

@@ -15,4 +15,4 @@ import org.climatechangemakers.act.common.serializers.StringEnumSerializer
   SenateResolution("S.Res."),
 }
 
-private object BillTypeSerializer : StringEnumSerializer<BillType>(BillType.values())
+object BillTypeSerializer : StringEnumSerializer<BillType>(BillType.values())

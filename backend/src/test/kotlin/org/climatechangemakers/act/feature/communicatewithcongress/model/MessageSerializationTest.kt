@@ -20,7 +20,7 @@ class MessageSerializationTest {
       topics = Topic.values().toList(),
       body = "Fucking do something about climate change, congress.",
       bills = listOf(
-        Bill(117, BillType.SenateBill, 1234, "some name", "some.url")
+        Bill(1L, 117, BillType.SenateBill, 1234, "some name", "some.url")
       ),
     )
 

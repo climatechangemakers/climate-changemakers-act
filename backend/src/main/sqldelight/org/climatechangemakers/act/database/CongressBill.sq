@@ -25,3 +25,13 @@ VALUES(
   :billName,
   :url
 );
+
+selectAll:
+SELECT
+  id,
+  congressional_session,
+  bill_type,
+  bill_number,
+  bill_name,
+  url
+FROM congress_bill;
