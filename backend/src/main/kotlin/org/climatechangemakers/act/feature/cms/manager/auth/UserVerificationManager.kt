@@ -1,4 +1,4 @@
-package org.climatechangemakers.act.feature.cms.manager
+package org.climatechangemakers.act.feature.cms.manager.auth
 
 interface UserVerificationManager {
 

@@ -1,4 +1,4 @@
-package org.climatechangemakers.act.feature.bill.manager
+package org.climatechangemakers.act.feature.cms.manager.bill
 
 import kotlinx.coroutines.withContext
 import org.climatechangemakers.act.database.Database
@@ -7,10 +7,10 @@ import org.climatechangemakers.act.feature.bill.model.Bill
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class DatabaseBillManager @Inject constructor(
+class DatabaseContentManagementBillManager @Inject constructor(
   database: Database,
   @Io private val coroutineContext: CoroutineContext,
-) : BillManager {
+) : ContentManagementBillManager {
 
   private val billQueries = database.congressBillQueries
 

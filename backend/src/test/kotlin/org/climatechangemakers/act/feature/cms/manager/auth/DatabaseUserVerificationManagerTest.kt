@@ -1,4 +1,4 @@
-package org.climatechangemakers.act.feature.cms.manager
+package org.climatechangemakers.act.feature.cms.manager.auth
 
 import app.cash.sqldelight.db.QueryResult
 import app.cash.sqldelight.db.SqlDriver
@@ -14,17 +14,20 @@ import kotlin.test.assertTrue
 
 class DatabaseUserVerificationManagerTest : TestContainerProvider() {
 
-  @Test fun `login verification returns true`() = suspendTest {
+  @Test
+  fun `login verification returns true`() = suspendTest {
     driver.insertHashedCredentials("kevin", "password")
     assertTrue(manager().verifyLogin("kevin", "password"))
   }
 
-  @Test fun `login verification returns false wrong password`() = suspendTest {
+  @Test
+  fun `login verification returns false wrong password`() = suspendTest {
     driver.insertHashedCredentials("kevin", "password")
     assertFalse(manager().verifyLogin("kevin", "wrong password!"))
   }
 
-  @Test fun `login verification returns false wrong username`() = suspendTest {
+  @Test
+  fun `login verification returns false wrong username`() = suspendTest {
     driver.insertHashedCredentials("kevin", "password")
     assertFalse(manager().verifyLogin("not_kevin", "password"))
   }

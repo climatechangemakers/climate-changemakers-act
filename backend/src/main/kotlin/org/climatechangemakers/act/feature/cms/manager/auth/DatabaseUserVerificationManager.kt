@@ -1,4 +1,4 @@
-package org.climatechangemakers.act.feature.cms.manager
+package org.climatechangemakers.act.feature.cms.manager.auth
 
 import at.favre.lib.crypto.bcrypt.BCrypt
 import kotlinx.coroutines.withContext

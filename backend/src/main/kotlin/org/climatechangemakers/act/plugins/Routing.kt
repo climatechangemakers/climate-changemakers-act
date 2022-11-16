@@ -8,21 +8,20 @@ import io.ktor.server.http.content.defaultResource
 import io.ktor.server.http.content.resources
 import io.ktor.server.http.content.static
 import org.climatechangemakers.act.di.ApiComponent
-import org.climatechangemakers.act.feature.bill.routing.billRoutes
 import org.climatechangemakers.act.feature.cms.routing.contentManagementRoutes
 import org.climatechangemakers.act.feature.values.routing.valuesRoutes
 
 fun Application.configureRouting(apiComponent: ApiComponent) {
-
   routing {
     route("/api") {
       actionRoutes(apiComponent.actionController())
       issueRoutes(apiComponent.issueController())
       valuesRoutes(apiComponent.valuesController())
-      billRoutes(apiComponent.billController())
     }
 
-    contentManagementRoutes()
+    contentManagementRoutes(
+      billController = apiComponent.billController(),
+    )
 
     static {
       resources("client")
