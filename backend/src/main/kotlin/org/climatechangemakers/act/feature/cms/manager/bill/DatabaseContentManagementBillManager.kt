@@ -4,6 +4,7 @@ import kotlinx.coroutines.withContext
 import org.climatechangemakers.act.database.Database
 import org.climatechangemakers.act.di.Io
 import org.climatechangemakers.act.feature.bill.model.Bill
+import org.climatechangemakers.act.feature.cms.model.bill.CreateBill
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -14,7 +15,7 @@ class DatabaseContentManagementBillManager @Inject constructor(
 
   private val billQueries = database.congressBillQueries
 
-  override suspend fun persistBill(bill: Bill) = withContext(coroutineContext) {
+  override suspend fun persistBill(bill: CreateBill) = withContext(coroutineContext) {
     billQueries.insert(
       congressionalSession = bill.congressionalSession,
       billType = bill.type,
@@ -22,5 +23,9 @@ class DatabaseContentManagementBillManager @Inject constructor(
       billName = bill.name,
       url = bill.url,
     )
+  }
+
+  override suspend fun getBills(): List<Bill> = withContext(coroutineContext) {
+    billQueries.selectAll(::Bill).executeAsList()
   }
 }

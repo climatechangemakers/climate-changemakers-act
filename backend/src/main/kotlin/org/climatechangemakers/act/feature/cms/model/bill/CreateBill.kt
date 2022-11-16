@@ -1,10 +1,9 @@
-package org.climatechangemakers.act.feature.bill.model
+package org.climatechangemakers.act.feature.cms.model.bill
 
 import kotlinx.serialization.Serializable
+import org.climatechangemakers.act.feature.bill.model.BillType
 
-
-@Serializable class Bill(
-  val id: Long,
+@Serializable class CreateBill(
   val congressionalSession: Short,
   val type: BillType,
   val number: Short,

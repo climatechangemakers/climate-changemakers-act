@@ -1,9 +1,6 @@
 package org.climatechangemakers.act.feature.communicatewithcongress.model
 
 import kotlinx.serialization.encodeToString
-import nl.adaptivity.xmlutil.XmlDeclMode
-import nl.adaptivity.xmlutil.core.XmlVersion
-import nl.adaptivity.xmlutil.serialization.XML
 import org.climatechangemakers.act.common.model.RepresentedArea
 import org.climatechangemakers.act.di.SerializationModule
 import org.climatechangemakers.act.feature.bill.model.Bill
@@ -47,7 +44,7 @@ class CommunicateWithCongressSerializationTest {
         subject = "This is a subject",
         topics = listOf(Topic.Energy, Topic.EnvironmentalProtection),
         bills = listOf(
-          Bill(117, BillType.HouseBill, 2519, "some name", "some.url")
+          Bill(1L, 117, BillType.HouseBill, 2519, "some name", "some.url")
         ),
         body = "foo",
       ),
