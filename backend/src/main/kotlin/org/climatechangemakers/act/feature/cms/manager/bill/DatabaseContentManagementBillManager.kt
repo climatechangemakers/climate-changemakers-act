@@ -25,6 +25,18 @@ class DatabaseContentManagementBillManager @Inject constructor(
     )
   }
 
+  override suspend fun updateBill(bill: Bill) = withContext(coroutineContext) {
+    billQueries.update(
+      id = bill.id,
+      congressionalSession = bill.congressionalSession,
+      billType = bill.type,
+      billNumber = bill.number,
+      billName = bill.name,
+      url = bill.url,
+      mapper = ::Bill,
+    ).executeAsOneOrNull() ?: throw NoSuchElementException("Bill with id ${bill.id} does not exist.")
+  }
+
   override suspend fun getBills(): List<Bill> = withContext(coroutineContext) {
     billQueries.selectAll(::Bill).executeAsList()
   }
