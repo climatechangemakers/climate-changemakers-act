@@ -3,7 +3,7 @@ package org.climatechangemakers.act.feature.bill.model
 import kotlinx.serialization.Serializable
 
 
-@Serializable class Bill(
+@Serializable data class Bill(
   val id: Long,
   val congressionalSession: Short,
   val type: BillType,

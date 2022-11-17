@@ -26,6 +26,24 @@ VALUES(
   :url
 );
 
+update:
+UPDATE congress_bill SET
+  congressional_session = :congressionalSession,
+  bill_type = :billType,
+  bill_number = :billNumber,
+  bill_name = :billName,
+  url = :url
+WHERE id = :id
+RETURNING
+  id,
+  congressional_session,
+  bill_type,
+  bill_number,
+  bill_name,
+  url
+;
+
+
 selectAll:
 SELECT
   id,

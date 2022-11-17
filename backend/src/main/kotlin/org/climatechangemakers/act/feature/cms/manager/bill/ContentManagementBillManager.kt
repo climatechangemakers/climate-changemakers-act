@@ -7,5 +7,7 @@ interface ContentManagementBillManager {
 
   suspend fun persistBill(bill: CreateBill)
 
+  suspend fun updateBill(bill: Bill): Bill
+
   suspend fun getBills(): List<Bill>
 }

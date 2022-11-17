@@ -2,6 +2,7 @@ package org.climatechangemakers.act.feature.cms.manager.bill
 
 import org.climatechangemakers.act.common.extension.state
 import org.climatechangemakers.act.database.Database
+import org.climatechangemakers.act.feature.bill.model.Bill
 import org.climatechangemakers.act.feature.bill.model.BillType
 import org.climatechangemakers.act.feature.cms.model.bill.CreateBill
 import org.climatechangemakers.act.feature.findlegislator.util.suspendTest
@@ -49,6 +50,37 @@ class DatabaseContentManagementBillManagerTest : TestContainerProvider() {
       expected = PSQLState.UNIQUE_VIOLATION,
       actual = e.state,
     )
+  }
+
+  @Test fun `manager updates bill`() = suspendTest {
+    val createBill = CreateBill(
+      congressionalSession = 117,
+      type = BillType.HouseBill,
+      number = 1,
+      name = "first bill!",
+      url = "some.url",
+    )
+    val sut = manager()
+    sut.persistBill(createBill)
+    val bill = sut.getBills().first()
+    val updated = bill.copy(congressionalSession = 1)
+    assertEquals(
+      expected = updated,
+      actual = sut.updateBill(updated),
+    )
+  }
+
+  @Test fun `manager throws NSE trying to update bill nonexistant bill`() = suspendTest {
+    val bill = Bill(
+      id = -1,
+      congressionalSession = 117,
+      type = BillType.HouseBill,
+      number = 1,
+      name = "first bill!",
+      url = "some.url",
+    )
+
+    assertFailsWith<NoSuchElementException> { manager().updateBill(bill) }
   }
 
   @Test fun `manager returns list of bills`() = suspendTest {
