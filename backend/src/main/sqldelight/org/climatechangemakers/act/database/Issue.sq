@@ -8,3 +8,12 @@ CREATE TABLE issue (
   -- This is intended to be resolved in version 2.0.0 of SQLDelight.
   is_active SMALLINT NOT NULL CONSTRAINT boolean_value CHECK (is_active = 0 OR is_active = 1)
 );
+
+updateIssue:
+UPDATE issue
+SET
+  title = :title,
+  precomposed_tweet_template = :tweet,
+  image_url = :imageUrl,
+  description = :description
+WHERE issue.id = :id;

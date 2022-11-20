@@ -2,3 +2,7 @@ CREATE TABLE focus_issue (
   issue_id BIGINT NOT NULL REFERENCES issue ON DELETE CASCADE,
   focused_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+insert:
+INSERT INTO focus_issue(issue_id)
+VALUES(:issueId);

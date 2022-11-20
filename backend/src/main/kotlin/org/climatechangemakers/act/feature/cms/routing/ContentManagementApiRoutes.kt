@@ -22,5 +22,6 @@ fun Route.contentManagementApiRoutes(
 
   route("/issues") {
     get { issueController.getIssues(call) }
+    put("/{id}") { issueController.updateIssue(call) }
   }
 }

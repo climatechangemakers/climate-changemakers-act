@@ -1,6 +1,7 @@
 package org.climatechangemakers.act.feature.cms.manager.issue
 
 import kotlinx.coroutines.withContext
+import org.climatechangemakers.act.common.extension.executeAsOneOrNotFound
 import org.climatechangemakers.act.database.Database
 import org.climatechangemakers.act.di.Io
 import org.climatechangemakers.act.feature.cms.model.issue.ContentManagementIssue
@@ -13,10 +14,44 @@ class DatabaseContentManagementIssueManager @Inject constructor(
 ) : ContentManagementIssueManager {
 
   private val issueAndFocusQueries = database.issueAndFocusQueries
+  private val issueQueries = database.issueQueries
+  private val focusIssueQueries = database.focusIssueQueries
 
   override suspend fun getIssues(): List<ContentManagementIssue> = withContext(coroutineContext) {
-    issueAndFocusQueries.selectAllActive { id, title, tweet, image, description, focused ->
-      ContentManagementIssue(id, title, tweet, image, description, isFocusIssue = focused == 1L)
-    }.executeAsList()
+    issueAndFocusQueries.selectAllActive(::toCmsIssue).executeAsList()
   }
+
+  override suspend fun updateIssue(
+    issue: ContentManagementIssue
+  ): ContentManagementIssue = withContext(coroutineContext) {
+    val currentIssue = issueAndFocusQueries
+      .selectForId(issue.id, ::toCmsIssue)
+      .executeAsOneOrNotFound()
+
+    if (issue.isFocusIssue && !currentIssue.isFocusIssue) {
+      // Issue focus state has changed. Update it.
+      focusIssueQueries.insert(issue.id)
+    }
+    
+    issueQueries.updateIssue(
+      id = issue.id,
+      title = issue.title,
+      tweet = issue.precomposedTweetTemplate,
+      imageUrl = issue.imageUrl,
+      description = issue.description,
+    )
+    issueAndFocusQueries.selectForId(
+      id = issue.id,
+      mapper = ::toCmsIssue
+    ).executeAsOneOrNotFound()
+  }
+
+  private fun toCmsIssue(
+    id: Long,
+    title: String,
+    tweet: String,
+    image: String,
+    description: String,
+    focused: Long,
+  ) = ContentManagementIssue(id, title, tweet, image, description, isFocusIssue = focused == 1L)
 }

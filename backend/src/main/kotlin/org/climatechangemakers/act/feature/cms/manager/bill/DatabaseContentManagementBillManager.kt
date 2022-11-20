@@ -1,6 +1,7 @@
 package org.climatechangemakers.act.feature.cms.manager.bill
 
 import kotlinx.coroutines.withContext
+import org.climatechangemakers.act.common.extension.executeAsOneOrNotFound
 import org.climatechangemakers.act.database.Database
 import org.climatechangemakers.act.di.Io
 import org.climatechangemakers.act.feature.bill.model.Bill
@@ -34,7 +35,7 @@ class DatabaseContentManagementBillManager @Inject constructor(
       billName = bill.name,
       url = bill.url,
       mapper = ::Bill,
-    ).executeAsOneOrNull() ?: throw NoSuchElementException("Bill with id ${bill.id} does not exist.")
+    ).executeAsOneOrNotFound("Bill with id ${bill.id} does not exist.")
   }
 
   override suspend fun getBills(): List<Bill> = withContext(coroutineContext) {
