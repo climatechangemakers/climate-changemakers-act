@@ -14,6 +14,8 @@ import org.climatechangemakers.act.feature.cms.manager.auth.DatabaseUserVerifica
 import org.climatechangemakers.act.feature.cms.manager.auth.UserVerificationManager
 import org.climatechangemakers.act.feature.cms.manager.bill.ContentManagementBillManager
 import org.climatechangemakers.act.feature.cms.manager.bill.DatabaseContentManagementBillManager
+import org.climatechangemakers.act.feature.cms.manager.issue.ContentManagementIssueManager
+import org.climatechangemakers.act.feature.cms.manager.issue.DatabaseContentManagementIssueManager
 import org.climatechangemakers.act.feature.communicatewithcongress.manager.CommunicateWithCongressManager
 import org.climatechangemakers.act.feature.communicatewithcongress.manager.NetworkCommunicateWithCongressManager
 import org.climatechangemakers.act.feature.findlegislator.manager.DatabaseMemberOfCongressManager
@@ -29,4 +31,5 @@ import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongre
   @Binds fun bindsNetworkCommunicateWithCongressManager(manager: NetworkCommunicateWithCongressManager): CommunicateWithCongressManager
   @Binds fun bindsUserVerificationManager(manager: DatabaseUserVerificationManager): UserVerificationManager
   @Binds fun bindsContentManagementBillManager(manager: DatabaseContentManagementBillManager): ContentManagementBillManager
+  @Binds fun bindsContentManagementIssueManager(manager: DatabaseContentManagementIssueManager): ContentManagementIssueManager
 }

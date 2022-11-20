@@ -23,6 +23,22 @@ SELECT title
 FROM issue_and_focus
 WHERE id = :issueId AND is_active = 1;
 
+selectAllActive:
+SELECT
+  id,
+  title,
+  precomposed_tweet_template,
+  image_url,
+  description,
+  -- We shouldn't have to do this, but this is a bug in SQLDelight.
+  -- https://github.com/cashapp/sqldelight/issues/3682.
+  CASE is_focused
+    WHEN TRUE THEN 1
+    ELSE 0
+  END is_focused_int
+FROM issue_and_focus
+WHERE is_active = 1;
+
 selectActiveFocusIssue:
 SELECT id, title, image_url, description
 FROM issue_and_focus
