@@ -5,4 +5,6 @@ import org.climatechangemakers.act.feature.cms.model.issue.ContentManagementIssu
 interface ContentManagementIssueManager {
 
   suspend fun getIssues(): List<ContentManagementIssue>
+
+  suspend fun updateIssue(issue: ContentManagementIssue): ContentManagementIssue
 }
