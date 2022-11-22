@@ -72,7 +72,7 @@ class DatabaseIssueManager @Inject constructor(
 
   private suspend fun getIssueTalkingPoints(issueId: Long): List<TalkingPoint> = withContext(ioDispatcher) {
     ensureIssueExists(issueId)
-    talkingPointQueries.selectForIssueId(issueId, ::TalkingPoint).executeAsList()
+    talkingPointQueries.selectTitleAndContentForIssueId(issueId, ::TalkingPoint).executeAsList()
   }
 
   private suspend fun ensureIssueExists(issueId: Long) = withContext(ioDispatcher) {

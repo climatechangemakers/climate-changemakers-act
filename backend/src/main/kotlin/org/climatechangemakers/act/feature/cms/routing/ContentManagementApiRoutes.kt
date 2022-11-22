@@ -8,10 +8,12 @@ import io.ktor.server.routing.put
 import io.ktor.server.routing.route
 import org.climatechangemakers.act.feature.cms.controller.ContentManagementBillController
 import org.climatechangemakers.act.feature.cms.controller.ContentManagementIssueController
+import org.climatechangemakers.act.feature.cms.controller.ContentManagementTalkingPointsController
 
 fun Route.contentManagementApiRoutes(
   billController: ContentManagementBillController,
   issueController: ContentManagementIssueController,
+  talkingPointsController: ContentManagementTalkingPointsController,
 ) = route("/api") {
 
   route("/bills") {
@@ -23,6 +25,11 @@ fun Route.contentManagementApiRoutes(
   route("/issues") {
     get { issueController.getIssues(call) }
     post { issueController.createIssue(call) }
-    put("/{id}") { issueController.updateIssue(call) }
+    route("/{id}") {
+      put { issueController.updateIssue(call) }
+      route("/talking-points") {
+        get { talkingPointsController.getTalkingPointsForIssue(call) }
+      }
+    }
   }
 }
