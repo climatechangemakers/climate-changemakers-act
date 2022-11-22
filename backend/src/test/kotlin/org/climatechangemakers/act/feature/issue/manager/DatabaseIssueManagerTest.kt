@@ -7,6 +7,7 @@ import org.climatechangemakers.act.feature.issue.model.PreComposedTweetResponse
 import org.climatechangemakers.act.feature.issue.model.TalkingPoint
 import org.climatechangemakers.act.feature.util.TestContainerProvider
 import org.climatechangemakers.act.feature.util.insertIssue
+import org.climatechangemakers.act.feature.util.insertTalkingPoint
 import org.junit.Test
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.assertEquals
@@ -20,8 +21,8 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   @Test fun `getting focus issue returns most recently focused item`() = suspendTest {
     val id1 = driver.insertIssue("foo", "tweet", "url.com")
     val id2 = driver.insertIssue("bar", "tweet", "url.com")
-    insertTalkingPoint(id1, "foo talking point", "foo is cool", 2)
-    insertTalkingPoint(id2, "bar talking point", "bar is cool", 1)
+    driver.insertTalkingPoint(id1, "foo talking point", "foo is cool", 2)
+    driver.insertTalkingPoint(id2, "bar talking point", "bar is cool", 1)
 
     focusIssue(id1)
     assertEquals(
@@ -51,8 +52,8 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
   @Test fun `getting unfocused issues returns correct values`() = suspendTest {
     val id1 = driver.insertIssue("foo", "tweet", "url.com")
     val id2 = driver.insertIssue("bar", "tweet", "url.com")
-    insertTalkingPoint(id1, "foo talking point", "foo is cool", 2)
-    insertTalkingPoint(id2, "bar talking point", "bar is cool", 1)
+    driver.insertTalkingPoint(id1, "foo talking point", "foo is cool", 2)
+    driver.insertTalkingPoint(id2, "bar talking point", "bar is cool", 1)
     focusIssue(id1)
 
     assertEquals(
@@ -113,9 +114,9 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
 
   @Test fun `talking points for an issue are in order`() = suspendTest {
     val id1 = driver.insertIssue("foo", "tweet", "url.com")
-    insertTalkingPoint(id1, "foo talking point 2", "foo is cool", 2)
-    insertTalkingPoint(id1, "foo talking point 3", "foo is cool", 3)
-    insertTalkingPoint(id1, "foo talking point 1", "foo is cool", 1)
+    driver.insertTalkingPoint(id1, "foo talking point 2", "foo is cool", 2)
+    driver.insertTalkingPoint(id1, "foo talking point 3", "foo is cool", 3)
+    driver.insertTalkingPoint(id1, "foo talking point 1", "foo is cool", 1)
 
     val result = issueManager.getUnfocusedIssues()
     assertEquals(
@@ -142,19 +143,6 @@ class DatabaseIssueManagerTest : TestContainerProvider() {
     driver.execute(0, "INSERT INTO example_issue_why_statement(issue_id, statement) VALUES(?,?)", 2) {
       bindLong(0, issueId)
       bindString(1, statement)
-    }
-  }
-
-  private fun insertTalkingPoint(issueId: Long, title: String, content: String, relativeOrdering: Int) {
-    driver.execute(
-      0,
-      "INSERT INTO talking_point(issue_id, title, content, relative_order_position) VALUES (?,?,?,?)",
-      4,
-    ) {
-      bindLong(0, issueId)
-      bindString(1, title)
-      bindString(2, content)
-      bindLong(3, relativeOrdering.toLong())
     }
   }
 

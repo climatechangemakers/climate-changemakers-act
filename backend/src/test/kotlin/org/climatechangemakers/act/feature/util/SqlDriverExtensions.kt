@@ -69,6 +69,22 @@ fun SqlDriver.insertMemberOfCongress(
   bindString(11, "")
 }
 
+fun SqlDriver.insertTalkingPoint(
+  issueId: Long,
+  title: String,
+  content: String,
+  relativeOrdering: Int,
+) = execute(
+  0,
+  "INSERT INTO talking_point(issue_id, title, content, relative_order_position) VALUES (?,?,?,?)",
+  4,
+) {
+  bindLong(0, issueId)
+  bindString(1, title)
+  bindString(2, content)
+  bindLong(3, relativeOrdering.toLong())
+}
+
 val DEFAULT_MEMBER_OF_CONGRESS = MemberOfCongress(
   bioguideId = "bioguide",
   fullName = "fullname",

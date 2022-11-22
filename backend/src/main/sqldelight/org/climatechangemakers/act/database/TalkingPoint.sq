@@ -7,8 +7,18 @@ CREATE TABLE talking_point (
   UNIQUE (issue_id, relative_order_position)
 );
 
-selectForIssueId:
+selectTitleAndContentForIssueId:
 SELECT title, content
+FROM talking_point
+WHERE issue_id = :issueId
+ORDER BY relative_order_position ASC;
+
+selectForIssueId:
+SELECT
+  id,
+  title,
+  content,
+  relative_order_position
 FROM talking_point
 WHERE issue_id = :issueId
 ORDER BY relative_order_position ASC;
