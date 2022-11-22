@@ -17,3 +17,20 @@ SET
   image_url = :imageUrl,
   description = :description
 WHERE issue.id = :id;
+
+insertIssue:
+INSERT INTO issue(
+  title,
+  precomposed_tweet_template,
+  image_url,
+  description,
+  is_active
+)
+VALUES(
+  :title,
+  :precomposedTweet,
+  :imageUrl,
+  :description,
+  1
+)
+RETURNING id;

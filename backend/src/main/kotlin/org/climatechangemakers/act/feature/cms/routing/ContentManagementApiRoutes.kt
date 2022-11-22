@@ -15,13 +15,14 @@ fun Route.contentManagementApiRoutes(
 ) = route("/api") {
 
   route("/bills") {
-    post { billController.postBill(call) }
     get { billController.getBills(call) }
+    post { billController.postBill(call) }
     put("/{id}") { billController.updateBill(call) }
   }
 
   route("/issues") {
     get { issueController.getIssues(call) }
+    post { issueController.createIssue(call) }
     put("/{id}") { issueController.updateIssue(call) }
   }
 }

@@ -5,6 +5,7 @@ import org.climatechangemakers.act.common.extension.executeAsOneOrNotFound
 import org.climatechangemakers.act.database.Database
 import org.climatechangemakers.act.di.Io
 import org.climatechangemakers.act.feature.cms.model.issue.ContentManagementIssue
+import org.climatechangemakers.act.feature.cms.model.issue.CreateIssue
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -44,6 +45,23 @@ class DatabaseContentManagementIssueManager @Inject constructor(
       id = issue.id,
       mapper = ::toCmsIssue
     ).executeAsOneOrNotFound()
+  }
+
+  override suspend fun createIssue(
+    issue: CreateIssue
+  ): ContentManagementIssue = withContext(coroutineContext) {
+    val issueId = issueQueries.insertIssue(
+      title = issue.title,
+      precomposedTweet = issue.precomposedTweetTemplate,
+      imageUrl = issue.imageUrl,
+      description = issue.description,
+    ).executeAsOne()
+
+    if (issue.isFocusIssue) {
+      focusIssueQueries.insert(issueId)
+    }
+
+    issueAndFocusQueries.selectForId(issueId, ::toCmsIssue).executeAsOneOrNotFound()
   }
 
   private fun toCmsIssue(
