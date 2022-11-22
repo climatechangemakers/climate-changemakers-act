@@ -3,6 +3,7 @@ package org.climatechangemakers.act.feature.cms.manager.issue
 import app.cash.sqldelight.db.SqlDriver
 import org.climatechangemakers.act.database.Database
 import org.climatechangemakers.act.feature.cms.model.issue.ContentManagementIssue
+import org.climatechangemakers.act.feature.cms.model.issue.CreateIssue
 import org.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import org.climatechangemakers.act.feature.util.TestContainerProvider
 import org.climatechangemakers.act.feature.util.insertIssue
@@ -80,6 +81,26 @@ class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
 
   @Test fun `update inserts into focus ledger isFocusIssue true`() = suspendTest {
     val issueId = driver.insertIssue(
+      title = "does not exist",
+      precomposedTweet = "tweet",
+      imageUrl = "image.url",
+      description = "description",
+    )
+    manager().updateIssue(
+      issue = ContentManagementIssue(
+        id = issueId,
+        title = "does not exist",
+        precomposedTweetTemplate = "tweet",
+        imageUrl = "image.url",
+        description = "description",
+        isFocusIssue = true,
+      )
+    )
+    assertEquals(expected = 1, actual = driver.countFocusIssueLedger())
+  }
+
+  @Test fun `updates issue`() = suspendTest {
+    val issueId = driver.insertIssue(
       title = "this is an issue",
       precomposedTweet = "tweet",
       imageUrl = "image.url",
@@ -108,20 +129,50 @@ class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
     )
   }
 
-  @Test fun `updates issue`() = suspendTest {
-    val issueId = driver.insertIssue(
-      title = "does not exist",
-      precomposedTweet = "tweet",
-      imageUrl = "image.url",
-      description = "description",
+  @Test fun `create inserts into focus ledger`() = suspendTest {
+    manager().createIssue(
+      issue = CreateIssue(
+        title = "this is another issue",
+        precomposedTweetTemplate = "tweet 2",
+        imageUrl = "image.url 2",
+        description = "description 2",
+        isFocusIssue = true,
+      )
     )
-    manager().updateIssue(
-      issue = ContentManagementIssue(
-        id = issueId,
-        title = "does not exist",
-        precomposedTweetTemplate = "tweet",
-        imageUrl = "image.url",
-        description = "description",
+    assertEquals(expected = 1, actual = driver.countFocusIssueLedger())
+  }
+
+  @Test fun `create does not insert into focus ledger`() = suspendTest {
+    manager().createIssue(
+      issue = CreateIssue(
+        title = "this is another issue",
+        precomposedTweetTemplate = "tweet 2",
+        imageUrl = "image.url 2",
+        description = "description 2",
+        isFocusIssue = false,
+      )
+    )
+    assertEquals(expected = 0, actual = driver.countFocusIssueLedger())
+  }
+
+  @Test fun `create inserts issue`() = suspendTest {
+    val result = manager().createIssue(
+      issue = CreateIssue(
+        title = "this is another issue",
+        precomposedTweetTemplate = "tweet 2",
+        imageUrl = "image.url 2",
+        description = "description 2",
+        isFocusIssue = false,
+      )
+    )
+    assertEquals(
+      actual = result,
+      expected = ContentManagementIssue(
+        id = 1L,
+        title = "this is another issue",
+        precomposedTweetTemplate = "tweet 2",
+        imageUrl = "image.url 2",
+        description = "description 2",
         isFocusIssue = false,
       )
     )
