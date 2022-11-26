@@ -83,7 +83,7 @@ fun SqlDriver.insertTalkingPoint(
   bindString(1, title)
   bindString(2, content)
   bindLong(3, relativeOrdering.toLong())
-}
+}.value
 
 val DEFAULT_MEMBER_OF_CONGRESS = MemberOfCongress(
   bioguideId = "bioguide",
