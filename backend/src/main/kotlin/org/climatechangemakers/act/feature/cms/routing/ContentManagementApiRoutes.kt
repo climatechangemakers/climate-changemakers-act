@@ -29,6 +29,7 @@ fun Route.contentManagementApiRoutes(
       put { issueController.updateIssue(call) }
       route("/talking-points") {
         get { talkingPointsController.getTalkingPointsForIssue(call) }
+        put { talkingPointsController.updateTalkingPointsForIssue(call) }
       }
     }
   }

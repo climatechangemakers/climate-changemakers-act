@@ -28,4 +28,23 @@ class DatabaseContentManagementTalkingPointsManager @Inject constructor(
       mapper = ::ContentManagementTalkingPoint,
     ).executeAsList()
   }
+
+  override suspend fun updateTalkingPoints(
+    issueId: Long,
+    talkingPoints: List<ContentManagementTalkingPoint>
+  ): List<ContentManagementTalkingPoint> = withContext(coroutineContext) {
+    talkingPointQueries.deleteForIssue(issueId)
+    talkingPoints.forEach { tp ->
+      talkingPointQueries.insert(
+        title = tp.title,
+        issueId = issueId,
+        content = tp.content,
+        relativeOrderPosition = tp.relativeOrderPosition,
+      )
+    }
+    talkingPointQueries.selectForIssueId(
+      issueId = issueId,
+      mapper = ::ContentManagementTalkingPoint,
+    ).executeAsList()
+  }
 }

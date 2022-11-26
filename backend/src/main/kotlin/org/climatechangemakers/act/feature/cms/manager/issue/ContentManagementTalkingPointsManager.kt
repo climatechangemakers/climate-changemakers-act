@@ -5,4 +5,9 @@ import org.climatechangemakers.act.feature.cms.model.issue.ContentManagementTalk
 interface ContentManagementTalkingPointsManager {
 
   suspend fun getTalkingPoints(issueId: Long): List<ContentManagementTalkingPoint>
+
+  suspend fun updateTalkingPoints(
+    issueId: Long,
+    talkingPoints: List<ContentManagementTalkingPoint>,
+  ): List<ContentManagementTalkingPoint>
 }

@@ -13,6 +13,23 @@ FROM talking_point
 WHERE issue_id = :issueId
 ORDER BY relative_order_position ASC;
 
+deleteForIssue:
+DELETE FROM talking_point
+WHERE issue_id = :issueId;
+
+insert:
+INSERT INTO talking_point(
+  title,
+  issue_id,
+  content,
+  relative_order_position
+) VALUES (
+  :title,
+  :issueId,
+  :content,
+  :relativeOrderPosition
+);
+
 selectForIssueId:
 SELECT
   id,
