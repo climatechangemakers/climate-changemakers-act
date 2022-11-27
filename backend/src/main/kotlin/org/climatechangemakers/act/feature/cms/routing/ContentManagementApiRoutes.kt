@@ -37,6 +37,7 @@ fun Route.contentManagementApiRoutes(
 
       route("/bills") {
         get { issueAndBillController.getBillsForIssue(call) }
+        put { issueAndBillController.associateBillsToIssue(call) }
       }
     }
   }
