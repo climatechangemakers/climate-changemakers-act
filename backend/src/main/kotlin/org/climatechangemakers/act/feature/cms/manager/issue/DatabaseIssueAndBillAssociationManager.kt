@@ -24,4 +24,16 @@ class DatabaseIssueAndBillAssociationManager @Inject constructor(
     }
     billAndIssueQueries.selectBillsForIssueId(issueId, ::Bill).executeAsList()
   }
+
+  override suspend fun associateBillsToIssue(
+    issueId: Long,
+    billIds: List<Long>,
+  ) = withContext(coroutineContext) {
+    billAndIssueQueries.transaction {
+      billAndIssueQueries.deleteForIssueId(issueId)
+      billIds.forEach { billId ->
+        billAndIssueQueries.insert(issueId, billId)
+      }
+    }
+  }
 }

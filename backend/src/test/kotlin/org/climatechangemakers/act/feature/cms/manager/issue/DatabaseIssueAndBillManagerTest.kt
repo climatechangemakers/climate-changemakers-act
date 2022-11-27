@@ -10,6 +10,7 @@ import org.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import org.climatechangemakers.act.feature.util.TestContainerProvider
 import org.climatechangemakers.act.feature.util.insertIssue
 import org.junit.Test
+import org.postgresql.util.PSQLException
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.assertEquals
@@ -42,6 +43,94 @@ class DatabaseIssueAndBillManagerTest : TestContainerProvider() {
       ),
       actual = manager().getBillsForIssueId(issueId)
     )
+  }
+
+  @Test fun `associates bills with an issue`() = suspendTest {
+    val billId = driver.insertBill(
+      bill = CreateBill(congressionalSession = 1, type = BillType.HouseBill, number = 1, name = "a", url = "a")
+    )
+    val issueId = driver.insertIssue(
+      title = "issue",
+      precomposedTweet = "tweet",
+      imageUrl = "url",
+      description = "description",
+    )
+
+    val manager = manager().apply { associateBillsToIssue(issueId, listOf(billId)) }
+    assertEquals(
+      expected = listOf(
+        Bill(id = billId, congressionalSession = 1, type = BillType.HouseBill, number = 1, name = "a", url = "a")
+      ),
+      actual = manager.getBillsForIssueId(issueId)
+    )
+  }
+
+  @Test fun `deletes omitted bills`() = suspendTest {
+    val billId = driver.insertBill(
+      bill = CreateBill(congressionalSession = 1, type = BillType.HouseBill, number = 1, name = "a", url = "a")
+    )
+    val issueId = driver.insertIssue(
+      title = "issue",
+      precomposedTweet = "tweet",
+      imageUrl = "url",
+      description = "description",
+    )
+
+    driver.insertBillAndIssueAssociation(issueId, billId)
+    val manager = manager().apply { associateBillsToIssue(issueId, emptyList()) }
+
+    assertEquals(
+      expected = emptyList(),
+      actual = manager.getBillsForIssueId(issueId)
+    )
+  }
+
+  @Test fun `does not alter when trying to insert invalid data`() = suspendTest {
+    val billId = driver.insertBill(
+      bill = CreateBill(congressionalSession = 1, type = BillType.HouseBill, number = 1, name = "a", url = "a")
+    )
+    val issueId = driver.insertIssue(
+      title = "issue",
+      precomposedTweet = "tweet",
+      imageUrl = "url",
+      description = "description",
+    )
+
+    driver.insertBillAndIssueAssociation(issueId, billId)
+
+    val manager = manager()
+
+    assertFailsWith<PSQLException> {
+      manager.associateBillsToIssue(-1L, listOf(-1L))
+    }
+
+    assertEquals(
+      expected = listOf(
+        Bill(id = billId, congressionalSession = 1, type = BillType.HouseBill, number = 1, name = "a", url = "a")
+      ),
+      actual = manager.getBillsForIssueId(issueId)
+    )
+  }
+
+  @Test fun `throws exception bill fk constraint violation`() = suspendTest {
+    val billId = driver.insertBill(
+      bill = CreateBill(congressionalSession = 1, type = BillType.HouseBill, number = 1, name = "a", url = "a")
+    )
+    assertFailsWith<PSQLException> {
+      manager().associateBillsToIssue(100, listOf(billId))
+    }
+  }
+
+  @Test fun `throws exception issue fk constraint violation`() = suspendTest {
+    val issueId = driver.insertIssue(
+      title = "issue",
+      precomposedTweet = "tweet",
+      imageUrl = "url",
+      description = "description",
+    )
+    assertFailsWith<PSQLException> {
+      manager().associateBillsToIssue(issueId, listOf(100))
+    }
   }
 
   private fun manager(
