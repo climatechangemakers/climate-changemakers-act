@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS congress_bill_and_issue(
+  issue_id BIGINT NOT NULL REFERENCES issue ON DELETE CASCADE,
+  congress_bill_id BIGINT NOT NULL REFERENCES congress_bill ON DELETE CASCADE,
+  UNIQUE(issue_id, congress_bill_id)
+);

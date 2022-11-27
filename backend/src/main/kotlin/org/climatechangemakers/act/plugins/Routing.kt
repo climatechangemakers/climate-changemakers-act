@@ -23,6 +23,7 @@ fun Application.configureRouting(apiComponent: ApiComponent) {
       billController = apiComponent.billController(),
       issueController = apiComponent.cmsIssueController(),
       talkingPointsController = apiComponent.cmsTalkingPointsController(),
+      issueAndBillController = apiComponent.issueAndBillController(),
     )
 
     static {

@@ -5,17 +5,20 @@ import io.ktor.server.routing.route
 import org.climatechangemakers.act.feature.cms.controller.ContentManagementBillController
 import org.climatechangemakers.act.feature.cms.controller.ContentManagementIssueController
 import org.climatechangemakers.act.feature.cms.controller.ContentManagementTalkingPointsController
+import org.climatechangemakers.act.feature.cms.controller.IssueAndBillAssociationController
 
 fun Route.contentManagementRoutes(
   billController: ContentManagementBillController,
   issueController: ContentManagementIssueController,
   talkingPointsController: ContentManagementTalkingPointsController,
+  issueAndBillController: IssueAndBillAssociationController,
 ) = cmsAuthenticated {
   route("/cms") {
     contentManagementApiRoutes(
       billController,
       issueController,
-      talkingPointsController
+      talkingPointsController,
+      issueAndBillController,
     )
   }
 }

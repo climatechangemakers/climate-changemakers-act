@@ -18,6 +18,8 @@ import org.climatechangemakers.act.feature.cms.manager.issue.ContentManagementIs
 import org.climatechangemakers.act.feature.cms.manager.issue.ContentManagementTalkingPointsManager
 import org.climatechangemakers.act.feature.cms.manager.issue.DatabaseContentManagementIssueManager
 import org.climatechangemakers.act.feature.cms.manager.issue.DatabaseContentManagementTalkingPointsManager
+import org.climatechangemakers.act.feature.cms.manager.issue.DatabaseIssueAndBillAssociationManager
+import org.climatechangemakers.act.feature.cms.manager.issue.IssueAndBillAssociationManager
 import org.climatechangemakers.act.feature.communicatewithcongress.manager.CommunicateWithCongressManager
 import org.climatechangemakers.act.feature.communicatewithcongress.manager.NetworkCommunicateWithCongressManager
 import org.climatechangemakers.act.feature.findlegislator.manager.DatabaseMemberOfCongressManager
@@ -35,4 +37,5 @@ import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongre
   @Binds fun bindsContentManagementBillManager(manager: DatabaseContentManagementBillManager): ContentManagementBillManager
   @Binds fun bindsContentManagementIssueManager(manager: DatabaseContentManagementIssueManager): ContentManagementIssueManager
   @Binds fun bindsContentManagementTalkingPointsManager(manager: DatabaseContentManagementTalkingPointsManager): ContentManagementTalkingPointsManager
+  @Binds fun bindsIssueAndBillAssociationManager(manager: DatabaseIssueAndBillAssociationManager): IssueAndBillAssociationManager
 }
