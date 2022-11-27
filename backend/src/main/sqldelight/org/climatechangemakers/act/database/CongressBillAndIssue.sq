@@ -1,0 +1,17 @@
+CREATE TABLE congress_bill_and_issue(
+  issue_id BIGINT NOT NULL REFERENCES issue ON DELETE CASCADE,
+  congress_bill_id BIGINT NOT NULL REFERENCES congress_bill ON DELETE CASCADE,
+  UNIQUE(issue_id, congress_bill_id)
+);
+
+selectBillsForIssueId:
+SELECT
+  congress_bill_and_issue.congress_bill_id,
+  congress_bill.congressional_session,
+  congress_bill.bill_type,
+  congress_bill.bill_number,
+  congress_bill.bill_name,
+  congress_bill.url
+FROM congress_bill_and_issue
+INNER JOIN congress_bill ON congress_bill.id = congress_bill_id
+WHERE congress_bill_and_issue.issue_id = :issueId;
