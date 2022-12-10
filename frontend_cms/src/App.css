@@ -1,0 +1,24 @@
+:root {
+    --bs-primary-rgb: 243, 182, 251 !important;
+    --bs-dark-rgb: 46, 38, 108 !important;
+    --primary-orange: #ee523b;
+    --text-pink: #f3b6fb;
+    --bg-light-grey: #eeefff;
+    --primary-purple: #351f75;
+    --disabled: #9b9b9b;
+}
+
+.App {
+    height: 100vh;
+    margin-top: 0;
+    background-color: var(--primary-purple);
+}
+
+html {
+    background-color: var(--primary-purple);
+}
+
+.btn-primary {
+    background-color: var(--primary-purple) !important;
+    border: purple !important;
+}
