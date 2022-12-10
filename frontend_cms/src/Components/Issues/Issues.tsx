@@ -13,7 +13,10 @@ export default function Issues() {
             <Table striped bordered hover>
                 <tbody>
                     {data?.map((d) => (
-                        <tr key={d.id}>
+                        <tr
+                            onClick={() => open(<IssuesModal issue={d} />)}
+                            key={d.id}
+                        >
                             <td>{d.title}</td>
                         </tr>
                     ))}

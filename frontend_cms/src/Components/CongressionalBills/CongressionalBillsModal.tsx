@@ -54,7 +54,7 @@ export default function CongressionalBillsModal() {
                                     {t}
                                 </option>
                             ))}
-                        </Form.Select>{" "}
+                        </Form.Select>
                     </Form.Group>
                     <Form.Group
                         className="mb-3"

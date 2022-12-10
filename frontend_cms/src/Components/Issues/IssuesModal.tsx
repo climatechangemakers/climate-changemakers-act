@@ -2,7 +2,7 @@ import { Alert, Button, Form, Modal } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
 import { ExistingIssue, IssueForm } from "Types/Issue";
 import Select from "react-select";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     useBillsQuery,
     useIssuesQuery,
@@ -19,40 +19,47 @@ export default function IssuesModal({ issue }: Props) {
     const { data: bills } = useBillsQuery();
     const { refetch } = useIssuesQuery();
     const { mutate: addIssue } = useCreateIssueMutation();
-    const { mutate: updateBillsAssociatedWithIssue } =
-        useUpdateBillsForIssueMutation();
+    const { mutate: updateBills } = useUpdateBillsForIssueMutation();
     const { register, handleSubmit, reset, control } = useForm<IssueForm>();
     const { close } = useModal();
     const [error, setError] = useState("");
 
+    useEffect(() => {
+        if (issue) reset(issue);
+    }, [issue]);
+
     const onSubmit = handleSubmit((data) => {
         const { associatedBills, ...issueData } = data;
-        addIssue(issueData, {
-            onSuccess: (data) => {
-                updateBillsAssociatedWithIssue(
-                    { issueId: data!.id, billIds: associatedBills },
-                    {
-                        onSuccess: () => {
-                            reset();
-                            refetch();
-                            close();
-                        },
-                        onError: async (error: Error) => {
-                            setError(error.message);
-                        },
-                    }
-                );
-            },
-            onError: async (error: Error) => {
-                setError(error.message);
-            },
-        });
+        if (!issue)
+            addIssue(issueData, {
+                onSuccess: (data) => {
+                    updateBills(
+                        { issueId: data!.id, billIds: associatedBills },
+                        {
+                            onSuccess: () => {
+                                reset();
+                                refetch();
+                                close();
+                            },
+                            onError: async (error: Error) => {
+                                setError(error.message);
+                            },
+                        }
+                    );
+                },
+                onError: async (error: Error) => {
+                    setError(error.message);
+                },
+            });
+        else console.log("Updating issue...");
     });
 
     return (
         <Modal show onHide={close} size="lg">
             <Modal.Header closeButton>
-                <Modal.Title>Add new issue</Modal.Title>
+                <Modal.Title>
+                    {!issue ? "Add new issue" : "Update existing issue"}
+                </Modal.Title>
             </Modal.Header>
             <Form onSubmit={onSubmit}>
                 <Modal.Body>
@@ -114,7 +121,7 @@ export default function IssuesModal({ issue }: Props) {
                         Close
                     </Button>
                     <Button variant="primary" type="submit">
-                        Add issue
+                        {!issue ? "Add issue" : "Update issue"}
                     </Button>
                 </Modal.Footer>
             </Form>
