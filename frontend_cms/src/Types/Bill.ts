@@ -5,3 +5,5 @@ export type Bill = {
     name: string;
     url: string;
 };
+
+export type ExisitingBill = Bill & { id: number };

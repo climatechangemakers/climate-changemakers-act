@@ -9,6 +9,7 @@ import {
     useCreateIssueMutation,
     useUpdateBillsForIssueMutation,
     useModal,
+    useUpdateIssueMutation,
 } from "hooks";
 
 type Props = {
@@ -19,6 +20,7 @@ export default function IssuesModal({ issue }: Props) {
     const { data: bills } = useBillsQuery();
     const { refetch } = useIssuesQuery();
     const { mutate: addIssue } = useCreateIssueMutation();
+    const { mutate: updateIssue } = useUpdateIssueMutation();
     const { mutate: updateBills } = useUpdateBillsForIssueMutation();
     const { register, handleSubmit, reset, control } = useForm<IssueForm>();
     const { close } = useModal();
@@ -28,30 +30,45 @@ export default function IssuesModal({ issue }: Props) {
         if (issue) reset(issue);
     }, [issue]);
 
+    const handleUpdateBills = (id: number, associatedBills: number[]) => {
+        updateBills(
+            { issueId: id, billIds: associatedBills },
+            {
+                onSuccess: () => {
+                    reset();
+                    refetch();
+                    close();
+                },
+                onError: async (error: Error) => {
+                    setError(error.message);
+                },
+            }
+        );
+    };
+
     const onSubmit = handleSubmit((data) => {
         const { associatedBills, ...issueData } = data;
         if (!issue)
             addIssue(issueData, {
                 onSuccess: (data) => {
-                    updateBills(
-                        { issueId: data!.id, billIds: associatedBills },
-                        {
-                            onSuccess: () => {
-                                reset();
-                                refetch();
-                                close();
-                            },
-                            onError: async (error: Error) => {
-                                setError(error.message);
-                            },
-                        }
-                    );
+                    handleUpdateBills(data!.id, associatedBills);
                 },
                 onError: async (error: Error) => {
                     setError(error.message);
                 },
             });
-        else console.log("Updating issue...");
+        else
+            updateIssue(
+                { ...issueData, id: issue.id },
+                {
+                    onSuccess: () => {
+                        handleUpdateBills(issue.id, associatedBills);
+                    },
+                    onError: async (error: Error) => {
+                        setError(error.message);
+                    },
+                }
+            );
     });
 
     return (

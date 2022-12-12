@@ -1,8 +1,8 @@
 import { useBillsQuery, useCreateBillMutation, useModal } from "hooks";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { Bill } from "Types/Bill";
+import { Bill, ExisitingBill } from "Types/Bill";
 
 const BILL_TYPES = [
     "H.R.",
@@ -15,30 +15,41 @@ const BILL_TYPES = [
     "S.Res.",
 ];
 
-export default function CongressionalBillsModal() {
+type Props = {
+    bill?: ExisitingBill;
+};
+
+export default function CongressionalBillsModal({ bill }: Props) {
     const { refetch } = useBillsQuery();
-    const mutation = useCreateBillMutation();
+    const { mutate: createBill } = useCreateBillMutation();
     const { register, handleSubmit, reset } = useForm<Bill>();
     const [error, setError] = useState("");
     const { close } = useModal();
 
+    useEffect(() => {
+        if (bill) reset(bill);
+    }, [bill]);
+
     const onSubmit = handleSubmit((data) => {
-        mutation.mutate(data, {
-            onSuccess: () => {
-                reset();
-                refetch();
-                close();
-            },
-            onError: async (error: Error) => {
-                setError(error.message);
-            },
-        });
+        if (!bill)
+            createBill(data, {
+                onSuccess: () => {
+                    reset();
+                    refetch();
+                    close();
+                },
+                onError: async (error: Error) => {
+                    setError(error.message);
+                },
+            });
     });
 
     return (
         <Modal show onHide={close} size="lg">
             <Modal.Header closeButton>
-                <Modal.Title>Add new bill</Modal.Title>
+                <Modal.Title>
+                    {!bill ? "Add new bill" : "Update bill"}
+                </Modal.Title>
             </Modal.Header>
             <Form onSubmit={onSubmit}>
                 <Modal.Body>
@@ -86,7 +97,7 @@ export default function CongressionalBillsModal() {
                         Close
                     </Button>
                     <Button variant="primary" type="submit">
-                        Add bill
+                        {!bill ? "Add bill" : "Update bill"}
                     </Button>
                 </Modal.Footer>
             </Form>

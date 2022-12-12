@@ -1,15 +1,18 @@
 import React from "react";
-import { Button, Card, Table } from "react-bootstrap";
+import { Button, Card, Spinner, Table } from "react-bootstrap";
 import { useIssuesQuery, useModal } from "hooks";
 import IssuesModal from "./IssuesModal";
 
 export default function Issues() {
-    const { data } = useIssuesQuery();
+    const { data, isLoading } = useIssuesQuery();
     const { open } = useModal();
 
     return (
         <Card className="p-4 mb-4">
-            <h2 className="ms-2 mb-3">Issues</h2>
+            <div className="d-flex">
+                <h2 className="ms-2 mb-3 me-2">Issues</h2>
+                {isLoading && <Spinner animation="border" />}
+            </div>
             <Table striped bordered hover>
                 <tbody>
                     {data?.map((d) => (
