@@ -72,7 +72,7 @@ migrate-production-database:
       - backend/src/main/sqldelight/migrations/*.sqm
 
 update-members-of-congress-dry-run:
-  image: registry.gitlab.com/climatechangemakers/parse-congress-info:783c3c38
+  image: registry.gitlab.com/climatechangemakers/parse-congress-info:e41913db
   stage: deploy-members-of-congress
   script:
     - parse-congress-info.kexe -t current-legislators -l congress/legislators-current.json -h congress/legislators-historical.json -c congress/active-offices.json -s congress/legislators-social-media.json members-of-congress.sql
@@ -89,7 +89,7 @@ update-members-of-congress-dry-run:
       - congress/active-offices.json
 
 update-members-of-congress:
-  image: registry.gitlab.com/climatechangemakers/parse-congress-info:783c3c38
+  image: registry.gitlab.com/climatechangemakers/parse-congress-info:e41913db
   stage: deploy-members-of-congress
   script:
     - parse-congress-info.kexe -t current-legislators -l congress/legislators-current.json -h congress/legislators-historical.json -c congress/active-offices.json -s congress/legislators-social-media.json members-of-congress.sql
