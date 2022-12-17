@@ -16,6 +16,13 @@ FROM congress_bill_and_issue
 INNER JOIN congress_bill ON congress_bill.id = congress_bill_id
 WHERE congress_bill_and_issue.issue_id = :issueId;
 
+selectBillIdsForIssueId:
+SELECT
+  congress_bill_and_issue.congress_bill_id
+FROM congress_bill_and_issue
+INNER JOIN congress_bill ON congress_bill.id = congress_bill_id
+WHERE congress_bill_and_issue.issue_id = :issueId;
+
 deleteForIssueId:
 DELETE FROM congress_bill_and_issue
 WHERE issue_id = :issueId;
