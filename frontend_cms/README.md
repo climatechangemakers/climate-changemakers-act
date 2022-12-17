@@ -1,6 +1,17 @@
-# Getting Started with Create React App
+# Climate Changemakers CMS
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## To run locally
+
+1. Follow steps in "Setting up your environment" in parent [README](../README.md)
+2. Change proxy in `package.json` to point to local backend `http://localhost:8080`
+3. Add Username/Password in `content_management_user` database in DB. Something like:
+
+-   `psql -h localhost -p 5432 -U postgres postgres`
+-   `insert into content_management_user (user_name, password_bcrypt_hash) values ('jack', 'YourBcryptHash');`
+
+4. `npm install` then `npm start`
 
 ## Available Scripts
 
