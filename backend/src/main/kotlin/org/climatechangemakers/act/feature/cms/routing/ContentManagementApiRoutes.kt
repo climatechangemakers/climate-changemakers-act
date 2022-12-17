@@ -23,7 +23,7 @@ fun Route.contentManagementApiRoutes(
 
   route("/issues") {
     get { issueController.getIssues(call) }
-    post { TODO() }
+    post { issueController.createIssue(call) }
 
     route("/{id}") {
       put { TODO() }
