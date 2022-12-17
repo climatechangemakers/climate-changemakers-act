@@ -24,7 +24,15 @@ VALUES(
   :billNumber,
   :billName,
   :url
-);
+)
+RETURNING
+  id,
+  congressional_session,
+  bill_type,
+  bill_number,
+  bill_name,
+  url
+;
 
 update:
 UPDATE congress_bill SET
