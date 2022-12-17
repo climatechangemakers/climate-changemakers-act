@@ -22,8 +22,6 @@ fun Application.configureRouting(apiComponent: ApiComponent) {
     contentManagementRoutes(
       billController = apiComponent.billController(),
       issueController = apiComponent.cmsIssueController(),
-      talkingPointsController = apiComponent.cmsTalkingPointsController(),
-      issueAndBillController = apiComponent.issueAndBillController(),
     )
 
     static {
