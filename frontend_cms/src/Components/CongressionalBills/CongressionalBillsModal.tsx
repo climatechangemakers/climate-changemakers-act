@@ -1,4 +1,5 @@
 import { useBillsQuery, useCreateBillMutation, useModal } from "hooks";
+import useUpdateBillMutation from "hooks/useUpdateBillMutation";
 import React, { useEffect, useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
@@ -22,6 +23,7 @@ type Props = {
 export default function CongressionalBillsModal({ bill }: Props) {
     const { refetch } = useBillsQuery();
     const { mutate: createBill } = useCreateBillMutation();
+    const { mutate: updateBill } = useUpdateBillMutation();
     const { register, handleSubmit, reset } = useForm<Bill>();
     const [error, setError] = useState("");
     const { close } = useModal();
@@ -30,18 +32,28 @@ export default function CongressionalBillsModal({ bill }: Props) {
         if (bill) reset(bill);
     }, [bill]);
 
+    const handleSuccess = () => {
+        reset();
+        refetch();
+        close();
+    };
+
+    const handleError = (error: Error) => setError(error.message);
+
     const onSubmit = handleSubmit((data) => {
         if (!bill)
             createBill(data, {
-                onSuccess: () => {
-                    reset();
-                    refetch();
-                    close();
-                },
-                onError: async (error: Error) => {
-                    setError(error.message);
-                },
+                onSuccess: handleSuccess,
+                onError: handleError,
             });
+        else
+            updateBill(
+                { ...data, id: bill.id },
+                {
+                    onSuccess: handleSuccess,
+                    onError: handleError,
+                }
+            );
     });
 
     return (

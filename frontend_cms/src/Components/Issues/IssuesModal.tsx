@@ -7,7 +7,6 @@ import {
     useBillsQuery,
     useIssuesQuery,
     useCreateIssueMutation,
-    useUpdateBillsForIssueMutation,
     useModal,
     useUpdateIssueMutation,
 } from "hooks";
@@ -21,7 +20,6 @@ export default function IssuesModal({ issue }: Props) {
     const { refetch } = useIssuesQuery();
     const { mutate: addIssue } = useCreateIssueMutation();
     const { mutate: updateIssue } = useUpdateIssueMutation();
-    const { mutate: updateBills } = useUpdateBillsForIssueMutation();
     const { register, handleSubmit, reset, control } = useForm<IssueForm>();
     const { close } = useModal();
     const [error, setError] = useState("");
@@ -30,43 +28,28 @@ export default function IssuesModal({ issue }: Props) {
         if (issue) reset(issue);
     }, [issue]);
 
-    const handleUpdateBills = (id: number, associatedBills: number[]) => {
-        updateBills(
-            { issueId: id, billIds: associatedBills },
-            {
-                onSuccess: () => {
-                    reset();
-                    refetch();
-                    close();
-                },
-                onError: async (error: Error) => {
-                    setError(error.message);
-                },
-            }
-        );
+    const handleSuccess = () => {
+        reset();
+        refetch();
+        close();
     };
+
+    const handleError = (error: Error) => setError(error.message);
 
     const onSubmit = handleSubmit((data) => {
         const { associatedBills, ...issueData } = data;
         if (!issue)
+            // TODO: This currently doesn't work, will fix when new create endpoint implemented
             addIssue(issueData, {
-                onSuccess: (data) => {
-                    handleUpdateBills(data!.id, associatedBills);
-                },
-                onError: async (error: Error) => {
-                    setError(error.message);
-                },
+                onSuccess: handleSuccess,
+                onError: handleError,
             });
         else
             updateIssue(
                 { ...issueData, id: issue.id },
                 {
-                    onSuccess: () => {
-                        handleUpdateBills(issue.id, associatedBills);
-                    },
-                    onError: async (error: Error) => {
-                        setError(error.message);
-                    },
+                    onSuccess: handleSuccess,
+                    onError: handleError,
                 }
             );
     });
@@ -131,6 +114,7 @@ export default function IssuesModal({ issue }: Props) {
                             )}
                         />
                     </Form.Group>
+                    {/* TODO: Add talking points */}
                     {error && <Alert variant="danger">{error}</Alert>}
                 </Modal.Body>
                 <Modal.Footer>

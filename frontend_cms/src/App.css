@@ -2,16 +2,24 @@
     --primary-purple: #351f75;
 }
 
-.App {
-    height: 100vh;
+html {
     background-color: var(--primary-purple);
 }
 
-html {
+.App {
+    height: 100vh;
     background-color: var(--primary-purple);
 }
 
 .btn-primary {
     background-color: var(--primary-purple) !important;
     border: purple !important;
+}
+
+.delete-icon {
+    display: none !important;
+}
+
+.table-row:hover>.delete-icon {
+    display: block !important;
 }
