@@ -509,9 +509,9 @@
         "class": 1,
         "party": "Democrat",
         "state_rank": "senior",
-        "url": "https://www.carper.senate.gov/public",
+        "url": "https://www.carper.senate.gov",
         "rss_url": "http://www.carper.senate.gov/public/index.cfm/rss/feed",
-        "contact_form": "https://www.carper.senate.gov/public/index.cfm/email-senator-carper",
+        "contact_form": "https://www.carper.senate.gov/contact/",
         "address": "513 Hart Senate Office Building Washington DC 20510",
         "office": "513 Hart Senate Office Building",
         "phone": "202-224-2441"
@@ -25271,7 +25271,7 @@
           },
           {
             "start": "1994-11-09",
-            "end": "2005-01-03",
+            "end": "1999-01-03",
             "party": "Republican"
           }
         ]
@@ -30804,7 +30804,21 @@
         "end": "2025-01-03",
         "state": "AZ",
         "class": 1,
-        "party": "Democrat",
+        "party": "Independent",
+        "caucus": "Democrat",
+        "party_affiliations": [
+          {
+            "start": "2019-01-03",
+            "end": "2022-12-08",
+            "party": "Democrat"
+          },
+          {
+            "start": "2022-12-09",
+            "end": "2025-01-03",
+            "party": "Independent",
+            "caucus": "Democrat"
+          }
+        ],
         "state_rank": "senior",
         "url": "https://www.sinema.senate.gov",
         "address": "317 Hart Senate Office Building Washington DC 20510",
@@ -41732,72 +41746,6 @@
   },
   {
     "id": {
-      "bioguide": "M001200",
-      "govtrack": 412728,
-      "wikipedia": "Donald McEachin",
-      "wikidata": "Q4647699",
-      "google_entity_id": "kg:/m/0979v6",
-      "votesmart": 8230,
-      "fec": [
-        "H6VA04061"
-      ],
-      "opensecrets": "N00039327",
-      "maplight": 2240,
-      "cspan": 103621,
-      "icpsr": 21736,
-      "ballotpedia": "Donald McEachin"
-    },
-    "name": {
-      "first": "A.",
-      "middle": "Donald",
-      "last": "McEachin",
-      "official_full": "A. Donald McEachin"
-    },
-    "bio": {
-      "gender": "M",
-      "birthday": "1961-10-10"
-    },
-    "terms": [
-      {
-        "type": "rep",
-        "start": "2017-01-03",
-        "end": "2019-01-03",
-        "state": "VA",
-        "district": 4,
-        "party": "Democrat",
-        "phone": "202-225-6365",
-        "address": "314 Cannon House Office Building; Washington DC 20515-4604",
-        "office": "314 Cannon House Office Building",
-        "url": "https://mceachin.house.gov"
-      },
-      {
-        "type": "rep",
-        "start": "2019-01-03",
-        "end": "2021-01-03",
-        "state": "VA",
-        "district": 4,
-        "party": "Democrat",
-        "phone": "202-225-6365",
-        "address": "314 Cannon House Office Building Washington DC 20515-4604",
-        "office": "314 Cannon House Office Building",
-        "url": "https://mceachin.house.gov"
-      },
-      {
-        "type": "rep",
-        "start": "2021-01-03",
-        "end": "2023-01-03",
-        "state": "VA",
-        "district": 4,
-        "party": "Democrat",
-        "url": "https://mceachin.house.gov",
-        "address": "314 Cannon House Office Building Washington DC 20515-4604",
-        "office": "314 Cannon House Office Building",
-        "phone": "202-225-6365"
-      }
-    ]
-  },
-  {
-    "id": {
       "bioguide": "J000298",
       "govtrack": 412730,
       "wikipedia": "Pramila Jayapal",
@@ -42338,7 +42286,7 @@
         "state_rank": "junior",
         "party": "Democrat",
         "url": "https://www.smith.senate.gov",
-        "contact_form": "https://www.smith.senate.gov/contact-tina",
+        "contact_form": "https://www.smith.senate.gov/share-your-opinion/",
         "address": "720 Hart Senate Office Building Washington DC 20510",
         "office": "720 Hart Senate Office Building",
         "phone": "202-224-5641"
@@ -49935,8 +49883,23 @@
       {
         "type": "sen",
         "start": "2021-01-20",
-        "end": "2023-01-03",
+        "end": "2022-11-08",
         "how": "appointment",
+        "state": "CA",
+        "class": 3,
+        "party": "Democrat",
+        "state_rank": "junior",
+        "address": "112 Hart Senate Office Building Washington DC 20510",
+        "office": "112 Hart Senate Office Building",
+        "phone": "202-224-3553",
+        "url": "https://www.padilla.senate.gov",
+        "contact_form": "https://www.padilla.senate.gov/contact/"
+      },
+      {
+        "type": "sen",
+        "start": "2022-11-09",
+        "end": "2023-01-03",
+        "how": "special-election",
         "state": "CA",
         "class": 3,
         "party": "Democrat",
@@ -50236,6 +50199,7 @@
         "H2OH11169"
       ],
       "govtrack": 456863,
+      "opensecrets": "N00047875",
       "wikipedia": "Shontel Brown",
       "wikidata": "Q107863952"
     },
@@ -50271,6 +50235,7 @@
         "H2OH15228"
       ],
       "govtrack": 456864,
+      "opensecrets": "N00048568",
       "wikipedia": "Mike Carey (politician)",
       "wikidata": "Q108010312"
     },
@@ -50305,6 +50270,7 @@
         "H8FL20032"
       ],
       "govtrack": 456865,
+      "opensecrets": "N00043504",
       "wikipedia": "Sheila Cherfilus-McCormick",
       "wikidata": "Q109560948"
     },
@@ -50339,6 +50305,7 @@
         "H2CA22231"
       ],
       "govtrack": 456866,
+      "opensecrets": "N00050064",
       "wikipedia": "Connie Conway",
       "wikidata": "Q5161840",
       "ballotpedia": "Connie Conway"
@@ -50373,6 +50340,7 @@
         "H2TX34113"
       ],
       "govtrack": 456867,
+      "opensecrets": "N00048049",
       "wikipedia": "Mayra Flores",
       "wikidata": "Q112577890"
     },
@@ -50406,6 +50374,7 @@
         "H2NE01118"
       ],
       "govtrack": 456868,
+      "opensecrets": "N00050145",
       "wikipedia": "Mike Flood (politician)",
       "wikidata": "Q6846855",
       "ballotpedia": "Mike Flood"
@@ -50440,6 +50409,7 @@
         "H2MN01223"
       ],
       "govtrack": 456869,
+      "opensecrets": "N00050649",
       "wikipedia": "Brad Finstad",
       "wikidata": "Q111159803",
       "ballotpedia": "Brad Finstad"
@@ -50474,6 +50444,7 @@
         "H2AK01158"
       ],
       "govtrack": 456870,
+      "opensecrets": "N00050780",
       "wikipedia": "Mary Peltola",
       "wikidata": "Q13562231",
       "ballotpedia": "Mary Peltola"
@@ -50510,6 +50481,7 @@
         "H8NY19223"
       ],
       "govtrack": 456871,
+      "opensecrets": "N00041165",
       "wikipedia": "Pat Ryan (politician)",
       "wikidata": "Q113587887",
       "ballotpedia": "Pat Ryan (New York)"
@@ -50544,6 +50516,7 @@
         "H2NY23137"
       ],
       "govtrack": 456872,
+      "opensecrets": "N00048747",
       "wikipedia": "Joe Sempolinski",
       "wikidata": "Q113588013",
       "ballotpedia": "Joe Sempolinski"
@@ -50568,6 +50541,42 @@
         "address": "1203 Longworth House Office Building Washington DC 20515-3223",
         "office": "1203 Longworth House Office Building",
         "phone": "202-225-3161"
+      }
+    ]
+  },
+  {
+    "id": {
+      "bioguide": "Y000067",
+      "fec": [
+        "H2IN02295"
+      ],
+      "govtrack": 456873,
+      "votesmart": 210545,
+      "wikipedia": "Rudy Yakym",
+      "wikidata": "Q115137719",
+      "ballotpedia": "Rudy Yakym"
+    },
+    "name": {
+      "first": "Rudy",
+      "last": "Yakym",
+      "official_full": "Rudy Yakym, III"
+    },
+    "bio": {
+      "gender": "M",
+      "birthday": "1984-02-24"
+    },
+    "terms": [
+      {
+        "type": "rep",
+        "start": "2022-11-14",
+        "end": "2023-01-03",
+        "state": "IN",
+        "district": 2,
+        "party": "Republican",
+        "how": "special-election",
+        "phone": "202-225-3915",
+        "address": "466 Cannon House Office Building Washington DC 20515-1402",
+        "office": "466 Cannon House Office Building"
       }
     ]
   }

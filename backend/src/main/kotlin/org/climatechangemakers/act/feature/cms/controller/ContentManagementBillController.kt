@@ -4,7 +4,6 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
-import org.climatechangemakers.act.common.extension.respondNothing
 import org.climatechangemakers.act.feature.bill.model.Bill
 import org.climatechangemakers.act.feature.cms.manager.bill.ContentManagementBillManager
 import org.climatechangemakers.act.feature.cms.model.bill.CreateBill
@@ -16,8 +15,10 @@ class ContentManagementBillController @Inject constructor(
 
   suspend fun postBill(call: ApplicationCall) {
     val bill = call.receive<CreateBill>()
-    billManager.persistBill(bill)
-    call.respondNothing()
+    call.respond(
+      status = HttpStatusCode.Created,
+      message = billManager.persistBill(bill)
+    )
   }
 
   suspend fun updateBill(call: ApplicationCall) {
