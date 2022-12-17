@@ -23,8 +23,10 @@ class DatabaseContentManagementBillManager @Inject constructor(
       billNumber = bill.number,
       billName = bill.name,
       url = bill.url,
-    )
+      mapper = ::Bill,
+    ).executeAsOne()
   }
+
 
   override suspend fun updateBill(bill: Bill) = withContext(coroutineContext) {
     billQueries.update(

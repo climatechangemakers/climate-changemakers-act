@@ -5,7 +5,7 @@ import org.climatechangemakers.act.feature.cms.model.bill.CreateBill
 
 interface ContentManagementBillManager {
 
-  suspend fun persistBill(bill: CreateBill)
+  suspend fun persistBill(bill: CreateBill): Bill
 
   suspend fun updateBill(bill: Bill): Bill
 
