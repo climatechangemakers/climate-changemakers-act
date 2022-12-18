@@ -8,4 +8,6 @@ import kotlinx.serialization.Serializable
   val imageUrl: String,
   val description: String,
   val isFocusIssue: Boolean,
+  val talkingPoints: List<ContentManagementTalkingPoint>,
+  val relatedBillIds: List<Long>,
 )

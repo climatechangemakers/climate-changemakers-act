@@ -68,20 +68,44 @@ class DatabaseContentManagementIssueManager @Inject constructor(
   override suspend fun createIssue(
     issue: CreateIssue
   ): ContentManagementIssue = withContext(coroutineContext) {
-//    val issueId = issueQueries.insertIssue(
-//      title = issue.title,
-//      precomposedTweet = issue.precomposedTweetTemplate,
-//      imageUrl = issue.imageUrl,
-//      description = issue.description,
-//    ).executeAsOne()
-//
-//    if (issue.isFocusIssue) {
-//      focusIssueQueries.insert(issueId)
-//    }
-//
-//    issueAndFocusQueries.selectForId(issueId, ::toCmsIssue).executeAsOneOrNotFound()
+    issueQueries.transactionWithResult {
+      val issueId = issueQueries.insertIssue(
+        title = issue.title,
+        precomposedTweet = issue.precomposedTweetTemplate,
+        imageUrl = issue.imageUrl,
+        description = issue.description,
+      ).executeAsOne()
 
-    TODO()
+      if (issue.isFocusIssue) {
+        focusIssueQueries.insert(issueId)
+      }
+
+      issue.relatedBillIds.forEach { billId ->
+        billQueries.insert(issueId = issueId, billId = billId)
+      }
+
+      val createdTalkingPoints = issue.talkingPoints.map { talkingPoint ->
+        val id = talkingPointQueries.insert(
+          title = talkingPoint.title,
+          issueId = issueId,
+          content = talkingPoint.content,
+          relativeOrderPosition = talkingPoint.relativeOrderPosition
+        ).executeAsOne()
+
+        talkingPoint.copy(id = id)
+      }
+
+      ContentManagementIssue(
+        id = issueId,
+        title = issue.title,
+        precomposedTweetTemplate = issue.precomposedTweetTemplate,
+        imageUrl = issue.imageUrl,
+        description = issue.description,
+        isFocusIssue = issue.isFocusIssue,
+        talkingPoints = createdTalkingPoints,
+        relatedBillIds = issue.relatedBillIds,
+      )
+    }
   }
 
 //  private fun toCmsIssue(

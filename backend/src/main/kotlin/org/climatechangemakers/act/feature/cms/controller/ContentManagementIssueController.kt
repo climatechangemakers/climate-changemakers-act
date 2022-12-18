@@ -33,6 +33,9 @@ class ContentManagementIssueController @Inject constructor(
 
   suspend fun createIssue(call: ApplicationCall) {
     val issue = call.receive<CreateIssue>()
-    call.respond(manager.createIssue(issue))
+    call.respond(
+      status = HttpStatusCode.Created,
+      message = manager.createIssue(issue)
+    )
   }
 }
