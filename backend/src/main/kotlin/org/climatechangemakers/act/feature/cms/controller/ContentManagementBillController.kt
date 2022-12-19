@@ -4,6 +4,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
+import org.climatechangemakers.act.common.extension.respondNothing
 import org.climatechangemakers.act.feature.bill.model.Bill
 import org.climatechangemakers.act.feature.cms.manager.bill.ContentManagementBillManager
 import org.climatechangemakers.act.feature.cms.model.bill.CreateBill
@@ -37,5 +38,11 @@ class ContentManagementBillController @Inject constructor(
 
   suspend fun getBills(call: ApplicationCall) {
     call.respond(billManager.getBills())
+  }
+
+  suspend fun deleteBill(call: ApplicationCall) {
+    val billId = checkNotNull(call.parameters["id"]?.toLong())
+    billManager.deleteBill(billId)
+    call.respondNothing()
   }
 }

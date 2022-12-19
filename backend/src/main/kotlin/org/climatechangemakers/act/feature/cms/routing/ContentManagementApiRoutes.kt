@@ -18,7 +18,10 @@ fun Route.contentManagementApiRoutes(
   route("/bills") {
     get { billController.getBills(call) }
     post { billController.postBill(call) }
-    put("/{id}") { billController.updateBill(call) }
+    route("/{id}") {
+      put { billController.updateBill(call) }
+      delete { billController.deleteBill(call) }
+    }
   }
 
   route("/issues") {
