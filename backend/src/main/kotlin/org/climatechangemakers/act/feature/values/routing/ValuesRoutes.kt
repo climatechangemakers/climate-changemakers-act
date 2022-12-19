@@ -11,4 +11,5 @@ fun Route.valuesRoutes(controller: ValuesController) = route("/values") {
   get("/areas") { controller.areaValues(call) }
   get("/library-of-congress-topics") { controller.libraryOfCongressTopicValues(call) }
   get("/prefixes") { controller.prefixValues(call) }
+  get("/bill-types") { controller.billTypes(call) }
 }
