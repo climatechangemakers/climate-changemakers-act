@@ -4,6 +4,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
+import org.climatechangemakers.act.common.extension.respondNothing
 import org.climatechangemakers.act.feature.cms.manager.issue.ContentManagementIssueManager
 import org.climatechangemakers.act.feature.cms.model.issue.ContentManagementIssue
 import javax.inject.Inject
@@ -36,5 +37,11 @@ class ContentManagementIssueController @Inject constructor(
       status = HttpStatusCode.Created,
       message = manager.createIssue(issue)
     )
+  }
+
+  suspend fun markIssueInactive(call: ApplicationCall) {
+    val issueId = checkNotNull(call.parameters["id"]?.toLong())
+    manager.markIssueInactive(issueId)
+    call.respondNothing()
   }
 }

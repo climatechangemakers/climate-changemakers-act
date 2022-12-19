@@ -119,4 +119,8 @@ class DatabaseContentManagementIssueManager @Inject constructor(
       )
     }
   }
+
+  override suspend fun markIssueInactive(issueId: Long) = withContext(coroutineContext) {
+    issueQueries.makeInactive(issueId)
+  }
 }

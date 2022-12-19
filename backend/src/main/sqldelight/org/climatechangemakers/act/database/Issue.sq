@@ -34,3 +34,8 @@ VALUES(
   1
 )
 RETURNING id;
+
+makeInactive:
+UPDATE issue
+SET is_active = 0
+WHERE issue.id = :id;

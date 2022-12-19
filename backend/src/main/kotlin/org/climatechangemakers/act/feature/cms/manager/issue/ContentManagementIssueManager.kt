@@ -13,4 +13,6 @@ interface ContentManagementIssueManager {
   suspend fun createIssue(
     issue: ContentManagementIssue.New
   ): ContentManagementIssue.Persisted
+
+  suspend fun markIssueInactive(issueId: Long)
 }
