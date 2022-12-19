@@ -28,12 +28,10 @@ INSERT INTO talking_point(
   :issueId,
   :content,
   :relativeOrderPosition
-)
-RETURNING id;
+);
 
 selectForIssueId:
 SELECT
-  id,
   title,
   content,
   relative_order_position

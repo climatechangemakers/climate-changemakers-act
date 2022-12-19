@@ -1,7 +1,6 @@
 package org.climatechangemakers.act.feature.cms.manager.issue
 
 import org.climatechangemakers.act.feature.cms.model.issue.ContentManagementIssue
-import org.climatechangemakers.act.feature.cms.model.issue.CreateIssue
 
 interface ContentManagementIssueManager {
 
@@ -9,5 +8,5 @@ interface ContentManagementIssueManager {
 
   suspend fun updateIssue(issue: ContentManagementIssue): ContentManagementIssue
 
-  suspend fun createIssue(issue: CreateIssue): ContentManagementIssue
+  suspend fun createIssue(issue: ContentManagementIssue): ContentManagementIssue
 }

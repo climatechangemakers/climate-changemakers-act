@@ -5,7 +5,6 @@ import org.climatechangemakers.act.database.Database
 import org.climatechangemakers.act.feature.bill.model.BillType
 import org.climatechangemakers.act.feature.cms.model.issue.ContentManagementIssue
 import org.climatechangemakers.act.feature.cms.model.issue.ContentManagementTalkingPoint
-import org.climatechangemakers.act.feature.cms.model.issue.CreateIssue
 import org.climatechangemakers.act.feature.findlegislator.util.suspendTest
 import org.climatechangemakers.act.feature.util.TestContainerProvider
 import org.climatechangemakers.act.feature.util.insertIssue
@@ -13,7 +12,9 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFails
 import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
 
@@ -89,12 +90,12 @@ class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
       imageUrl = "image.url",
       isActive = true,
     )
-    val talkingPointId = database.talkingPointQueries.insert(
+    database.talkingPointQueries.insert(
       title = "some title",
       issueId = issueId,
       content = "blahhh",
       relativeOrderPosition = 0,
-    ).executeAsOne()
+    )
 
     assertEquals(
       expected = listOf(
@@ -107,7 +108,6 @@ class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
           relatedBillIds = emptyList(),
           talkingPoints = listOf(
             ContentManagementTalkingPoint(
-              id = talkingPointId,
               title = "some title",
               content = "blahhh",
               relativeOrderPosition = 0,
@@ -120,139 +120,170 @@ class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
     )
   }
 
-//  @Test fun `update throws NoSuchElementException with no matching issue ID`() = suspendTest {
-//    assertFailsWith<NoSuchElementException> {
-//      manager().updateIssue(
-//        issue = ContentManagementIssue(
-//          id = -1,
-//          title = "does not exist",
-//          precomposedTweetTemplate = "tweet",
-//          imageUrl = "image.url",
-//          description = "description",
-//          isFocusIssue = false,
-//        )
-//      )
-//    }
-//  }
-//
-//  @Test fun `update does not insert into focus ledger isFocusIssue false`() = suspendTest {
-//    val issueId = driver.insertIssue(
-//      title = "does not exist",
-//      precomposedTweet = "tweet",
-//      imageUrl = "image.url",
-//      description = "description",
-//    )
-//    manager().updateIssue(
-//      issue = ContentManagementIssue(
-//        id = issueId,
-//        title = "does not exist",
-//        precomposedTweetTemplate = "tweet",
-//        imageUrl = "image.url",
-//        description = "description",
-//        isFocusIssue = false,
-//      )
-//    )
-//    assertEquals(expected = 0, actual = driver.countFocusIssueLedger())
-//  }
-//
-//  @Test fun `update inserts into focus ledger isFocusIssue true`() = suspendTest {
-//    val issueId = driver.insertIssue(
-//      title = "does not exist",
-//      precomposedTweet = "tweet",
-//      imageUrl = "image.url",
-//      description = "description",
-//    )
-//    manager().updateIssue(
-//      issue = ContentManagementIssue(
-//        id = issueId,
-//        title = "does not exist",
-//        precomposedTweetTemplate = "tweet",
-//        imageUrl = "image.url",
-//        description = "description",
-//        isFocusIssue = true,
-//      )
-//    )
-//    assertEquals(expected = 1, actual = driver.countFocusIssueLedger())
-//  }
-//
-//  @Test fun `updates issue`() = suspendTest {
-//    val issueId = driver.insertIssue(
-//      title = "this is an issue",
-//      precomposedTweet = "tweet",
-//      imageUrl = "image.url",
-//      description = "description",
-//    )
-//    val result = manager().updateIssue(
-//      issue = ContentManagementIssue(
-//        id = issueId,
-//        title = "this is another issue",
-//        precomposedTweetTemplate = "tweet 2",
-//        imageUrl = "image.url 2",
-//        description = "description 2",
-//        isFocusIssue = false,
-//      )
-//    )
-//    assertEquals(
-//      actual = result,
-//      expected = ContentManagementIssue(
-//        id = issueId,
-//        title = "this is another issue",
-//        precomposedTweetTemplate = "tweet 2",
-//        imageUrl = "image.url 2",
-//        description = "description 2",
-//        isFocusIssue = false,
-//      ),
-//    )
-//  }
-//
-//  @Test fun `create inserts into focus ledger`() = suspendTest {
-//    manager().createIssue(
-//      issue = CreateIssue(
-//        title = "this is another issue",
-//        precomposedTweetTemplate = "tweet 2",
-//        imageUrl = "image.url 2",
-//        description = "description 2",
-//        isFocusIssue = true,
-//      )
-//    )
-//    assertEquals(expected = 1, actual = driver.countFocusIssueLedger())
-//  }
-//
-//  @Test fun `create does not insert into focus ledger`() = suspendTest {
-//    manager().createIssue(
-//      issue = CreateIssue(
-//        title = "this is another issue",
-//        precomposedTweetTemplate = "tweet 2",
-//        imageUrl = "image.url 2",
-//        description = "description 2",
-//        isFocusIssue = false,
-//      )
-//    )
-//    assertEquals(expected = 0, actual = driver.countFocusIssueLedger())
-//  }
-//
-//  @Test fun `create inserts issue`() = suspendTest {
-//    val result = manager().createIssue(
-//      issue = CreateIssue(
-//        title = "this is another issue",
-//        precomposedTweetTemplate = "tweet 2",
-//        imageUrl = "image.url 2",
-//        description = "description 2",
-//        isFocusIssue = false,
-//      )
-//    )
-//    assertEquals(
-//      actual = result,
-//      expected = ContentManagementIssue(
-//        id = 1L,
-//        title = "this is another issue",
-//        precomposedTweetTemplate = "tweet 2",
-//        imageUrl = "image.url 2",
-//        description = "description 2",
-//        isFocusIssue = false,
-//      )
-//    )
-//  }
+  @Test fun `creating issue throws with issue ID`() = suspendTest {
+    val issue = ContentManagementIssue(
+      id = 1L,
+      title = "title",
+      precomposedTweetTemplate = "tweet",
+      imageUrl = "foo.url",
+      description = "description",
+      isFocusIssue = false,
+      talkingPoints = emptyList(),
+      relatedBillIds = emptyList()
+    )
+
+    assertFailsWith<IllegalArgumentException> {
+      manager().createIssue(issue)
+    }
+  }
+
+  @Test fun `creating issue inserts issue and bill relations`() = suspendTest {
+    val bill = database.congressBillQueries.insert(
+      congressionalSession = 1,
+      billType = BillType.HouseBill,
+      billNumber = 1,
+      billName = "name",
+      url = "url"
+    ).executeAsOne()
+    val issue = ContentManagementIssue(
+      id = null,
+      title = "title",
+      precomposedTweetTemplate = "tweet",
+      imageUrl = "foo.url",
+      description = "description",
+      isFocusIssue = false,
+      talkingPoints = emptyList(),
+      relatedBillIds = listOf(bill.id),
+    )
+
+    val createdIssue = manager().createIssue(issue)
+
+    assertEquals(
+      expected = listOf(bill.id),
+      actual = createdIssue.relatedBillIds,
+    )
+
+    assertEquals(
+      expected = listOf(bill.id),
+      actual = database.congressBillAndIssueQueries
+        .selectBillsForIssueId(createdIssue.id!!)
+        .executeAsList()
+        .map { it.congress_bill_id },
+    )
+  }
+
+  @Test fun `creating issue inserts issue and talking points`() = suspendTest {
+    val issue = ContentManagementIssue(
+      id = null,
+      title = "title",
+      precomposedTweetTemplate = "tweet",
+      imageUrl = "foo.url",
+      description = "description",
+      isFocusIssue = false,
+      talkingPoints = listOf(
+        ContentManagementTalkingPoint(
+          title = "title",
+          content = "content",
+          relativeOrderPosition = 0,
+        )
+      ),
+      relatedBillIds = emptyList(),
+    )
+
+    val createdIssue = manager().createIssue(issue)
+
+    assertEquals(
+      expected = listOf(
+        ContentManagementTalkingPoint(
+          title = "title",
+          content = "content",
+          relativeOrderPosition = 0,
+        )
+      ),
+      actual = createdIssue.talkingPoints,
+    )
+
+    assertEquals(
+      expected = 1,
+      actual = database.talkingPointQueries
+        .selectForIssueId(createdIssue.id!!)
+        .executeAsList()
+        .size,
+    )
+  }
+
+  @Test fun `creating focused issue inserts issue and focus ledger item`() = suspendTest {
+    val issue = ContentManagementIssue(
+      id = null,
+      title = "title",
+      precomposedTweetTemplate = "tweet",
+      imageUrl = "foo.url",
+      description = "description",
+      isFocusIssue = true,
+      talkingPoints = emptyList(),
+      relatedBillIds = emptyList(),
+    )
+
+    val createdIssue = manager().createIssue(issue)
+
+    assertTrue(createdIssue.isFocusIssue)
+
+    assertEquals(
+      expected = createdIssue.id,
+      actual = database.issueAndFocusQueries.selectActiveFocusIssue().executeAsOne().id,
+    )
+  }
+
+  @Test fun `no issue is created invalid bill`() = suspendTest {
+    val issue = ContentManagementIssue(
+      id = null,
+      title = "title",
+      precomposedTweetTemplate = "tweet",
+      imageUrl = "foo.url",
+      description = "description",
+      isFocusIssue = false,
+      talkingPoints = emptyList(),
+      relatedBillIds = listOf(-1L),
+    )
+
+    assertFails { manager().createIssue(issue) }
+
+    assertEquals(
+      expected = emptyList(),
+      actual = database.issueAndFocusQueries.selectAllActive().executeAsList(),
+    )
+  }
+
+  @Test fun `no issue is created invalid talking point`() = suspendTest {
+    val issue = ContentManagementIssue(
+      id = null,
+      title = "title",
+      precomposedTweetTemplate = "tweet",
+      imageUrl = "foo.url",
+      description = "description",
+      isFocusIssue = false,
+      talkingPoints = listOf(
+        ContentManagementTalkingPoint(
+          title = "title",
+          content = "content",
+          relativeOrderPosition = 0,
+        ),
+        ContentManagementTalkingPoint(
+          title = "title",
+          content = "content",
+          relativeOrderPosition = 0,
+        ),
+      ),
+      relatedBillIds = emptyList(),
+    )
+
+    assertFails { manager().createIssue(issue) }
+
+    assertEquals(
+      expected = emptyList(),
+      actual = database.issueAndFocusQueries.selectAllActive().executeAsList(),
+    )
+  }
 
   private fun manager(
     coroutineContext: CoroutineContext = EmptyCoroutineContext,

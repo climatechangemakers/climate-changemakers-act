@@ -6,7 +6,6 @@ import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import org.climatechangemakers.act.feature.cms.manager.issue.ContentManagementIssueManager
 import org.climatechangemakers.act.feature.cms.model.issue.ContentManagementIssue
-import org.climatechangemakers.act.feature.cms.model.issue.CreateIssue
 import javax.inject.Inject
 
 class ContentManagementIssueController @Inject constructor(
@@ -32,7 +31,7 @@ class ContentManagementIssueController @Inject constructor(
   }
 
   suspend fun createIssue(call: ApplicationCall) {
-    val issue = call.receive<CreateIssue>()
+    val issue = call.receive<ContentManagementIssue>()
     call.respond(
       status = HttpStatusCode.Created,
       message = manager.createIssue(issue)

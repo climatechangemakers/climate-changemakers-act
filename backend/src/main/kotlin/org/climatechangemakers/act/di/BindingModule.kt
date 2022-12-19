@@ -16,8 +16,6 @@ import org.climatechangemakers.act.feature.cms.manager.bill.ContentManagementBil
 import org.climatechangemakers.act.feature.cms.manager.bill.DatabaseContentManagementBillManager
 import org.climatechangemakers.act.feature.cms.manager.issue.ContentManagementIssueManager
 import org.climatechangemakers.act.feature.cms.manager.issue.DatabaseContentManagementIssueManager
-import org.climatechangemakers.act.feature.cms.manager.issue.DatabaseIssueAndBillAssociationManager
-import org.climatechangemakers.act.feature.cms.manager.issue.IssueAndBillAssociationManager
 import org.climatechangemakers.act.feature.communicatewithcongress.manager.CommunicateWithCongressManager
 import org.climatechangemakers.act.feature.communicatewithcongress.manager.NetworkCommunicateWithCongressManager
 import org.climatechangemakers.act.feature.findlegislator.manager.DatabaseMemberOfCongressManager
