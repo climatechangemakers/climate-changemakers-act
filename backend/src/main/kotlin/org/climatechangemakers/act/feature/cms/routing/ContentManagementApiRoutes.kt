@@ -2,6 +2,7 @@ package org.climatechangemakers.act.feature.cms.routing
 
 import io.ktor.server.application.call
 import io.ktor.server.routing.Route
+import io.ktor.server.routing.delete
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.put
@@ -26,6 +27,7 @@ fun Route.contentManagementApiRoutes(
 
     route("/{id}") {
       put { issueController.updateIssue(call) }
+      delete { issueController.markIssueInactive(call) }
     }
   }
 }

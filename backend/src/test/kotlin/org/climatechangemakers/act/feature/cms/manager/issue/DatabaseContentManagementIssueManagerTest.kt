@@ -1,6 +1,5 @@
 package org.climatechangemakers.act.feature.cms.manager.issue
 
-import app.cash.sqldelight.db.SqlDriver
 import org.climatechangemakers.act.database.Database
 import org.climatechangemakers.act.feature.bill.model.BillType
 import org.climatechangemakers.act.feature.cms.model.issue.ContentManagementIssue
@@ -13,7 +12,6 @@ import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
-import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
@@ -263,17 +261,27 @@ class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
     )
   }
 
+  @Test fun `marking issue inactive omits from issue list`()  = suspendTest {
+    val manager = manager()
+    val issue = manager.createIssue(
+      ContentManagementIssue.New(
+        title = "title",
+        precomposedTweetTemplate = "tweet",
+        imageUrl = "foo.url",
+        description = "description",
+        isFocusIssue = false,
+        talkingPoints = emptyList(),
+        relatedBillIds = emptyList(),
+      )
+    )
+
+    manager.markIssueInactive(issue.id)
+
+    assertEquals(expected = 0, actual = manager.getIssues().size)
+  }
+
   private fun manager(
     coroutineContext: CoroutineContext = EmptyCoroutineContext,
     database: Database = this.database
   ) = DatabaseContentManagementIssueManager(database, coroutineContext)
-}
-
-private fun SqlDriver.countFocusIssueLedger(): Long {
-  return executeQuery(
-    identifier = null,
-    sql = "SELECT COUNT(*) FROM focus_issue;",
-    mapper = { cursor -> cursor.also { it.next() }.getLong(0)!! },
-    parameters = 0,
-  ).value
 }
