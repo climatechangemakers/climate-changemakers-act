@@ -43,4 +43,8 @@ class DatabaseContentManagementBillManager @Inject constructor(
   override suspend fun getBills(): List<Bill> = withContext(coroutineContext) {
     billQueries.selectAll(::Bill).executeAsList()
   }
+
+  override suspend fun deleteBill(id: Long) = withContext(coroutineContext) {
+    billQueries.deleteWithId(id)
+  }
 }
