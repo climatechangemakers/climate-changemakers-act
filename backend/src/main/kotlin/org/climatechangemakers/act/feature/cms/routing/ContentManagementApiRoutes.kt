@@ -8,7 +8,6 @@ import io.ktor.server.routing.put
 import io.ktor.server.routing.route
 import org.climatechangemakers.act.feature.cms.controller.ContentManagementBillController
 import org.climatechangemakers.act.feature.cms.controller.ContentManagementIssueController
-import org.climatechangemakers.act.feature.cms.controller.IssueAndBillAssociationController
 
 fun Route.contentManagementApiRoutes(
   billController: ContentManagementBillController,
@@ -26,7 +25,7 @@ fun Route.contentManagementApiRoutes(
     post { issueController.createIssue(call) }
 
     route("/{id}") {
-      put { TODO() }
+      put { issueController.updateIssue(call) }
     }
   }
 }
