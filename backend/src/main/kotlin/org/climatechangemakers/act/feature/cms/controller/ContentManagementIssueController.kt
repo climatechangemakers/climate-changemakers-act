@@ -17,7 +17,7 @@ class ContentManagementIssueController @Inject constructor(
   }
 
   suspend fun updateIssue(call: ApplicationCall) {
-    val issue = call.receive<ContentManagementIssue>()
+    val issue = call.receive<ContentManagementIssue.Persisted>()
     val issueId = checkNotNull(call.parameters["id"]?.toLong())
 
     if (issueId == issue.id) {
@@ -31,7 +31,7 @@ class ContentManagementIssueController @Inject constructor(
   }
 
   suspend fun createIssue(call: ApplicationCall) {
-    val issue = call.receive<ContentManagementIssue>()
+    val issue = call.receive<ContentManagementIssue.New>()
     call.respond(
       status = HttpStatusCode.Created,
       message = manager.createIssue(issue)

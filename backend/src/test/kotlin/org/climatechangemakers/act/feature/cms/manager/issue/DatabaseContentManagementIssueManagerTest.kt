@@ -34,7 +34,7 @@ class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
 
     assertEquals(
       expected = listOf(
-        ContentManagementIssue(
+        ContentManagementIssue.Persisted(
           id = 2,
           title = "bar",
           precomposedTweetTemplate = "some tweet",
@@ -68,7 +68,7 @@ class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
 
     assertEquals(
       expected = listOf(
-        ContentManagementIssue(
+        ContentManagementIssue.Persisted(
           id = 1,
           title = "bar",
           precomposedTweetTemplate = "some tweet",
@@ -99,7 +99,7 @@ class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
 
     assertEquals(
       expected = listOf(
-        ContentManagementIssue(
+        ContentManagementIssue.Persisted(
           id = 1,
           title = "bar",
           precomposedTweetTemplate = "some tweet",
@@ -120,23 +120,6 @@ class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
     )
   }
 
-  @Test fun `creating issue throws with issue ID`() = suspendTest {
-    val issue = ContentManagementIssue(
-      id = 1L,
-      title = "title",
-      precomposedTweetTemplate = "tweet",
-      imageUrl = "foo.url",
-      description = "description",
-      isFocusIssue = false,
-      talkingPoints = emptyList(),
-      relatedBillIds = emptyList()
-    )
-
-    assertFailsWith<IllegalArgumentException> {
-      manager().createIssue(issue)
-    }
-  }
-
   @Test fun `creating issue inserts issue and bill relations`() = suspendTest {
     val bill = database.congressBillQueries.insert(
       congressionalSession = 1,
@@ -145,8 +128,7 @@ class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
       billName = "name",
       url = "url"
     ).executeAsOne()
-    val issue = ContentManagementIssue(
-      id = null,
+    val issue = ContentManagementIssue.New(
       title = "title",
       precomposedTweetTemplate = "tweet",
       imageUrl = "foo.url",
@@ -166,15 +148,14 @@ class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
     assertEquals(
       expected = listOf(bill.id),
       actual = database.congressBillAndIssueQueries
-        .selectBillsForIssueId(createdIssue.id!!)
+        .selectBillsForIssueId(createdIssue.id)
         .executeAsList()
         .map { it.congress_bill_id },
     )
   }
 
   @Test fun `creating issue inserts issue and talking points`() = suspendTest {
-    val issue = ContentManagementIssue(
-      id = null,
+    val issue = ContentManagementIssue.New(
       title = "title",
       precomposedTweetTemplate = "tweet",
       imageUrl = "foo.url",
@@ -206,15 +187,14 @@ class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
     assertEquals(
       expected = 1,
       actual = database.talkingPointQueries
-        .selectForIssueId(createdIssue.id!!)
+        .selectForIssueId(createdIssue.id)
         .executeAsList()
         .size,
     )
   }
 
   @Test fun `creating focused issue inserts issue and focus ledger item`() = suspendTest {
-    val issue = ContentManagementIssue(
-      id = null,
+    val issue = ContentManagementIssue.New(
       title = "title",
       precomposedTweetTemplate = "tweet",
       imageUrl = "foo.url",
@@ -235,8 +215,7 @@ class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
   }
 
   @Test fun `no issue is created invalid bill`() = suspendTest {
-    val issue = ContentManagementIssue(
-      id = null,
+    val issue = ContentManagementIssue.New(
       title = "title",
       precomposedTweetTemplate = "tweet",
       imageUrl = "foo.url",
@@ -255,8 +234,7 @@ class DatabaseContentManagementIssueManagerTest : TestContainerProvider() {
   }
 
   @Test fun `no issue is created invalid talking point`() = suspendTest {
-    val issue = ContentManagementIssue(
-      id = null,
+    val issue = ContentManagementIssue.New(
       title = "title",
       precomposedTweetTemplate = "tweet",
       imageUrl = "foo.url",

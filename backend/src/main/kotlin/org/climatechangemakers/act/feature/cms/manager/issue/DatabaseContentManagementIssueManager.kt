@@ -22,11 +22,11 @@ class DatabaseContentManagementIssueManager @Inject constructor(
   private val billQueries = database.congressBillAndIssueQueries
   private val talkingPointQueries = database.talkingPointQueries
 
-  override suspend fun getIssues(): List<ContentManagementIssue> = withContext(coroutineContext) {
+  override suspend fun getIssues(): List<ContentManagementIssue.Persisted> = withContext(coroutineContext) {
     issueAndFocusQueries.selectAllActive().executeAsList().map { issue ->
       val relatedBillIds = billQueries.selectBillIdsForIssueId(issue.id).executeAsList()
       val talkingPoints = talkingPointQueries.selectForIssueId(issue.id, ::ContentManagementTalkingPoint).executeAsList()
-      ContentManagementIssue(
+      ContentManagementIssue.Persisted(
         id = issue.id,
         title = issue.title,
         precomposedTweetTemplate = issue.precomposed_tweet_template,
@@ -40,15 +40,15 @@ class DatabaseContentManagementIssueManager @Inject constructor(
   }
 
   override suspend fun updateIssue(
-    issue: ContentManagementIssue
-  ): ContentManagementIssue = withContext(coroutineContext) {
+    issue: ContentManagementIssue.Persisted
+  ): ContentManagementIssue.Persisted = withContext(coroutineContext) {
     issueQueries.transactionWithResult {
       issueQueries.updateIssue(
         title = issue.title,
         tweet = issue.precomposedTweetTemplate,
         imageUrl = issue.imageUrl,
         description = issue.description,
-        id = requireNotNull(issue.id),
+        id = issue.id,
       )
 
       val currentIssue = issueAndFocusQueries
@@ -80,9 +80,8 @@ class DatabaseContentManagementIssueManager @Inject constructor(
   }
 
   override suspend fun createIssue(
-    issue: ContentManagementIssue
-  ): ContentManagementIssue = withContext(coroutineContext) {
-    require(issue.id == null)
+    issue: ContentManagementIssue.New
+  ): ContentManagementIssue.Persisted = withContext(coroutineContext) {
     issueQueries.transactionWithResult {
       val issueId = issueQueries.insertIssue(
         title = issue.title,
@@ -108,7 +107,16 @@ class DatabaseContentManagementIssueManager @Inject constructor(
         )
       }
 
-      issue.copy(id = issueId)
+      ContentManagementIssue.Persisted(
+        id = issueId,
+        title = issue.title,
+        precomposedTweetTemplate = issue.precomposedTweetTemplate,
+        imageUrl = issue.imageUrl,
+        description = issue.description,
+        isFocusIssue = issue.isFocusIssue,
+        talkingPoints = issue.talkingPoints,
+        relatedBillIds = issue.relatedBillIds,
+      )
     }
   }
 }
