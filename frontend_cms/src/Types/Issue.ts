@@ -1,3 +1,5 @@
+import { EditorState } from "draft-js";
+
 export type IssueInfo = {
     description: string;
     imageUrl: string;
@@ -8,6 +10,12 @@ export type IssueInfo = {
 
 export type IssueForm = IssueInfo & {
     associatedBills: number[];
+    issueTalkingPoints: TalkingPoints[];
 };
+
+export type TalkingPoints = {
+    title: string;
+    body: EditorState;
+}
 
 export type ExistingIssue = IssueInfo & { id: number };

@@ -1,4 +1,4 @@
-import { Alert, Button, Form, Modal } from "react-bootstrap";
+import { Alert, Button, Form, Modal, Accordion } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
 import { ExistingIssue, IssueForm } from "Types/Issue";
 import Select from "react-select";
@@ -10,6 +10,10 @@ import {
     useModal,
     useUpdateIssueMutation,
 } from "hooks";
+import { convertToRaw, EditorState } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToHtml from "draftjs-to-html";
 
 type Props = {
     issue?: ExistingIssue;
@@ -37,21 +41,26 @@ export default function IssuesModal({ issue }: Props) {
     const handleError = (error: Error) => setError(error.message);
 
     const onSubmit = handleSubmit((data) => {
-        const { associatedBills, ...issueData } = data;
-        if (!issue)
-            // TODO: This currently doesn't work, will fix when new create endpoint implemented
-            addIssue(issueData, {
-                onSuccess: handleSuccess,
-                onError: handleError,
-            });
-        else
-            updateIssue(
-                { ...issueData, id: issue.id },
-                {
-                    onSuccess: handleSuccess,
-                    onError: handleError,
-                }
-            );
+        // console.log(
+        //     draftToHtml(
+        //         convertToRaw(data.issueTalkingPoints.getCurrentContent())
+        //     )
+        // );
+        // const { associatedBills, ...issueData } = data;
+        // if (!issue)
+        //     // TODO: This currently doesn't work, will fix when new create endpoint implemented
+        //     addIssue(issueData, {
+        //         onSuccess: handleSuccess,
+        //         onError: handleError,
+        //     });
+        // else
+        //     updateIssue(
+        //         { ...issueData, id: issue.id },
+        //         {
+        //             onSuccess: handleSuccess,
+        //             onError: handleError,
+        //         }
+        //     );
     });
 
     return (
@@ -99,7 +108,6 @@ export default function IssuesModal({ issue }: Props) {
                             name="associatedBills"
                             render={({ field: { onChange } }) => (
                                 <Select
-                                    classNamePrefix="addl-class"
                                     options={
                                         bills?.map((b) => ({
                                             value: b.id,
@@ -114,7 +122,71 @@ export default function IssuesModal({ issue }: Props) {
                             )}
                         />
                     </Form.Group>
-                    {/* TODO: Add talking points */}
+                    <Form.Group className="mb-3" controlId="issueTalkingPoints">
+                        <Form.Label>Issue Talking Points</Form.Label>
+                        <Controller
+                            control={control}
+                            name="issueTalkingPoints"
+                            render={({ field: { onChange, value } }) => (
+                                <>
+                                    <Accordion defaultActiveKey="0">
+                                        {value?.map((v, i) => (
+                                            <Accordion.Item
+                                                eventKey="0"
+                                                key={i}
+                                            >
+                                                <Accordion.Header>
+                                                    {v.title}
+                                                </Accordion.Header>
+                                                <Accordion.Body>
+                                                    <div className="border">
+                                                        <Editor
+                                                            editorClassName="p-2"
+                                                            editorState={v.body}
+                                                            onEditorStateChange={(
+                                                                e
+                                                            ) =>
+                                                                onChange(
+                                                                    value.map(
+                                                                        (
+                                                                            _,
+                                                                            j
+                                                                        ) =>
+                                                                            i !==
+                                                                            j
+                                                                                ? v
+                                                                                : {
+                                                                                      ...v,
+                                                                                      body: e,
+                                                                                  }
+                                                                    )
+                                                                )
+                                                            }
+                                                        />
+                                                    </div>
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                        ))}
+                                    </Accordion>
+                                    <Button
+                                        onClick={() =>
+                                            onChange([
+                                                ...(value ?? []),
+                                                {
+                                                    title: `Talking Point ${
+                                                        value?.length ?? 1
+                                                    }`,
+                                                    body: EditorState.createEmpty(),
+                                                },
+                                            ])
+                                        }
+                                    >
+                                        +
+                                    </Button>
+                                </>
+                            )}
+                        />
+                    </Form.Group>
                     {error && <Alert variant="danger">{error}</Alert>}
                 </Modal.Body>
                 <Modal.Footer>
