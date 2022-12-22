@@ -5,10 +5,12 @@ import org.climatechangemakers.act.common.extension.executeAsOneOrNotFound
 import org.climatechangemakers.act.database.Database
 import org.climatechangemakers.act.di.Io
 import org.climatechangemakers.act.feature.cms.model.issue.ContentManagementIssue
-import org.climatechangemakers.act.feature.cms.model.issue.CreateIssue
+import org.climatechangemakers.act.feature.cms.model.issue.ContentManagementTalkingPoint
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
+// TODO(kcianfarini) Break this up into multiple managers that can share a suspending transaction
+//                   once we migrate to a non-blocking pgsql driver.
 class DatabaseContentManagementIssueManager @Inject constructor(
   database: Database,
   @Io private val coroutineContext: CoroutineContext,
@@ -17,59 +19,108 @@ class DatabaseContentManagementIssueManager @Inject constructor(
   private val issueAndFocusQueries = database.issueAndFocusQueries
   private val issueQueries = database.issueQueries
   private val focusIssueQueries = database.focusIssueQueries
+  private val billQueries = database.congressBillAndIssueQueries
+  private val talkingPointQueries = database.talkingPointQueries
 
-  override suspend fun getIssues(): List<ContentManagementIssue> = withContext(coroutineContext) {
-    issueAndFocusQueries.selectAllActive(::toCmsIssue).executeAsList()
+  override suspend fun getIssues(): List<ContentManagementIssue.Persisted> = withContext(coroutineContext) {
+    issueAndFocusQueries.selectAllActive().executeAsList().map { issue ->
+      val relatedBillIds = billQueries.selectBillIdsForIssueId(issue.id).executeAsList()
+      val talkingPoints = talkingPointQueries.selectForIssueId(issue.id, ::ContentManagementTalkingPoint).executeAsList()
+      ContentManagementIssue.Persisted(
+        id = issue.id,
+        title = issue.title,
+        precomposedTweetTemplate = issue.precomposed_tweet_template,
+        imageUrl = issue.image_url,
+        description = issue.description,
+        isFocusIssue = issue.is_focused_int == 1L,
+        relatedBillIds = relatedBillIds,
+        talkingPoints = talkingPoints,
+      )
+    }
   }
 
   override suspend fun updateIssue(
-    issue: ContentManagementIssue
-  ): ContentManagementIssue = withContext(coroutineContext) {
-    val currentIssue = issueAndFocusQueries
-      .selectForId(issue.id, ::toCmsIssue)
-      .executeAsOneOrNotFound()
+    issue: ContentManagementIssue.Persisted
+  ): ContentManagementIssue.Persisted = withContext(coroutineContext) {
+    issueQueries.transactionWithResult {
+      issueQueries.updateIssue(
+        title = issue.title,
+        tweet = issue.precomposedTweetTemplate,
+        imageUrl = issue.imageUrl,
+        description = issue.description,
+        id = issue.id,
+      )
 
-    if (issue.isFocusIssue && !currentIssue.isFocusIssue) {
-      // Issue focus state has changed. Update it.
-      focusIssueQueries.insert(issue.id)
+      val currentIssue = issueAndFocusQueries
+        .selectForId(issue.id)
+        .executeAsOneOrNotFound()
+
+      if (issue.isFocusIssue && currentIssue.is_focused_int != 1L) {
+        // Issue focus state has changed. Update it.
+        focusIssueQueries.insert(issue.id)
+      }
+
+      billQueries.deleteForIssueId(issue.id)
+      issue.relatedBillIds.forEach { billId ->
+        billQueries.insert(issueId = issue.id, billId = billId)
+      }
+
+      talkingPointQueries.deleteForIssue(issue.id)
+      issue.talkingPoints.forEach { tp ->
+        talkingPointQueries.insert(
+          title = tp.title,
+          issueId = issue.id,
+          content = tp.content,
+          relativeOrderPosition = tp.relativeOrderPosition
+        )
+      }
+
+      issue
     }
-    
-    issueQueries.updateIssue(
-      id = issue.id,
-      title = issue.title,
-      tweet = issue.precomposedTweetTemplate,
-      imageUrl = issue.imageUrl,
-      description = issue.description,
-    )
-    issueAndFocusQueries.selectForId(
-      id = issue.id,
-      mapper = ::toCmsIssue
-    ).executeAsOneOrNotFound()
   }
 
   override suspend fun createIssue(
-    issue: CreateIssue
-  ): ContentManagementIssue = withContext(coroutineContext) {
-    val issueId = issueQueries.insertIssue(
-      title = issue.title,
-      precomposedTweet = issue.precomposedTweetTemplate,
-      imageUrl = issue.imageUrl,
-      description = issue.description,
-    ).executeAsOne()
+    issue: ContentManagementIssue.New
+  ): ContentManagementIssue.Persisted = withContext(coroutineContext) {
+    issueQueries.transactionWithResult {
+      val issueId = issueQueries.insertIssue(
+        title = issue.title,
+        precomposedTweet = issue.precomposedTweetTemplate,
+        imageUrl = issue.imageUrl,
+        description = issue.description,
+      ).executeAsOne()
 
-    if (issue.isFocusIssue) {
-      focusIssueQueries.insert(issueId)
+      if (issue.isFocusIssue) {
+        focusIssueQueries.insert(issueId)
+      }
+
+      issue.relatedBillIds.forEach { billId ->
+        billQueries.insert(issueId = issueId, billId = billId)
+      }
+
+      issue.talkingPoints.forEach { talkingPoint ->
+        talkingPointQueries.insert(
+          title = talkingPoint.title,
+          issueId = issueId,
+          content = talkingPoint.content,
+          relativeOrderPosition = talkingPoint.relativeOrderPosition
+        )
+      }
+
+      ContentManagementIssue.Persisted(
+        id = issueId,
+        title = issue.title,
+        precomposedTweetTemplate = issue.precomposedTweetTemplate,
+        imageUrl = issue.imageUrl,
+        description = issue.description,
+        isFocusIssue = issue.isFocusIssue,
+        talkingPoints = issue.talkingPoints,
+        relatedBillIds = issue.relatedBillIds,
+      )
     }
-
-    issueAndFocusQueries.selectForId(issueId, ::toCmsIssue).executeAsOneOrNotFound()
   }
 
-  private fun toCmsIssue(
-    id: Long,
-    title: String,
-    tweet: String,
-    image: String,
-    description: String,
-    focused: Long,
-  ) = ContentManagementIssue(id, title, tweet, image, description, isFocusIssue = focused == 1L)
+  override suspend fun markIssueInactive(issueId: Long) = withContext(coroutineContext) {
+    issueQueries.makeInactive(issueId)
+  }
 }

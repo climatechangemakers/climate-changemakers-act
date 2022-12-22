@@ -3,6 +3,7 @@ package org.climatechangemakers.act.feature.values.controller
 import io.ktor.server.application.ApplicationCall
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.server.response.respond
 import io.ktor.server.response.respondText
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ArraySerializer
@@ -14,6 +15,7 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.encoding.encodeStructure
 import kotlinx.serialization.json.Json
 import org.climatechangemakers.act.common.model.RepresentedArea
+import org.climatechangemakers.act.feature.bill.model.BillType
 import org.climatechangemakers.act.feature.communicatewithcongress.model.Prefix
 import org.climatechangemakers.act.feature.communicatewithcongress.model.PrefixSerializer
 import org.climatechangemakers.act.feature.communicatewithcongress.model.Topic
@@ -43,6 +45,8 @@ class ValuesController @Inject constructor(private val json: Json) {
     text = json.encodeToString(ArraySerializer(PrefixSerializer), Prefix.values()),
     status = HttpStatusCode.OK,
   )
+
+  suspend fun billTypes(call: ApplicationCall) = call.respond(BillType.values())
 }
 
 private object FullNameAreaSerializer : KSerializer<RepresentedArea> {

@@ -6,8 +6,6 @@ import dagger.Component
 import kotlinx.serialization.json.Json
 import org.climatechangemakers.act.feature.cms.controller.ContentManagementBillController
 import org.climatechangemakers.act.feature.cms.controller.ContentManagementIssueController
-import org.climatechangemakers.act.feature.cms.controller.ContentManagementTalkingPointsController
-import org.climatechangemakers.act.feature.cms.controller.IssueAndBillAssociationController
 import org.climatechangemakers.act.feature.cms.manager.auth.UserVerificationManager
 import org.climatechangemakers.act.feature.values.controller.ValuesController
 import javax.inject.Singleton
@@ -31,6 +29,4 @@ interface ApiComponent {
   fun userVerificationManager(): UserVerificationManager
   fun billController(): ContentManagementBillController
   fun cmsIssueController(): ContentManagementIssueController
-  fun cmsTalkingPointsController(): ContentManagementTalkingPointsController
-  fun issueAndBillController(): IssueAndBillAssociationController
 }

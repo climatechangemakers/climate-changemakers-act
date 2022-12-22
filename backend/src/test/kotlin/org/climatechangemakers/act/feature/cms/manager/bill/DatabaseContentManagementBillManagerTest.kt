@@ -101,6 +101,26 @@ class DatabaseContentManagementBillManagerTest : TestContainerProvider() {
     )
   }
 
+  @Test fun `manager deletes bill`() = suspendTest {
+    val sut = manager()
+    val bill = sut.persistBill(
+      CreateBill(
+        congressionalSession = 117,
+        type = BillType.HouseBill,
+        number = 1,
+        name = "first bill!",
+        url = "some.url",
+      )
+    )
+
+    sut.deleteBill(bill.id)
+
+    assertEquals(
+      expected = 0,
+      actual = sut.getBills().size,
+    )
+  }
+
   private fun selectCountBills(): Long = driver.executeQuery(
     identifier = null,
     sql = "SELECT COUNT(*) FROM congress_bill;",

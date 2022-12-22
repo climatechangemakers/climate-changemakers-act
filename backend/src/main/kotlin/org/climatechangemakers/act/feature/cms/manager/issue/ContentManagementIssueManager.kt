@@ -1,13 +1,18 @@
 package org.climatechangemakers.act.feature.cms.manager.issue
 
 import org.climatechangemakers.act.feature.cms.model.issue.ContentManagementIssue
-import org.climatechangemakers.act.feature.cms.model.issue.CreateIssue
 
 interface ContentManagementIssueManager {
 
-  suspend fun getIssues(): List<ContentManagementIssue>
+  suspend fun getIssues(): List<ContentManagementIssue.Persisted>
 
-  suspend fun updateIssue(issue: ContentManagementIssue): ContentManagementIssue
+  suspend fun updateIssue(
+    issue: ContentManagementIssue.Persisted
+  ): ContentManagementIssue.Persisted
 
-  suspend fun createIssue(issue: CreateIssue): ContentManagementIssue
+  suspend fun createIssue(
+    issue: ContentManagementIssue.New
+  ): ContentManagementIssue.Persisted
+
+  suspend fun markIssueInactive(issueId: Long)
 }

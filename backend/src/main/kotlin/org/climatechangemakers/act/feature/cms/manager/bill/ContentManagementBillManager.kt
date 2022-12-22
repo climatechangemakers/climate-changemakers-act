@@ -10,4 +10,6 @@ interface ContentManagementBillManager {
   suspend fun updateBill(bill: Bill): Bill
 
   suspend fun getBills(): List<Bill>
+
+  suspend fun deleteBill(id: Long)
 }

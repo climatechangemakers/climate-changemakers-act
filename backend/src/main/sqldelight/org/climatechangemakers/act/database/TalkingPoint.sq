@@ -32,7 +32,6 @@ INSERT INTO talking_point(
 
 selectForIssueId:
 SELECT
-  id,
   title,
   content,
   relative_order_position

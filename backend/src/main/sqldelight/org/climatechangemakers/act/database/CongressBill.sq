@@ -61,3 +61,7 @@ SELECT
   bill_name,
   url
 FROM congress_bill;
+
+deleteWithId:
+DELETE FROM congress_bill
+WHERE id = :id;
