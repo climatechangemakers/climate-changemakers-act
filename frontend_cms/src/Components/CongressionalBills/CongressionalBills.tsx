@@ -1,21 +1,27 @@
-import React, { MouseEvent } from "react";
+import React, { MouseEvent, useState } from "react";
 import { Alert, Button, Card, Spinner, Table } from "react-bootstrap";
-import { useBillsQuery, useModal } from "hooks";
+import { useBillsQuery, useDeleteBillMutation, useModal } from "hooks";
 import CongressionalBillsModal from "./CongressionalBillsModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 export default function CongressionalBills() {
-    const { data, isLoading, error } = useBillsQuery();
+    const { data, isLoading, error: billsError, refetch } = useBillsQuery();
+    const { mutate: deleteBill } = useDeleteBillMutation();
     const { open } = useModal();
+    const [deleteError, setDeleteError] = useState("");
+
+    const error = billsError?.message || deleteError;
 
     const handleDelete = (
         e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
         id: number
     ) => {
         e.stopPropagation();
-        // TODO: Add deleting endpoint
-        console.log("Deleting bill " + id);
+        deleteBill(id, {
+            onSuccess: () => refetch(),
+            onError: (error: Error) => setDeleteError(error.message),
+        });
     };
 
     return (
@@ -48,7 +54,7 @@ export default function CongressionalBills() {
                     ))}
                 </tbody>
             </Table>
-            {error && <Alert variant="danger">{error.message}</Alert>}
+            {error && <Alert variant="danger">{error}</Alert>}
             <div className="d-flex justify-content-end">
                 <Button onClick={() => open(<CongressionalBillsModal />)}>
                     + Add new bill

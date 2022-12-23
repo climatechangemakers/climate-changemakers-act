@@ -9,6 +9,10 @@ export default function useUpdateIssueMutation() {
         ExistingIssue,
         unknown
     >((formData: ExistingIssue) =>
-        fetcher<ExistingIssue | undefined, ExistingIssue>("issues", formData)
+        fetcher<ExistingIssue | undefined, ExistingIssue>(
+            `issues/${formData.id}`,
+            formData,
+            "PUT"
+        )
     );
 }

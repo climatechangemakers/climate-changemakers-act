@@ -1,21 +1,27 @@
-import React, { MouseEvent } from "react";
+import React, { MouseEvent, useState } from "react";
 import { Alert, Button, Card, Spinner, Table } from "react-bootstrap";
-import { useIssuesQuery, useModal } from "hooks";
+import { useDeleteIssueMutation, useIssuesQuery, useModal } from "hooks";
 import IssuesModal from "./IssuesModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 export default function Issues() {
-    const { data, isLoading, error } = useIssuesQuery();
+    const { data, isLoading, error: issuesError, refetch } = useIssuesQuery();
+    const { mutate: deleteIssue } = useDeleteIssueMutation();
     const { open } = useModal();
+    const [deleteError, setDeleteError] = useState("");
+
+    const error = issuesError?.message || deleteError;
 
     const handleDelete = (
         e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
         id: number
     ) => {
         e.stopPropagation();
-        // TODO: Add deleting endpoint
-        console.log("Deleting issue " + id);
+        deleteIssue(id, {
+            onSuccess: () => refetch(),
+            onError: (error: Error) => setDeleteError(error.message),
+        });
     };
 
     return (
@@ -44,7 +50,7 @@ export default function Issues() {
                     ))}
                 </tbody>
             </Table>
-            {error && <Alert variant="danger">{error.message}</Alert>}
+            {error && <Alert variant="danger">{error}</Alert>}
             <div className="d-flex justify-content-end">
                 <Button onClick={() => open(<IssuesModal />)}>
                     + Add new issue

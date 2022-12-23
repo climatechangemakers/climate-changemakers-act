@@ -1,6 +1,11 @@
 import { Alert, Button, Form, Modal, Accordion } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
-import { ExistingIssue, IssueForm } from "Types/Issue";
+import {
+    ExistingIssue,
+    IssueForm,
+    IssueInfo,
+    TalkingPointsForm,
+} from "Types/Issue";
 import Select from "react-select";
 import { useState, useEffect } from "react";
 import {
@@ -10,10 +15,20 @@ import {
     useModal,
     useUpdateIssueMutation,
 } from "hooks";
-import { convertToRaw, EditorState } from "draft-js";
+import {
+    ContentBlock,
+    ContentState,
+    convertFromHTML,
+    convertToRaw,
+    EditorState,
+} from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
+import TalkingPoint from "./TalkingPoint";
 
 type Props = {
     issue?: ExistingIssue;
@@ -29,7 +44,27 @@ export default function IssuesModal({ issue }: Props) {
     const [error, setError] = useState("");
 
     useEffect(() => {
-        if (issue) reset(issue);
+        if (issue)
+            reset({
+                ...issue,
+                talkingPoints: issue.talkingPoints
+                    .sort(
+                        (a, b) =>
+                            a.relativeOrderPosition - b.relativeOrderPosition
+                    )
+                    .map((t) => ({
+                        id: crypto.randomUUID(),
+                        title: t.title,
+                        content: EditorState.createWithContent(
+                            ContentState.createFromBlockArray(
+                                convertFromHTML(
+                                    t.content
+                                ) as unknown as ContentBlock[]
+                            )
+                        ),
+                        relativeOrderPosition: t.relativeOrderPosition,
+                    })),
+            });
     }, [issue]);
 
     const handleSuccess = () => {
@@ -41,27 +76,49 @@ export default function IssuesModal({ issue }: Props) {
     const handleError = (error: Error) => setError(error.message);
 
     const onSubmit = handleSubmit((data) => {
-        // console.log(
-        //     draftToHtml(
-        //         convertToRaw(data.issueTalkingPoints.getCurrentContent())
-        //     )
-        // );
-        // const { associatedBills, ...issueData } = data;
-        // if (!issue)
-        //     // TODO: This currently doesn't work, will fix when new create endpoint implemented
-        //     addIssue(issueData, {
-        //         onSuccess: handleSuccess,
-        //         onError: handleError,
-        //     });
-        // else
-        //     updateIssue(
-        //         { ...issueData, id: issue.id },
-        //         {
-        //             onSuccess: handleSuccess,
-        //             onError: handleError,
-        //         }
-        //     );
+        const issues: IssueInfo = {
+            ...data,
+            talkingPoints: data.talkingPoints.map((t, i) => ({
+                title: t.title,
+                content: draftToHtml(
+                    convertToRaw(t?.content?.getCurrentContent() ?? "")
+                ),
+                relativeOrderPosition: i,
+            })),
+        };
+
+        if (!issue)
+            addIssue(issues, {
+                onSuccess: handleSuccess,
+                onError: handleError,
+            });
+        else
+            updateIssue(
+                { ...issues, id: issue.id },
+                {
+                    onSuccess: handleSuccess,
+                    onError: handleError,
+                }
+            );
     });
+
+    const updateTalkingPoint = (
+        talkingPoints: TalkingPointsForm[],
+        updatedTalkingPoint: TalkingPointsForm,
+        onChange: (...event: any[]) => void
+    ) => {
+        onChange(
+            talkingPoints.map((t) =>
+                t.id !== updatedTalkingPoint.id ? t : updatedTalkingPoint
+            )
+        );
+    };
+
+    const swap = (arr: any[], from: number, to: number) => {
+        let temp = arr;
+        [temp[to], temp[from]] = [temp[from], temp[to]];
+        return temp;
+    };
 
     return (
         <Modal show onHide={close} size="lg">
@@ -101,12 +158,12 @@ export default function IssuesModal({ issue }: Props) {
                             {...register("isFocusIssue")}
                         />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="associatedBills">
+                    <Form.Group className="mb-3" controlId="relatedBillIds">
                         <Form.Label>Associated Bills</Form.Label>
                         <Controller
                             control={control}
-                            name="associatedBills"
-                            render={({ field: { onChange } }) => (
+                            name="relatedBillIds"
+                            render={({ field: { onChange, value } }) => (
                                 <Select
                                     options={
                                         bills?.map((b) => ({
@@ -114,6 +171,12 @@ export default function IssuesModal({ issue }: Props) {
                                             label: b.name,
                                         })) || []
                                     }
+                                    value={bills
+                                        ?.filter((b) => value?.includes(b.id))
+                                        ?.map((b) => ({
+                                            value: b.id,
+                                            label: b.name,
+                                        }))}
                                     onChange={(val) =>
                                         onChange(val.map((v) => v.value))
                                     }
@@ -122,67 +185,68 @@ export default function IssuesModal({ issue }: Props) {
                             )}
                         />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="issueTalkingPoints">
-                        <Form.Label>Issue Talking Points</Form.Label>
+                    <Form.Group className="mb-3" controlId="talkingPoints">
                         <Controller
                             control={control}
-                            name="issueTalkingPoints"
+                            name="talkingPoints"
                             render={({ field: { onChange, value } }) => (
                                 <>
-                                    <Accordion defaultActiveKey="0">
-                                        {value?.map((v, i) => (
-                                            <Accordion.Item
-                                                eventKey="0"
-                                                key={i}
-                                            >
-                                                <Accordion.Header>
-                                                    {v.title}
-                                                </Accordion.Header>
-                                                <Accordion.Body>
-                                                    <div className="border">
-                                                        <Editor
-                                                            editorClassName="p-2"
-                                                            editorState={v.body}
-                                                            onEditorStateChange={(
-                                                                e
-                                                            ) =>
-                                                                onChange(
-                                                                    value.map(
-                                                                        (
-                                                                            _,
-                                                                            j
-                                                                        ) =>
-                                                                            i !==
-                                                                            j
-                                                                                ? v
-                                                                                : {
-                                                                                      ...v,
-                                                                                      body: e,
-                                                                                  }
-                                                                    )
-                                                                )
-                                                            }
-                                                        />
-                                                    </div>
-                                                </Accordion.Body>
-                                            </Accordion.Item>
+                                    <Form.Label>
+                                        Issue Talking Points
+                                        <Button
+                                            className="ms-2"
+                                            size="sm"
+                                            onClick={() =>
+                                                onChange([
+                                                    ...(value ?? []),
+                                                    {
+                                                        id: crypto.randomUUID(),
+                                                        title: `Talking Point ${
+                                                            (value?.length ??
+                                                                0) + 1
+                                                        }`,
+                                                        content: "",
+                                                    },
+                                                ])
+                                            }
+                                        >
+                                            +
+                                        </Button>
+                                    </Form.Label>
+                                    <Accordion className="ps-4 pe-5 position-relative">
+                                        {value?.map((talkingPoint, i) => (
+                                            <TalkingPoint
+                                                index={i}
+                                                talkingPoint={talkingPoint}
+                                                update={(newTalkingPoint) =>
+                                                    updateTalkingPoint(
+                                                        value,
+                                                        newTalkingPoint,
+                                                        onChange
+                                                    )
+                                                }
+                                                deleteTalkingPoint={(tp) =>
+                                                    onChange(
+                                                        value.filter(
+                                                            (t) =>
+                                                                t.id !== tp.id
+                                                        )
+                                                    )
+                                                }
+                                                moveUp={() =>
+                                                    onChange(
+                                                        swap(value, i, i - 1)
+                                                    )
+                                                }
+                                                moveDown={() =>
+                                                    onChange(
+                                                        swap(value, i, i + 1)
+                                                    )
+                                                }
+                                                isLast={i === value.length - 1}
+                                            />
                                         ))}
                                     </Accordion>
-                                    <Button
-                                        onClick={() =>
-                                            onChange([
-                                                ...(value ?? []),
-                                                {
-                                                    title: `Talking Point ${
-                                                        value?.length ?? 1
-                                                    }`,
-                                                    body: EditorState.createEmpty(),
-                                                },
-                                            ])
-                                        }
-                                    >
-                                        +
-                                    </Button>
                                 </>
                             )}
                         />
@@ -191,7 +255,7 @@ export default function IssuesModal({ issue }: Props) {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={close}>
-                        Close
+                        Cancel
                     </Button>
                     <Button variant="primary" type="submit">
                         {!issue ? "Add issue" : "Update issue"}

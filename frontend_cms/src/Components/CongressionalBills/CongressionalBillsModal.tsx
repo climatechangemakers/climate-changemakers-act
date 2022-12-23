@@ -106,7 +106,7 @@ export default function CongressionalBillsModal({ bill }: Props) {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={close}>
-                        Close
+                        Cancel
                     </Button>
                     <Button variant="primary" type="submit">
                         {!bill ? "Add bill" : "Update bill"}

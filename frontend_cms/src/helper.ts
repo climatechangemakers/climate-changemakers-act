@@ -1,7 +1,7 @@
 export async function fetcher<Data, Payload = undefined>(
     path: string,
     payload?: Payload,
-    method?: "GET" | "POST" | "PUT"
+    method?: "GET" | "POST" | "PUT" | "DELETE"
 ) {
     const res = await fetch("/cms/api/" + path, {
         method: method ? method : payload ? "POST" : "GET",

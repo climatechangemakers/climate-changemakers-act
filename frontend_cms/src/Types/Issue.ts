@@ -1,21 +1,30 @@
 import { EditorState } from "draft-js";
 
-export type IssueInfo = {
+type Issue = {
     description: string;
     imageUrl: string;
     isFocusIssue: boolean;
     precomposedTweetTemplate: string;
     title: string;
+    relatedBillIds: number[];
+}
+export type IssueInfo = Issue & {
+    talkingPoints: Array<{
+        id?: string;
+        title: string;
+        content: string;
+        relativeOrderPosition: number;
+    }>
 };
 
-export type IssueForm = IssueInfo & {
-    associatedBills: number[];
-    issueTalkingPoints: TalkingPoints[];
+export type IssueForm = Issue & {
+    talkingPoints: TalkingPointsForm[];
 };
 
-export type TalkingPoints = {
+export type TalkingPointsForm = {
+    id: string;
     title: string;
-    body: EditorState;
+    content: EditorState;
 }
 
 export type ExistingIssue = IssueInfo & { id: number };
