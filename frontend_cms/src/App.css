@@ -1,0 +1,43 @@
+:root {
+    --primary-purple: #351f75;
+}
+
+html {
+    background-color: var(--primary-purple);
+}
+
+.App {
+    height: 100vh;
+    background-color: var(--primary-purple);
+}
+
+.btn-primary {
+    background-color: var(--primary-purple) !important;
+    border: purple !important;
+}
+
+.order-arrow {
+    padding: .1rem .25rem !important;
+}
+
+.delete-icon {
+    display: none !important;
+}
+
+.table-row:hover>.delete-icon {
+    display: flex !important;
+}
+
+.accordion-move-buttons {
+    position: absolute;
+    left: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.accordion-delete-button {
+    position: absolute;
+    right: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+}

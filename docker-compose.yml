@@ -6,6 +6,12 @@ services:
     image: frontend:latest
     ports:
       - ${REACT_APP_PORT}:3000
+  
+  frontend_cms:
+    build: ./frontend_cms
+    image: frontend_cms:latest
+    ports:
+      - ${CMS_APP_PORT}:3000
 
   backend:
     build: ./backend
