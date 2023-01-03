@@ -11,6 +11,20 @@ COPY frontend/ .
 
 RUN npm run build
 
+# build the cms frontend
+
+FROM node:lts-alpine3.14 AS build_cms
+
+RUN mkdir -p /app
+COPY frontend_cms/package*.json ./
+
+WORKDIR /app
+
+RUN npm install
+COPY frontend_cms/ .
+
+RUN npm run build
+
 # build the backend
 
 FROM openjdk:11.0.12 AS build_backend
@@ -22,6 +36,7 @@ RUN rm -rf /appbuild/src/main/resources/client
 RUN mkdir -p /appbuild/src/main/resources/client
 
 COPY --from=build_client /app/build/ /appbuild/src/main/resources/client
+COPY --from=build_cms /app/build/ /appbuild/src/main/resources/cms
 
 WORKDIR /appbuild
 
