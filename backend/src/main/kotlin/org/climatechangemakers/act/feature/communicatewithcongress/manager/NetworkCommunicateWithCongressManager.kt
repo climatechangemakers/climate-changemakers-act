@@ -11,6 +11,7 @@ import org.climatechangemakers.act.common.model.Failure
 import org.climatechangemakers.act.common.serializers.toAlphaNumericString
 import org.climatechangemakers.act.feature.action.manager.ActionTrackerManager
 import org.climatechangemakers.act.feature.action.model.SendEmailRequest
+import org.climatechangemakers.act.feature.bill.manager.BillManager
 import org.climatechangemakers.act.feature.communicatewithcongress.model.CommunicateWithCogressRequest
 import org.climatechangemakers.act.feature.communicatewithcongress.model.Constituent
 import org.climatechangemakers.act.feature.communicatewithcongress.model.Delivery
@@ -31,6 +32,7 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
   private val houseService: HouseCommunicateWithCongressService,
   private val memberOfCongressManager: MemberOfCongressManager,
   private val actionTrackerManager: ActionTrackerManager,
+  private val billManager: BillManager,
   private val issueManager: IssueManager,
   private val logger: Logger,
 ) : CommunicateWithCongressManager {
@@ -91,7 +93,7 @@ class NetworkCommunicateWithCongressManager @Inject constructor(
       message = Message(
         subject = emailRequest.emailSubject,
         topics = emailRequest.relatedTopics,
-        bills = emptyList(), // TODO(kcianfarini) Github issue #95
+        bills = billManager.getBillsForIssueId(emailRequest.relatedIssueId),
         body = emailRequest.emailBody,
       ),
     )

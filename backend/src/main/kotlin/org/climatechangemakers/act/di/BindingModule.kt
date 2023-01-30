@@ -10,6 +10,8 @@ import org.climatechangemakers.act.feature.lcvscore.manager.DatabaseLcvScoreMana
 import org.climatechangemakers.act.feature.lcvscore.manager.LcvScoreManager
 import dagger.Binds
 import dagger.Module
+import org.climatechangemakers.act.feature.bill.manager.BillManager
+import org.climatechangemakers.act.feature.bill.manager.DatabaseBillManager
 import org.climatechangemakers.act.feature.cms.manager.auth.DatabaseUserVerificationManager
 import org.climatechangemakers.act.feature.cms.manager.auth.UserVerificationManager
 import org.climatechangemakers.act.feature.cms.manager.bill.ContentManagementBillManager
@@ -32,4 +34,5 @@ import org.climatechangemakers.act.feature.findlegislator.manager.MemberOfCongre
   @Binds fun bindsUserVerificationManager(manager: DatabaseUserVerificationManager): UserVerificationManager
   @Binds fun bindsContentManagementBillManager(manager: DatabaseContentManagementBillManager): ContentManagementBillManager
   @Binds fun bindsContentManagementIssueManager(manager: DatabaseContentManagementIssueManager): ContentManagementIssueManager
+  @Binds fun bindsDatabaseBillManager(manager: DatabaseBillManager): BillManager
 }
