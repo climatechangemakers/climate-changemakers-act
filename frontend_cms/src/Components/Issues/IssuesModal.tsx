@@ -78,6 +78,7 @@ export default function IssuesModal({ issue }: Props) {
     const onSubmit = handleSubmit((data) => {
         const issues: IssueInfo = {
             ...data,
+            relatedBillIds: data.relatedBillIds ?? [],
             talkingPoints: data.talkingPoints.map((t, i) => ({
                 title: t.title,
                 content: draftToHtml(
