@@ -1590,8 +1590,8 @@
         "state_rank": "senior",
         "url": "https://www.wicker.senate.gov",
         "contact_form": "https://www.wicker.senate.gov/public/index.cfm/contact",
-        "address": "555 Dirksen Senate Office Building Washington DC 20510",
-        "office": "555 Dirksen Senate Office Building",
+        "address": "425 Russell Senate Office Building Washington DC 20510",
+        "office": "425 Russell Senate Office Building",
         "phone": "202-224-6253"
       }
     ]
@@ -5512,8 +5512,8 @@
         "party": "Republican",
         "url": "https://www.cassidy.senate.gov",
         "contact_form": "https://www.cassidy.senate.gov/contact",
-        "address": "520 Hart Senate Office Building Washington DC 20510",
-        "office": "520 Hart Senate Office Building",
+        "address": "455 Dirksen Senate Office Building Washington DC 20510",
+        "office": "455 Dirksen Senate Office Building",
         "phone": "202-224-5824"
       }
     ]
@@ -18554,8 +18554,8 @@
         "url": "https://www.paul.senate.gov",
         "rss_url": "http://paul.senate.gov/rss/?p=news",
         "contact_form": "https://www.paul.senate.gov/connect/email-rand",
-        "address": "167 Russell Senate Office Building Washington DC 20510",
-        "office": "167 Russell Senate Office Building",
+        "address": "295 Russell Senate Office Building Washington DC 20510",
+        "office": "295 Russell Senate Office Building",
         "phone": "202-224-4343"
       }
     ],
@@ -21898,8 +21898,8 @@
         "party": "Democrat",
         "url": "https://sewell.house.gov",
         "rss_url": "http://sewell.house.gov/rss.xml",
-        "address": "1035 Rayburn House Office Building Washington DC 20515-0107",
-        "office": "1035 Rayburn House Office Building",
+        "address": "1035 Longworth House Office Building Washington DC 20515-0107",
+        "office": "1035 Longworth House Office Building",
         "phone": "202-225-2665"
       }
     ]
@@ -31445,8 +31445,8 @@
         "party": "Republican",
         "url": "https://jasonsmith.house.gov",
         "rss_url": "http://jasonsmith.house.gov/rss.xml",
-        "address": "1011 Rayburn House Office Building Washington DC 20515-2508",
-        "office": "1011 Rayburn House Office Building",
+        "address": "1011 Longworth House Office Building Washington DC 20515-2508",
+        "office": "1011 Longworth House Office Building",
         "phone": "202-225-4404"
       }
     ]
@@ -34563,8 +34563,8 @@
         "district": 0,
         "party": "Republican",
         "url": "https://radewagen.house.gov",
-        "address": "2001 Longworth House Office Building Washington DC 20515-5200",
-        "office": "2001 Longworth House Office Building",
+        "address": "2001 Rayburn House Office Building Washington DC 20515-5200",
+        "office": "2001 Rayburn House Office Building",
         "phone": "202-225-8577"
       }
     ]
@@ -34817,67 +34817,6 @@
         "address": "716 Hart Senate Office Building Washington DC 20510",
         "office": "716 Hart Senate Office Building",
         "phone": "202-224-5842"
-      }
-    ]
-  },
-  {
-    "id": {
-      "bioguide": "S001197",
-      "thomas": "02289",
-      "fec": [
-        "S4NE00090"
-      ],
-      "govtrack": 412671,
-      "opensecrets": "N00035544",
-      "lis": "S382",
-      "maplight": 2127,
-      "wikidata": "Q16192221",
-      "wikipedia": "Ben Sasse",
-      "google_entity_id": "kg:/m/0j5wk_6",
-      "votesmart": 150182,
-      "cspan": 77429,
-      "icpsr": 41503,
-      "ballotpedia": "Ben Sasse"
-    },
-    "name": {
-      "first": "Benjamin",
-      "middle": "Eric",
-      "nickname": "Ben",
-      "last": "Sasse",
-      "official_full": "Ben Sasse"
-    },
-    "bio": {
-      "gender": "M",
-      "birthday": "1972-02-22"
-    },
-    "terms": [
-      {
-        "type": "sen",
-        "start": "2015-01-06",
-        "end": "2021-01-03",
-        "state": "NE",
-        "class": 2,
-        "state_rank": "junior",
-        "party": "Republican",
-        "url": "https://www.sasse.senate.gov/public",
-        "address": "107 Russell Senate Office Building Washington DC 20510",
-        "office": "107 Russell Senate Office Building",
-        "phone": "202-224-4224",
-        "contact_form": "http://www.sasse.senate.gov/public/index.cfm/email-ben"
-      },
-      {
-        "type": "sen",
-        "start": "2021-01-03",
-        "end": "2027-01-03",
-        "state": "NE",
-        "class": 2,
-        "state_rank": "junior",
-        "party": "Republican",
-        "url": "https://www.sasse.senate.gov/public",
-        "contact_form": "https://www.sasse.senate.gov/public/index.cfm/email-ben",
-        "address": "139 Russell Senate Office Building Washington DC 20510",
-        "office": "139 Russell Senate Office Building",
-        "phone": "202-224-4224"
       }
     ]
   },
@@ -36776,8 +36715,8 @@
         "district": 3,
         "party": "Republican",
         "url": "https://banks.house.gov",
-        "address": "2418 Longworth House Office Building Washington DC 20515-1403",
-        "office": "2418 Longworth House Office Building",
+        "address": "2418 Rayburn House Office Building Washington DC 20515-1403",
+        "office": "2418 Rayburn House Office Building",
         "phone": "202-225-4436"
       }
     ]
@@ -39540,8 +39479,8 @@
         "district": 49,
         "party": "Democrat",
         "url": "https://mikelevin.house.gov",
-        "address": "2352 Longworth House Office Building Washington DC 20515-0549",
-        "office": "2352 Longworth House Office Building",
+        "address": "2352 Rayburn House Office Building Washington DC 20515-0549",
+        "office": "2352 Rayburn House Office Building",
         "phone": "202-225-3906"
       }
     ]
@@ -39603,8 +39542,8 @@
         "district": 2,
         "party": "Democrat",
         "url": "https://neguse.house.gov",
-        "address": "2400 Longworth House Office Building Washington DC 20515-0602",
-        "office": "2400 Longworth House Office Building",
+        "address": "2400 Rayburn House Office Building Washington DC 20515-0602",
+        "office": "2400 Rayburn House Office Building",
         "phone": "202-225-2161"
       }
     ]
@@ -42078,8 +42017,8 @@
         "district": 6,
         "party": "Republican",
         "url": "https://johnrose.house.gov",
-        "address": "2238 Longworth House Office Building Washington DC 20515-4206",
-        "office": "2238 Longworth House Office Building",
+        "address": "2238 Rayburn House Office Building Washington DC 20515-4206",
+        "office": "2238 Rayburn House Office Building",
         "phone": "202-225-4231"
       }
     ]
@@ -42394,8 +42333,8 @@
         "district": 16,
         "party": "Democrat",
         "url": "https://escobar.house.gov",
-        "address": "2448 Longworth House Office Building Washington DC 20515-4316",
-        "office": "2448 Longworth House Office Building",
+        "address": "2448 Rayburn House Office Building Washington DC 20515-4316",
+        "office": "2448 Rayburn House Office Building",
         "phone": "202-225-4831"
       }
     ]
@@ -44270,8 +44209,8 @@
         "party": "Republican",
         "url": "https://www.hagerty.senate.gov",
         "contact_form": "https://www.hagerty.senate.gov/email-me/",
-        "address": "248 Russell Senate Office Building Washington DC 20510",
-        "office": "248 Russell Senate Office Building",
+        "address": "251 Russell Senate Office Building Washington DC 20510",
+        "office": "251 Russell Senate Office Building",
         "phone": "202-224-4944"
       }
     ]
@@ -46249,8 +46188,8 @@
         "district": 4,
         "party": "Republican",
         "url": "https://fallon.house.gov",
-        "address": "2416 Longworth House Office Building Washington DC 20515-4304",
-        "office": "2416 Longworth House Office Building",
+        "address": "2416 Rayburn House Office Building Washington DC 20515-4304",
+        "office": "2416 Rayburn House Office Building",
         "phone": "202-225-6673"
       }
     ]
@@ -47033,8 +46972,8 @@
         "district": 5,
         "party": "Republican",
         "url": "https://letlow.house.gov",
-        "address": "142 Longworth House Office Building Washington DC 20515-1805",
-        "office": "142 Longworth House Office Building",
+        "address": "142 Cannon House Office Building Washington DC 20515-1805",
+        "office": "142 Cannon House Office Building",
         "phone": "202-225-8490"
       }
     ]
@@ -48088,7 +48027,8 @@
       "official_full": "Brittany Pettersen"
     },
     "bio": {
-      "gender": "F"
+      "gender": "F",
+      "birthday": "1981-12-06"
     },
     "terms": [
       {
@@ -48299,7 +48239,8 @@
       "official_full": "Laurel M. Lee"
     },
     "bio": {
-      "gender": "F"
+      "gender": "F",
+      "birthday": "1974-03-26"
     },
     "terms": [
       {
@@ -48437,7 +48378,8 @@
       "official_full": "James C. Moylan"
     },
     "bio": {
-      "gender": "M"
+      "gender": "M",
+      "birthday": "1962-07-18"
     },
     "terms": [
       {
@@ -48483,8 +48425,8 @@
         "district": 2,
         "party": "Democrat",
         "url": "https://tokuda.house.gov/",
-        "address": "1005 Cannon House Office Building Washington DC 20515-1102",
-        "office": "1005 Cannon House Office Building",
+        "address": "1005 Longworth House Office Building Washington DC 20515-1102",
+        "office": "1005 Longworth House Office Building",
         "phone": "202-225-4906"
       }
     ]
@@ -48614,7 +48556,8 @@
       "official_full": "Nikki Budzinski"
     },
     "bio": {
-      "gender": "F"
+      "gender": "F",
+      "birthday": "1977-03-11"
     },
     "terms": [
       {
@@ -48970,7 +48913,8 @@
       "official_full": "Mike Ezell"
     },
     "bio": {
-      "gender": "M"
+      "gender": "M",
+      "birthday": "1959-04-06"
     },
     "terms": [
       {
@@ -49503,7 +49447,8 @@
       "official_full": "Brandon Williams"
     },
     "bio": {
-      "gender": "M"
+      "gender": "M",
+      "birthday": "1967-05-22"
     },
     "terms": [
       {
@@ -49532,7 +49477,7 @@
       "google_entity_id": "kg:/g/11g119yyj8"
     },
     "name": {
-      "first": "Nickolas",
+      "first": "Nicholas",
       "middle": "A.",
       "last": "Langworthy",
       "official_full": "Nicholas A. Langworthy"
@@ -49784,7 +49729,8 @@
       "official_full": "Andrea Salinas"
     },
     "bio": {
-      "gender": "F"
+      "gender": "F",
+      "birthday": "1969-12-06"
     },
     "terms": [
       {
@@ -49855,7 +49801,8 @@
       "official_full": "Christopher R. Deluzio"
     },
     "bio": {
-      "gender": "M"
+      "gender": "M",
+      "birthday": "1984-07-13"
     },
     "terms": [
       {
@@ -50310,8 +50257,7 @@
       "ballotpedia": "Marie Gluesenkamp Perez"
     },
     "name": {
-      "first": "Kristina",
-      "middle": "Marie (goes by)",
+      "first": "Marie",
       "last": "Gluesenkamp Perez",
       "official_full": "Marie Gluesenkamp Perez"
     },
@@ -50405,6 +50351,47 @@
         "address": "1531 Longworth House Office Building Washington DC 20515-5000",
         "office": "1531 Longworth House Office Building",
         "phone": "202-225-2311"
+      }
+    ]
+  },
+  {
+    "id": {
+      "bioguide": "R000618",
+      "lis": "S423",
+      "fec": [
+        "S6NE00129"
+      ],
+      "govtrack": 456952,
+      "wikidata": "Q6106781",
+      "wikipedia": "Pete Ricketts",
+      "votesmart": 57777,
+      "cspan": 61233,
+      "ballotpedia": "Pete Ricketts"
+    },
+    "name": {
+      "first": "Pete",
+      "last": "Ricketts",
+      "official_full": "Pete Ricketts"
+    },
+    "bio": {
+      "gender": "M",
+      "birthday": "1964-08-19"
+    },
+    "terms": [
+      {
+        "type": "sen",
+        "start": "2023-01-23",
+        "end": "2024-11-05",
+        "how": "appointment",
+        "end-type": "special-election",
+        "state": "NE",
+        "class": 2,
+        "state_rank": "junior",
+        "party": "Republican",
+        "url": "https://www.ricketts.senate.gov",
+        "address": "40D Dirksen Senate Office Building Washington DC 20510",
+        "office": "40d Dirksen Senate Office Building",
+        "phone": "202-224-4224"
       }
     ]
   }
