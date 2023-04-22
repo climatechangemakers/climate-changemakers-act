@@ -48,6 +48,10 @@
     "office_code": "SMA01"
   },
   {
+    "name": "Eric Schmitt [bioguide_id: S001227]",
+    "office_code": "SMO03"
+  },
+  {
     "name": "Gary C. Peters [bioguide_id: P000595]",
     "office_code": "SMI02"
   },
@@ -58,6 +62,10 @@
   {
     "name": "James Lankford [bioguide_id: L000575]",
     "office_code": "SOK03"
+  },
+  {
+    "name": "J.D. Vance [bioguide_id: V000137]",
+    "office_code": "SOH03"
   },
   {
     "name": "Jeanne Shaheen [bioguide_id: S001181]",
@@ -76,6 +84,10 @@
     "office_code": "SWY01"
   },
   {
+    "name": "John Fetterman [bioguide_id: F000479]",
+    "office_code": "SPA03"
+  },
+  {
     "name": "John Hickenlooper [bioguide_id: H000273]",
     "office_code": "SCO02"
   },
@@ -86,6 +98,10 @@
   {
     "name": "Jon Ossoff [bioguide_id: O000174]",
     "office_code": "SGA02"
+  },
+  {
+    "name": "Katie Britt [bioguide_id: B001319]",
+    "office_code": "SAL03"
   },
   {
     "name": "Kevin Cramer [bioguide_id: C001096]",
@@ -104,6 +120,10 @@
     "office_code": "SVA02"
   },
   {
+    "name": "Markwayne Mullin [bioguide_id: M001190]",
+    "office_code": "SOK02"
+  },
+  {
     "name": "Martin Heinrich [bioguide_id: H001046]",
     "office_code": "SNM01"
   },
@@ -118,6 +138,14 @@
   {
     "name": "Patty Murray [bioguide_id: M001111]",
     "office_code": "SWA03"
+  },
+  {
+    "name": "Pete Ricketts [bioguide_id: R000618]",
+    "office_code": "SNE02"
+  },
+  {
+    "name": "Peter Welch [bioguide_id: W000800]",
+    "office_code": "SVT03"
   },
   {
     "name": "Raphael G. Warnock [bioguide_id: W000790]",
@@ -146,6 +174,10 @@
   {
     "name": "Tammy Baldwin [bioguide_id: B001230]",
     "office_code": "SWI01"
+  },
+  {
+    "name": "Ted Budd [bioguide_id: B001305]",
+    "office_code": "SNC03"
   },
   {
     "name": "Tim Kaine [bioguide_id: K000384]",
