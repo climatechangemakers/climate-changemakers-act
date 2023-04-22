@@ -63,7 +63,12 @@ WHERE is_focused = TRUE AND is_active = 1;
 selectActiveUnfocusedIssues:
 SELECT id, title, image_url, description
 FROM issue_and_focus
-WHERE is_focused = FALSE AND is_active = 1;
+WHERE is_focused = FALSE AND is_active = 1
+ORDER BY (
+  SELECT focus_issue.focused_at FROM focus_issue
+  WHERE focus_issue.issue_id = id
+  ORDER BY focus_issue.focused_at DESC LIMIT 1
+) DESC;
 
 rowCount:
 SELECT COUNT(*) FROM issue_and_focus WHERE id = :issueId;
