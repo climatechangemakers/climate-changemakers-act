@@ -990,21 +990,6 @@
   },
   {
     "id": {
-      "bioguide": "M001165",
-      "thomas": "01833",
-      "govtrack": 412190
-    },
-    "social": {
-      "twitter": "GOPLeader",
-      "facebook": "CongressmanKevinMcCarthy",
-      "youtube": "repkevinmccarthy",
-      "youtube_id": "UCdJUZUFSLJRlUpE-91-6DsA",
-      "instagram": "RepKevinMcCarthy",
-      "twitter_id": "19739126"
-    }
-  },
-  {
-    "id": {
       "bioguide": "M001163",
       "thomas": "01814",
       "govtrack": 400663
@@ -1764,20 +1749,6 @@
   },
   {
     "id": {
-      "bioguide": "F000062",
-      "thomas": "01332",
-      "govtrack": 300043
-    },
-    "social": {
-      "twitter": "SenFeinstein",
-      "facebook": "senatorfeinstein",
-      "youtube": "SenatorFeinstein",
-      "youtube_id": "UCtVC--6LR0ff2aOP8THpuEw",
-      "twitter_id": "476256944"
-    }
-  },
-  {
-    "id": {
       "bioguide": "E000215",
       "thomas": "00355",
       "govtrack": 400124
@@ -1926,20 +1897,6 @@
       "instagram": "reprickcrawford",
       "instagram_id": 389864684,
       "twitter_id": "233693291"
-    }
-  },
-  {
-    "id": {
-      "bioguide": "C001084",
-      "thomas": "02055",
-      "govtrack": 412470
-    },
-    "social": {
-      "twitter": "RepCicilline",
-      "facebook": "CongressmanDavidCicilline",
-      "youtube": "RepDavidCicilline",
-      "youtube_id": "UC3sCl46o8hYP69LnidNltuw",
-      "twitter_id": "462143773"
     }
   },
   {
@@ -2826,21 +2783,6 @@
       "youtube_id": "UCTH9zV8Imw09J5bOoTR18_A",
       "twitter_id": "970207298",
       "instagram": "senwarren"
-    }
-  },
-  {
-    "id": {
-      "bioguide": "S001192",
-      "thomas": "02168",
-      "govtrack": 412581
-    },
-    "social": {
-      "twitter": "RepChrisStewart",
-      "facebook": "RepChrisStewart",
-      "youtube": "repchrisstewart",
-      "youtube_id": "UCKYqzTvmQVWys-WhrCkbyPw",
-      "instagram": "repChrisStewart",
-      "twitter_id": "1072008757"
     }
   },
   {
