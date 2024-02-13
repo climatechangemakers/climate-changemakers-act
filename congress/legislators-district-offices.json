@@ -2016,7 +2016,7 @@
         "zip": "04101",
         "latitude": 43.6566885,
         "longitude": -70.2551294,
-        "phone": "207-780-3575"
+        "phone": "207-618-5560"
       }
     ]
   },
@@ -2775,28 +2775,6 @@
   },
   {
     "id": {
-      "bioguide": "C001084",
-      "govtrack": 412470,
-      "thomas": "02055"
-    },
-    "offices": [
-      {
-        "id": "C001084-pawtucket",
-        "address": "1070 Main St.",
-        "suite": "Suite 300",
-        "city": "Pawtucket",
-        "state": "RI",
-        "zip": "02860",
-        "latitude": 41.8610791,
-        "longitude": -71.3986461,
-        "fax": "401-729-5608",
-        "hours": "Mon-Fri 8:30am-5:30pm",
-        "phone": "401-729-5600"
-      }
-    ]
-  },
-  {
-    "id": {
       "bioguide": "C001087",
       "govtrack": 412400,
       "thomas": "01989"
@@ -3283,23 +3261,24 @@
       },
       {
         "id": "C001112-santa_barbara",
-        "address": "360 S. Hope Ave.",
-        "suite": "Suite C-301",
+        "address": "125 E. De La Guerra St.",
+        "suite": "Suite 203B",
         "city": "Santa Barbara",
         "state": "CA",
-        "zip": "93105",
-        "latitude": 34.434901,
-        "longitude": -119.746862,
-        "phone": "805-546-8348"
+        "zip": "93101",
+        "latitude": 34.421663,
+        "longitude": -119.700339,
+        "phone": "805-730-1710"
       },
       {
-        "id": "C001112-santa_maria",
-        "address": "1619 S. Thornburg St.",
-        "city": "Santa Maria",
+        "id": "C001112-ventura",
+        "address": "505 Poli St.",
+        "suite": "Suite 201",
+        "city": "Ventura",
         "state": "CA",
-        "zip": "93458",
-        "latitude": 34.434901,
-        "longitude": -120.4405464,
+        "zip": "93001",
+        "latitude": 34.282713,
+        "longitude": -119.296125,
         "phone": "805-730-1710"
       }
     ]
@@ -4188,67 +4167,6 @@
         "latitude": 31.76012,
         "longitude": -106.48618,
         "phone": "915-541-1400"
-      }
-    ]
-  },
-  {
-    "id": {
-      "bioguide": "F000062",
-      "govtrack": 300043,
-      "thomas": "01332"
-    },
-    "offices": [
-      {
-        "id": "F000062-fresno",
-        "address": "2500 Tulare St.",
-        "suite": "Suite 4290",
-        "city": "Fresno",
-        "state": "CA",
-        "zip": "93721",
-        "latitude": 36.7374775,
-        "longitude": -119.7836709,
-        "fax": "559-485-9689",
-        "phone": "559-485-7430",
-        "hours": "9AM-5PM"
-      },
-      {
-        "id": "F000062-los_angeles",
-        "address": "11111 Santa Monica Blvd.",
-        "suite": "Suite 915",
-        "city": "Los Angeles",
-        "state": "CA",
-        "zip": "90025",
-        "latitude": 34.0476223,
-        "longitude": -118.444656,
-        "fax": "310-914-7318",
-        "phone": "310-914-7300",
-        "hours": "9AM-5PM"
-      },
-      {
-        "id": "F000062-san_diego",
-        "address": "880 Front St.",
-        "suite": "Suite 4236",
-        "city": "San Diego",
-        "state": "CA",
-        "zip": "92101",
-        "latitude": 32.7143481,
-        "longitude": -117.1647085,
-        "fax": "619-231-1108",
-        "phone": "619-231-9712",
-        "hours": "9AM-5PM"
-      },
-      {
-        "id": "F000062-san_francisco",
-        "address": "One Post Street",
-        "suite": "Suite 2450",
-        "city": "San Francisco",
-        "state": "CA",
-        "zip": "94104",
-        "latitude": 37.7887748,
-        "longitude": -122.4026656,
-        "fax": "415-393-0710",
-        "phone": "415-393-0707",
-        "hours": "9AM-5PM"
       }
     ]
   },
@@ -8643,28 +8561,6 @@
   },
   {
     "id": {
-      "bioguide": "M001165",
-      "govtrack": 412190,
-      "thomas": "01833"
-    },
-    "offices": [
-      {
-        "id": "M001165-bakersfield",
-        "address": "4100 Empire Dr.",
-        "suite": "Suite 150",
-        "city": "Bakersfield",
-        "state": "CA",
-        "zip": "93309",
-        "latitude": 35.3750182,
-        "longitude": -119.0467701,
-        "fax": "661-637-0867",
-        "hours": "M-F 8:30am - 5:00pm",
-        "phone": "661-327-3611"
-      }
-    ]
-  },
-  {
-    "id": {
       "bioguide": "M001169",
       "govtrack": 412194,
       "thomas": "01837"
@@ -11670,39 +11566,6 @@
   },
   {
     "id": {
-      "bioguide": "S001192",
-      "govtrack": 412581,
-      "thomas": "02168"
-    },
-    "offices": [
-      {
-        "id": "S001192-salt_lake_city",
-        "address": "420 East South Temple",
-        "suite": "#390",
-        "city": "Salt Lake City",
-        "state": "UT",
-        "zip": "84111",
-        "latitude": 40.7686249,
-        "longitude": -111.8789585,
-        "fax": "801-364-5551",
-        "phone": "801-364-5550"
-      },
-      {
-        "id": "S001192-st__george",
-        "address": "253 W. St George Blvd.",
-        "suite": "Suite 100",
-        "city": "St. George",
-        "state": "UT",
-        "zip": "84770",
-        "latitude": 37.10961350000001,
-        "longitude": -113.5887467,
-        "fax": "435-627-1911",
-        "phone": "435-627-1500"
-      }
-    ]
-  },
-  {
-    "id": {
       "bioguide": "S001193",
       "govtrack": 412514,
       "thomas": "02104"
@@ -12302,15 +12165,15 @@
     },
     "offices": [
       {
-        "id": "S001215-novi",
-        "address": "43155 Main St",
-        "suite": "2300B",
-        "city": "Novi",
+        "id": "S001215-farmington-hills",
+        "address": "30500 Northwestern Highway",
+        "suite": "Suite 525",
+        "city": "Farmington Hills",
         "state": "MI",
-        "zip": "48375-1777",
-        "latitude": 42.47818,
-        "longitude": -83.47075,
-        "phone": "202-227-7397"
+        "zip": 48334,
+        "latitude": 42.511916,
+        "longitude": -83.328995,
+        "phone": "734-853-3040"
       }
     ]
   },
@@ -13429,15 +13292,15 @@
     "offices": [
       {
         "id": "W000800-burlington",
-        "address": "128 Lakeside Ave.",
-        "suite": "Suite 235",
+        "address": "199 Main St.",
+        "suite": "4th Floor",
         "city": "Burlington",
         "state": "VT",
         "zip": "05401",
-        "latitude": 44.4626812,
-        "longitude": -73.21776830000002,
-        "fax": "888-605-7270",
-        "phone": "802-652-2450"
+        "latitude": 44.475563,
+        "longitude": -73.211276,
+        "fax": "202-228-7575",
+        "phone": "802-863-2525"
       }
     ]
   },
@@ -14598,8 +14461,7 @@
         "zip": "90017",
         "latitude": 34.0569399,
         "longitude": -118.2618953,
-        "fax": "213-481-1425",
-        "phone": "213-481-1427"
+        "phone": "213-481-1425"
       }
     ]
   },
@@ -15073,6 +14935,58 @@
         "fax": "202-228-3863",
         "latitude": 32.718147,
         "longitude": -117.1585979
+      }
+    ]
+  },
+  {
+    "id": {
+      "bioguide": "B001320",
+      "govtrack": 456954
+    },
+    "offices": [
+      {
+        "id": "B001320-fresno",
+        "address": "2500 Tulare St.",
+        "suite": "Suite 4290",
+        "city": "Fresno",
+        "state": "CA",
+        "zip": "93721",
+        "latitude": 36.7374775,
+        "longitude": -119.7836709,
+        "phone": "559-485-7430"
+      },
+      {
+        "id": "B001320-los_angeles",
+        "address": "11111 Santa Monica Blvd.",
+        "suite": "Suite 915",
+        "city": "Los Angeles",
+        "state": "CA",
+        "zip": "90025",
+        "latitude": 34.0476223,
+        "longitude": -118.444656,
+        "phone": "310-914-7300"
+      },
+      {
+        "id": "B001320-san_diego",
+        "address": "880 Front St.",
+        "suite": "Suite 4236",
+        "city": "San Diego",
+        "state": "CA",
+        "zip": "92101",
+        "latitude": 32.7143481,
+        "longitude": -117.1647085,
+        "phone": "619-231-9712"
+      },
+      {
+        "id": "B001320-san_francisco",
+        "address": "One Post Street",
+        "suite": "Suite 2450",
+        "city": "San Francisco",
+        "state": "CA",
+        "zip": "94104",
+        "latitude": 37.7887748,
+        "longitude": -122.4026656,
+        "phone": "415-393-0707"
       }
     ]
   }
